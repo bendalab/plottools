@@ -59,14 +59,15 @@ def zoomed_inset(ax, pos, box=None, lines=None, **kwargs):
         axins.set_xlim(box[0], box[2])
         axins.set_ylim(box[1], box[3])
         ax.plot([box[0], box[0], box[2], box[2], box[0]],
-                [box[1], box[3], box[3], box[1], box[1]], **kwargs)
+                [box[1], box[3], box[3], box[1], box[1]],
+                clip_on=False, **kwargs)
         if lines is not None:
             for p0, p1 in lines:
                 p0 = (p0-1)%4
                 p1 = (p1-1)%4
                 x = [box[(((p0+1)%4)//2)*2], pos[(((p1+1)%4)//2)*2]]
                 y = [box[1+(p0//2)*2], pos[1+(p1//2)*2]]
-                ax.plot(x, y, **kwargs)
+                ax.plot(x, y, clip_on=False, **kwargs)
     return axins
     
 
