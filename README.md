@@ -1,8 +1,8 @@
 # plottools
 Simplify creation of publication-quality figures.
 
-- `insets`: add insets to an axes.
-- `scalebars`: add labeled scalebars to an axes.
+- `insets`: insets made easy.
+- `scalebars`: labeled scale bars.
 - `significance`: indicating statsitical significance.
 
 For demos run the modules in `plottools/`, e.g.

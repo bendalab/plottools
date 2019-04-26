@@ -1,7 +1,7 @@
 """
 # Insets
 
-Add insets to an axes.
+Insets made easy.
 
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 """
@@ -23,16 +23,15 @@ def zoomed_inset(ax, pos, box=None, lines=None, **kwargs):
         Zoomed in region in data coordinates (x0, y0, x1, y1)
         used for drawing a frame and setting the limits of the inset.
     lines: list of two-tuples
-        Additional lines to be drawn from the zommed region to the inset.
+        Additional lines to be drawn from the zoomed region to the inset.
         Each element in the list specifies a line by a tuple of two numbers.
         The first number specifies the corner on the zoomed region
         where the line starts, the second number the corner on the
         inset where the line ends. The corners are counted anti-clockwise and
         the bottom left corner has index '1'.
     kwargs:
-        Passed on to plot for plotting the box around the zoomed-in region.
-        If not otherwise specified, the color is set to black and
-        linewidth to one.
+        Passed on to ax.plot() for plotting the box around the zoomed-in region.
+        If not otherwise specified, color is set to black and linewidth to one.
 
     Returns
     -------
