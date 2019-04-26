@@ -9,8 +9,8 @@ Add labeled scale bars to an axes.
 """
 
 
-def xscalebar(ax, x, y, width, wunit=None, ha='left', va='bottom',
-              lw=2, capsize=0.0, clw=0.5, fs=10.0):
+def xscalebar(ax, x, y, width, wunit=None, wformat=None,
+              ha='left', va='bottom', lw=2, capsize=0.0, clw=0.5, fs=10.0):
     """Draw horizontal scale bar with label.
 
     Parameter
@@ -23,8 +23,10 @@ def xscalebar(ax, x, y, width, wunit=None, ha='left', va='bottom',
         y-coordinate where to draw the scale bar in relative units of the axes.
     width: float
         Length of the scale bar in units of the data's x-values.
-    wunit: string
-        Unit of the data's x-values.
+    wunit: string or None
+        Optional unit of the data's x-values.
+    wformat: string or None
+        Optional format string for formatting the label of the scale bar.
     ha: 'left', 'right', or 'center'
         Scale bar aligned left, right, or centered to (x, y)
     va: 'top' or 'bottom'
@@ -53,10 +55,11 @@ def xscalebar(ax, x, y, width, wunit=None, ha='left', va='bottom',
     x = xmin + x*unitx
     y = ymin + y*unity
     # bar length:
-    ff = '%.0f'
-    if width < 1.0:
-        ff = '%.1f'
-    ls = ff % width
+    if wformat is None:
+        wformat = '%.0f'
+        if width < 1.0:
+            wformat = '%.1f'
+    ls = wformat % width
     width = float(ls)
     # bar:
     if ha == 'left':
@@ -77,7 +80,7 @@ def xscalebar(ax, x, y, width, wunit=None, ha='left', va='bottom',
                 solid_capstyle='butt', clip_on=False)
     # label:
     if wunit:
-        ls += ' %s' % wunit
+        ls += u'\u2009%s' % wunit
     if va == 'top':
         ax.text(0.5*(x0+x1), y+0.2*dyf, ls, clip_on=False,
                 ha='center', va='bottom', fontsize=fs)
@@ -86,8 +89,8 @@ def xscalebar(ax, x, y, width, wunit=None, ha='left', va='bottom',
                 ha='center', va='top', fontsize=fs)
 
         
-def yscalebar(ax, x, y, height, hunit=None, ha='left', va='bottom',
-              lw=2, capsize=0.0, clw=0.5, fs=10.0):
+def yscalebar(ax, x, y, height, hunit=None, hformat=None,
+              ha='left', va='bottom', lw=2, capsize=0.0, clw=0.5, fs=10.0):
     """Draw vertical scale bar with label.
 
     Parameter
@@ -102,6 +105,8 @@ def yscalebar(ax, x, y, height, hunit=None, ha='left', va='bottom',
         Length of the scale bar in units of the data's y-values.
     hunit: string
         Unit of the data's y-values.
+    hformat: string or None
+        Optional format string for formatting the label of the scale bar.
     ha: 'left' or 'right'
         Label of the scale bar either to the left or to the right
         of the scale bar.
@@ -131,10 +136,11 @@ def yscalebar(ax, x, y, height, hunit=None, ha='left', va='bottom',
     x = xmin + x*unitx
     y = ymin + y*unity
     # bar length:
-    ff = '%.0f'
-    if height < 1.0:
-        ff = '%.1f'
-    ls = ff % height
+    if hformat is None:
+        hformat = '%.0f'
+        if height < 1.0:
+            hformat = '%.1f'
+    ls = hformat % height
     width = float(ls)
     # bar:
     if va == 'bottom':
@@ -155,7 +161,7 @@ def yscalebar(ax, x, y, height, hunit=None, ha='left', va='bottom',
                 clip_on=False)
     # label:
     if hunit:
-        ls += ' %s' % hunit
+        ls += u'\u2009%s' % hunit
     if ha == 'right':
         ax.text(x+0.3*dxf, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
                 ha='left', va='center', fontsize=fs)
@@ -164,7 +170,8 @@ def yscalebar(ax, x, y, height, hunit=None, ha='left', va='bottom',
                 ha='right', va='center', fontsize=fs)
 
         
-def scalebar(ax, x, y, width, height, wunit, hunit, ha='left', va='bottom',
+def scalebar(ax, x, y, width, height, wunit=None, hunit=None,
+             wformat=None, hformat=None, ha='left', va='bottom',
              lw=2, fs=10.0):
     """Draw horizontal and vertical scale bar with labels.
 
@@ -184,6 +191,10 @@ def scalebar(ax, x, y, width, height, wunit, hunit, ha='left', va='bottom',
         Unit of x-values.
     hunit: string
         Unit of y-values.
+    wformat: string or None
+        Optional format string for formatting the x-label of the scale bar.
+    hformat: string or None
+        Optional format string for formatting the y-label of the scale bar.
     ha: 'left' or 'right'
         Scale bars aligned left or right to (x, y).
         Vertical scale bar left or right.
@@ -195,8 +206,8 @@ def scalebar(ax, x, y, width, height, wunit, hunit, ha='left', va='bottom',
     fs: float
         Fontsize for scale bar label 
     """
-    xscalebar(ax, x, y, width, wunit, ha, va, lw, 0.0, 1, fs)
-    yscalebar(ax, x, y, height, hunit, ha, va, lw, 0.0, 1, fs)
+    xscalebar(ax, x, y, width, wunit, wformat, ha, va, lw, 0.0, 1, fs)
+    yscalebar(ax, x, y, height, hunit, hformat, ha, va, lw, 0.0, 1, fs)
 
 
 if __name__ == "__main__":
@@ -217,10 +228,10 @@ if __name__ == "__main__":
     xscalebar(ax, 0.0, 0.3, 1.0, 's', ha='left', va='bottom', lw=2,
               capsize=0.0, clw=1, fs=10.0)
     draw_anchor(ax, 0.5, 0.3)
-    xscalebar(ax, 0.5, 0.3, 1.5, 's', ha='center', va='bottom', lw=4,
+    xscalebar(ax, 0.5, 0.3, 1.5, 's', '%.1f', ha='center', va='bottom', lw=4,
               capsize=0.5, clw=1, fs=10.0)
     draw_anchor(ax, 1.0, 0.3)
-    xscalebar(ax, 1.0, 0.3, 0.5, 's', ha='right', va='top', lw=2,
+    xscalebar(ax, 1.0, 0.3, 0.55, 's', ha='right', va='top', lw=2,
               capsize=0.0, clw=1, fs=10.0)
 
     draw_anchor(ax, 0.3, 0.25)
@@ -231,13 +242,13 @@ if __name__ == "__main__":
               capsize=0.2, clw=1, fs=10.0)
 
     draw_anchor(ax, 0.1, 0.1)
-    scalebar(ax, 0.1, 0.1, 1.2, 0.5, 's', '', ha='left', va='bottom',
+    scalebar(ax, 0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom',
              lw=2, fs=10.0)
     draw_anchor(ax, 0.9, 0.1)
     scalebar(ax, 0.9, 0.1, 0.8, 0.7, 's', '', ha='right', va='bottom',
              lw=2, fs=10.0)
     draw_anchor(ax, 0.1, 0.9)
-    scalebar(ax, 0.1, 0.9, 1.0, 0.5, 's', '', ha='left', va='top',
+    scalebar(ax, 0.1, 0.9, 1.5, 0.5, 's', '', ha='left', va='top',
              lw=4, fs=10.0)
     draw_anchor(ax, 0.95, 0.9)
     scalebar(ax, 0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top',
