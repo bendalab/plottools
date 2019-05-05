@@ -6,6 +6,30 @@ Insets made easy.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 """
 
+def inset(ax, pos):
+    """
+    Add an inset to an axes in relative axes coordinates.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes to which the inset is added.
+    pos: list of floats
+        Position of the inset in axes coordinates (x0, y0, x1, y1).
+
+    Returns
+    -------
+    axi: matplotlib axes
+        Axes of the inset.
+    """
+    # inset:
+    x0, y0, width, height = ax.get_position().bounds
+    axins = ax.get_figure().add_axes([x0+pos[0]*width, y0+pos[1]*height,
+                                      (pos[2]-pos[0])*width,
+                                      (pos[3]-pos[1])*height])
+    return axins
+    
+
 def zoomed_inset(ax, pos, box=None, lines=None, **kwargs):
     """
     Add an inset for displaying zoomed-in data.
@@ -38,13 +62,11 @@ def zoomed_inset(ax, pos, box=None, lines=None, **kwargs):
     axi: matplotlib axes
         Axes of the inset.
     """
+    # inset:
+    axins = inset(ax, pos)
+    # box to data coordinates:
     xmin, xmax = ax.get_xlim()
     ymin, ymax = ax.get_ylim()
-    x0, y0, width, height = ax.get_position().bounds
-    axins = ax.get_figure().add_axes([x0+pos[0]*width, y0+pos[1]*height,
-                                      (pos[2]-pos[0])*width,
-                                      (pos[3]-pos[1])*height])
-    # inbox to data coordinates:
     pos = np.array(pos)
     pos[0::2] *= np.abs(xmax - xmin)
     pos[0::2] += min(xmin, xmax)
