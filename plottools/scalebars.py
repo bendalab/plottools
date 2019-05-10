@@ -26,7 +26,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     wunit: string or None
         Optional unit of the data's x-values.
     wformat: string or None
-        Optional format string for formatting the label of the scale bar.
+        Optional format string for formatting the label of the scale bar
+        or simply a string used for labeling the scale bar.
     ha: 'left', 'right', or 'center'
         Scale bar aligned left, right, or centered to (x, y)
     va: 'top' or 'bottom'
@@ -59,8 +60,11 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         wformat = '%.0f'
         if width < 1.0:
             wformat = '%.1f'
-    ls = wformat % width
-    width = float(ls)
+    try:
+        ls = wformat % width
+        width = float(ls)
+    except TypeError:
+        ls = wformat
     # bar:
     if ha == 'left':
         x0 = x
@@ -107,7 +111,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     hunit: string
         Unit of the data's y-values.
     hformat: string or None
-        Optional format string for formatting the label of the scale bar.
+        Optional format string for formatting the label of the scale bar
+        or simply a string used for labeling the scale bar.
     ha: 'left' or 'right'
         Label of the scale bar either to the left or to the right
         of the scale bar.
@@ -141,8 +146,11 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         hformat = '%.0f'
         if height < 1.0:
             hformat = '%.1f'
-    ls = hformat % height
-    width = float(ls)
+    try:
+        ls = hformat % height
+        width = float(ls)
+    except TypeError:
+        ls = hformat
     # bar:
     if va == 'bottom':
         y0 = y
@@ -194,9 +202,11 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     hunit: string
         Unit of y-values.
     wformat: string or None
-        Optional format string for formatting the x-label of the scale bar.
+        Optional format string for formatting the x-label of the scale bar
+        or simply a string used for labeling the x scale bar.
     hformat: string or None
-        Optional format string for formatting the y-label of the scale bar.
+        Optional format string for formatting the y-label of the scale bar
+        or simply a string used for labeling the y scale bar.
     ha: 'left' or 'right'
         Scale bars aligned left or right to (x, y).
         Vertical scale bar left or right.
