@@ -57,8 +57,10 @@ def show_spines(ax, spines):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis whose spines and ticks ar emanipulated.
+    ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
+        Axis whose spines and ticks are manipulated.
+        If figure, then apply manipulations on all axes of the figure.
+        If list of axes, applu manipulations on each of the given axes.
     spines: string
         Specify which spines and ticks should be shown. All other ones or hidden.
         'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
@@ -78,29 +80,36 @@ def show_spines(ax, spines):
         yspines.append('left')
     if 'r' in spines:
         yspines.append('right')
-    # hide spines:
-    if not 'top' in xspines:
-        ax.spines['top'].set_visible(False)
-    if not 'bottom' in xspines:
-        ax.spines['bottom'].set_visible(False)
-    if not 'left' in yspines:
-        ax.spines['left'].set_visible(False)
-    if not 'right' in yspines:
-        ax.spines['right'].set_visible(False)
-    if len(xspines) == 0:
-        ax.xaxis.set_ticks_position('none')
-        ax.set_xticks([])
-    elif len(xspines) == 1:
-        ax.xaxis.set_ticks_position(xspines[0])
+    if isinstance(ax, (list, tuple)):
+        axs = ax
     else:
-        ax.xaxis.set_ticks_position('both')
-    if len(yspines) == 0:
-        ax.yaxis.set_ticks_position('none')
-        ax.set_yticks([])
-    elif len(yspines) == 1:
-        ax.yaxis.set_ticks_position(yspines[0])
-    else:
-        ax.yaxis.set_ticks_position('both')
+        axs = ax.get_axes()
+        if not isinstance(axs, (list, tuple)):
+            axs = [axs]
+    for ax in axs:
+        # hide spines:
+        if not 'top' in xspines:
+            ax.spines['top'].set_visible(False)
+        if not 'bottom' in xspines:
+            ax.spines['bottom'].set_visible(False)
+        if not 'left' in yspines:
+            ax.spines['left'].set_visible(False)
+        if not 'right' in yspines:
+            ax.spines['right'].set_visible(False)
+        if len(xspines) == 0:
+            ax.xaxis.set_ticks_position('none')
+            ax.set_xticks([])
+        elif len(xspines) == 1:
+            ax.xaxis.set_ticks_position(xspines[0])
+        else:
+            ax.xaxis.set_ticks_position('both')
+        if len(yspines) == 0:
+            ax.yaxis.set_ticks_position('none')
+            ax.set_yticks([])
+        elif len(yspines) == 1:
+            ax.yaxis.set_ticks_position(yspines[0])
+        else:
+            ax.yaxis.set_ticks_position('both')
 
 
 if __name__ == "__main__":
@@ -108,5 +117,5 @@ if __name__ == "__main__":
 
     plot_format()
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    show_spines(ax, 'lb')
+    show_spines([ax], 'lb')
     plt.show()
