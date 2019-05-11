@@ -1,6 +1,7 @@
 # plottools
 Simplify creation of publication-quality figures.
 
+- `plotformat`: layout settings for a plot figure.
 - `labelaxes`: mark panels with a label.
 - `insets`: insets made easy.
 - `scalebars`: labeled scale bars.
