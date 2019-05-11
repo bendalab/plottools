@@ -8,7 +8,7 @@ Indicating statsitical significance.
 """
 
 
-def significance_bar(ax, p, x0, x1, y, fs=10.0):
+def significance_bar(ax, p, x0, x1, y, **kwargs):
     """
     A horizontal bar with asterisks indicating significance level.
     
@@ -31,8 +31,8 @@ def significance_bar(ax, p, x0, x1, y, fs=10.0):
         x-coordinate of ending point of significance bar in data units.
     y: float
         y-coordinate of significance bar in data units.
-    fs: float
-        Fontsize.
+    kwargs: key-word arguments
+        Passed on to ax.text() used to print the asterisks.
     """
     if p < 0.001:
         ps = '***'
@@ -46,7 +46,7 @@ def significance_bar(ax, p, x0, x1, y, fs=10.0):
     dy = 0.03*height
     ax.plot([x0, x0, x1, x1], [y-dy, y, y, y-dy], color='black', lw=1,
             clip_on=False)
-    ax.text(0.5*(x0+x1), y-0.2*dy, ps, ha='center', fontsize=fs)
+    ax.text(0.5*(x0+x1), y-0.2*dy, ps, ha='center', **kwargs)
     
 
 if __name__ == "__main__":
