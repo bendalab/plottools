@@ -5,7 +5,7 @@ Layout settings for a plot figure.
 
 - `plot_format()`: set default plot format.
 - `cm_size()`: convert dimensions from cm to inch.
-- `show_spines()`: show spines and ticks of specified positions only.
+- `show_spines()`: show and hide spines and ticks.
 """
 
 import matplotlib as mpl
@@ -13,6 +13,8 @@ import matplotlib as mpl
 
 def plot_format(fontsize=10.0):
     """ Set default plot format.
+
+    Call this function *before* you create a matplotlib figure.
 
     Parameters
     ----------
@@ -31,42 +33,46 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['legend.fontsize'] = 'x-small'
 
 
-def cm_size(width, height):
+def cm_size(*args):
     """ Convert dimensions from cm to inch.
+
+    Use this function to set the size of a figure in centimeter:
+    ```
+    fig = plt.figure(figsize=cm_size(16.0, 10.0))
+    ```
 
     Parameters
     ----------
-    width: float
-        Width of the plot figure in centimeter.
-    height: float
-        Height of the plot figure in centimeter.
+    args: one or many float
+        Size in centimeter.
 
     Returns
     -------
-    width: float
-        Width of the plot figure in inch.
-    height: float
-        Height of the plot figure in inch.
+    inches: float or list of floats
+        Input arguments converted to inch.
     """
-    inch_fac = 2.54
-    return width/inch_fac, height/inch_fac
+    inch_per_cm = 2.54
+    if len(args) == 1:
+        return args[0]/inch_per_cm
+    else:
+        return [v/inch_per_cm for v in args]
 
 
 def show_spines(ax, spines):
-    """ Show spines and ticks of specified positions only.
+    """ Show and hide spines.
 
     Parameters
     ----------
     ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
         Axis whose spines and ticks are manipulated.
         If figure, then apply manipulations on all axes of the figure.
-        If list of axes, applu manipulations on each of the given axes.
+        If list of axes, apply manipulations on each of the given axes.
     spines: string
         Specify which spines and ticks should be shown. All other ones or hidden.
         'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
         E.g. 'lb' shows the left and bottom spine, and hides the top and and right spines,
         as well as their tick marks and labels.
-        '' shows not spine at all.
+        '' shows no spines at all.
         'lrtb' shows all spines and tick marks.
     """
     # collect spine visibility:
@@ -80,6 +86,7 @@ def show_spines(ax, spines):
         yspines.append('left')
     if 'r' in spines:
         yspines.append('right')
+    # collect axes:
     if isinstance(ax, (list, tuple)):
         axs = ax
     else:
@@ -96,6 +103,7 @@ def show_spines(ax, spines):
             ax.spines['left'].set_visible(False)
         if not 'right' in yspines:
             ax.spines['right'].set_visible(False)
+        # ticks:
         if len(xspines) == 0:
             ax.xaxis.set_ticks_position('none')
             ax.set_xticks([])
@@ -115,7 +123,10 @@ def show_spines(ax, spines):
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
 
+    # set default plot parameter:
     plot_format()
+    # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    show_spines([ax], 'lb')
+    # only show left and bottom spine:
+    show_spines(ax, 'lb')
     plt.show()
