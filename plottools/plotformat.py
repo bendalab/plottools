@@ -6,9 +6,13 @@ Layout settings for a plot figure.
 - `plot_format()`: set default plot format.
 - `cm_size()`: convert dimensions from cm to inch.
 - `show_spines()`: show and hide spines and ticks.
+- `colors`: list of nice colors
 """
 
 import matplotlib as mpl
+
+
+colors = ['#BA2D22', '#F47F17', '#AAB71B', '#3673A4', '#53379B', '#DC143C', '#1E90FF']
 
 
 def plot_format(fontsize=10.0):
@@ -121,6 +125,7 @@ def show_spines(ax, spines):
 
 
 if __name__ == "__main__":
+    import numpy as np
     import matplotlib.pyplot as plt
 
     # set default plot parameter:
@@ -129,4 +134,12 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
     # only show left and bottom spine:
     show_spines(ax, 'lb')
+    # colors
+    rectx = np.array([0, 1, 1, 0, 0])
+    recty = np.array([0, 0, 1, 1, 0])
+    for k, c in enumerate(colors):
+        ax.fill(rectx + 1.5*k, recty, color=c)
+        ax.text(0.5 + 1.5*k, -0.2, c, ha='center')
+    ax.set_xlim(-0.5, len(colors) + 3.5)
+    ax.set_ylim(-0.3, 1.0)
     plt.show()
