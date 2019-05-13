@@ -64,11 +64,11 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs
     figheight = fig.get_window_extent().height
     # set offsets:
     if xoffs is None:
-        xoffs = xo
+        xoffs = xo - 1.0/figwidth
     else:
         xoffs /= figwidth
     if yoffs is None:
-        yoffs = yo
+        yoffs = yo - 1.0/figheight
     else:
         yoffs /= figheight
     # put labels onto axes:
