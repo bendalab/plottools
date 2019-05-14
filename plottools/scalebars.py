@@ -8,8 +8,6 @@ Labeled scale bars.
 - `scalebars()`: horizontal and vertical scale bars with labels.
 """
 
-import matplotlib as mpl
-
 
 def xscalebar(ax, x, y, width, wunit=None, wformat=None,
               ha='left', va='bottom', lw=2, capsize=0.0, clw=0.5, **kwargs):
