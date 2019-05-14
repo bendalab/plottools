@@ -38,7 +38,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         Line width of the scale bar.
     capsize: float
         If larger then zero draw cap lines at the ends of the bar.
-        The length of the lines is given in fractions of the fontsize.
+        The length of the lines is given in points (same unit as linewidth).
     clw: int, float
         Line width of the cap lines.
     kwargs: key-word arguments
@@ -52,11 +52,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     ymin, ymax = ax.get_ylim()
     unitx = xmax - xmin
     unity = ymax - ymin
-    fs = mpl.rcParams['font.size']
-    if 'fontsize' in kwargs and isinstance(kwargs['fontsize'], (float, int)):
-        fs = kwargs['fontsize']
-    dxf = fs/pixelx*np.abs(unitx)
-    dyf = fs/pixely*np.abs(unity)
+    dxu = np.abs(unitx)/pixelx
+    dyu = np.abs(unity)/pixely
     # transform x, y from relative units to axis units:
     x = xmin + x*unitx
     y = ymin + y*unity
@@ -80,9 +77,11 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     else:
         x0 = x-0.5*width
         x1 = x+0.5*width
-    ax.plot([x0, x1], [y, y], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    lh = ax.plot([x0, x1], [y, y], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    # get y position of line in figure pixel coordinates:
+    ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     if capsize > 0.0:
-        dy = capsize*dyf
+        dy = capsize*dyu
         ax.plot([x0, x0], [y-dy, y+dy], 'k', lw=clw,
                 solid_capstyle='butt', clip_on=False)
         ax.plot([x1, x1], [y-dy, y+dy], 'k', lw=clw,
@@ -91,11 +90,18 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     if wunit:
         ls += u'\u2009%s' % wunit
     if va == 'top':
-        ax.text(0.5*(x0+x1), y+0.2*dyf, ls, clip_on=False,
-                ha='center', va='bottom', **kwargs)
+        th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
+                     ha='center', va='bottom', **kwargs)
+        # get y coordinate of text bottom in figure pixel coordinates:
+        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
+        dty = ly+0.5*lw + 2.0 - ty
     else:
-        ax.text(0.5*(x0+x1), y-0.5*dyf, ls, clip_on=False,
-                ha='center', va='top', **kwargs)
+        th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
+                     ha='center', va='top', **kwargs)
+        # get y coordinate of text bottom in figure pixel coordinates:
+        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,1]
+        dty = ly-0.5*lw - 2.0 - ty
+    th.set_position((0.5*(x0+x1), y+np.abs(unity)*dty/pixely))
     return x0, x1, y
 
         
@@ -127,7 +133,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         Line width of the scale bar.
     capsize: float
         If larger then zero draw cap lines at the ends of the bar.
-        The length of the lines is given in fractions of the fontsize.
+        The length of the lines is given in points (same unit as linewidth).
     clw: int, float
         Line width of the cap lines.
     kwargs: key-word arguments
@@ -141,11 +147,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     ymin, ymax = ax.get_ylim()
     unitx = xmax - xmin
     unity = ymax - ymin
-    fs = mpl.rcParams['font.size']
-    if 'fontsize' in kwargs and isinstance(kwargs['fontsize'], (float, int)):
-        fs = kwargs['fontsize']
-    dxf = fs/pixelx*np.abs(unitx)
-    dyf = fs/pixely*np.abs(unity)
+    dxu = np.abs(unitx)/pixelx
+    dyu = np.abs(unity)/pixely
     # transform x, y from relative units to axis units:
     x = xmin + x*unitx
     y = ymin + y*unity
@@ -169,9 +172,11 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     else:
         y0 = y-0.5*height
         y1 = y+0.5*height
-    ax.plot([x, x], [y0, y1], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    lh = ax.plot([x, x], [y0, y1], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    # get x position of line in figure pixel coordinates:
+    lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
     if capsize > 0.0:
-        dx = capsize*dxf
+        dx = capsize*dxu
         ax.plot([x-dx, x+dx], [y0, y0], 'k', lw=clw, solid_capstyle='butt',
                 clip_on=False)
         ax.plot([x-dx, x+dx], [y1, y1], 'k', lw=clw, solid_capstyle='butt',
@@ -180,11 +185,18 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     if hunit:
         ls += u'\u2009%s' % hunit
     if ha == 'right':
-        ax.text(x+0.3*dxf, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
-                ha='left', va='center', **kwargs)
+        th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
+                     ha='left', va='center', **kwargs)
+        # get x coordinate of text bottom in figure pixel coordinates:
+        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
+        dtx = lx+0.5*lw + 2.0 - tx
     else:
-        ax.text(x+0.1*dxf, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
-                ha='right', va='center', **kwargs)
+        th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
+                     ha='right', va='center', **kwargs)
+        # get x coordinate of text bottom in figure pixel coordinates:
+        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,0]
+        dtx = lx-0.5*lw - 1.0 - tx
+    th.set_position((x+np.abs(unitx)*dtx/pixelx, 0.5*(y0+y1)))
     return x, y0, y1
 
         
@@ -265,7 +277,7 @@ if __name__ == "__main__":
               capsize=0.0, clw=1)
     draw_anchor(ax, 0.5, 0.3)
     xscalebar(ax, 0.5, 0.3, 1.5, 's', '%.1f', ha='center', va='bottom', lw=4,
-              capsize=0.5, clw=1)
+              capsize=8, clw=1)
     draw_anchor(ax, 1.0, 0.3)
     xscalebar(ax, 1.0, 0.3, 0.55, 's', ha='right', va='top', lw=2,
               capsize=0.0, clw=1)
@@ -275,7 +287,7 @@ if __name__ == "__main__":
               capsize=0.0, clw=1)
     draw_anchor(ax, 0.7, 0.35)
     yscalebar(ax, 0.7, 0.35, 0.3, '', ha='right', va='top', lw=2,
-              capsize=0.2, clw=1)
+              capsize=4, clw=1)
 
     draw_anchor(ax, 0.1, 0.1)
     scalebars(ax, 0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom', lw=2)
