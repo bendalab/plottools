@@ -9,5 +9,5 @@ Simplify creation of publication-quality figures.
 
 For demos run the modules in `plottools/`, e.g.
 ```
-python -m plottools/scalebars
+python -m plottools.scalebars
 ```
