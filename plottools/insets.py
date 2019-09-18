@@ -42,6 +42,8 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
     a frame is drawn around the zoomed-in region and optionally
     lines connecting the zoommed-in region with the inset.
 
+    Do not change the limits of `ax` after calling this function.
+
     Parameters
     ----------
     ax: matplotlib axes
