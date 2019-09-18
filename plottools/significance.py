@@ -7,6 +7,8 @@ Indicating statsitical significance.
 
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 
@@ -63,12 +65,11 @@ def significance_bar(ax, p, x0, x1, y, **kwargs):
     ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     dty = ly+0.5*lw -0.4*fs - ty
     th.set_position((0.5*(x0+x1), y+dty*dyu))
-    
 
-if __name__ == "__main__":
-    import numpy as np
-    import matplotlib.pyplot as plt
-    
+
+def demo():
+    """ Run a demonstration of the significance module.
+    """
     fig, ax = plt.subplots()
     x1 = 1.0+0.3*np.random.randn(50)
     x2 = 4.0+0.5*np.random.randn(50)
@@ -77,3 +78,7 @@ if __name__ == "__main__":
     ax.set_ylim(0.0, 8)
     significance_bar(ax, 0.002, 1, 2, 6)
     plt.show()
+
+
+if __name__ == "__main__":
+    demo()

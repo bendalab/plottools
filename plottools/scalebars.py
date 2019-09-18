@@ -8,6 +8,9 @@ Labeled scale bars.
 - `scalebars()`: horizontal and vertical scale bars with labels.
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 def xscalebar(ax, x, y, width, wunit=None, wformat=None,
               ha='left', va='bottom', lw=2, capsize=0.0, clw=0.5, **kwargs):
@@ -256,9 +259,9 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
                     solid_joinstyle='miter', clip_on=False)
 
 
-if __name__ == "__main__":
-    import numpy as np
-    import matplotlib.pyplot as plt
+def demo():
+    """ Run a demonstration of the scalebars module.
+    """
 
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
@@ -298,4 +301,6 @@ if __name__ == "__main__":
         
     plt.show()
 
-    
+
+if __name__ == "__main__":
+    demo()

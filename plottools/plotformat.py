@@ -9,6 +9,8 @@ Layout settings for a plot figure.
 - `colors`: list of nice colors
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 
@@ -124,10 +126,9 @@ def show_spines(ax, spines):
             ax.yaxis.set_ticks_position('both')
 
 
-if __name__ == "__main__":
-    import numpy as np
-    import matplotlib.pyplot as plt
-
+def demo():
+    """ Run a demonstration of the plotformat module.
+    """
     # set default plot parameter:
     plot_format()
     # figsize in centimeter:
@@ -143,3 +144,7 @@ if __name__ == "__main__":
     ax.set_xlim(-0.5, len(colors) + 3.5)
     ax.set_ylim(-0.3, 1.0)
     plt.show()
+
+
+if __name__ == "__main__":
+    demo()

@@ -7,6 +7,8 @@ Mark panels with a label.
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 
 def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs):
@@ -85,9 +87,9 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs
         ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **kwargs)
 
 
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    import matplotlib.gridspec as gridspec
+def demo():
+    """ Run a demonstration of the labelaxes module.
+    """
 
     def afigure():
         fig = plt.figure()
@@ -113,4 +115,7 @@ if __name__ == "__main__":
                 transform=axs[0].transAxes, ha='center')
     label_axes(fig, [0, 2, 3], labels='(a)', fontsize='large')
     plt.show()
-    
+
+
+if __name__ == "__main__":
+    demo()

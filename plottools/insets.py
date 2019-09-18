@@ -6,6 +6,10 @@ Insets made easy.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def inset(ax, pos):
     """
     Add an inset to an axes in relative axes coordinates.
@@ -98,12 +102,12 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
             y = [box[1+(p0//2)*2], pos[1+(p1//2)*2]]
             ax.plot(x, y, clip_on=False, **kwargs)
     return axins
+
+
+def demo():
+    """ Run a demonstration of the insets module.
+    """
     
-
-if __name__ == "__main__":
-    import numpy as np
-    import matplotlib.pyplot as plt
-
     def label_corners(ax):
         ax.text(0.02, 0.02, '1', ha='left', va='bottom', fontweight='bold', transform=ax.transAxes)
         ax.text(0.98, 0.02, '2', ha='right', va='bottom', fontweight='bold', transform=ax.transAxes)
@@ -121,3 +125,7 @@ if __name__ == "__main__":
     axi.plot(x, np.sin(2.0*np.pi*4.0*x))
     label_corners(axi)
     plt.show()
+
+
+if __name__ == "__main__":
+    demo()

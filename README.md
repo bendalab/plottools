@@ -7,7 +7,12 @@ Simplify creation of publication-quality figures.
 - `scalebars`: labeled scale bars.
 - `significance`: indicating statsitical significance.
 
-For demos run the modules in `plottools/`, e.g.
+For all demos simply run
+```
+python demos.py
+```
+For demos of the individual modules in `plottools/`, 
+run, for example,
 ```
 python -m plottools.scalebars
 ```
