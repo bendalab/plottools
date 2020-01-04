@@ -3,10 +3,12 @@
 
 Mark panels with a label.
 
+The following function is also added as a member to mpl.figure.Figure:
 - `label_axes()`: put on each axes a label.
 """
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
@@ -102,8 +104,8 @@ def demo():
         return fig, (ax1, ax2, ax3, ax4)
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.5, 'label_axes(fig)', transform=axs[0].transAxes, ha='center')
-    label_axes(fig)
+    axs[0].text(0.5, 0.5, 'fig.label_axes()', transform=axs[0].transAxes, ha='center')
+    fig.label_axes()
 
     fig, axs = afigure()
     axs[0].text(0.5, 0.5, 'label_axes(None, [ax2, ax4],\n -50.0, 20.0)',
@@ -111,10 +113,14 @@ def demo():
     label_axes(None, [axs[1], axs[3]], -50.0, 20.0)
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.5, "label_axes(fig, [0, 2, 3],\n labels='(a)', fontsize='large')",
+    axs[0].text(0.5, 0.5, "fig.label_axes([0, 2, 3],\n labels='(a)', fontsize='large')",
                 transform=axs[0].transAxes, ha='center')
-    label_axes(fig, [0, 2, 3], labels='(a)', fontsize='large')
+    fig.label_axes([0, 2, 3], labels='(a)', fontsize='large')
     plt.show()
+
+
+# make the functions available as member variables:
+mpl.figure.Figure.label_axes = label_axes
 
 
 if __name__ == "__main__":

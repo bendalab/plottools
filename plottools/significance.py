@@ -3,11 +3,13 @@
 
 Indicating statsitical significance.
 
+The following function is also added as a member to mpl.axes.Axes:
 - `significance_bar()`: horizontal bar with asterisks indicating significance level.
 
 """
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
@@ -76,8 +78,12 @@ def demo():
     ax.boxplot([x1, x2])
     ax.set_xlim(0.5, 2.5)
     ax.set_ylim(0.0, 8)
-    significance_bar(ax, 0.002, 1, 2, 6)
+    ax.significance_bar(0.002, 1, 2, 6)
     plt.show()
+
+
+# make the functions available as member variables:
+mpl.axes.Axes.significance_bar = significance_bar
 
 
 if __name__ == "__main__":

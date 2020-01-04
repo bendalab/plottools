@@ -3,23 +3,27 @@
 
 Insets made easy.
 
+The following functions are also added as members to mpl.axes.Axes:
+- `inset()`: add an inset in relative axes coordinates.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 """
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
 def inset(ax, pos):
     """
-    Add an inset to an axes in relative axes coordinates.
+    Add an inset in relative axes coordinates.
 
     Parameters
     ----------
     ax: matplotlib axes
         Axes to which the inset is added.
     pos: list of floats
-        Position of the inset in axes coordinates (x0, y0, x1, y1).
+        Position of the inset in axes coordinates (x0, y0, x1, y1)
+        each ranging between 0 and 1.
 
     Returns
     -------
@@ -49,7 +53,8 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
     ax: matplotlib axes
         Axes to which the inset is added.
     pos: list of floats
-        Position of the inset in axes coordinates (x0, y0, x1, y1).
+        Position of the inset in axes coordinates (x0, y0, x1, y1)
+        each ranging between 0 and 1.
     box: list of floats
         Zoomed in region in data coordinates (x0, y0, x1, y1)
         used for drawing a frame and setting the limits of the inset.
@@ -122,11 +127,16 @@ def demo():
     ax.set_xlim(-2.0, 5.0)
     ax.set_ylim(-1.5, 4.5)
     ax.set_xlabel('Time [s]')
-    axi = zoomed_inset(ax, [0.1, 0.6, 0.9, 0.95], [0.0, -1.0, 2.0, 1.0],
-                       [(4, 1), (3, 2)], lw=0.5)
+    axi = ax.zoomed_inset([0.1, 0.6, 0.9, 0.95], [0.0, -1.0, 2.0, 1.0],
+                          [(4, 1), (3, 2)], lw=0.5)
     axi.plot(x, np.sin(2.0*np.pi*4.0*x))
     label_corners(axi)
     plt.show()
+
+
+# make the functions available as member variables:
+mpl.axes.Axes.inset = inset
+mpl.axes.Axes.zoomed_inset = zoomed_inset
 
 
 if __name__ == "__main__":

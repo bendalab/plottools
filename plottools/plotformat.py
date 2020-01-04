@@ -6,13 +6,15 @@ Layout settings for a plot figure.
 - `plot_format()`: set default plot format.
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
-- `show_spines()`: show and hide spines and ticks.
 - `colors`: list of nice colors
+
+The following function is also added as a member to mpl.axes.Axes:
+- `show_spines()`: show and hide spines and ticks.
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.pyplot as plt
 
 
 colors = ['#BA2D22', '#F47F17', '#AAB71B', '#3673A4', '#53379B', '#DC143C', '#1E90FF']
@@ -178,7 +180,7 @@ def demo():
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
     fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=1.0))
     # only show left and bottom spine:
-    show_spines(ax, 'lb')
+    ax.show_spines('lb')
     # colors
     rectx = np.array([0, 1, 1, 0, 0])
     recty = np.array([0, 0, 1, 1, 0])
@@ -188,6 +190,10 @@ def demo():
     ax.set_xlim(-0.5, len(colors) + 3.5)
     ax.set_ylim(-0.3, 1.0)
     plt.show()
+
+
+# make the functions available as member variables:
+mpl.axes.Axes.show_spines = show_spines
 
 
 if __name__ == "__main__":

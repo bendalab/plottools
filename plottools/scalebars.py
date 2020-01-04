@@ -3,12 +3,14 @@
 
 Labeled scale bars.
 
+The following functions are also added as members to mpl.axes.Axes:
 - `xscalebar()`: horizontal scale bar with label.
 - `yscalebar()`: vertical scale bar with label.
 - `scalebars()`: horizontal and vertical scale bars with labels.
 """
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
@@ -274,32 +276,38 @@ def demo():
     ax.set_xlabel('Time [s]')
     
     draw_anchor(ax, 0.0, 0.3)
-    xscalebar(ax, 0.0, 0.3, 1.0, 's', ha='left', va='bottom', lw=2,
-              capsize=0.0, clw=1)
+    ax.xscalebar(0.0, 0.3, 1.0, 's', ha='left', va='bottom', lw=2,
+                 capsize=0.0, clw=1)
     draw_anchor(ax, 0.5, 0.3)
-    xscalebar(ax, 0.5, 0.3, 1.5, 's', '%.1f', ha='center', va='bottom', lw=4,
-              capsize=8, clw=1)
+    ax.xscalebar(0.5, 0.3, 1.5, 's', '%.1f', ha='center', va='bottom', lw=4,
+                 capsize=8, clw=1)
     draw_anchor(ax, 1.0, 0.3)
-    xscalebar(ax, 1.0, 0.3, 0.55, 's', ha='right', va='top', lw=2,
-              capsize=0.0, clw=1)
+    ax.xscalebar(1.0, 0.3, 0.55, 's', ha='right', va='top', lw=2,
+                 capsize=0.0, clw=1)
 
     draw_anchor(ax, 0.3, 0.25)
-    yscalebar(ax, 0.3, 0.25, 0.5, '', ha='left', va='bottom', lw=2,
-              capsize=0.0, clw=1)
+    ax.yscalebar(0.3, 0.25, 0.5, '', ha='left', va='bottom', lw=2,
+                 capsize=0.0, clw=1)
     draw_anchor(ax, 0.7, 0.35)
-    yscalebar(ax, 0.7, 0.35, 0.3, '', ha='right', va='top', lw=2,
-              capsize=4, clw=1)
+    ax.yscalebar(0.7, 0.35, 0.3, '', ha='right', va='top', lw=2,
+                 capsize=4, clw=1)
 
     draw_anchor(ax, 0.1, 0.1)
-    scalebars(ax, 0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom', lw=2)
+    ax.scalebars(0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom', lw=2)
     draw_anchor(ax, 0.9, 0.1)
-    scalebars(ax, 0.9, 0.1, 0.8, 0.7, 's', '', ha='right', va='bottom', lw=2)
+    ax.scalebars(0.9, 0.1, 0.8, 0.7, 's', '', ha='right', va='bottom', lw=2)
     draw_anchor(ax, 0.1, 0.9)
-    scalebars(ax, 0.1, 0.9, 1.5, 0.5, 's', '', ha='left', va='top', lw=4)
+    ax.scalebars(0.1, 0.9, 1.5, 0.5, 's', '', ha='left', va='top', lw=4)
     draw_anchor(ax, 0.95, 0.9)
-    scalebars(ax, 0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top', lw=4)
+    ax.scalebars(0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top', lw=4)
         
     plt.show()
+
+
+# make the functions available as member variables:
+mpl.axes.Axes.xscalebar = xscalebar
+mpl.axes.Axes.yscalebar = yscalebar
+mpl.axes.Axes.scalebars = scalebars
 
 
 if __name__ == "__main__":
