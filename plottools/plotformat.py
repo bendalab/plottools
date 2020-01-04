@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 colors = ['#BA2D22', '#F47F17', '#AAB71B', '#3673A4', '#53379B', '#DC143C', '#1E90FF']
 
 
-""" Default spines to be shown. """
+""" Default spines to be shown (installed by plot_format()). """
 default_spines = 'lb'
 
 
@@ -55,6 +55,9 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
+    # when using axislabels module, define the appearance of axis labels:
+    #global axis_label_format
+    #axis_label_format = '{label} [{unit}]'
     # extend Axes constructor (for show_spines()):
     mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
     mpl.axes.Subplot.__init__ = __axes__init__
