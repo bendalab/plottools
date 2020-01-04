@@ -20,10 +20,25 @@ import matplotlib.pyplot as plt
 colors = ['#BA2D22', '#F47F17', '#AAB71B', '#3673A4', '#53379B', '#DC143C', '#1E90FF']
 
 
+""" Default spines to be shown. """
+default_spines = 'lb'
+
+
+def __axes__init__(ax, *args, **kwargs):
+    """ Set some default formatting for a new Axes instance.
+
+    Used by plot_format().
+    """
+    ax.__init__orig(*args, **kwargs)
+    ax.show_spines(default_spines)
+
+
 def plot_format(fontsize=10.0):
     """ Set default plot format.
 
     Call this function *before* you create a matplotlib figure.
+
+    You most likely want to copy it and adjust it according to your needs.
 
     Parameters
     ----------
@@ -40,6 +55,10 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
+    # extend Axes constructor (for show_spines()):
+    mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
+    mpl.axes.Subplot.__init__ = __axes__init__
+    default_spines = 'lbt'
 
 
 def cm_size(*args):
@@ -146,14 +165,10 @@ def show_spines(ax, spines):
             axs = [axs]
     for ax in axs:
         # hide spines:
-        if not 'top' in xspines:
-            ax.spines['top'].set_visible(False)
-        if not 'bottom' in xspines:
-            ax.spines['bottom'].set_visible(False)
-        if not 'left' in yspines:
-            ax.spines['left'].set_visible(False)
-        if not 'right' in yspines:
-            ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible('top' in xspines)
+        ax.spines['bottom'].set_visible('bottom' in xspines)
+        ax.spines['left'].set_visible('left' in yspines)
+        ax.spines['right'].set_visible('right' in yspines)
         # ticks:
         if len(xspines) == 0:
             ax.xaxis.set_ticks_position('none')
@@ -178,21 +193,24 @@ def demo():
     plot_format()
     # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=1.0))
-    # only show left and bottom spine:
-    ax.show_spines('lb')
+    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=1.5, right=2.0))
+    # only show left, right, and bottom spine
+    # (default is left and bottom spine as defined in __axes__init__()
+    # via the default_spines string):
+    ax.show_spines('lbr')
+    ax.text(0.0, -0.2, "ax.show_spines('lbr')")
     # colors
     rectx = np.array([0, 1, 1, 0, 0])
     recty = np.array([0, 0, 1, 1, 0])
     for k, c in enumerate(colors):
         ax.fill(rectx + 1.5*k, recty, color=c)
-        ax.text(0.5 + 1.5*k, -0.2, c, ha='center')
+        ax.text(0.5 + 1.5*k, -0.1, c, ha='center')
     ax.set_xlim(-0.5, len(colors) + 3.5)
-    ax.set_ylim(-0.3, 1.0)
+    ax.set_ylim(-0.3, 1.1)
     plt.show()
 
 
-# make the functions available as member variables:
+# make functions available as member variables:
 mpl.axes.Axes.show_spines = show_spines
 
 
