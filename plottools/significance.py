@@ -11,7 +11,6 @@ The following function is also added as a member to mpl.axes.Axes:
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 
 
 def significance_bar(ax, p, x0, x1, y, **kwargs):
