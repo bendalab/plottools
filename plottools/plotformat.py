@@ -5,6 +5,7 @@ Layout settings for a plot figure.
 
 - `plot_format()`: set default plot format.
 - `cm_size()`: convert dimensions from cm to inch.
+- `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `show_spines()`: show and hide spines and ticks.
 - `colors`: list of nice colors
 """
@@ -62,6 +63,48 @@ def cm_size(*args):
         return args[0]/inch_per_cm
     else:
         return [v/inch_per_cm for v in args]
+
+
+def adjust_fs(fig=None, left=5.5, right=0.5, bottom=2.8, top=0.5):
+    """ Compute plot margins from multiples of the current font size.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure or None
+        The figure from which the figure size is taken. If None use the current figure.
+    left: float
+        the left margin of the plots given in multiples of the width of a character
+        (in fact, simply 60% of the current font size).
+    right: float
+        the right margin of the plots given in multiples of the width of a character
+        (in fact, simply 60% of the current font size).
+        *Note:* in contrast to the matplotlib `right` parameters, this specifies the
+        width of the right margin, not its position relative to the origin.
+    bottom: float
+        the bottom margin of the plots given in multiples of the height of a character
+        (the current font size).
+    top: float
+        the right margin of the plots given in multiples of the height of a character
+        (the current font size).
+        *Note:* in contrast to the matplotlib `top` parameters, this specifies the
+        width of the top margin, not its position relative to the origin.
+
+    Example
+    -------
+    ```
+    fig, axs = plt.subplots(2, 2, figsize=(10, 5))
+    fig.subplots_adjust(**adjust_fs(fig, left=4.5))   # no matter what the figsize is!
+    ```
+    """
+    if fig is None:
+        fig = plt.gcf()
+    ppi = 72.0 # points per inch:
+    w, h = fig.get_size_inches()*ppi
+    fs = plt.rcParams['font.size']
+    return { 'left': left*0.6*fs/w,
+             'right': 1.0 - right*0.6*fs/w,
+             'bottom': bottom*fs/h,
+             'top': 1.0 - top*fs/h }
 
 
 def show_spines(ax, spines):
@@ -133,6 +176,7 @@ def demo():
     plot_format()
     # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
+    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=1.0))
     # only show left and bottom spine:
     show_spines(ax, 'lb')
     # colors
