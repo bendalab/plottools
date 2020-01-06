@@ -13,7 +13,8 @@ The following function is also added as a member to mpl.axes.Axes:
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
-- `colors_bendalab`: colors used by the Benda-lab.
+- `colors_bendalab`: muted colors used by the Benda-lab.
+- `colors_bendalab_vivid`: vivid colors used by the Benda-lab.
 - `colors_henninger`: colors by Joerg Henninger.
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_uni_tuebingen`: colors of the corporate design of the university of Tuebingen.
@@ -25,16 +26,27 @@ import matplotlib.pyplot as plt
 from collections import OrderedDict
 
 
-""" Colors used by the Benda-lab. """
+""" Muted colors used by the Benda-lab. """
 colors_bendalab = OrderedDict()
-colors_bendalab['red'] = '#C02020'
-colors_bendalab['orange'] = '#F79010'
+colors_bendalab['red'] = '#C02010'
+colors_bendalab['orange'] = '#F78010'
 colors_bendalab['yellow'] = '#F7E030'
 colors_bendalab['green'] = '#97C010'
 colors_bendalab['cyan'] = '#40A787'
-colors_bendalab['blue'] = '#306797'
-colors_bendalab['purple'] = '#873797'
-colors_bendalab['pink'] = '#C71057'
+colors_bendalab['blue'] = '#2050A0'
+colors_bendalab['purple'] = '#7040A0'
+colors_bendalab['pink'] = '#D72060'
+
+""" Vivid colors used by the Benda-lab. """
+colors_bendalab_vivid = OrderedDict()
+colors_bendalab_vivid['red'] = '#D01000'
+colors_bendalab_vivid['orange'] = '#FF9000'
+colors_bendalab_vivid['yellow'] = '#FFF700'
+colors_bendalab_vivid['green'] = '#30D700'
+colors_bendalab_vivid['cyan'] = '#00F0B0'
+colors_bendalab_vivid['blue'] = '#0020C0'
+colors_bendalab_vivid['purple'] = '#B000B0'
+colors_bendalab_vivid['pink'] = '#F00080'
 
 """ Colors by Joerg Henninger. """
 colors_henninger = OrderedDict()
@@ -299,7 +311,7 @@ def darker(color, saturation):
 
 
 def plot_colors(ax, colors, n=1):
-    """ Plot all colors of a palette.
+    """ Plot all colors of a palette and optionally some lighter and darker variants.
 
     Parameters
     ----------
@@ -344,7 +356,65 @@ def plot_colors(ax, colors, n=1):
         ax.set_xlim(-0.5, len(colors)*1.5)
     ax.set_ylim(-0.2, 1.05)
 
-    
+
+def plot_complementary_colors(ax, colors):
+    """ Plot complementary colors of a palette on top of each other.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the colors.
+    colors: dict
+        A dictionary with names and rgb hex-strings of colors.
+    """
+    rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
+    recty = np.array([0.0, 0.0, 1.0, 1.0, 0.0])
+    n = 0
+    if 'red' in colors and 'green' in colors:
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['red'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['green'])
+        n += 1
+    if 'orange' in colors and 'blue' in colors:
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['orange'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['blue'])
+        n += 1
+    if 'yellow' in colors and 'purple' in colors:
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['yellow'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['purple'])
+        n += 1
+    if 'pink' in colors and 'cyan' in colors:
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['cyan'])
+        n += 1
+    ax.set_xlim(-0.5, n*1.5)
+    ax.set_ylim(-0.1, 2.1)
+
+
+def plot_color_comparison(ax, colorsa, colorsb):
+    """ Plot matching colors of two palettes on top of each other.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the colors.
+    colorsa: dict
+        A dictionary with names and rgb hex-strings of colors.
+        This is the reference palette which is plotted completely at the bottom.
+    colorsb: dict
+        A dictionary with names and rgb hex-strings of colors.
+        Colors with names matching the ones from `colorsa` are plotted on top.
+    """
+    rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
+    recty = np.array([0.0, 0.0, 1.0, 1.0, 0.0])
+    for k, c in enumerate(colorsa):
+        ax.fill(rectx + 1.5*k, recty + 0.0, color=colorsa[c])
+        if c in colorsb:
+            ax.fill(rectx + 1.5*k, recty + 1.0, color=colorsb[c])
+        ax.text(0.5 + 1.5*k, -0.1, c, ha='center')
+    ax.set_xlim(-0.5, len(colorsa)*1.5)
+    ax.set_ylim(-0.2, 2.1)
+
+
 def demo():
     """ Run a demonstration of the plotformat module.
     """
@@ -359,6 +429,9 @@ def demo():
     ax.show_spines('lbr')
     ax.text(0.0, -0.23, "ax.show_spines('lbr')")
     # colors
+    #plot_complementary_colors(ax, colors)
+    #plot_color_comparison(ax, colors, colors_bendalab_vivid)
+    #plot_color_comparison(ax, colors, colors_henninger)
     plot_colors(ax, colors, 4)
     ax.set_ylim(-0.27, 1.05)
     plt.show()
