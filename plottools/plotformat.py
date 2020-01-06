@@ -23,6 +23,7 @@ Dictionaries with colors:
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from cycler import cycler
 from collections import OrderedDict
 
 
@@ -124,9 +125,21 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
+    if 'axes.prop_cycle' in mpl.rcParams:
+        mpl.rcParams['axes.prop_cycle'] = cycler(color=[colors['blue'], colors['red'],
+                                                        colors['orange'], colors['green'],
+                                                        colors['purple'], colors['yellow'],
+                                                        colors['cyan'], colors['pink']])
+    else:
+        mpl.rcParams['axes.color_cycle'] = [colors['blue'], colors['red'],
+                                            colors['orange'], colors['green'],
+                                            colors['purple'], colors['yellow'],
+                                            colors['cyan'], colors['pink']]
+    
     # when using axislabels module, define the appearance of axis labels:
     #global axis_label_format
     #axis_label_format = '{label} [{unit}]'
+    
     # extend Axes constructor (for show_spines()):
     mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
     mpl.axes.Subplot.__init__ = __axes__init__
@@ -386,6 +399,10 @@ def plot_complementary_colors(ax, colors):
         ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
         ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['cyan'])
         n += 1
+    if 'pink' in colors and 'blue' in colors:
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['blue'])
+        n += 1
     ax.set_xlim(-0.5, n*1.5)
     ax.set_ylim(-0.1, 2.1)
 
@@ -432,7 +449,8 @@ def demo():
     #plot_complementary_colors(ax, colors)
     #plot_color_comparison(ax, colors, colors_bendalab_vivid)
     #plot_color_comparison(ax, colors, colors_henninger)
-    plot_colors(ax, colors, 4)
+    plot_colors(ax, colors, 1)
+    #plot_colors(ax, colors, 4)
     ax.set_ylim(-0.27, 1.05)
     plt.show()
 
