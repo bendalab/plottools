@@ -82,11 +82,11 @@ def cm_size(*args):
     inches: float or list of floats
         Input arguments converted to inch.
     """
-    inch_per_cm = 2.54
+    cm_per_inch = 2.54
     if len(args) == 1:
-        return args[0]/inch_per_cm
+        return args[0]/cm_per_inch
     else:
-        return [v/inch_per_cm for v in args]
+        return [v/cm_per_inch for v in args]
 
 
 def adjust_fs(fig=None, left=5.5, right=0.5, bottom=2.8, top=0.5):
