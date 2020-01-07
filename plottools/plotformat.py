@@ -30,16 +30,16 @@ from collections import OrderedDict
 colors_bendalab = OrderedDict()
 colors_bendalab['red'] = '#C02010'
 colors_bendalab['orange'] = '#F78010'
-colors_bendalab['yellow'] = '#F7E030'
-colors_bendalab['green'] = '#97C010'
+colors_bendalab['yellow'] = '#F0D730'
+colors_bendalab['green'] = '#A0B717'
 colors_bendalab['cyan'] = '#40A787'
-colors_bendalab['blue'] = '#2050A0'
-colors_bendalab['purple'] = '#7040A0'
-colors_bendalab['pink'] = '#D72060'
+colors_bendalab['blue'] = '#2757A0'
+colors_bendalab['purple'] = '#573790'
+colors_bendalab['pink'] = '#C72750'
 
 """ Vivid colors used by the Benda-lab. """
 colors_bendalab_vivid = OrderedDict()
-colors_bendalab_vivid['red'] = '#D01000'
+colors_bendalab_vivid['red'] = '#D71000'
 colors_bendalab_vivid['orange'] = '#FF9000'
 colors_bendalab_vivid['yellow'] = '#FFF700'
 colors_bendalab_vivid['green'] = '#30D700'
@@ -47,6 +47,17 @@ colors_bendalab_vivid['cyan'] = '#00F0B0'
 colors_bendalab_vivid['blue'] = '#0020C0'
 colors_bendalab_vivid['purple'] = '#B000B0'
 colors_bendalab_vivid['pink'] = '#F00080'
+
+""" Plain rgb colors. """
+colors_plain = OrderedDict()
+colors_plain['red'] = '#FF0000'
+colors_plain['orange'] = '#FF7700'
+colors_plain['yellow'] = '#FFFF00'
+colors_plain['green'] = '#00FF00'
+colors_plain['cyan'] = '#00FFFF'
+colors_plain['blue'] = '#0000FF'
+colors_plain['purple'] = '#FF00FF'
+colors_plain['pink'] = '#FF0077'
 
 """ Colors by Joerg Henninger. """
 colors_henninger = OrderedDict()
