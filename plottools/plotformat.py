@@ -36,6 +36,8 @@ colors_bendalab['cyan'] = '#40A787'
 colors_bendalab['blue'] = '#2757A0'
 colors_bendalab['purple'] = '#573790'
 colors_bendalab['pink'] = '#C72750'
+colors_bendalab['gray'] = '#909090'
+colors_bendalab['black'] = '#000000'
 
 """ Vivid colors used by the Benda-lab. """
 colors_bendalab_vivid = OrderedDict()
@@ -47,17 +49,21 @@ colors_bendalab_vivid['cyan'] = '#00F0B0'
 colors_bendalab_vivid['blue'] = '#0020C0'
 colors_bendalab_vivid['purple'] = '#B000B0'
 colors_bendalab_vivid['pink'] = '#F00080'
+colors_bendalab_vivid['gray'] = '#909090'
+colors_bendalab_vivid['black'] = '#000000'
 
 """ Plain rgb colors. """
 colors_plain = OrderedDict()
 colors_plain['red'] = '#FF0000'
-colors_plain['orange'] = '#FF7700'
+colors_plain['orange'] = '#FFA500'
 colors_plain['yellow'] = '#FFFF00'
 colors_plain['green'] = '#00FF00'
 colors_plain['cyan'] = '#00FFFF'
 colors_plain['blue'] = '#0000FF'
 colors_plain['purple'] = '#FF00FF'
 colors_plain['pink'] = '#FF0077'
+colors_plain['gray'] = '#808080'
+colors_plain['black'] = '#000000'
 
 """ Colors by Joerg Henninger. """
 colors_henninger = OrderedDict()
@@ -443,8 +449,16 @@ def plot_color_comparison(ax, colorsa, colorsb):
     ax.set_ylim(-0.2, 2.1)
 
 
-def demo():
+def demo(mode=1):
     """ Run a demonstration of the plotformat module.
+
+    Parameters
+    ----------
+    mode: int or 'complementary' or 'comparison'
+        1: plot the default color palette
+        n>1: plot the default color palette with n-1 lighter and darker colors
+        'complementary': plot complementary colors of the default color palette
+        'comparison': plot the default color palette in comparison with colors_bendalab_vivid
     """
     # set default plot parameter:
     plot_format()
@@ -457,12 +471,14 @@ def demo():
     ax.show_spines('lbr')
     ax.text(0.0, -0.23, "ax.show_spines('lbr')")
     # colors
-    #plot_complementary_colors(ax, colors)
-    #plot_color_comparison(ax, colors, colors_bendalab_vivid)
-    #plot_color_comparison(ax, colors, colors_henninger)
-    plot_colors(ax, colors, 1)
-    #plot_colors(ax, colors, 4)
-    ax.set_ylim(-0.27, 1.05)
+    if mode == 'complementary':
+        plot_complementary_colors(ax, colors)
+    elif mode == 'comparison':
+        plot_color_comparison(ax, colors, colors_bendalab_vivid)
+        #plot_color_comparison(ax, colors, colors_henninger)
+    else:
+        plot_colors(ax, colors, mode)
+        ax.set_ylim(-0.27, 1.05)
     plt.show()
 
 
