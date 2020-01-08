@@ -141,17 +141,13 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
+    color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'green', 'purple',
+                                       'yellow', 'cyan', 'pink'] if c in colors]
     if 'axes.prop_cycle' in mpl.rcParams:
         from cycler import cycler
-        mpl.rcParams['axes.prop_cycle'] = cycler(color=[colors['blue'], colors['red'],
-                                                        colors['orange'], colors['green'],
-                                                        colors['purple'], colors['yellow'],
-                                                        colors['cyan'], colors['pink']])
+        mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
     else:
-        mpl.rcParams['axes.color_cycle'] = [colors['blue'], colors['red'],
-                                            colors['orange'], colors['green'],
-                                            colors['purple'], colors['yellow'],
-                                            colors['cyan'], colors['pink']]
+        mpl.rcParams['axes.color_cycle'] = color_cycle
     
     # when using axislabels module, define the appearance of axis labels:
     #global axis_label_format
