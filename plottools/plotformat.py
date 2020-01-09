@@ -15,9 +15,14 @@ Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
 - `colors_bendalab`: muted colors used by the Benda-lab.
 - `colors_bendalab_vivid`: vivid colors used by the Benda-lab.
+- `colors_plain`: plain rgb colors.
 - `colors_henninger`: colors by Joerg Henninger.
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_uni_tuebingen`: colors of the corporate design of the university of Tuebingen.
+
+Dictionaries with line and marker styles:
+- `lsSpines`
+- `lsGrid`
 """
 
 import numpy as np
@@ -32,9 +37,11 @@ colors_bendalab['red'] = '#C02010'
 colors_bendalab['orange'] = '#F78010'
 colors_bendalab['yellow'] = '#F0D730'
 colors_bendalab['green'] = '#A0B717'
+colors_bendalab['darkgreen'] = '#007030'
 colors_bendalab['cyan'] = '#40A787'
 colors_bendalab['blue'] = '#2757A0'
-colors_bendalab['magenta'] = '#573790'
+colors_bendalab['purple'] = '#573790'
+colors_bendalab['magenta'] = '#872770'
 colors_bendalab['pink'] = '#C72750'
 colors_bendalab['gray'] = '#A0A0A0'
 colors_bendalab['black'] = '#000000'
@@ -45,8 +52,10 @@ colors_bendalab_vivid['red'] = '#D71000'
 colors_bendalab_vivid['orange'] = '#FF9000'
 colors_bendalab_vivid['yellow'] = '#FFF700'
 colors_bendalab_vivid['green'] = '#30D700'
+colors_bendalab_vivid['darkgreen'] = '#008020'
 colors_bendalab_vivid['cyan'] = '#00F0B0'
 colors_bendalab_vivid['blue'] = '#0020C0'
+colors_bendalab_vivid['purple'] = '#8000C0'
 colors_bendalab_vivid['magenta'] = '#B000B0'
 colors_bendalab_vivid['pink'] = '#F00080'
 colors_bendalab_vivid['gray'] = '#A7A7A7'
@@ -58,10 +67,12 @@ colors_plain['red'] = '#FF0000'
 colors_plain['orange'] = '#FFA500'
 colors_plain['yellow'] = '#FFFF00'
 colors_plain['green'] = '#00FF00'
+colors_plain['darkgreen'] = '#008000'
 colors_plain['cyan'] = '#00FFFF'
 colors_plain['blue'] = '#0000FF'
+colors_plain['purple'] = '#8000FF'
 colors_plain['magenta'] = '#FF00FF'
-colors_plain['pink'] = '#FF0077'
+colors_plain['pink'] = '#FF0080'
 colors_plain['gray'] = '#808080'
 colors_plain['black'] = '#000000'
 
@@ -86,7 +97,7 @@ colors_scicomp['blue'] = '#0000CC'
 The first three are the primary colors, the remaining ones the secondary colors.
 """
 colors_uni_tuebingen = OrderedDict()
-colors_uni_tuebingen['darkred'] = '#A51E37'
+colors_uni_tuebingen['red'] = '#A51E37'
 colors_uni_tuebingen['gold'] = '#B4A069'
 colors_uni_tuebingen['black'] = '#32414B'
 colors_uni_tuebingen['darkblue'] = '#415A8C'
@@ -95,7 +106,7 @@ colors_uni_tuebingen['lightblue'] = '#50AAC8'
 colors_uni_tuebingen['cyan'] = '#82B9A0'
 colors_uni_tuebingen['green'] = '#7DA54B'
 colors_uni_tuebingen['darkgreen'] = '#326E1E'
-colors_uni_tuebingen['red'] = '#C8503C'
+colors_uni_tuebingen['lightred'] = '#C8503C'
 colors_uni_tuebingen['magenta'] = '#AF6E96'
 colors_uni_tuebingen['gray'] = '#B4A096'
 colors_uni_tuebingen['lightorange'] = '#D7B469'
@@ -104,7 +115,58 @@ colors_uni_tuebingen['brown'] = '#916946'
 
 """ Default color palette. """
 colors = colors_bendalab
-colors = colors_plain
+
+
+""" line styles for plot(). """
+lwthick = 2.5
+lwthin = 1.0
+fillalpha = 0.5
+
+# helper lines:
+lsSpine = {'c': colors['black'], 'linestyle': '-', 'linewidth': lwthin}
+lsGrid = {'c': colors['gray'], 'linestyle': '--', 'linewidth': lwthin}
+
+# general line styles and fill styles:
+lsA1 = {'color': colors['red'], 'linestyle': '-', 'linewidth': lwthick}
+lsA2 = {'color': colors['orange'], 'linestyle': '-', 'linewidth': lwthick}
+lsA3 = {'color': colors['yellow'], 'linestyle': '-', 'linewidth': lwthick}
+lsA1_m = {'color': colors['red'], 'linestyle': '-', 'linewidth': lwthin}
+lsA2_m = {'color': colors['orange'], 'linestyle': '-', 'linewidth': lwthin}
+lsA3_m = {'color': colors['yellow'], 'linestyle': '-', 'linewidth': lwthin}
+fsA1 = {'facecolor': colors['red'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsA2 = {'facecolor': colors['orange'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsA3 = {'facecolor': colors['yellow'], 'edgecolor': 'none', 'alpha': fillalpha}
+
+lsB1 = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthick}
+lsB2 = {'color': colors['purple'], 'linestyle': '-', 'linewidth': lwthick}
+lsB3 = {'color': colors['magenta'], 'linestyle': '-', 'linewidth': lwthick}
+lsB4 = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthick}
+lsB1_m = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthin}
+lsB2_m = {'color': colors['purple'], 'linestyle': '-', 'linewidth': lwthin}
+lsB3_m = {'color': colors['magenta'], 'linestyle': '-', 'linewidth': lwthin}
+lsB4_m = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthin}
+fsB1 = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB2 = {'facecolor': colors['purple'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB3 = {'facecolor': colors['magenta'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB4 = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
+
+lsC1 = {'color': colors['green'], 'linestyle': '-', 'linewidth': lwthick}
+lsC2 = {'color': colors['darkgreen'], 'linestyle': '-', 'linewidth': lwthick}
+lsC3 = {'color': colors['cyan'], 'linestyle': '-', 'linewidth': lwthick}
+lsC1_m = {'color': colors['green'], 'linestyle': '-', 'linewidth': lwthin}
+lsC2_m = {'color': colors['darkgreen'], 'linestyle': '-', 'linewidth': lwthin}
+lsC3_m = {'color': colors['cyan'], 'linestyle': '-', 'linewidth': lwthin}
+fsC1 = {'facecolor': colors['green'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC2 = {'facecolor': colors['darkgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC3 = {'facecolor': colors['cyan'], 'edgecolor': 'none', 'alpha': fillalpha}
+
+# lines for male female colors:
+lsMale = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthick}
+lsFemale = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthick}
+lsMale_m = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthin}
+lsFemale_m = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthin}
+fsMale = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsFemale = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
 
 
 """ Default spines to be shown (installed by plot_format()). """
@@ -142,6 +204,12 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
+    mpl.rcParams['grid.color'] = lsGrid['c']
+    mpl.rcParams['grid.linestyle'] = lsGrid['linestyle']
+    mpl.rcParams['grid.linewidth'] = lsGrid['linewidth']
+    mpl.rcParams['axes.facecolor'] = 'none'
+    mpl.rcParams['axes.edgecolor'] = lsSpine['c']
+    mpl.rcParams['axes.linewidth'] = lsSpine['linewidth']
     color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'green', 'magenta',
                                        'yellow', 'cyan', 'pink'] if c in colors]
     if 'axes.prop_cycle' in mpl.rcParams:
@@ -157,7 +225,8 @@ def plot_format(fontsize=10.0):
     # extend Axes constructor (for show_spines()):
     mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
     mpl.axes.Subplot.__init__ = __axes__init__
-    default_spines = 'lbt'
+    global default_spines
+    default_spines = 'lb'
 
 
 def cm_size(*args):
@@ -421,29 +490,58 @@ def plot_complementary_colors(ax, colors):
     ax.set_ylim(-0.1, 2.1)
 
 
-def plot_color_comparison(ax, colorsa, colorsb):
-    """ Plot matching colors of two palettes on top of each other.
+def plot_color_comparison(ax, colorsa, *args):
+    """ Plot matching colors of severals palettes on top of each other.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the colors.
-    colorsa: dict
+    colorsa: dict or tuple (dict, string)
         A dictionary with names and rgb hex-strings of colors.
         This is the reference palette which is plotted completely at the bottom.
-    colorsb: dict
-        A dictionary with names and rgb hex-strings of colors.
+        The optional second name is used as a string to annotated the colors.
+    args: list of dicts or tuples (dict, string)
+        Further dictionaries with names and rgb hex-strings of colors.
         Colors with names matching the ones from `colorsa` are plotted on top.
+        The optional second element is used as a string to annotated the colors.
     """
     rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
     recty = np.array([0.0, 0.0, 1.0, 1.0, 0.0])
+    if isinstance(colorsa, (list, tuple)):
+        ax.text(-0.1, 0.5, colorsa[1], rotation='vertical', ha='right', va='center')
+        colorsa = colorsa[0]
     for k, c in enumerate(colorsa):
         ax.fill(rectx + 1.5*k, recty + 0.0, color=colorsa[c])
-        if c in colorsb:
-            ax.fill(rectx + 1.5*k, recty + 1.0, color=colorsb[c])
+        for i, cbn in enumerate(args):
+            cb = cbn
+            if isinstance(cbn, (list, tuple)):
+                cb = cbn[0]
+                if k == 0:
+                    ax.text(-0.1, 1.5+i, cbn[1], rotation='vertical', ha='right', va='center')
+            if c in cb:
+                ax.fill(rectx + 1.5*k, recty + 1 + i, color=cb[c])
         ax.text(0.5 + 1.5*k, -0.1, c, ha='center')
     ax.set_xlim(-0.5, len(colorsa)*1.5)
-    ax.set_ylim(-0.2, 2.1)
+    ax.set_ylim(-0.2, 1.1 + len(args))
+
+
+
+def plot_linestyles(ax):
+    lsnames = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
+    lsmajor = (lsA1, lsA2, lsA3, lsB1, lsB2, lsB3, lsB4, lsC1, lsC2, lsC3, lsMale, lsFemale)
+    lsminor = (lsA1_m, lsA2_m, lsA3_m, lsB1_m, lsB2_m, lsB3_m, lsB4_m, lsC1_m, lsC2_m, lsC3_m, lsMale_m, lsFemale_m)
+    fills = (fsA1, fsA2, fsA3, fsB1, fsB2, fsB3, fsB4, fsC1, fsC2, fsC3, fsMale, fsFemale)
+    for k, (name, ls, lsm, fs) in enumerate(zip(lsnames, lsmajor, lsminor, fills)):
+        ax.text(k, 1.9, name)
+        ax.fill_between([k, k+3.5], [1.9, 2.7], [2.1, 2.9], **fs)
+        ax.plot([k, k+3.5], [2.0, 2.8], **ls)
+        ax.text(k, 0.9, name)
+        ax.plot([k, k+3.5], [1.0, 1.8], **ls)
+        ax.text(k, -0.1, name+'_m')
+        ax.plot([k, k+3.5], [0.0, 0.8], **lsm)
+    ax.set_ylim(-0.15, 3.1)
+        
 
 
 def demo(mode=1):
@@ -467,12 +565,18 @@ def demo(mode=1):
     # via the default_spines string):
     ax.show_spines('lbr')
     ax.text(0.0, -0.23, "ax.show_spines('lbr')")
-    # colors
-    if mode == 'complementary':
+    # colors and linestyles:
+    if mode == 'linestyles':
+        plot_linestyles(ax)
+    elif mode == 'complementary':
         plot_complementary_colors(ax, colors)
     elif mode == 'comparison':
-        plot_color_comparison(ax, colors, colors_bendalab_vivid)
-        #plot_color_comparison(ax, colors, colors_henninger)
+        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+                              (colors_bendalab_vivid, 'bendalab_vivid'),
+                              (colors_plain, 'plain'),
+                              (colors_henninger, 'henninger'),
+                              (colors_scicomp, 'scicomp'),
+                              (colors_uni_tuebingen, 'uni_tuebingen'))
     else:
         plot_colors(ax, colors, mode)
         ax.set_ylim(-0.27, 1.05)
@@ -484,4 +588,10 @@ mpl.axes.Axes.show_spines = show_spines
 
 
 if __name__ == "__main__":
-    demo()
+    import sys
+    mode = 1
+    if len(sys.argv) > 1:
+        mode = sys.argv[1]
+        if mode.isdigit():
+            mode = int(mode)
+    demo(mode)
