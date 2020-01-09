@@ -34,9 +34,9 @@ colors_bendalab['yellow'] = '#F0D730'
 colors_bendalab['green'] = '#A0B717'
 colors_bendalab['cyan'] = '#40A787'
 colors_bendalab['blue'] = '#2757A0'
-colors_bendalab['purple'] = '#573790'
+colors_bendalab['magenta'] = '#573790'
 colors_bendalab['pink'] = '#C72750'
-colors_bendalab['gray'] = '#909090'
+colors_bendalab['gray'] = '#A0A0A0'
 colors_bendalab['black'] = '#000000'
 
 """ Vivid colors used by the Benda-lab. """
@@ -47,9 +47,9 @@ colors_bendalab_vivid['yellow'] = '#FFF700'
 colors_bendalab_vivid['green'] = '#30D700'
 colors_bendalab_vivid['cyan'] = '#00F0B0'
 colors_bendalab_vivid['blue'] = '#0020C0'
-colors_bendalab_vivid['purple'] = '#B000B0'
+colors_bendalab_vivid['magenta'] = '#B000B0'
 colors_bendalab_vivid['pink'] = '#F00080'
-colors_bendalab_vivid['gray'] = '#909090'
+colors_bendalab_vivid['gray'] = '#A7A7A7'
 colors_bendalab_vivid['black'] = '#000000'
 
 """ Plain rgb colors. """
@@ -60,7 +60,7 @@ colors_plain['yellow'] = '#FFFF00'
 colors_plain['green'] = '#00FF00'
 colors_plain['cyan'] = '#00FFFF'
 colors_plain['blue'] = '#0000FF'
-colors_plain['purple'] = '#FF00FF'
+colors_plain['magenta'] = '#FF00FF'
 colors_plain['pink'] = '#FF0077'
 colors_plain['gray'] = '#808080'
 colors_plain['black'] = '#000000'
@@ -71,7 +71,7 @@ colors_henninger['red'] = '#BA2D22'
 colors_henninger['orange'] = '#F47F17'
 colors_henninger['green'] = '#AAB71B'
 colors_henninger['blue'] = '#3673A4'
-colors_henninger['purple'] = '#53379B'
+colors_henninger['magenta'] = '#53379B'
 
 """ Colors from the scientific computing script. """
 colors_scicomp = OrderedDict()
@@ -96,7 +96,7 @@ colors_uni_tuebingen['cyan'] = '#82B9A0'
 colors_uni_tuebingen['green'] = '#7DA54B'
 colors_uni_tuebingen['darkgreen'] = '#326E1E'
 colors_uni_tuebingen['red'] = '#C8503C'
-colors_uni_tuebingen['purple'] = '#AF6E96'
+colors_uni_tuebingen['magenta'] = '#AF6E96'
 colors_uni_tuebingen['gray'] = '#B4A096'
 colors_uni_tuebingen['lightorange'] = '#D7B469'
 colors_uni_tuebingen['orange'] = '#D29600'
@@ -104,6 +104,7 @@ colors_uni_tuebingen['brown'] = '#916946'
 
 """ Default color palette. """
 colors = colors_bendalab
+colors = colors_plain
 
 
 """ Default spines to be shown (installed by plot_format()). """
@@ -141,7 +142,7 @@ def plot_format(fontsize=10.0):
     mpl.rcParams['xtick.major.size'] = 2.5
     mpl.rcParams['ytick.major.size'] = 2.5
     mpl.rcParams['legend.fontsize'] = 'x-small'
-    color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'green', 'purple',
+    color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'green', 'magenta',
                                        'yellow', 'cyan', 'pink'] if c in colors]
     if 'axes.prop_cycle' in mpl.rcParams:
         from cycler import cycler
@@ -404,9 +405,9 @@ def plot_complementary_colors(ax, colors):
         ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['orange'])
         ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['blue'])
         n += 1
-    if 'yellow' in colors and 'purple' in colors:
+    if 'yellow' in colors and 'magenta' in colors:
         ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['yellow'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['purple'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['magenta'])
         n += 1
     if 'pink' in colors and 'cyan' in colors:
         ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
