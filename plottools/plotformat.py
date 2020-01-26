@@ -125,11 +125,11 @@ lwthick = 2.0
 lwthin = 1.0
 mainline = {'linestyle': '-', 'linewidth': lwthick}
 minorline = {'linestyle': '-', 'linewidth': lwthin}
-largemarker = {'marker': 'o', 'markersize': 9, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-smallmarker = {'marker': 'o', 'markersize': 6, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'marker': 'o', 'markersize': 10, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-smalllinepoints = {'linestyle': '-', 'linewidth': 1.4, 'marker': 'o', 'markersize': 7, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-filllw = 1
+largemarker = {'marker': 'o', 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+smallmarker = {'marker': 'o', 'markersize': 4, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'marker': 'o', 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+smalllinepoints = {'linestyle': '-', 'linewidth': lwthin, 'marker': 'o', 'markersize': 4, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+filllw = 1.0
 fillec = colors['white']
 fillalpha = 0.4
 
