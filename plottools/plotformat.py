@@ -43,6 +43,7 @@ colors_bendalab['blue'] = '#2757A0'
 colors_bendalab['purple'] = '#573790'
 colors_bendalab['magenta'] = '#872770'
 colors_bendalab['pink'] = '#C72750'
+colors_bendalab['white'] = '#FFFFFF'
 colors_bendalab['gray'] = '#A0A0A0'
 colors_bendalab['black'] = '#000000'
 
@@ -58,6 +59,7 @@ colors_bendalab_vivid['blue'] = '#0020C0'
 colors_bendalab_vivid['purple'] = '#8000C0'
 colors_bendalab_vivid['magenta'] = '#B000B0'
 colors_bendalab_vivid['pink'] = '#F00080'
+colors_bendalab_vivid['white'] = '#FFFFFF'
 colors_bendalab_vivid['gray'] = '#A7A7A7'
 colors_bendalab_vivid['black'] = '#000000'
 
@@ -73,6 +75,7 @@ colors_plain['blue'] = '#0000FF'
 colors_plain['purple'] = '#8000FF'
 colors_plain['magenta'] = '#FF00FF'
 colors_plain['pink'] = '#FF0080'
+colors_plain['white'] = '#FFFFFF'
 colors_plain['gray'] = '#808080'
 colors_plain['black'] = '#000000'
 
@@ -118,55 +121,158 @@ colors = colors_bendalab
 
 
 """ line styles for plot(). """
-lwthick = 2.5
+lwthick = 2.0
 lwthin = 1.0
-fillalpha = 0.5
+mainline = {'linestyle': '-', 'linewidth': lwthick}
+minorline = {'linestyle': '-', 'linewidth': lwthin}
+largemarker = {'marker': 'o', 'markersize': 9, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+smallmarker = {'marker': 'o', 'markersize': 6, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'marker': 'o', 'markersize': 10, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+smalllinepoints = {'linestyle': '-', 'linewidth': 1.4, 'marker': 'o', 'markersize': 7, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+filllw = 1
+fillec = colors['white']
+fillalpha = 0.4
 
 # helper lines:
-lsSpine = {'c': colors['black'], 'linestyle': '-', 'linewidth': lwthin}
-lsGrid = {'c': colors['gray'], 'linestyle': '--', 'linewidth': lwthin}
+lsSpine = {'c': colors['black'], 'linestyle': '-', 'linewidth': 1, 'clip_on': False}
+lsGrid = {'c': colors['gray'], 'linestyle': '--', 'linewidth': 1}
+lsMarker = {'c': colors['black'], 'linestyle': '-', 'linewidth': 2}
 
-# general line styles and fill styles:
-lsA1 = {'color': colors['red'], 'linestyle': '-', 'linewidth': lwthick}
-lsA2 = {'color': colors['orange'], 'linestyle': '-', 'linewidth': lwthick}
-lsA3 = {'color': colors['yellow'], 'linestyle': '-', 'linewidth': lwthick}
-lsA1_m = {'color': colors['red'], 'linestyle': '-', 'linewidth': lwthin}
-lsA2_m = {'color': colors['orange'], 'linestyle': '-', 'linewidth': lwthin}
-lsA3_m = {'color': colors['yellow'], 'linestyle': '-', 'linewidth': lwthin}
-fsA1 = {'facecolor': colors['red'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsA2 = {'facecolor': colors['orange'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsA3 = {'facecolor': colors['yellow'], 'edgecolor': 'none', 'alpha': fillalpha}
+# line (ls), point (ps), and fill styles (fs).
 
-lsB1 = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthick}
-lsB2 = {'color': colors['purple'], 'linestyle': '-', 'linewidth': lwthick}
-lsB3 = {'color': colors['magenta'], 'linestyle': '-', 'linewidth': lwthick}
-lsB4 = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthick}
-lsB1_m = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthin}
-lsB2_m = {'color': colors['purple'], 'linestyle': '-', 'linewidth': lwthin}
-lsB3_m = {'color': colors['magenta'], 'linestyle': '-', 'linewidth': lwthin}
-lsB4_m = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthin}
-fsB1 = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB2 = {'facecolor': colors['purple'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB3 = {'facecolor': colors['magenta'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB4 = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
+# Each style is derived from a main color as indicated by the capital letter.
+# Substyles, indicated by the number following the capital letter, have
+# the same style and similar hues.
 
-lsC1 = {'color': colors['green'], 'linestyle': '-', 'linewidth': lwthick}
-lsC2 = {'color': colors['darkgreen'], 'linestyle': '-', 'linewidth': lwthick}
-lsC3 = {'color': colors['cyan'], 'linestyle': '-', 'linewidth': lwthick}
-lsC1_m = {'color': colors['green'], 'linestyle': '-', 'linewidth': lwthin}
-lsC2_m = {'color': colors['darkgreen'], 'linestyle': '-', 'linewidth': lwthin}
-lsC3_m = {'color': colors['cyan'], 'linestyle': '-', 'linewidth': lwthin}
-fsC1 = {'facecolor': colors['green'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsC2 = {'facecolor': colors['darkgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsC3 = {'facecolor': colors['cyan'], 'edgecolor': 'none', 'alpha': fillalpha}
+# Line styles come in two variants:
+# - plain style with a thick/solid line (e.g. lsA1), and
+# - minor style with a thinner or dashed line (e.g. lsA1m).
+
+# Point (marker) styles come in two variants:
+# - plain style with large solid markers (e.g. psB1), and
+# - minor style with smaller markers (e.g. psB1m).
+
+# Linepoint styles (markers connected by lines) come in two variants:
+# - plain style with large solid markers (e.g. lpsA2), and
+# - minor style with smaller markers (e.g. lpsA2m).
+
+# Fill styles come in three variants:
+# - plain (e.g. fsA3) for a solid fill color and a darker edge color,
+# - solid (e.g. fsA3s) for a solid fill color and without edge color, and
+# - alpha (e.g. fsA3a) for a transparent fill color without edge color.
+
+lsA1 = dict({'color': colors['red']}, **mainline)
+lsA2 = dict({'color': colors['orange']}, **mainline)
+lsA3 = dict({'color': colors['yellow']}, **mainline)
+lsA1m = dict({'color': colors['red']}, **minorline)
+lsA2m = dict({'color': colors['orange']}, **minorline)
+lsA3m = dict({'color': colors['yellow']}, **minorline)
+psA1 = dict({'color': colors['red'], 'linestyle': 'none'}, **largemarker)
+psA2 = dict({'color': colors['orange'], 'linestyle': 'none'}, **largemarker)
+psA3 = dict({'color': colors['yellow'], 'linestyle': 'none'}, **largemarker)
+psA1m = dict({'color': colors['red'], 'linestyle': 'none'}, **smallmarker)
+psA2m = dict({'color': colors['orange'], 'linestyle': 'none'}, **smallmarker)
+psA3m = dict({'color': colors['yellow'], 'linestyle': 'none'}, **smallmarker)
+lpsA1 = dict({'color': colors['red']}, **largelinepoints)
+lpsA2 = dict({'color': colors['orange']}, **largelinepoints)
+lpsA3 = dict({'color': colors['yellow']}, **largelinepoints)
+lpsA1m = dict({'color': colors['red']}, **smalllinepoints)
+lpsA2m = dict({'color': colors['orange']}, **smalllinepoints)
+lpsA3m = dict({'color': colors['yellow']}, **smalllinepoints)
+fsA1 = {'facecolor': colors['red'], 'edgecolor': fillec, 'linewidth': filllw}
+fsA2 = {'facecolor': colors['orange'], 'edgecolor': fillec, 'linewidth': filllw}
+fsA3 = {'facecolor': colors['yellow'], 'edgecolor': fillec, 'linewidth': filllw}
+fsA1s = {'facecolor': colors['red'], 'edgecolor': 'none'}
+fsA2s = {'facecolor': colors['orange'], 'edgecolor': 'none'}
+fsA3s = {'facecolor': colors['yellow'], 'edgecolor': 'none'}
+fsA1a = {'facecolor': colors['red'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsA2a = {'facecolor': colors['orange'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsA3a = {'facecolor': colors['yellow'], 'edgecolor': 'none', 'alpha': fillalpha}
+
+lsB1 = dict({'color': colors['blue']}, **mainline)
+lsB2 = dict({'color': colors['purple']}, **mainline)
+lsB3 = dict({'color': colors['magenta']}, **mainline)
+lsB4 = dict({'color': colors['pink']}, **mainline)
+lsB1m = dict({'color': colors['blue']}, **minorline)
+lsB2m = dict({'color': colors['purple']}, **minorline)
+lsB3m = dict({'color': colors['magenta']}, **minorline)
+lsB4m = dict({'color': colors['pink']}, **minorline)
+psB1 = dict({'color': colors['blue'], 'linestyle': 'none'}, **largemarker)
+psB2 = dict({'color': colors['purple'], 'linestyle': 'none'}, **largemarker)
+psB3 = dict({'color': colors['magenta'], 'linestyle': 'none'}, **largemarker)
+psB4 = dict({'color': colors['pink'], 'linestyle': 'none'}, **largemarker)
+psB1m = dict({'color': colors['blue'], 'linestyle': 'none'}, **smallmarker)
+psB2m = dict({'color': colors['purple'], 'linestyle': 'none'}, **smallmarker)
+psB3m = dict({'color': colors['magenta'], 'linestyle': 'none'}, **smallmarker)
+psB4m = dict({'color': colors['pink'], 'linestyle': 'none'}, **smallmarker)
+lpsB1 = dict({'color': colors['blue']}, **largelinepoints)
+lpsB2 = dict({'color': colors['purple']}, **largelinepoints)
+lpsB3 = dict({'color': colors['magenta']}, **largelinepoints)
+lpsB4 = dict({'color': colors['pink']}, **largelinepoints)
+lpsB1m = dict({'color': colors['blue']}, **smalllinepoints)
+lpsB2m = dict({'color': colors['purple']}, **smalllinepoints)
+lpsB3m = dict({'color': colors['magenta']}, **smalllinepoints)
+lpsB4m = dict({'color': colors['pink']}, **smalllinepoints)
+fsB1 = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB2 = {'facecolor': colors['purple'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB3 = {'facecolor': colors['magenta'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB4 = {'facecolor': colors['pink'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB1s = {'facecolor': colors['blue'], 'edgecolor': 'none'}
+fsB2s = {'facecolor': colors['purple'], 'edgecolor': 'none'}
+fsB3s = {'facecolor': colors['magenta'], 'edgecolor': 'none'}
+fsB4s = {'facecolor': colors['pink'], 'edgecolor': 'none'}
+fsB1a = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB2a = {'facecolor': colors['purple'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB3a = {'facecolor': colors['magenta'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB4a = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
+
+lsC1 = dict({'color': colors['green']}, **mainline)
+lsC2 = dict({'color': colors['darkgreen']}, **mainline)
+lsC3 = dict({'color': colors['cyan']}, **mainline)
+lsC1m = dict({'color': colors['green']}, **minorline)
+lsC2m = dict({'color': colors['darkgreen']}, **minorline)
+lsC3m = dict({'color': colors['cyan']}, **minorline)
+psC1 = dict({'color': colors['green'], 'linestyle': 'none'}, **largemarker)
+psC2 = dict({'color': colors['darkgreen'], 'linestyle': 'none'}, **largemarker)
+psC3 = dict({'color': colors['cyan'], 'linestyle': 'none'}, **largemarker)
+psC1m = dict({'color': colors['green'], 'linestyle': 'none'}, **smallmarker)
+psC2m = dict({'color': colors['darkgreen'], 'linestyle': 'none'}, **smallmarker)
+psC3m = dict({'color': colors['cyan'], 'linestyle': 'none'}, **smallmarker)
+lpsC1 = dict({'color': colors['green']}, **largelinepoints)
+lpsC2 = dict({'color': colors['darkgreen']}, **largelinepoints)
+lpsC3 = dict({'color': colors['cyan']}, **largelinepoints)
+lpsC1m = dict({'color': colors['green']}, **smalllinepoints)
+lpsC2m = dict({'color': colors['darkgreen']}, **smalllinepoints)
+lpsC3m = dict({'color': colors['cyan']}, **smalllinepoints)
+fsC1 = {'facecolor': colors['green'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC2 = {'facecolor': colors['darkgreen'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC3 = {'facecolor': colors['cyan'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC1s = {'facecolor': colors['green'], 'edgecolor': 'none'}
+fsC2s = {'facecolor': colors['darkgreen'], 'edgecolor': 'none'}
+fsC3s = {'facecolor': colors['cyan'], 'edgecolor': 'none'}
+fsC1a = {'facecolor': colors['green'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC2a = {'facecolor': colors['darkgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC3a = {'facecolor': colors['cyan'], 'edgecolor': 'none', 'alpha': fillalpha}
 
 # lines for male female colors:
-lsMale = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthick}
-lsFemale = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthick}
-lsMale_m = {'color': colors['blue'], 'linestyle': '-', 'linewidth': lwthin}
-lsFemale_m = {'color': colors['pink'], 'linestyle': '-', 'linewidth': lwthin}
-fsMale = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsFemale = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
+lsMale = dict({'color': colors['blue']}, **mainline)
+lsFemale = dict({'color': colors['pink']}, **mainline)
+lsMalem = dict({'color': colors['blue']}, **minorline)
+lsFemalem = dict({'color': colors['pink']}, **minorline)
+psMale = dict({'color': colors['blue'], 'linestyle': 'none'}, **largemarker)
+psFemale = dict({'color': colors['pink'], 'linestyle': 'none'}, **largemarker)
+psMalem = dict({'color': colors['blue'], 'linestyle': 'none'}, **smallmarker)
+psFemalem = dict({'color': colors['pink'], 'linestyle': 'none'}, **smallmarker)
+lpsMale = dict({'color': colors['blue']}, **largelinepoints)
+lpsFemale = dict({'color': colors['pink']}, **largelinepoints)
+lpsMalem = dict({'color': colors['blue']}, **smalllinepoints)
+lpsFemalem = dict({'color': colors['pink']}, **smalllinepoints)
+fsMale = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
+fsFemale = {'facecolor': colors['pink'], 'edgecolor': fillec, 'linewidth': filllw}
+fsMales = {'facecolor': colors['blue'], 'edgecolor': 'none'}
+fsFemales = {'facecolor': colors['pink'], 'edgecolor': 'none'}
+fsMalea = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsFemalea = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
 
 
 """ Default spines to be shown (installed by plot_format()). """
@@ -530,15 +636,15 @@ def plot_color_comparison(ax, colorsa, *args):
 def plot_linestyles(ax):
     lsnames = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
     lsmajor = (lsA1, lsA2, lsA3, lsB1, lsB2, lsB3, lsB4, lsC1, lsC2, lsC3, lsMale, lsFemale)
-    lsminor = (lsA1_m, lsA2_m, lsA3_m, lsB1_m, lsB2_m, lsB3_m, lsB4_m, lsC1_m, lsC2_m, lsC3_m, lsMale_m, lsFemale_m)
-    fills = (fsA1, fsA2, fsA3, fsB1, fsB2, fsB3, fsB4, fsC1, fsC2, fsC3, fsMale, fsFemale)
+    lsminor = (lsA1m, lsA2m, lsA3m, lsB1m, lsB2m, lsB3m, lsB4m, lsC1m, lsC2m, lsC3m, lsMalem, lsFemalem)
+    fills = (fsA1a, fsA2a, fsA3a, fsB1a, fsB2a, fsB3a, fsB4a, fsC1a, fsC2a, fsC3a, fsMalea, fsFemalea)
     for k, (name, ls, lsm, fs) in enumerate(zip(lsnames, lsmajor, lsminor, fills)):
         ax.text(k, 1.9, name)
         ax.fill_between([k, k+3.5], [1.9, 2.7], [2.1, 2.9], **fs)
         ax.plot([k, k+3.5], [2.0, 2.8], **ls)
         ax.text(k, 0.9, name)
         ax.plot([k, k+3.5], [1.0, 1.8], **ls)
-        ax.text(k, -0.1, name+'_m')
+        ax.text(k, -0.1, name+'m')
         ax.plot([k, k+3.5], [0.0, 0.8], **lsm)
     ax.set_ylim(-0.15, 3.1)
         
