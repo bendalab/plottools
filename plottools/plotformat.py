@@ -632,7 +632,6 @@ def plot_color_comparison(ax, colorsa, *args):
     ax.set_ylim(-0.2, 1.1 + len(args))
 
 
-
 def plot_linestyles(ax):
     lsnames = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
     lsmajor = (lsA1, lsA2, lsA3, lsB1, lsB2, lsB3, lsB4, lsC1, lsC2, lsC3, lsMale, lsFemale)
@@ -648,7 +647,6 @@ def plot_linestyles(ax):
         ax.plot([k, k+3.5], [0.0, 0.8], **lsm)
     ax.set_ylim(-0.15, 3.1)
         
-
 
 def demo(mode=1):
     """ Run a demonstration of the plotformat module.
