@@ -33,19 +33,20 @@ from collections import OrderedDict
 
 """ Muted colors used by the Benda-lab. """
 colors_bendalab = OrderedDict()
-colors_bendalab['red'] = '#C02010'
-colors_bendalab['orange'] = '#F78010'
+colors_bendalab['red'] = '#C02717'
+colors_bendalab['orange'] = '#F78017'
 colors_bendalab['yellow'] = '#F0D730'
-colors_bendalab['green'] = '#A0B717'
+colors_bendalab['green'] = '#AAB71B'
 colors_bendalab['darkgreen'] = '#007030'
 colors_bendalab['cyan'] = '#40A787'
-colors_bendalab['blue'] = '#2757A0'
-colors_bendalab['purple'] = '#573790'
-colors_bendalab['magenta'] = '#872770'
-colors_bendalab['pink'] = '#C72750'
+colors_bendalab['blue'] = '#2060A7'
+colors_bendalab['purple'] = '#53379B'
+colors_bendalab['magenta'] = '#873770'
+colors_bendalab['pink'] = '#D03050'
 colors_bendalab['white'] = '#FFFFFF'
 colors_bendalab['gray'] = '#A0A0A0'
 colors_bendalab['black'] = '#000000'
+
 
 """ Vivid colors used by the Benda-lab. """
 colors_bendalab_vivid = OrderedDict()
@@ -85,7 +86,7 @@ colors_henninger['red'] = '#BA2D22'
 colors_henninger['orange'] = '#F47F17'
 colors_henninger['green'] = '#AAB71B'
 colors_henninger['blue'] = '#3673A4'
-colors_henninger['magenta'] = '#53379B'
+colors_henninger['purple'] = '#53379B'
 
 """ Colors from the scientific computing script. """
 colors_scicomp = OrderedDict()
@@ -589,8 +590,8 @@ def plot_complementary_colors(ax, colors):
         ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['cyan'])
         n += 1
     if 'pink' in colors and 'blue' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['blue'])
+        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['blue'])
+        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['pink'])
         n += 1
     ax.set_xlim(-0.5, n*1.5)
     ax.set_ylim(-0.1, 2.1)
@@ -670,20 +671,26 @@ def demo(mode=1):
     ax.show_spines('lbr')
     ax.text(0.0, -0.23, "ax.show_spines('lbr')")
     # colors and linestyles:
-    if mode == 'linestyles':
-        plot_linestyles(ax)
-    elif mode == 'complementary':
-        plot_complementary_colors(ax, colors)
-    elif mode == 'comparison':
-        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
-                              (colors_bendalab_vivid, 'bendalab_vivid'),
-                              (colors_plain, 'plain'),
-                              (colors_henninger, 'henninger'),
-                              (colors_scicomp, 'scicomp'),
-                              (colors_uni_tuebingen, 'uni_tuebingen'))
-    else:
+    if isinstance(mode, int):
         plot_colors(ax, colors, mode)
         ax.set_ylim(-0.27, 1.05)
+    else:
+        if 'line' in mode:
+            plot_linestyles(ax)
+        elif 'compl' in mode:
+            plot_complementary_colors(ax, colors)
+        elif 'compa' in mode:
+            plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+                                  (colors_bendalab_vivid, 'bendalab_vivid'),
+                                  (colors_plain, 'plain'),
+                                  (colors_henninger, 'henninger'),
+                                  (colors_scicomp, 'scicomp'),
+                                  (colors_uni_tuebingen, 'uni_tuebingen'))
+        elif 'henn' in mode:
+            plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+                                  (colors_henninger, 'henninger'))
+        else:
+            print('unknown option %s!' % mode)
     plt.show()
 
 
