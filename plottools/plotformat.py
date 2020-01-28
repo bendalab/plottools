@@ -275,6 +275,45 @@ fsFemales = {'facecolor': colors['pink'], 'edgecolor': 'none'}
 fsMalea = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
 fsFemalea = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
 
+# dictionaries for line, point, and fill styles:
+style_names = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
+ls = {'A1': lsA1, 'A2': lsA2, 'A3': lsA3,
+      'B1': lsB1, 'B2': lsB2, 'B3': lsB3, 'B4': lsB4,
+      'C1': lsC1, 'C2': lsC2, 'C3': lsC3,
+      'Male': lsMale, 'Female': lsFemale}
+lsm = {'A1': lsA1m, 'A2': lsA2m, 'A3': lsA3m,
+       'B1': lsB1m, 'B2': lsB2m, 'B3': lsB3m, 'B4': lsB4m,
+       'C1': lsC1m, 'C2': lsC2m, 'C3': lsC3m,
+       'Male': lsMalem, 'Female': lsFemalem}
+ps = {'A1': psA1, 'A2': psA2, 'A3': psA3,
+      'B1': psB1, 'B2': psB2, 'B3': psB3, 'B4': psB4,
+      'C1': psC1, 'C2': psC2, 'C3': psC3,
+      'Male': psMale, 'Female': psFemale}
+psm = {'A1': psA1m, 'A2': psA2m, 'A3': psA3m,
+       'B1': psB1m, 'B2': psB2m, 'B3': psB3m, 'B4': psB4m,
+       'C1': psC1m, 'C2': psC2m, 'C3': psC3m,
+       'Male': psMalem, 'Female': psFemalem}
+lps = {'A1': lpsA1, 'A2': lpsA2, 'A3': lpsA3,
+       'B1': lpsB1, 'B2': lpsB2, 'B3': lpsB3, 'B4': lpsB4,
+       'C1': lpsC1, 'C2': lpsC2, 'C3': lpsC3,
+       'Male': lpsMale, 'Female': lpsFemale}
+lpsm = {'A1': lpsA1m, 'A2': lpsA2m, 'A3': lpsA3m,
+        'B1': lpsB1m, 'B2': lpsB2m, 'B3': lpsB3m, 'B4': lpsB4m,
+        'C1': lpsC1m, 'C2': lpsC2m, 'C3': lpsC3m,
+        'Male': lpsMalem, 'Female': lpsFemalem}
+fs = {'A1': fsA1, 'A2': fsA2, 'A3': fsA3,
+      'B1': fsB1, 'B2': fsB2, 'B3': fsB3, 'B4': fsB4,
+      'C1': fsC1, 'C2': fsC2, 'C3': fsC3,
+      'Male': fsMale, 'Female': fsFemale}
+fss = {'A1': fsA1s, 'A2': fsA2s, 'A3': fsA3s,
+       'B1': fsB1s, 'B2': fsB2s, 'B3': fsB3s, 'B4': fsB4s,
+       'C1': fsC1s, 'C2': fsC2s, 'C3': fsC3s,
+       'Male': fsMales, 'Female': fsFemales}
+fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
+       'B1': fsB1a, 'B2': fsB2a, 'B3': fsB3a, 'B4': fsB4a,
+       'C1': fsC1a, 'C2': fsC2a, 'C3': fsC3a,
+       'Male': fsMalea, 'Female': fsFemalea}
+
 
 """ Default spines to be shown (installed by plot_format()). """
 default_spines = 'lb'
@@ -634,19 +673,43 @@ def plot_color_comparison(ax, colorsa, *args):
 
 
 def plot_linestyles(ax):
-    lsnames = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
-    lsmajor = (lsA1, lsA2, lsA3, lsB1, lsB2, lsB3, lsB4, lsC1, lsC2, lsC3, lsMale, lsFemale)
-    lsminor = (lsA1m, lsA2m, lsA3m, lsB1m, lsB2m, lsB3m, lsB4m, lsC1m, lsC2m, lsC3m, lsMalem, lsFemalem)
-    fills = (fsA1a, fsA2a, fsA3a, fsB1a, fsB2a, fsB3a, fsB4a, fsC1a, fsC2a, fsC3a, fsMalea, fsFemalea)
-    for k, (name, ls, lsm, fs) in enumerate(zip(lsnames, lsmajor, lsminor, fills)):
-        ax.text(k, 1.9, name)
-        ax.fill_between([k, k+3.5], [1.9, 2.7], [2.1, 2.9], **fs)
-        ax.plot([k, k+3.5], [2.0, 2.8], **ls)
-        ax.text(k, 0.9, name)
-        ax.plot([k, k+3.5], [1.0, 1.8], **ls)
-        ax.text(k, -0.1, name+'m')
-        ax.plot([k, k+3.5], [0.0, 0.8], **lsm)
+    """ Plot names and lines of all available line styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the line styles.
+    """
+    for k, name in enumerate(style_names):
+        ax.text(k, 1.9, 'fs'+name+'a')
+        ax.fill_between([k, k+3.5], [1.9, 2.7], [2.1, 2.9], **fsa[name])
+        ax.plot([k, k+3.5], [2.0, 2.8], **ls[name])
+        ax.text(k, 0.9, 'ls'+name)
+        ax.plot([k, k+3.5], [1.0, 1.8], **ls[name])
+        ax.text(k, -0.1, 'ls'+name+'m')
+        ax.plot([k, k+3.5], [0.0, 0.8], **lsm[name])
     ax.set_ylim(-0.15, 3.1)
+        
+
+def plot_pointstyles(ax):
+    """ Plot names and lines of all available point styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the point styles.
+    """
+    for k, name in enumerate(reversed(style_names)):
+        ax.text(0.1, k, 'ps'+name)
+        ax.plot([0.6], [k], **ps[name])
+        ax.text(0.9, k, 'ps'+name+'m')
+        ax.plot([1.4], [k], **psm[name])
+        ax.text(1.7, k, 'lps'+name)
+        ax.plot([2.3, 2.6, 2.9], [k, k, k], **lps[name])
+        ax.text(3.2, k, 'lps'+name+'m')
+        ax.plot([3.8, 4.1, 4.4], [k, k, k], **lpsm[name])
+    ax.set_xlim(0.0, 4.5)
+    ax.set_ylim(-2.0, len(style_names)+1.0)
         
 
 def demo(mode=1):
@@ -654,9 +717,11 @@ def demo(mode=1):
 
     Parameters
     ----------
-    mode: int or 'complementary' or 'comparison'
+    mode: int or 'complementary', 'comparison', 'linestyles', or 'pointstyles'
         1: plot the default color palette
         n>1: plot the default color palette with n-1 lighter and darker colors
+        'linestyles': plot the names and lines of all available line styles
+        'pointstyles': plot the names and points (markers) of all available point styles
         'complementary': plot complementary colors of the default color palette
         'comparison': plot the default color palette in comparison with colors_bendalab_vivid
     """
@@ -677,6 +742,8 @@ def demo(mode=1):
     else:
         if 'line' in mode:
             plot_linestyles(ax)
+        elif 'point' in mode:
+            plot_pointstyles(ax)
         elif 'compl' in mode:
             plot_complementary_colors(ax, colors)
         elif 'compa' in mode:
