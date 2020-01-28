@@ -126,8 +126,10 @@ lwthick = 2.0
 lwthin = 1.0
 mainline = {'linestyle': '-', 'linewidth': lwthick}
 minorline = {'linestyle': '-', 'linewidth': lwthin}
-largemarker = {'marker': 'o', 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-smallmarker = {'marker': 'o', 'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+largemarker = {'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1, 'linestyle': 'none'}
+smallmarker = {'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1, 'linestyle': 'none'}
+largecirclemarker = dict({'marker': 'o'}, **largemarker)
+smallcirclemarker = dict({'marker': 'o'}, **smallmarker)
 largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'marker': 'o', 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
 smalllinepoints = {'linestyle': '-', 'linewidth': lwthin, 'marker': 'o', 'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
 filllw = 1.0
@@ -149,9 +151,10 @@ lsMarker = {'c': colors['black'], 'linestyle': '-', 'linewidth': 2}
 # - plain style with a thick/solid line (e.g. lsA1), and
 # - minor style with a thinner or dashed line (e.g. lsA1m).
 
-# Point (marker) styles come in two variants:
-# - plain style with large solid markers (e.g. psB1), and
-# - minor style with smaller markers (e.g. psB1m).
+# Point (marker) styles come in four variants:
+# - plain style with large solid markers (e.g. psB1),
+# - plain style with large circular markers (e.g. psB1c),
+# - minor style with smaller (circular) markers (e.g. psB1m).
 
 # Linepoint styles (markers connected by lines) come in two variants:
 # - plain style with large solid markers (e.g. lpsA2), and
@@ -168,12 +171,17 @@ lsA3 = dict({'color': colors['yellow']}, **mainline)
 lsA1m = dict({'color': colors['red']}, **minorline)
 lsA2m = dict({'color': colors['orange']}, **minorline)
 lsA3m = dict({'color': colors['yellow']}, **minorline)
-psA1 = dict({'color': colors['red'], 'linestyle': 'none'}, **largemarker)
-psA2 = dict({'color': colors['orange'], 'linestyle': 'none'}, **largemarker)
-psA3 = dict({'color': colors['yellow'], 'linestyle': 'none'}, **largemarker)
-psA1m = dict({'color': colors['red'], 'linestyle': 'none'}, **smallmarker)
-psA2m = dict({'color': colors['orange'], 'linestyle': 'none'}, **smallmarker)
-psA3m = dict({'color': colors['yellow'], 'linestyle': 'none'}, **smallmarker)
+psA1 = dict({'color': colors['red'], 'marker': 'o'}, **largemarker)
+psA2 = dict({'color': colors['orange'], 'marker': 'p'}, **largemarker)
+psA2.update({'markersize': 1.3*psA2['markersize']})
+psA3 = dict({'color': colors['yellow'], 'marker': 'h'}, **largemarker)
+psA3.update({'markersize': 1.2*psA3['markersize']})
+psA1c = dict({'color': colors['red']}, **largecirclemarker)
+psA2c = dict({'color': colors['orange']}, **largecirclemarker)
+psA3c = dict({'color': colors['yellow']}, **largecirclemarker)
+psA1m = dict({'color': colors['red']}, **smallcirclemarker)
+psA2m = dict({'color': colors['orange']}, **smallcirclemarker)
+psA3m = dict({'color': colors['yellow']}, **smallcirclemarker)
 lpsA1 = dict({'color': colors['red']}, **largelinepoints)
 lpsA2 = dict({'color': colors['orange']}, **largelinepoints)
 lpsA3 = dict({'color': colors['yellow']}, **largelinepoints)
@@ -198,14 +206,22 @@ lsB1m = dict({'color': colors['blue']}, **minorline)
 lsB2m = dict({'color': colors['purple']}, **minorline)
 lsB3m = dict({'color': colors['magenta']}, **minorline)
 lsB4m = dict({'color': colors['pink']}, **minorline)
-psB1 = dict({'color': colors['blue'], 'linestyle': 'none'}, **largemarker)
-psB2 = dict({'color': colors['purple'], 'linestyle': 'none'}, **largemarker)
-psB3 = dict({'color': colors['magenta'], 'linestyle': 'none'}, **largemarker)
-psB4 = dict({'color': colors['pink'], 'linestyle': 'none'}, **largemarker)
-psB1m = dict({'color': colors['blue'], 'linestyle': 'none'}, **smallmarker)
-psB2m = dict({'color': colors['purple'], 'linestyle': 'none'}, **smallmarker)
-psB3m = dict({'color': colors['magenta'], 'linestyle': 'none'}, **smallmarker)
-psB4m = dict({'color': colors['pink'], 'linestyle': 'none'}, **smallmarker)
+psB1 = dict({'color': colors['blue'], 'marker': 'v'}, **largemarker)
+psB1.update({'markersize': 1.3*psB1['markersize']})
+psB2 = dict({'color': colors['purple'], 'marker': '^'}, **largemarker)
+psB2.update({'markersize': 1.3*psB2['markersize']})
+psB3 = dict({'color': colors['magenta'], 'marker': '<'}, **largemarker)
+psB3.update({'markersize': 1.3*psB3['markersize']})
+psB4 = dict({'color': colors['pink'], 'marker': '>'}, **largemarker)
+psB4.update({'markersize': 1.3*psB4['markersize']})
+psB1c = dict({'color': colors['blue']}, **largecirclemarker)
+psB2c = dict({'color': colors['purple']}, **largecirclemarker)
+psB3c = dict({'color': colors['magenta']}, **largecirclemarker)
+psB4c = dict({'color': colors['pink']}, **largecirclemarker)
+psB1m = dict({'color': colors['blue']}, **smallcirclemarker)
+psB2m = dict({'color': colors['purple']}, **smallcirclemarker)
+psB3m = dict({'color': colors['magenta']}, **smallcirclemarker)
+psB4m = dict({'color': colors['pink']}, **smallcirclemarker)
 lpsB1 = dict({'color': colors['blue']}, **largelinepoints)
 lpsB2 = dict({'color': colors['purple']}, **largelinepoints)
 lpsB3 = dict({'color': colors['magenta']}, **largelinepoints)
@@ -233,12 +249,17 @@ lsC3 = dict({'color': colors['cyan']}, **mainline)
 lsC1m = dict({'color': colors['green']}, **minorline)
 lsC2m = dict({'color': colors['darkgreen']}, **minorline)
 lsC3m = dict({'color': colors['cyan']}, **minorline)
-psC1 = dict({'color': colors['green'], 'linestyle': 'none'}, **largemarker)
-psC2 = dict({'color': colors['darkgreen'], 'linestyle': 'none'}, **largemarker)
-psC3 = dict({'color': colors['cyan'], 'linestyle': 'none'}, **largemarker)
-psC1m = dict({'color': colors['green'], 'linestyle': 'none'}, **smallmarker)
-psC2m = dict({'color': colors['darkgreen'], 'linestyle': 'none'}, **smallmarker)
-psC3m = dict({'color': colors['cyan'], 'linestyle': 'none'}, **smallmarker)
+psC1 = dict({'color': colors['green'], 'marker': 's'}, **largemarker)
+psC2 = dict({'color': colors['darkgreen'], 'marker': 'D'}, **largemarker)
+psC2.update({'markersize': 0.95*psC2['markersize']})
+psC3 = dict({'color': colors['cyan'], 'marker': '*'}, **largemarker)
+psC3.update({'markersize': 1.7*psC3['markersize']})
+psC1c = dict({'color': colors['green']}, **largecirclemarker)
+psC2c = dict({'color': colors['darkgreen']}, **largecirclemarker)
+psC3c = dict({'color': colors['cyan']}, **largecirclemarker)
+psC1m = dict({'color': colors['green']}, **smallcirclemarker)
+psC2m = dict({'color': colors['darkgreen']}, **smallcirclemarker)
+psC3m = dict({'color': colors['cyan']}, **smallcirclemarker)
 lpsC1 = dict({'color': colors['green']}, **largelinepoints)
 lpsC2 = dict({'color': colors['darkgreen']}, **largelinepoints)
 lpsC3 = dict({'color': colors['cyan']}, **largelinepoints)
@@ -260,10 +281,12 @@ lsMale = dict({'color': colors['blue']}, **mainline)
 lsFemale = dict({'color': colors['pink']}, **mainline)
 lsMalem = dict({'color': colors['blue']}, **minorline)
 lsFemalem = dict({'color': colors['pink']}, **minorline)
-psMale = dict({'color': colors['blue'], 'linestyle': 'none'}, **largemarker)
-psFemale = dict({'color': colors['pink'], 'linestyle': 'none'}, **largemarker)
-psMalem = dict({'color': colors['blue'], 'linestyle': 'none'}, **smallmarker)
-psFemalem = dict({'color': colors['pink'], 'linestyle': 'none'}, **smallmarker)
+psMale = dict({'color': colors['blue'], 'marker': 'o'}, **largemarker)
+psFemale = dict({'color': colors['pink'], 'marker': 'o'}, **largemarker)
+psMalec = dict({'color': colors['blue']}, **largecirclemarker)
+psFemalec = dict({'color': colors['pink']}, **largecirclemarker)
+psMalem = dict({'color': colors['blue']}, **smallcirclemarker)
+psFemalem = dict({'color': colors['pink']}, **smallcirclemarker)
 lpsMale = dict({'color': colors['blue']}, **largelinepoints)
 lpsFemale = dict({'color': colors['pink']}, **largelinepoints)
 lpsMalem = dict({'color': colors['blue']}, **smalllinepoints)
@@ -289,6 +312,10 @@ ps = {'A1': psA1, 'A2': psA2, 'A3': psA3,
       'B1': psB1, 'B2': psB2, 'B3': psB3, 'B4': psB4,
       'C1': psC1, 'C2': psC2, 'C3': psC3,
       'Male': psMale, 'Female': psFemale}
+psc = {'A1': psA1c, 'A2': psA2c, 'A3': psA3c,
+       'B1': psB1c, 'B2': psB2c, 'B3': psB3c, 'B4': psB4c,
+       'C1': psC1c, 'C2': psC2c, 'C3': psC3c,
+       'Male': psMalec, 'Female': psFemalec}
 psm = {'A1': psA1m, 'A2': psA2m, 'A3': psA3m,
        'B1': psB1m, 'B2': psB2m, 'B3': psB3m, 'B4': psB4m,
        'C1': psC1m, 'C2': psC2m, 'C3': psC3m,
@@ -689,6 +716,7 @@ def plot_linestyles(ax):
         ax.text(k, -0.1, 'ls'+name+'m')
         ax.plot([k, k+3.5], [0.0, 0.8], **lsm[name])
     ax.set_ylim(-0.15, 3.1)
+    ax.set_title('line styles')
         
 
 def plot_pointstyles(ax):
@@ -702,14 +730,31 @@ def plot_pointstyles(ax):
     for k, name in enumerate(reversed(style_names)):
         ax.text(0.1, k, 'ps'+name)
         ax.plot([0.6], [k], **ps[name])
-        ax.text(0.9, k, 'ps'+name+'m')
-        ax.plot([1.4], [k], **psm[name])
-        ax.text(1.7, k, 'lps'+name)
-        ax.plot([2.3, 2.6, 2.9], [k, k, k], **lps[name])
-        ax.text(3.2, k, 'lps'+name+'m')
-        ax.plot([3.8, 4.1, 4.4], [k, k, k], **lpsm[name])
-    ax.set_xlim(0.0, 4.5)
-    ax.set_ylim(-2.0, len(style_names)+1.0)
+        ax.text(1.1, k, 'ps'+name+'c')
+        ax.plot([1.6], [k], **psc[name])
+        ax.text(2.1, k, 'ps'+name+'m')
+        ax.plot([2.6], [k], **psm[name])
+    ax.set_xlim(0.0, 3.0)
+    ax.set_ylim(-1.0, len(style_names))
+    ax.set_title('point styles')
+        
+
+def plot_linepointstyles(ax):
+    """ Plot names and lines of all available linepoint styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the linepoint styles.
+    """
+    for k, name in enumerate(reversed(style_names)):
+        ax.text(0.1, k, 'lps'+name)
+        ax.plot([0.8, 1.1, 1.4], [k, k, k], **lps[name])
+        ax.text(2.1, k, 'lps'+name+'m')
+        ax.plot([2.8, 3.1, 3.4], [k, k, k], **lpsm[name])
+    ax.set_xlim(0.0, 4.0)
+    ax.set_ylim(-1.0, len(style_names))
+    ax.set_title('linepoint styles')
         
 
 def demo(mode=1):
@@ -717,11 +762,12 @@ def demo(mode=1):
 
     Parameters
     ----------
-    mode: int or 'complementary', 'comparison', 'linestyles', or 'pointstyles'
+    mode: int or string
         1: plot the default color palette
         n>1: plot the default color palette with n-1 lighter and darker colors
         'linestyles': plot the names and lines of all available line styles
         'pointstyles': plot the names and points (markers) of all available point styles
+        'linepointstyles': plot the names and lines of all available linepoint styles
         'complementary': plot complementary colors of the default color palette
         'comparison': plot the default color palette in comparison with colors_bendalab_vivid
     """
@@ -729,7 +775,7 @@ def demo(mode=1):
     plot_format()
     # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=1.5, right=2.0))
+    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=2.0, right=2.0))
     # only show left, right, and bottom spine
     # (default is left and bottom spine as defined in __axes__init__()
     # via the default_spines string):
@@ -740,7 +786,9 @@ def demo(mode=1):
         plot_colors(ax, colors, mode)
         ax.set_ylim(-0.27, 1.05)
     else:
-        if 'line' in mode:
+        if 'linep' in mode:
+            plot_linepointstyles(ax)
+        elif 'line' in mode:
             plot_linestyles(ax)
         elif 'point' in mode:
             plot_pointstyles(ax)
