@@ -20,9 +20,7 @@ Dictionaries with colors:
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_uni_tuebingen`: colors of the corporate design of the university of Tuebingen.
 
-Dictionaries with line and marker styles:
-- `lsSpines`
-- `lsGrid`
+Line and marker styles.
 """
 
 import numpy as np
@@ -130,8 +128,10 @@ largemarker = {'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredg
 smallmarker = {'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1, 'linestyle': 'none'}
 largecirclemarker = dict({'marker': 'o'}, **largemarker)
 smallcirclemarker = dict({'marker': 'o'}, **smallmarker)
-largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'marker': 'o', 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
-smalllinepoints = {'linestyle': '-', 'linewidth': lwthin, 'marker': 'o', 'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'markersize': 7.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+smalllinepoints = {'linestyle': '-', 'linewidth': lwthin, 'markersize': 5.5, 'markeredgecolor': colors['white'], 'markeredgewidth': 1}
+largecirclelinepoints = dict({'marker': 'o'}, **largelinepoints)
+smallcirclelinepoints = dict({'marker': 'o'}, **smalllinepoints)
 filllw = 1.0
 fillec = colors['white']
 fillalpha = 0.4
@@ -153,17 +153,18 @@ lsMarker = {'c': colors['black'], 'linestyle': '-', 'linewidth': 2}
 
 # Point (marker) styles come in four variants:
 # - plain style with large solid markers (e.g. psB1),
-# - plain style with large circular markers (e.g. psB1c),
+# - plain style with large circular markers (e.g. psB1c), and
 # - minor style with smaller (circular) markers (e.g. psB1m).
 
 # Linepoint styles (markers connected by lines) come in two variants:
-# - plain style with large solid markers (e.g. lpsA2), and
-# - minor style with smaller markers (e.g. lpsA2m).
+# - plain style with large solid markers (e.g. lpsA2),
+# - plain style with large circular markers (e.g. lpsA2c),
+# - minor style with smaller (circular) markers (e.g. lpsA2m).
 
 # Fill styles come in three variants:
-# - plain (e.g. fsA3) for a solid fill color and a darker edge color,
-# - solid (e.g. fsA3s) for a solid fill color and without edge color, and
-# - alpha (e.g. fsA3a) for a transparent fill color without edge color.
+# - plain (e.g. fsA3) for a solid fill color and an edge color,
+# - solid (e.g. fsA3s) for a solid fill color without edge color, and
+# - alpha (e.g. fsA3a) for a transparent fill color.
 
 lsA1 = dict({'color': colors['red']}, **mainline)
 lsA2 = dict({'color': colors['orange']}, **mainline)
@@ -182,12 +183,17 @@ psA3c = dict({'color': colors['yellow']}, **largecirclemarker)
 psA1m = dict({'color': colors['red']}, **smallcirclemarker)
 psA2m = dict({'color': colors['orange']}, **smallcirclemarker)
 psA3m = dict({'color': colors['yellow']}, **smallcirclemarker)
-lpsA1 = dict({'color': colors['red']}, **largelinepoints)
-lpsA2 = dict({'color': colors['orange']}, **largelinepoints)
-lpsA3 = dict({'color': colors['yellow']}, **largelinepoints)
-lpsA1m = dict({'color': colors['red']}, **smalllinepoints)
-lpsA2m = dict({'color': colors['orange']}, **smalllinepoints)
-lpsA3m = dict({'color': colors['yellow']}, **smalllinepoints)
+lpsA1 = dict({'color': colors['red'], 'marker': 'o'}, **largelinepoints)
+lpsA2 = dict({'color': colors['orange'], 'marker': 'p'}, **largelinepoints)
+lpsA2.update({'markersize': 1.3*lpsA2['markersize']})
+lpsA3 = dict({'color': colors['yellow'], 'marker': 'h'}, **largelinepoints)
+lpsA3.update({'markersize': 1.2*lpsA3['markersize']})
+lpsA1c = dict({'color': colors['red']}, **largecirclelinepoints)
+lpsA2c = dict({'color': colors['orange']}, **largecirclelinepoints)
+lpsA3c = dict({'color': colors['yellow']}, **largecirclelinepoints)
+lpsA1m = dict({'color': colors['red']}, **smallcirclelinepoints)
+lpsA2m = dict({'color': colors['orange']}, **smallcirclelinepoints)
+lpsA3m = dict({'color': colors['yellow']}, **smallcirclelinepoints)
 fsA1 = {'facecolor': colors['red'], 'edgecolor': fillec, 'linewidth': filllw}
 fsA2 = {'facecolor': colors['orange'], 'edgecolor': fillec, 'linewidth': filllw}
 fsA3 = {'facecolor': colors['yellow'], 'edgecolor': fillec, 'linewidth': filllw}
@@ -222,14 +228,22 @@ psB1m = dict({'color': colors['blue']}, **smallcirclemarker)
 psB2m = dict({'color': colors['purple']}, **smallcirclemarker)
 psB3m = dict({'color': colors['magenta']}, **smallcirclemarker)
 psB4m = dict({'color': colors['pink']}, **smallcirclemarker)
-lpsB1 = dict({'color': colors['blue']}, **largelinepoints)
-lpsB2 = dict({'color': colors['purple']}, **largelinepoints)
-lpsB3 = dict({'color': colors['magenta']}, **largelinepoints)
-lpsB4 = dict({'color': colors['pink']}, **largelinepoints)
-lpsB1m = dict({'color': colors['blue']}, **smalllinepoints)
-lpsB2m = dict({'color': colors['purple']}, **smalllinepoints)
-lpsB3m = dict({'color': colors['magenta']}, **smalllinepoints)
-lpsB4m = dict({'color': colors['pink']}, **smalllinepoints)
+lpsB1 = dict({'color': colors['blue'], 'marker': 'v'}, **largelinepoints)
+lpsB1.update({'markersize': 1.3*lpsB1['markersize']})
+lpsB2 = dict({'color': colors['purple'], 'marker': '^'}, **largelinepoints)
+lpsB2.update({'markersize': 1.3*lpsB2['markersize']})
+lpsB3 = dict({'color': colors['magenta'], 'marker': '<'}, **largelinepoints)
+lpsB3.update({'markersize': 1.3*lpsB3['markersize']})
+lpsB4 = dict({'color': colors['pink'], 'marker': '>'}, **largelinepoints)
+lpsB4.update({'markersize': 1.3*lpsB4['markersize']})
+lpsB1c = dict({'color': colors['blue']}, **largecirclelinepoints)
+lpsB2c = dict({'color': colors['purple']}, **largecirclelinepoints)
+lpsB3c = dict({'color': colors['magenta']}, **largecirclelinepoints)
+lpsB4c = dict({'color': colors['pink']}, **largecirclelinepoints)
+lpsB1m = dict({'color': colors['blue']}, **smallcirclelinepoints)
+lpsB2m = dict({'color': colors['purple']}, **smallcirclelinepoints)
+lpsB3m = dict({'color': colors['magenta']}, **smallcirclelinepoints)
+lpsB4m = dict({'color': colors['pink']}, **smallcirclelinepoints)
 fsB1 = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
 fsB2 = {'facecolor': colors['purple'], 'edgecolor': fillec, 'linewidth': filllw}
 fsB3 = {'facecolor': colors['magenta'], 'edgecolor': fillec, 'linewidth': filllw}
@@ -260,12 +274,17 @@ psC3c = dict({'color': colors['cyan']}, **largecirclemarker)
 psC1m = dict({'color': colors['green']}, **smallcirclemarker)
 psC2m = dict({'color': colors['darkgreen']}, **smallcirclemarker)
 psC3m = dict({'color': colors['cyan']}, **smallcirclemarker)
-lpsC1 = dict({'color': colors['green']}, **largelinepoints)
-lpsC2 = dict({'color': colors['darkgreen']}, **largelinepoints)
-lpsC3 = dict({'color': colors['cyan']}, **largelinepoints)
-lpsC1m = dict({'color': colors['green']}, **smalllinepoints)
-lpsC2m = dict({'color': colors['darkgreen']}, **smalllinepoints)
-lpsC3m = dict({'color': colors['cyan']}, **smalllinepoints)
+lpsC1 = dict({'color': colors['green'], 'marker': 's'}, **largelinepoints)
+lpsC2 = dict({'color': colors['darkgreen'], 'marker': 'D'}, **largelinepoints)
+lpsC2.update({'markersize': 0.95*lpsC2['markersize']})
+lpsC3 = dict({'color': colors['cyan'], 'marker': '*'}, **largelinepoints)
+lpsC3.update({'markersize': 1.7*lpsC3['markersize']})
+lpsC1c = dict({'color': colors['green']}, **largecirclelinepoints)
+lpsC2c = dict({'color': colors['darkgreen']}, **largecirclelinepoints)
+lpsC3c = dict({'color': colors['cyan']}, **largecirclelinepoints)
+lpsC1m = dict({'color': colors['green']}, **smallcirclelinepoints)
+lpsC2m = dict({'color': colors['darkgreen']}, **smallcirclelinepoints)
+lpsC3m = dict({'color': colors['cyan']}, **smallcirclelinepoints)
 fsC1 = {'facecolor': colors['green'], 'edgecolor': fillec, 'linewidth': filllw}
 fsC2 = {'facecolor': colors['darkgreen'], 'edgecolor': fillec, 'linewidth': filllw}
 fsC3 = {'facecolor': colors['cyan'], 'edgecolor': fillec, 'linewidth': filllw}
@@ -287,10 +306,12 @@ psMalec = dict({'color': colors['blue']}, **largecirclemarker)
 psFemalec = dict({'color': colors['pink']}, **largecirclemarker)
 psMalem = dict({'color': colors['blue']}, **smallcirclemarker)
 psFemalem = dict({'color': colors['pink']}, **smallcirclemarker)
-lpsMale = dict({'color': colors['blue']}, **largelinepoints)
-lpsFemale = dict({'color': colors['pink']}, **largelinepoints)
-lpsMalem = dict({'color': colors['blue']}, **smalllinepoints)
-lpsFemalem = dict({'color': colors['pink']}, **smalllinepoints)
+lpsMale = dict({'color': colors['blue'], 'marker': 'o'}, **largelinepoints)
+lpsFemale = dict({'color': colors['pink'], 'marker': 'o'}, **largelinepoints)
+lpsMalec = dict({'color': colors['blue']}, **largecirclelinepoints)
+lpsFemalec = dict({'color': colors['pink']}, **largecirclelinepoints)
+lpsMalem = dict({'color': colors['blue']}, **smallcirclelinepoints)
+lpsFemalem = dict({'color': colors['pink']}, **smallcirclelinepoints)
 fsMale = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
 fsFemale = {'facecolor': colors['pink'], 'edgecolor': fillec, 'linewidth': filllw}
 fsMales = {'facecolor': colors['blue'], 'edgecolor': 'none'}
@@ -298,7 +319,7 @@ fsFemales = {'facecolor': colors['pink'], 'edgecolor': 'none'}
 fsMalea = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
 fsFemalea = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
 
-# dictionaries for line, point, and fill styles:
+# dictionaries for line, point, linepoint and fill styles:
 style_names = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
 ls = {'A1': lsA1, 'A2': lsA2, 'A3': lsA3,
       'B1': lsB1, 'B2': lsB2, 'B3': lsB3, 'B4': lsB4,
@@ -324,6 +345,10 @@ lps = {'A1': lpsA1, 'A2': lpsA2, 'A3': lpsA3,
        'B1': lpsB1, 'B2': lpsB2, 'B3': lpsB3, 'B4': lpsB4,
        'C1': lpsC1, 'C2': lpsC2, 'C3': lpsC3,
        'Male': lpsMale, 'Female': lpsFemale}
+lpsc = {'A1': lpsA1c, 'A2': lpsA2c, 'A3': lpsA3c,
+        'B1': lpsB1c, 'B2': lpsB2c, 'B3': lpsB3c, 'B4': lpsB4c,
+        'C1': lpsC1c, 'C2': lpsC2c, 'C3': lpsC3c,
+        'Male': lpsMalec, 'Female': lpsFemalec}
 lpsm = {'A1': lpsA1m, 'A2': lpsA2m, 'A3': lpsA3m,
         'B1': lpsB1m, 'B2': lpsB2m, 'B3': lpsB3m, 'B4': lpsB4m,
         'C1': lpsC1m, 'C2': lpsC2m, 'C3': lpsC3m,
@@ -750,9 +775,11 @@ def plot_linepointstyles(ax):
     for k, name in enumerate(reversed(style_names)):
         ax.text(0.1, k, 'lps'+name)
         ax.plot([0.8, 1.1, 1.4], [k, k, k], **lps[name])
-        ax.text(2.1, k, 'lps'+name+'m')
-        ax.plot([2.8, 3.1, 3.4], [k, k, k], **lpsm[name])
-    ax.set_xlim(0.0, 4.0)
+        ax.text(2.1, k, 'lps'+name+'c')
+        ax.plot([2.8, 3.1, 3.4], [k, k, k], **lpsc[name])
+        ax.text(4.1, k, 'lps'+name+'m')
+        ax.plot([4.8, 5.1, 5.4], [k, k, k], **lpsm[name])
+    ax.set_xlim(0.0, 6.0)
     ax.set_ylim(-1.0, len(style_names))
     ax.set_title('linepoint styles')
         
