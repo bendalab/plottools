@@ -10,6 +10,7 @@ Layout settings for a plot figure.
 
 The following function is also added as a member to mpl.axes.Axes:
 - `show_spines()`: show and hide spines and ticks.
+- `set_spines_outward()`: set the specified spines outward.
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
@@ -369,6 +370,8 @@ fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
 
 """ Default spines to be shown (installed by plot_format()). """
 default_spines = 'lb'
+default_spine_offsets = {'left': (3, True), 'right': (0, True),
+                         'top': (0, True), 'bottom': (3, True)}
 
 
 def __axes__init__(ax, *args, **kwargs):
@@ -378,6 +381,7 @@ def __axes__init__(ax, *args, **kwargs):
     """
     ax.__init__orig(*args, **kwargs)
     ax.show_spines(default_spines)
+    ax.set_spines_outward(default_spine_offsets)
 
 
 def plot_format(fontsize=10.0):
@@ -550,6 +554,72 @@ def show_spines(ax, spines):
             ax.yaxis.set_ticks_position(yspines[0])
         else:
             ax.yaxis.set_ticks_position('both')
+
+
+def set_spines_outward(ax, spines, offset=0, smart_bounds=None):
+    """ Set the specified spines outward.
+
+    Parameters
+    ----------
+    ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
+        Axis whose spines are manipulated.
+        If figure, then apply manipulations on all axes of the figure.
+        If list of axes, apply manipulations on each of the given axes.
+    spines: dictionary or string
+        If dictionary then apply offsets and smart bounds as specified
+        in the dictionary for each spine individually. Valid dictionary
+        keys are "left', 'right', 'top', 'bottom'. If the corresponding
+        values are tuples, then the first value specifies the offset by
+        which the spines are moved outwards in pixels and the second one
+        the smart bound (True, False, or None). Single numbers as values
+        specify the offsets, smart bounds are set according to the
+        `smart_bound` parameter.
+        If string, specify to which spines the offset given by the `offset` argument
+        should be applied.
+        'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
+        E.g. 'lb' applies the offset to the left and bottom spine.
+    offset: float
+        Move the specified spines outward by that many pixels.
+    smart_bounds: boolean or None
+        If True do not draw the spine beyond the data range.
+        If None do not set the smart bounds behavior.
+    """
+    # collect axes:
+    if isinstance(ax, (list, tuple)):
+        axs = ax
+    else:
+        axs = ax.get_axes()
+        if not isinstance(axs, (list, tuple)):
+            axs = [axs]
+    if isinstance(spines, dict):
+        for ax in axs:
+            for sp in spines:
+                val = spines[sp]
+                if isinstance(val, (tuple, list)):
+                    offset = val[0]
+                    sb = val[1]
+                else:
+                    offset = val
+                    sb = smart_bounds
+                ax.spines[sp].set_position(('outward', offset))
+                if sb is not None:
+                    ax.spines[sp].set_smart_bounds(sb)
+    else:
+        # collect spine visibility:
+        spines_list = []
+        if 't' in spines:
+            spines_list.append('top')
+        if 'b' in spines:
+            spines_list.append('bottom')
+        if 'l' in spines:
+            spines_list.append('left')
+        if 'r' in spines:
+            spines_list.append('right')
+        for ax in axs:
+            for sp in spines_list:
+                ax.spines[sp].set_position(('outward', offset))
+                if smart_bounds is not None:
+                    ax.spines[sp].set_smart_bounds(smart_bounds)
 
 
 def lighter(color, lightness):
@@ -838,6 +908,7 @@ def demo(mode=1):
 
 # make functions available as member variables:
 mpl.axes.Axes.show_spines = show_spines
+mpl.axes.Axes.set_spines_outward = set_spines_outward
 
 
 if __name__ == "__main__":
