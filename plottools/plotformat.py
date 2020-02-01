@@ -365,10 +365,10 @@ fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
        'Male': fsMalea, 'Female': fsFemalea}
 
 
-""" Default spines to be shown (installed by plot_format()). """
+""" Default spines to be shown and their appearance (installed by plot_format()). """
 default_spines = 'lb'
-default_spine_offsets = {'left': (3, True), 'right': (0, True),
-                         'top': (0, True), 'bottom': (3, True)}
+default_spines_offsets = {'left': 0, 'right': 0, 'top': 0, 'bottom': 0}
+default_spines_bounds = {'left': 'full', 'right': 'full', 'top': 'full', 'bottom': 'full'}
 
 
 def __axes__init__(ax, *args, **kwargs):
@@ -378,7 +378,8 @@ def __axes__init__(ax, *args, **kwargs):
     """
     ax.__init__orig(*args, **kwargs)
     ax.show_spines(default_spines)
-    ax.set_spines_outward(default_spine_offsets)
+    ax.set_spines_outward(default_spines_offsets)
+    ax.set_spines_bounds(default_spines_bounds)
 
 
 def plot_format(fontsize=10.0):
@@ -426,6 +427,10 @@ def plot_format(fontsize=10.0):
     mpl.axes.Subplot.__init__ = __axes__init__
     global default_spines
     default_spines = 'lb'
+    global default_spines_offsets
+    default_spines_offsets = {'left': 3, 'right': 3, 'top': 3, 'bottom': 3}
+    global default_spines_bounds
+    default_spines_bounds = {'left': 'ticks', 'right': 'ticks', 'top': 'ticks', 'bottom': 'ticks'}
 
 
 def cm_size(*args):
@@ -745,7 +750,7 @@ def demo(mode=1):
     plot_format()
     # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.0, top=2.0, right=2.0))
+    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.5, top=2.0, right=2.0))
     # colors and linestyles:
     if isinstance(mode, int):
         plot_colors(ax, colors, mode)

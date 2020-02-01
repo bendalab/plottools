@@ -3,9 +3,10 @@
 
 Modify the appearance of spines.
 
-The following functions are added as a members to mpl.axes.Axes:
+The following functions are added as a members to mpl.axes.Axes and mpl.figure.Figure:
 - `show_spines()`: show and hide spines and corresponding tick marks.
 - `set_spines_outward()`: set the specified spines outward.
+- `set_spines_bounds()`: set bounds for the specified spines.
 """
 
 import numpy as np
@@ -19,7 +20,7 @@ def show_spines(ax, spines):
     Parameters
     ----------
     ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
-        Axis whose spines and ticks are manipulated.
+        Axis on which spine and ticks visibility is manipulated.
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
     spines: string
@@ -42,7 +43,7 @@ def show_spines(ax, spines):
     if 'r' in spines:
         yspines.append('right')
     # collect axes:
-    if isinstance(ax, (list, tuple)):
+    if isinstance(ax, (list, tuple, np.ndarray)):
         axs = ax
     else:
         axs = ax.get_axes()
@@ -71,36 +72,42 @@ def show_spines(ax, spines):
             ax.yaxis.set_ticks_position('both')
 
 
-def set_spines_outward(ax, spines, offset=0, smart_bounds=None):
+def set_spines_outward(ax, spines, offset=0):
     """ Set the specified spines outward.
 
     Parameters
     ----------
     ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
-        Axis whose spines are manipulated.
+        Axis on which spines are set outwards.
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
     spines: dictionary or string
-        If dictionary then apply offsets and smart bounds as specified
-        in the dictionary for each spine individually. Valid dictionary
-        keys are "left', 'right', 'top', 'bottom'. If the corresponding
-        values are tuples, then the first value specifies the offset by
-        which the spines are moved outwards in pixels and the second one
-        the smart bound (True, False, or None). Single numbers as values
-        specify the offsets, smart bounds are set according to the
-        `smart_bound` parameter.
+        If dictionary then apply offsets for each spine individually.
+        Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
+        The corresponding dictionary values specify the offsets
+        by which the spine is set outwards.
         If string, specify to which spines the offset given by the `offset` argument
         should be applied.
         'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
         E.g. 'lb' applies the offset to the left and bottom spine.
     offset: float
         Move the specified spines outward by that many pixels.
-    smart_bounds: boolean or None
-        If True do not draw the spine beyond the data range.
-        If None do not set the smart bounds behavior.
+
+    Examples
+    --------
+    ```
+    # set left and right spine outwards by 10 pixels:
+    ax.set_spines_outward('lr', 10)
+
+    # set the left spine outwards by 10 pixels and the right one by 5:
+    ax.set_spines_outward({'left': 10, 'right': 5})
+
+    # set the bottom spine of all axis of the figure outward by 5 pixels:
+    fig.set_spines_outward('b', 5)
+    ```
     """
     # collect axes:
-    if isinstance(ax, (list, tuple)):
+    if isinstance(ax, (list, tuple, np.ndarray)):
         axs = ax
     else:
         axs = ax.get_axes()
@@ -109,16 +116,7 @@ def set_spines_outward(ax, spines, offset=0, smart_bounds=None):
     if isinstance(spines, dict):
         for ax in axs:
             for sp in spines:
-                val = spines[sp]
-                if isinstance(val, (tuple, list)):
-                    offset = val[0]
-                    sb = val[1]
-                else:
-                    offset = val
-                    sb = smart_bounds
-                ax.spines[sp].set_position(('outward', offset))
-                if sb is not None:
-                    ax.spines[sp].set_smart_bounds(sb)
+                ax.spines[sp].set_position(('outward', spines[sp]))
     else:
         # collect spine visibility:
         spines_list = []
@@ -133,22 +131,88 @@ def set_spines_outward(ax, spines, offset=0, smart_bounds=None):
         for ax in axs:
             for sp in spines_list:
                 ax.spines[sp].set_position(('outward', offset))
-                if smart_bounds is not None:
-                    ax.spines[sp].set_smart_bounds(smart_bounds)
+
+
+def set_spines_bounds(ax, spines, bounds='full'):
+    """ Set bounds for the specified spines.
+
+    Parameters
+    ----------
+    ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
+        Axis on which spine bounds are set.
+        If figure, then apply manipulations on all axes of the figure.
+        If list of axes, apply manipulations on each of the given axes.
+    spines: dictionary or string
+        If dictionary then apply bound settings for each spine individually.
+        Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
+        The corresponding dictionary values specify the bound settings
+        (see `bounds` for possible values and their effects).
+        If string, specify to which spines the bound setttings given by
+        the `bounds` argument should be applied.
+        'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
+        E.g. 'lb' applies the bounds settings to the left and bottom spine.
+    bounds: 'full', 'data', or 'ticks'
+        If 'full' draw the spine in its full length
+        (this sets the spine's smart_bounds property to False).
+        If 'data' do not draw the spine beyond the data range
+        (this sets the spine's smart_bounds property to True).
+        If 'ticks' draw the spine only within the first and last tick mark.
+
+    Note
+    ----
+    Apply this function before adding data, setting axis limits, or manipulating tick marks.
+
+    Raises
+    ------
+    ValueError:
+        If an invalid `bounds` argument was specified.
+    """
+    # collect axes:
+    if isinstance(ax, (list, tuple, np.ndarray)):
+        axs = ax
+    else:
+        axs = ax.get_axes()
+        if not isinstance(axs, (list, tuple)):
+            axs = [axs]
+    if isinstance(spines, dict):
+        for ax in axs:
+            for sp in spines:
+                if spines[sp] == 'full':
+                    ax.spines[sp].set_smart_bounds(False)
+                elif spines[sp] == 'data':
+                    ax.spines[sp].set_smart_bounds(True)
+                elif spines[sp] == 'ticks':
+                    ax.spines[sp].set_smart_bounds(False)
+                else:
+                    raise ValueError('Invalid value for bounds of %s spine: %s. Should be one of "full", "data", "ticks")' % (sp, spines[sp]))
+    else:
+        if bounds not in ['full', 'data', 'ticks']:
+            raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
+        # collect spine visibility:
+        spines_list = []
+        if 't' in spines:
+            spines_list.append('top')
+        if 'b' in spines:
+            spines_list.append('bottom')
+        if 'l' in spines:
+            spines_list.append('left')
+        if 'r' in spines:
+            spines_list.append('right')
+        for ax in axs:
+            for sp in spines_list:
+                if bounds == 'full':
+                    ax.spines[sp].set_smart_bounds(False)
+                elif bounds == 'data':
+                    ax.spines[sp].set_smart_bounds(True)
+                elif bounds == 'ticks':
+                    ax.spines[sp].set_smart_bounds(False)
 
 
 def demo():
     """ Run a demonstration of the spine module.
     """
     fig, axs = plt.subplots(2, 2)
-    x = np.linspace(0.0, 1.0, 100)
-    y = np.sin(2.0*np.pi*x)
-    for axx in axs:
-        for ax in axx:
-            ax.plot(x, y)
-            ax.set_ylim(-1.1, 2.0)
-            ax.set_spines_outward('lrtb', 10)
-            ax.text(0.05, 1.4, "ax.set_spines_outward('lrtb', 10)")
+    # spine visibility:
     axs[0, 0].show_spines('lt')
     axs[0, 0].text(0.05, 1.7, "ax.show_spines('lt')")
     axs[0, 1].show_spines('rt')
@@ -157,12 +221,31 @@ def demo():
     axs[1, 0].text(0.05, 1.7, "ax.show_spines('lb')")
     axs[1, 1].show_spines('rb')
     axs[1, 1 ].text(0.05, 1.7, "ax.show_spines('rb')")
+    # set spines outward:
+    fig.set_spines_outward('lrtb', 10)
+    # set spine bounds:
+    set_spines_bounds(axs[0, :], 'lr', 'data')
+    for ax in axs[0, :]:
+        ax.text(0.05, 1.1, "set_spines_bounds(axs[0,:], 'lr', 'data')")
+    # plot and annotate:
+    x = np.linspace(0.0, 1.0, 100)
+    y = 0.5*np.sin(2.0*np.pi*x) + 0.5
+    for axx in axs:
+        for ax in axx:
+            ax.plot(x, y)
+            ax.set_ylim(-1.5, 2.0)
+            ax.set_yticks([-1, -0.5, 0, 0.5, 1])
+            ax.text(0.05, 1.4, "fig.set_spines_outward('lrtb', 10)")
     plt.show()
 
 
 # make functions available as member variables:
 mpl.axes.Axes.show_spines = show_spines
 mpl.axes.Axes.set_spines_outward = set_spines_outward
+mpl.axes.Axes.set_spines_bounds = set_spines_bounds
+mpl.figure.Figure.show_spines = show_spines
+mpl.figure.Figure.set_spines_outward = set_spines_outward
+mpl.figure.Figure.set_spines_bounds = set_spines_bounds
 
 
 if __name__ == "__main__":
