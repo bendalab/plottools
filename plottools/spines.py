@@ -82,14 +82,14 @@ def set_spines_outward(ax, spines, offset=0):
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
     spines: dictionary or string
-        If dictionary then apply offsets for each spine individually.
-        Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
-        The corresponding dictionary values specify the offsets
-        by which the spine is set outwards.
-        If string, specify to which spines the offset given by the `offset` argument
-        should be applied.
-        'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
-        E.g. 'lb' applies the offset to the left and bottom spine.
+        - dictionary: apply offsets for each spine individually.
+          Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
+          The corresponding dictionary values specify the offsets
+          by which the spine is set outwards.
+        - string: specify to which spines the offset given by the `offset` argument
+          should be applied.
+          'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
+          E.g. 'lb' applies the offset to the left and bottom spine.
     offset: float
         Move the specified spines outward by that many pixels.
 
@@ -143,24 +143,26 @@ def set_spines_bounds(ax, spines, bounds='full'):
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
     spines: dictionary or string
-        If dictionary then apply bound settings for each spine individually.
-        Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
-        The corresponding dictionary values specify the bound settings
-        (see `bounds` for possible values and their effects).
-        If string, specify to which spines the bound setttings given by
-        the `bounds` argument should be applied.
-        'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
-        E.g. 'lb' applies the bounds settings to the left and bottom spine.
+        - dictionary: apply bound settings for each spine individually.
+          Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
+          The corresponding dictionary values specify the bound settings
+          (see `bounds` for possible values and their effects).
+        - string: specify to which spines the bound setttings given by
+          the `bounds` argument should be applied.
+          'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
+          E.g. 'lb' applies the bounds settings to the left and bottom spine.
     bounds: 'full', 'data', or 'ticks'
-        If 'full' draw the spine in its full length
-        (this sets the spine's smart_bounds property to False).
-        If 'data' do not draw the spine beyond the data range
-        (this sets the spine's smart_bounds property to True).
-        If 'ticks' draw the spine only within the first and last tick mark.
+        - 'full': draw the spine in its full length
+           (this sets the spine's smart_bounds property to False).
+        - 'data': do not draw the spine beyond the data range
+          (this sets the spine's smart_bounds property to True).
+        - 'ticks': draw the spine only within the first and last major tick mark.
 
     Note
     ----
-    Apply this function before adding data, setting axis limits, or manipulating tick marks.
+    If you call this function before adding data, setting axis limits, or
+    manipulating tick marks, and you set bounds to 'ticks', then you need
+    to call update_spines() on the figure or axis after all the manipulations.
 
     Raises
     ------
@@ -183,8 +185,15 @@ def set_spines_bounds(ax, spines, bounds='full'):
                     ax.spines[sp].set_smart_bounds(True)
                 elif spines[sp] == 'ticks':
                     ax.spines[sp].set_smart_bounds(False)
+                    if sp in ['left', 'right']:
+                        ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
+                                                 np.max(ax.yaxis.get_majorticklocs()))
+                    else:
+                        ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
+                                                 np.max(ax.xaxis.get_majorticklocs()))
                 else:
                     raise ValueError('Invalid value for bounds of %s spine: %s. Should be one of "full", "data", "ticks")' % (sp, spines[sp]))
+                ax.spines[sp].bounds_style = spines[sp]
     else:
         if bounds not in ['full', 'data', 'ticks']:
             raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
@@ -206,8 +215,49 @@ def set_spines_bounds(ax, spines, bounds='full'):
                     ax.spines[sp].set_smart_bounds(True)
                 elif bounds == 'ticks':
                     ax.spines[sp].set_smart_bounds(False)
+                    if sp in ['left', 'right']:
+                        #print(axs[0,0].yaxis.get_majorticklocs())
+                        #print(axs[0,0].get_yticks())
+                        #print(axs[0,0].yaxis.get_view_interval())
+                        #print(axs[0,0].get_ylim())
+                        ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
+                                                 np.max(ax.yaxis.get_majorticklocs()))
+                    else:
+                        ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
+                                                 np.max(ax.xaxis.get_majorticklocs()))
+                ax.spines[sp].bounds_style = bounds
 
 
+def update_spines(ax):
+    """ Update bounds of spines.
+
+    This is needed for applying the 'ticks' setting of set_spines_bounds().
+    Call it after all manipulations of the axes.
+
+    Parameters
+    ----------
+    ax: matplotlib figure, or matplotlib axis
+        Axis on which spine bounds are to be updated.
+        If figure, then apply manipulations on all axes of the figure.
+    """
+    # collect axes:
+    axs = ax.get_axes()
+    if not isinstance(axs, (list, tuple)):
+        axs = [axs]
+    # update bounds of spines:
+    for ax in axs:
+        for sp in ['left', 'right']:
+            if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
+                ax.spines[sp].set_smart_bounds(False)
+                ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
+                                         np.max(ax.yaxis.get_majorticklocs()))
+        for sp in ['top', 'bottom']:
+            if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
+                ax.spines[sp].set_smart_bounds(False)
+                ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
+                                         np.max(ax.xaxis.get_majorticklocs()))
+
+            
 def demo():
     """ Run a demonstration of the spine module.
     """
@@ -227,6 +277,8 @@ def demo():
     set_spines_bounds(axs[0, :], 'lr', 'data')
     for ax in axs[0, :]:
         ax.text(0.05, 1.1, "set_spines_bounds(axs[0,:], 'lr', 'data')")
+    set_spines_bounds(axs[1, 1], 'lr', 'ticks')
+    axs[1, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'ticks')")
     # plot and annotate:
     x = np.linspace(0.0, 1.0, 100)
     y = 0.5*np.sin(2.0*np.pi*x) + 0.5
@@ -236,6 +288,8 @@ def demo():
             ax.set_ylim(-1.5, 2.0)
             ax.set_yticks([-1, -0.5, 0, 0.5, 1])
             ax.text(0.05, 1.4, "fig.set_spines_outward('lrtb', 10)")
+    # set spine bounds:
+    fig.update_spines()
     plt.show()
 
 
@@ -243,9 +297,11 @@ def demo():
 mpl.axes.Axes.show_spines = show_spines
 mpl.axes.Axes.set_spines_outward = set_spines_outward
 mpl.axes.Axes.set_spines_bounds = set_spines_bounds
+mpl.axes.Axes.update_spines = update_spines
 mpl.figure.Figure.show_spines = show_spines
 mpl.figure.Figure.set_spines_outward = set_spines_outward
 mpl.figure.Figure.set_spines_bounds = set_spines_bounds
+mpl.figure.Figure.update_spines = update_spines
 
 
 if __name__ == "__main__":
