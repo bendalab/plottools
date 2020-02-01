@@ -81,15 +81,14 @@ def set_spines_outward(ax, spines, offset=0):
         Axis on which spines are set outwards.
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
-    spines: dictionary or string
-        - dictionary: apply offsets for each spine individually.
-          Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
-          The corresponding dictionary values specify the offsets
-          by which the spine is set outwards.
+    spines: string or dictionary 
         - string: specify to which spines the offset given by the `offset` argument
           should be applied.
           'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
           E.g. 'lb' applies the offset to the left and bottom spine.
+        - dictionary: apply offsets for several sets of spines individually.
+          Dictionary keys are strings spcifying the spines as described above.
+          The corresponding values specify the offset by which the spines are move outwards.
     offset: float
         Move the specified spines outward by that many pixels.
 
@@ -99,25 +98,24 @@ def set_spines_outward(ax, spines, offset=0):
     # set left and right spine outwards by 10 pixels:
     ax.set_spines_outward('lr', 10)
 
-    # set the left spine outwards by 10 pixels and the right one by 5:
-    ax.set_spines_outward({'left': 10, 'right': 5})
+    # set the left and right spines outwards by 10 pixels and the top and bottom ones by 5:
+    ax.set_spines_outward({'lr': 10, 'bt': 5})
 
     # set the bottom spine of all axis of the figure outward by 5 pixels:
     fig.set_spines_outward('b', 5)
     ```
     """
-    # collect axes:
-    if isinstance(ax, (list, tuple, np.ndarray)):
-        axs = ax
+    if isinstance(spines, dict):
+        for sp in spines:
+            set_spines_outward(ax, sp, spines[sp])
     else:
-        axs = ax.get_axes()
+        # collect axes:
+        if isinstance(ax, (list, tuple, np.ndarray)):
+            axs = ax
+        else:
+            axs = ax.get_axes()
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
-    if isinstance(spines, dict):
-        for ax in axs:
-            for sp in spines:
-                ax.spines[sp].set_position(('outward', spines[sp]))
-    else:
         # collect spine visibility:
         spines_list = []
         if 't' in spines:
@@ -142,15 +140,15 @@ def set_spines_bounds(ax, spines, bounds='full'):
         Axis on which spine bounds are set.
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
-    spines: dictionary or string
-        - dictionary: apply bound settings for each spine individually.
-          Valid dictionary keys are 'left', 'right', 'top', 'bottom'.
-          The corresponding dictionary values specify the bound settings
-          (see `bounds` for possible values and their effects).
+    spines: string or dictionary 
         - string: specify to which spines the bound setttings given by
           the `bounds` argument should be applied.
           'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
           E.g. 'lb' applies the bounds settings to the left and bottom spine.
+        - dictionary: apply bound settings for several sets of spines.
+          Dictionary keys are strings spcifying the spines as described above.
+          The corresponding values specify the bound settings
+          (see `bounds` below for possible values and their effects).
     bounds: 'full', 'data', or 'ticks'
         - 'full': draw the spine in its full length
            (this sets the spine's smart_bounds property to False).
@@ -169,35 +167,20 @@ def set_spines_bounds(ax, spines, bounds='full'):
     ValueError:
         If an invalid `bounds` argument was specified.
     """
-    # collect axes:
-    if isinstance(ax, (list, tuple, np.ndarray)):
-        axs = ax
+    if isinstance(spines, dict):
+        for sp in spines:
+            set_spines_bounds(ax, sp, spines[sp])
     else:
-        axs = ax.get_axes()
+        # collect axes:
+        if isinstance(ax, (list, tuple, np.ndarray)):
+            axs = ax
+        else:
+            axs = ax.get_axes()
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
-    if isinstance(spines, dict):
-        for ax in axs:
-            for sp in spines:
-                if spines[sp] == 'full':
-                    ax.spines[sp].set_smart_bounds(False)
-                elif spines[sp] == 'data':
-                    ax.spines[sp].set_smart_bounds(True)
-                elif spines[sp] == 'ticks':
-                    ax.spines[sp].set_smart_bounds(False)
-                    if sp in ['left', 'right']:
-                        ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
-                                                 np.max(ax.yaxis.get_majorticklocs()))
-                    else:
-                        ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
-                                                 np.max(ax.xaxis.get_majorticklocs()))
-                else:
-                    raise ValueError('Invalid value for bounds of %s spine: %s. Should be one of "full", "data", "ticks")' % (sp, spines[sp]))
-                ax.spines[sp].bounds_style = spines[sp]
-    else:
         if bounds not in ['full', 'data', 'ticks']:
             raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
-        # collect spine visibility:
+        # collect spine ids:
         spines_list = []
         if 't' in spines:
             spines_list.append('top')

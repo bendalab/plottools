@@ -6,7 +6,6 @@ Layout settings for a plot figure.
 - `plot_format()`: set default plot format.
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
-- `colors`: list of nice colors
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
@@ -366,9 +365,9 @@ fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
 
 
 """ Default spines to be shown and their appearance (installed by plot_format()). """
-default_spines = 'lb'
-default_spines_offsets = {'left': 0, 'right': 0, 'top': 0, 'bottom': 0}
-default_spines_bounds = {'left': 'full', 'right': 'full', 'top': 'full', 'bottom': 'full'}
+__default_spines = 'lb'
+__default_spines_offsets = {'lrtb': 3}
+__default_spines_bounds = {'lrtb': 'full'}
 
 
 def __axes__init__(ax, *args, **kwargs):
@@ -377,12 +376,12 @@ def __axes__init__(ax, *args, **kwargs):
     Used by plot_format().
     """
     ax.__init__orig(*args, **kwargs)
-    ax.show_spines(default_spines)
-    ax.set_spines_outward(default_spines_offsets)
-    ax.set_spines_bounds(default_spines_bounds)
+    ax.show_spines(__default_spines)
+    ax.set_spines_outward(__default_spines_offsets)
+    ax.set_spines_bounds(__default_spines_bounds)
 
 
-def plot_format(fontsize=10.0):
+def plot_format(fontsize=10.0, spines=None, spines_offsets=None, spines_bounds=None):
     """ Set default plot format.
 
     Call this function *before* you create a matplotlib figure.
@@ -393,6 +392,12 @@ def plot_format(fontsize=10.0):
     ----------
     fontsize: float
         Fontsize for text in points.
+    spines: string
+        Spines to be shown. See spines.show_spines() for details.
+    spines_offsets: dict
+        Offsets for moving spines outward. See spines.set_spines_outward() for details.
+    spines_bounds: dict
+        Bounds for the spines. See spines.set_spines_bounds() for details.
     """
     mpl.rcParams['figure.facecolor'] = 'white'
     mpl.rcParams['font.family'] = 'sans-serif'
@@ -425,12 +430,15 @@ def plot_format(fontsize=10.0):
     # extend Axes constructor (for modifying spine appearence):
     mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
     mpl.axes.Subplot.__init__ = __axes__init__
-    global default_spines
-    default_spines = 'lb'
-    global default_spines_offsets
-    default_spines_offsets = {'left': 3, 'right': 3, 'top': 3, 'bottom': 3}
-    global default_spines_bounds
-    default_spines_bounds = {'left': 'full', 'right': 'full', 'top': 'full', 'bottom': 'full'}
+    if spines is not None:
+        global __default_spines
+        __default_spines = spines
+    if spines_offsets is not None:
+        global __default_spines_offsets
+        __default_spines_offsets = spines_offsets
+    if spines_bounds is not None:
+        global __default_spines_bounds
+        __default_spines_bounds = spines_bounds
 
 
 def cm_size(*args):
