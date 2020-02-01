@@ -430,7 +430,7 @@ def plot_format(fontsize=10.0):
     global default_spines_offsets
     default_spines_offsets = {'left': 3, 'right': 3, 'top': 3, 'bottom': 3}
     global default_spines_bounds
-    default_spines_bounds = {'left': 'ticks', 'right': 'ticks', 'top': 'ticks', 'bottom': 'ticks'}
+    default_spines_bounds = {'left': 'full', 'right': 'full', 'top': 'full', 'bottom': 'full'}
 
 
 def cm_size(*args):

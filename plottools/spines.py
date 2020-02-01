@@ -216,15 +216,17 @@ def set_spines_bounds(ax, spines, bounds='full'):
                 elif bounds == 'ticks':
                     ax.spines[sp].set_smart_bounds(False)
                     if sp in ['left', 'right']:
-                        #print(axs[0,0].yaxis.get_majorticklocs())
-                        #print(axs[0,0].get_yticks())
-                        #print(axs[0,0].yaxis.get_view_interval())
-                        #print(axs[0,0].get_ylim())
-                        ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
-                                                 np.max(ax.yaxis.get_majorticklocs()))
+                        view = ax.yaxis.get_view_interval()
+                        ticks = ax.yaxis.get_majorticklocs()
+                        ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                        if len(ticks) > 0:
+                            ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
                     else:
-                        ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
-                                                 np.max(ax.xaxis.get_majorticklocs()))
+                        view = ax.xaxis.get_view_interval()
+                        ticks = ax.xaxis.get_majorticklocs()
+                        ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                        if len(ticks) > 0:
+                            ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
                 ax.spines[sp].bounds_style = bounds
 
 
@@ -244,13 +246,19 @@ def __update_spines(fig):
         for sp in ['left', 'right']:
             if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
                 ax.spines[sp].set_smart_bounds(False)
-                ax.spines[sp].set_bounds(np.min(ax.yaxis.get_majorticklocs()),
-                                         np.max(ax.yaxis.get_majorticklocs()))
+                view = ax.yaxis.get_view_interval()
+                ticks = ax.yaxis.get_majorticklocs()
+                ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                if len(ticks) > 0:
+                    ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
         for sp in ['top', 'bottom']:
             if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
                 ax.spines[sp].set_smart_bounds(False)
-                ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
-                                         np.max(ax.xaxis.get_majorticklocs()))
+                view = ax.xaxis.get_view_interval()
+                ticks = ax.xaxis.get_majorticklocs()
+                ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                if len(ticks) > 0:
+                    ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
 
     
 def __fig_show_spines(fig, *args, **kwargs):
