@@ -228,24 +228,19 @@ def set_spines_bounds(ax, spines, bounds='full'):
                 ax.spines[sp].bounds_style = bounds
 
 
-def update_spines(ax):
+def __update_spines(fig):
     """ Update bounds of spines.
 
     This is needed for applying the 'ticks' setting of set_spines_bounds().
-    Call it after all manipulations of the axes.
+    The spines module patches the plt.show(), fig.show(), and fig.savefig()
+    functions to first call __update_spines(). This way this function is
+    called automatically right before the figure is drawn.
 
     Parameters
     ----------
-    ax: matplotlib figure, or matplotlib axis
-        Axis on which spine bounds are to be updated.
-        If figure, then apply manipulations on all axes of the figure.
+    fig: matplotlib figure
     """
-    # collect axes:
-    axs = ax.get_axes()
-    if not isinstance(axs, (list, tuple)):
-        axs = [axs]
-    # update bounds of spines:
-    for ax in axs:
+    for ax in fig.get_axes():
         for sp in ['left', 'right']:
             if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
                 ax.spines[sp].set_smart_bounds(False)
@@ -256,6 +251,55 @@ def update_spines(ax):
                 ax.spines[sp].set_smart_bounds(False)
                 ax.spines[sp].set_bounds(np.min(ax.xaxis.get_majorticklocs()),
                                          np.max(ax.xaxis.get_majorticklocs()))
+
+    
+def __fig_show_spines(fig, *args, **kwargs):
+    """ Call __update_spines() on the figures before showing it.
+    """
+    fig.update_spines()
+    fig.show_orig_spines(*args, **kwargs)
+
+    
+def __fig_savefig_spines(fig, *args, **kwargs):
+    """ Call __update_spines() on the figures before saving it.
+    """
+    fig.update_spines()
+    fig.savefig_orig_spines(*args, **kwargs)
+
+
+def __plt_show_spines(*args, **kwargs):
+    """ Call __update_spines() on all figures before showing them.
+    """
+    for fig in map(plt.figure, plt.get_fignums()):
+        fig.update_spines()
+    plt.show_orig_spines(*args, **kwargs)
+
+
+def __plt_savefig_spines(*args, **kwargs):
+    """ Call __update_spines() on the curren figure before saving it.
+    """
+    plt.gcf().update_spines()
+    plt.savefig_orig_spines(*args, **kwargs)
+
+
+# make functions available as member variables:
+mpl.axes.Axes.show_spines = show_spines
+mpl.axes.Axes.set_spines_outward = set_spines_outward
+mpl.axes.Axes.set_spines_bounds = set_spines_bounds
+mpl.figure.Figure.show_spines = show_spines
+mpl.figure.Figure.set_spines_outward = set_spines_outward
+mpl.figure.Figure.set_spines_bounds = set_spines_bounds
+mpl.figure.Figure.update_spines = __update_spines
+
+# install __update_spines():
+mpl.figure.Figure.savefig_orig_spines = mpl.figure.Figure.savefig
+mpl.figure.Figure.savefig = __fig_savefig_spines
+mpl.figure.Figure.show_orig_spines = mpl.figure.Figure.show
+mpl.figure.Figure.show = __fig_show_spines
+plt.savefig_orig_spines = plt.savefig
+plt.savefig = __plt_savefig_spines
+plt.show_orig_spines = plt.show
+plt.show = __plt_show_spines
 
             
 def demo():
@@ -274,10 +318,11 @@ def demo():
     # set spines outward:
     fig.set_spines_outward('lrtb', 10)
     # set spine bounds:
-    set_spines_bounds(axs[0, :], 'lr', 'data')
-    for ax in axs[0, :]:
-        ax.text(0.05, 1.1, "set_spines_bounds(axs[0,:], 'lr', 'data')")
-    set_spines_bounds(axs[1, 1], 'lr', 'ticks')
+    axs[0, 1].set_spines_bounds('lr', 'full')
+    axs[0, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'full')")
+    axs[1, 0].set_spines_bounds('lr', 'data')
+    axs[1, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'data')")
+    axs[1, 1].set_spines_bounds('lr', 'ticks')
     axs[1, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'ticks')")
     # plot and annotate:
     x = np.linspace(0.0, 1.0, 100)
@@ -285,23 +330,11 @@ def demo():
     for axx in axs:
         for ax in axx:
             ax.plot(x, y)
-            ax.set_ylim(-1.5, 2.0)
-            ax.set_yticks([-1, -0.5, 0, 0.5, 1])
+            ax.set_ylim(-1.0, 2.0)
+            ax.set_yticks([-0.5, 0, 0.5, 1])
             ax.text(0.05, 1.4, "fig.set_spines_outward('lrtb', 10)")
-    # set spine bounds:
-    fig.update_spines()
+    #fig.savefig('spines.pdf')
     plt.show()
-
-
-# make functions available as member variables:
-mpl.axes.Axes.show_spines = show_spines
-mpl.axes.Axes.set_spines_outward = set_spines_outward
-mpl.axes.Axes.set_spines_bounds = set_spines_bounds
-mpl.axes.Axes.update_spines = update_spines
-mpl.figure.Figure.show_spines = show_spines
-mpl.figure.Figure.set_spines_outward = set_spines_outward
-mpl.figure.Figure.set_spines_bounds = set_spines_bounds
-mpl.figure.Figure.update_spines = update_spines
 
 
 if __name__ == "__main__":
