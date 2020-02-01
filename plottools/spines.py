@@ -156,12 +156,6 @@ def set_spines_bounds(ax, spines, bounds='full'):
           (this sets the spine's smart_bounds property to True).
         - 'ticks': draw the spine only within the first and last major tick mark.
 
-    Note
-    ----
-    If you call this function before adding data, setting axis limits, or
-    manipulating tick marks, and you set bounds to 'ticks', then you need
-    to call update_spines() on the figure or axis after all the manipulations.
-
     Raises
     ------
     ValueError:
@@ -192,24 +186,6 @@ def set_spines_bounds(ax, spines, bounds='full'):
             spines_list.append('right')
         for ax in axs:
             for sp in spines_list:
-                if bounds == 'full':
-                    ax.spines[sp].set_smart_bounds(False)
-                elif bounds == 'data':
-                    ax.spines[sp].set_smart_bounds(True)
-                elif bounds == 'ticks':
-                    ax.spines[sp].set_smart_bounds(False)
-                    if sp in ['left', 'right']:
-                        view = ax.yaxis.get_view_interval()
-                        ticks = ax.yaxis.get_majorticklocs()
-                        ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                        if len(ticks) > 0:
-                            ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
-                    else:
-                        view = ax.xaxis.get_view_interval()
-                        ticks = ax.xaxis.get_majorticklocs()
-                        ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                        if len(ticks) > 0:
-                            ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
                 ax.spines[sp].bounds_style = bounds
 
 
@@ -227,21 +203,33 @@ def __update_spines(fig):
     """
     for ax in fig.get_axes():
         for sp in ['left', 'right']:
-            if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
-                ax.spines[sp].set_smart_bounds(False)
+            if hasattr(ax.spines[sp], 'bounds_style'):
                 view = ax.yaxis.get_view_interval()
-                ticks = ax.yaxis.get_majorticklocs()
-                ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                if len(ticks) > 0:
-                    ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
+                if ax.spines[sp].bounds_style == 'ticks':
+                    ax.spines[sp].set_smart_bounds(False)
+                    ticks = ax.yaxis.get_majorticklocs()
+                    ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                    if len(ticks) > 0:
+                        ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
+                elif ax.spines[sp].bounds_style == 'data':
+                    ax.spines[sp].set_smart_bounds(True)
+                elif ax.spines[sp].bounds_style == 'full':
+                    ax.spines[sp].set_smart_bounds(False)
+                    #ax.spines[sp].set_bounds(view[0], view[1])
         for sp in ['top', 'bottom']:
-            if hasattr(ax.spines[sp], 'bounds_style') and ax.spines[sp].bounds_style == 'ticks':
-                ax.spines[sp].set_smart_bounds(False)
+            if hasattr(ax.spines[sp], 'bounds_style'):
                 view = ax.xaxis.get_view_interval()
-                ticks = ax.xaxis.get_majorticklocs()
-                ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                if len(ticks) > 0:
-                    ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
+                if ax.spines[sp].bounds_style == 'ticks':
+                    ax.spines[sp].set_smart_bounds(False)
+                    ticks = ax.xaxis.get_majorticklocs()
+                    ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                    if len(ticks) > 0:
+                        ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
+                elif ax.spines[sp].bounds_style == 'data':
+                    ax.spines[sp].set_smart_bounds(True)
+                elif ax.spines[sp].bounds_style == 'full':
+                    ax.spines[sp].set_smart_bounds(False)
+                    #ax.spines[sp].set_bounds(view[0], view[1])
 
     
 def __fig_show_spines(fig, *args, **kwargs):
