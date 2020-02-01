@@ -1,5 +1,5 @@
 """
-# Axis labels
+# Labels
 
 Annotate axis with label and unit.
 
@@ -54,7 +54,7 @@ def set_xlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the set_xlabel() function.
     """
-    ax.set_xlabel_orig(__axis_label(label, unit), **kwargs)
+    ax.set_xlabel_labels(__axis_label(label, unit), **kwargs)
 
         
 def set_ylabel(ax, label, unit=None, **kwargs):
@@ -71,7 +71,7 @@ def set_ylabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the set_ylabel() function.
     """
-    ax.set_ylabel_orig(__axis_label(label, unit), **kwargs)
+    ax.set_ylabel_labels(__axis_label(label, unit), **kwargs)
 
         
 def set_zlabel(ax, label, unit=None, **kwargs):
@@ -88,8 +88,16 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the set_zlabel() function.
     """
-    ax.set_zlabel_orig(__axis_label(label, unit), **kwargs)
+    ax.set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
+
+# make the functions available as member variables:
+mpl.axes.Axes.set_xlabel_labels = mpl.axes.Axes.set_xlabel
+mpl.axes.Axes.set_xlabel = set_xlabel
+mpl.axes.Axes.set_ylabel_labels = mpl.axes.Axes.set_ylabel
+mpl.axes.Axes.set_ylabel = set_ylabel
+Axes3D.set_zlabel_labels = Axes3D.set_zlabel
+Axes3D.set_zlabel = set_zlabel
 
 
 def demo():
@@ -107,15 +115,6 @@ def demo():
     axis_label_format = '{label} / {unit}'   # usually you would do this before any plotting!
     ax.set_ylabel('Amplitude', 'Pa')
     plt.show()
-
-
-# make the functions available as member variables:
-mpl.axes.Axes.set_xlabel_orig = mpl.axes.Axes.set_xlabel
-mpl.axes.Axes.set_xlabel = set_xlabel
-mpl.axes.Axes.set_ylabel_orig = mpl.axes.Axes.set_ylabel
-mpl.axes.Axes.set_ylabel = set_ylabel
-Axes3D.set_zlabel_orig = Axes3D.set_zlabel
-Axes3D.set_zlabel = set_zlabel
 
 
 if __name__ == "__main__":

@@ -23,7 +23,8 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from .spines import show_spines
+from .spines import show_spines, set_spines_outward, set_spines_bounds
+from .labels import set_xlabel, set_ylabel, set_zlabel
 
 
 """ Muted colors used by the Benda-lab. """
