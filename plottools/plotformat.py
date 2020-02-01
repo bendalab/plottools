@@ -24,7 +24,13 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 from .spines import show_spines, set_spines_outward, set_spines_bounds
+from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
+from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_xlabel, set_ylabel, set_zlabel
+from .insets import inset, zoomed_inset
+from .labelaxes import label_axes
+from .scalebars import xscalebar, yscalebar, scalebars
+from .significance import significance_bar
 
 
 """ Muted colors used by the Benda-lab. """
@@ -382,7 +388,8 @@ def __axes__init__(ax, *args, **kwargs):
     ax.set_spines_bounds(__default_spines_bounds)
 
 
-def plot_format(fontsize=10.0, spines=None, spines_offsets=None, spines_bounds=None):
+def plot_format(fontsize=10.0, label_format=None,
+                spines=None, spines_offsets=None, spines_bounds=None):
     """ Set default plot format.
 
     Call this function *before* you create a matplotlib figure.
@@ -393,6 +400,8 @@ def plot_format(fontsize=10.0, spines=None, spines_offsets=None, spines_bounds=N
     ----------
     fontsize: float
         Fontsize for text in points.
+    label_format: string
+        Defines how an axis label is formatted from a label and an unit.
     spines: string
         Spines to be shown. See spines.show_spines() for details.
     spines_offsets: dict
@@ -424,9 +433,10 @@ def plot_format(fontsize=10.0, spines=None, spines_offsets=None, spines_bounds=N
     else:
         mpl.rcParams['axes.color_cycle'] = color_cycle
     
-    # when using axislabels module, define the appearance of axis labels:
-    #global axis_label_format
-    #axis_label_format = '{label} [{unit}]'
+    # define the appearance of axis labels:
+    if label_format:
+        global axis_label_format
+        axis_label_format = label_format
     
     # extend Axes constructor (for modifying spine appearence):
     mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__

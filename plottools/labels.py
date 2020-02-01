@@ -32,7 +32,8 @@ def __axis_label(label, unit=None):
     Returns
     -------
     label: string
-        An axis label formatted from `label` and `unit`.
+        An axis label formatted from `label` and `unit` according to
+        the `axis_label_format` string.
     """
     if not unit:
         return label
