@@ -149,12 +149,12 @@ def set_spines_bounds(ax, spines, bounds='full'):
           Dictionary keys are strings spcifying the spines as described above.
           The corresponding values specify the bound settings
           (see `bounds` below for possible values and their effects).
-    bounds: 'full', 'data', or 'ticks'
-        - 'full': draw the spine in its full length
-           (this sets the spine's smart_bounds property to False).
-        - 'data': do not draw the spine beyond the data range
-          (this sets the spine's smart_bounds property to True).
+    bounds: 'full', 'data', 'ticks' or tuple
+        - 'full': draw the spine in its full length (default)
+        - 'data': do not draw the spine beyond the data range, uses matplotlib's smart_bounds
         - 'ticks': draw the spine only within the first and last major tick mark.
+        - tuple: two values of 'full', 'data', or 'ticks' specifying the lower
+          and upper bound separately.
 
     Raises
     ------
@@ -172,8 +172,22 @@ def set_spines_bounds(ax, spines, bounds='full'):
             axs = ax.get_axes()
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
-        if bounds not in ['full', 'data', 'ticks']:
-            raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
+        if isinstance(bounds, (tuple, list)):
+            if len(bounds) != 2:
+                raise ValueError('Invalid number of elements for bounds. Should be one or two.')
+            if bounds[0] not in ['full', 'data', 'ticks']:
+                raise ValueError('Invalid value for lower bound: %s. Should be one of "full", "data", "ticks")' % bounds[0])
+            if bounds[1] not in ['full', 'data', 'ticks']:
+                raise ValueError('Invalid value for upper bound: %s. Should be one of "full", "data", "ticks")' % bounds[1])
+            lower_bound = bounds[0]
+            upper_bound = bounds[1]
+        else:
+            if bounds not in ['full', 'data', 'ticks']:
+                raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
+            lower_bound = bounds
+            upper_bound = bounds
+        if lower_bound == 'data' and lower_bound != upper_bound:
+            raise ValueError('Invalid value for smart bounds: both upper and lower bound need to be set to "data".' )
         # collect spine ids:
         spines_list = []
         if 't' in spines:
@@ -186,7 +200,7 @@ def set_spines_bounds(ax, spines, bounds='full'):
             spines_list.append('right')
         for ax in axs:
             for sp in spines_list:
-                ax.spines[sp].bounds_style = bounds
+                ax.spines[sp].bounds_style = (lower_bound, upper_bound)
 
 
 def __update_spines(fig):
@@ -202,34 +216,31 @@ def __update_spines(fig):
     fig: matplotlib figure
     """
     for ax in fig.get_axes():
-        for sp in ['left', 'right']:
+        for sp in ['left', 'right', 'top', 'bottom']:
             if hasattr(ax.spines[sp], 'bounds_style'):
-                view = ax.yaxis.get_view_interval()
-                if ax.spines[sp].bounds_style == 'ticks':
-                    ax.spines[sp].set_smart_bounds(False)
-                    ticks = ax.yaxis.get_majorticklocs()
-                    ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                    if len(ticks) > 0:
-                        ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
-                elif ax.spines[sp].bounds_style == 'data':
+                if ax.spines[sp].bounds_style[0] == 'data':
                     ax.spines[sp].set_smart_bounds(True)
-                elif ax.spines[sp].bounds_style == 'full':
+                else:
                     ax.spines[sp].set_smart_bounds(False)
-                    #ax.spines[sp].set_bounds(view[0], view[1])
-        for sp in ['top', 'bottom']:
-            if hasattr(ax.spines[sp], 'bounds_style'):
-                view = ax.xaxis.get_view_interval()
-                if ax.spines[sp].bounds_style == 'ticks':
-                    ax.spines[sp].set_smart_bounds(False)
-                    ticks = ax.xaxis.get_majorticklocs()
-                    ticks= ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                    if len(ticks) > 0:
-                        ax.spines[sp].set_bounds(np.min(ticks), np.max(ticks))
-                elif ax.spines[sp].bounds_style == 'data':
-                    ax.spines[sp].set_smart_bounds(True)
-                elif ax.spines[sp].bounds_style == 'full':
-                    ax.spines[sp].set_smart_bounds(False)
-                    #ax.spines[sp].set_bounds(view[0], view[1])
+                    if sp in ['top', 'bottom']:
+                        view = sorted(ax.xaxis.get_view_interval())
+                        ticks = np.asarray(ax.xaxis.get_majorticklocs())
+                    else:
+                        view = sorted(ax.yaxis.get_view_interval())
+                        ticks = np.asarray(ax.yaxis.get_majorticklocs())
+                    # limit ticks to view:
+                    ticks = ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                    if len(ticks) < 2:
+                        ticks = view
+                    else:
+                        ticks = (np.min(ticks), np.max(ticks))
+                    lower = view[0]
+                    upper = view[1]
+                    if ax.spines[sp].bounds_style[0] == 'ticks':
+                        lower = ticks[0]
+                    if ax.spines[sp].bounds_style[1] == 'ticks':
+                        upper = ticks[1]
+                    ax.spines[sp].set_bounds(lower, upper)
 
     
 def __fig_show_spines(fig, *args, **kwargs):
@@ -284,16 +295,20 @@ plt.show = __plt_show_spines
 def demo():
     """ Run a demonstration of the spine module.
     """
-    fig, axs = plt.subplots(2, 2)
+    fig, axs = plt.subplots(3, 2, figsize=(10, 8))
     # spine visibility:
     axs[0, 0].show_spines('lt')
     axs[0, 0].text(0.05, 1.7, "ax.show_spines('lt')")
     axs[0, 1].show_spines('rt')
     axs[0, 1].text(0.05, 1.7, "ax.show_spines('rt')")
-    axs[1, 0].show_spines('lb')
-    axs[1, 0].text(0.05, 1.7, "ax.show_spines('lb')")
-    axs[1, 1].show_spines('rb')
-    axs[1, 1 ].text(0.05, 1.7, "ax.show_spines('rb')")
+    axs[1, 0].show_spines('l')
+    axs[1, 0].text(0.05, 1.7, "ax.show_spines('l')")
+    axs[1, 1].show_spines('r')
+    axs[1, 1 ].text(0.05, 1.7, "ax.show_spines('r')")
+    axs[2, 0].show_spines('lb')
+    axs[2, 0].text(0.05, 1.7, "ax.show_spines('lb')")
+    axs[2, 1].show_spines('rb')
+    axs[2, 1 ].text(0.05, 1.7, "ax.show_spines('rb')")
     # set spines outward:
     fig.set_spines_outward('lrtb', 10)
     # set spine bounds:
@@ -303,6 +318,10 @@ def demo():
     axs[1, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'data')")
     axs[1, 1].set_spines_bounds('lr', 'ticks')
     axs[1, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'ticks')")
+    axs[2, 0].set_spines_bounds('lr', ('full', 'ticks'))
+    axs[2, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('full', 'ticks'))")
+    axs[2, 1].set_spines_bounds('lr', ('ticks', 'full'))
+    axs[2, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('ticks', 'full'))")
     # plot and annotate:
     x = np.linspace(0.0, 1.0, 100)
     y = 0.5*np.sin(2.0*np.pi*x) + 0.5
