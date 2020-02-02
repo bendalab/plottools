@@ -26,7 +26,7 @@ from collections import OrderedDict
 from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
-from .labels import set_label_format
+from .labels import set_label_format, install_align_labels
 from .insets import inset, zoomed_inset
 from .labelaxes import label_axes
 from .scalebars import xscalebar, yscalebar, scalebars
@@ -421,7 +421,8 @@ def plot_format(fontsize=10.0, label_format=None,
     if label_format is None:
         label_format = '{label} [{unit}]'
     set_label_format(label_format)
-
+    install_align_labels(5, 10)
+    
     # spines:
     if spines is None:
         spines = 'lb'

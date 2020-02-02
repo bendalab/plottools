@@ -5,7 +5,7 @@ Simplify creation of publication-quality figures.
 - `plotformat`: layout settings for a plot figure.
 - `spines`: modify the appearance of spines.
 - `ticks`: convience functions for setting tick locations and formats.
-- `labels`: annotate axis with label and unit.
+- `labels`: annotate axis with label and unit and align axes labels.
 - `labelaxes`: mark panels with a label.
 - `insets`: insets made easy.
 - `scalebars`: labeled scale bars.

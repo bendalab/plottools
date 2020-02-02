@@ -253,14 +253,14 @@ def __update_spines(fig):
 
     
 def __fig_show_spines(fig, *args, **kwargs):
-    """ Call __update_spines() on the figures before showing it.
+    """ Call __update_spines() on the figure before showing it.
     """
     fig.update_spines()
     fig.show_orig_spines(*args, **kwargs)
 
     
 def __fig_savefig_spines(fig, *args, **kwargs):
-    """ Call __update_spines() on the figures before saving it.
+    """ Call __update_spines() on the figure before saving it.
     """
     fig.update_spines()
     fig.savefig_orig_spines(*args, **kwargs)
@@ -275,7 +275,7 @@ def __plt_show_spines(*args, **kwargs):
 
 
 def __plt_savefig_spines(*args, **kwargs):
-    """ Call __update_spines() on the curren figure before saving it.
+    """ Call __update_spines() on the current figure before saving it.
     """
     plt.gcf().update_spines()
     plt.savefig_orig_spines(*args, **kwargs)
