@@ -107,6 +107,29 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     ax.set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
+def align_labels(fig):
+    # get axes positions and ticklabel widths:
+    renderer = fig.canvas.get_renderer()
+    xap = np.zeros(len(fig.get_axes()))
+    xlw = np.zeros(len(fig.get_axes()))
+    for k, ax in enumerate(fig.get_axes()):
+        # XXX need to check for existing label, vertical rotation, xlabel, etc.
+        ax_bbox = ax.get_window_extent().get_points()
+        pixelx = np.abs(np.diff(ax_bbox[:,0]))[0]
+        yax = ax.yaxis
+        tw = yax.get_text_widths(renderer)[0]
+        tw -= np.abs(np.diff(yax.get_label().get_window_extent(renderer).get_points()[:,0]))[0]
+        xc = tw/pixelx
+        xlw[k] = xc
+        xap[k] = ax_bbox[0,0]
+    # compute label position for axes with same position:
+    for xp in set(xap):
+        xlw[xap == xp] = np.max(xlw[xap == xp])
+    # set label position:
+    for k, ax in enumerate(fig.get_axes()):
+        ax.yaxis.set_label_coords(-xlw[k], 0.5, None)
+
+
 # make the functions available as member variables:
 mpl.axes.Axes.set_xlabel_labels = mpl.axes.Axes.set_xlabel
 mpl.axes.Axes.set_xlabel = set_xlabel
@@ -114,22 +137,40 @@ mpl.axes.Axes.set_ylabel_labels = mpl.axes.Axes.set_ylabel
 mpl.axes.Axes.set_ylabel = set_ylabel
 Axes3D.set_zlabel_labels = Axes3D.set_zlabel
 Axes3D.set_zlabel = set_zlabel
+mpl.figure.Figure.align_labels = align_labels
 
 
 def demo():
     """ Run a demonstration of the axislabels module.
     """
-    fig, ax = plt.subplots()
+    fig, axs = plt.subplots(2, 2)
+    fig.subplots_adjust(wspace=0.5)
     x = np.linspace(0.0, 4.0*np.pi, 200)
     y = np.sin(x)
-    ax.plot(x, y)
-    ax.set_ylim(-1.1, 1.6)
-    ax.text(1.0, 1.45, "ax.set_xlabel('Time', 'ms')")
-    ax.text(1.0, 1.3, "set_label_format('{label} / {unit}')")
-    ax.text(1.0, 1.15, "ax.set_ylabel('Amplitude', 'Pa')")
-    ax.set_xlabel('Time', 'ms')
+    
+    axs[0, 0].plot(x, y)
+    axs[0, 0].set_ylim(-1.0, 1.7)
+    axs[0, 0].text(1.0, 1.3, "ax.set_xlabel('Time', 'ms')")
+    axs[0, 0].text(1.0, 1.1, "ax.set_ylabel('Amplitude', 'Pa')")
+    axs[0, 0].set_xlabel('Time', 'ms')
+    axs[0, 0].set_ylabel('Amplitude', 'Pa')
+    
     set_label_format('{label} / {unit}')   # usually you would do this before any plotting!
-    ax.set_ylabel('Amplitude', 'Pa')
+    axs[1, 0].plot(x, 1000*y)
+    axs[1, 0].set_ylim(-1000, 1700)
+    axs[1, 0].text(1.0, 1500, "set_label_format('{label} / {unit}')")
+    axs[1, 0].text(1.0, 1300, "ax.set_xlabel('Time', 'ms')")
+    axs[1, 0].text(1.0, 1100, "ax.set_ylabel('Amplitude', 'Pa')")
+    axs[1, 0].set_xlabel('Time', 'ms')
+    axs[1, 0].set_ylabel('Amplitude', 'Pa')
+
+    axs[0, 1].set_ylim(-1.0, 1.0)
+    axs[0, 1].set_ylabel('Velocity', 'm/s')
+    
+    axs[1, 1].set_ylim(-10000.0, 10000.0)
+    axs[1, 1].set_ylabel('Accelaration', 'm/s^2')
+    
+    fig.align_labels()    
     plt.show()
 
 
