@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from .spines import show_spines, set_spines_outward, set_spines_bounds
+from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_xlabel, set_ylabel, set_zlabel
@@ -371,23 +371,6 @@ fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
        'Male': fsMalea, 'Female': fsFemalea}
 
 
-""" Default spines to be shown and their appearance (installed by plot_format()). """
-__default_spines = 'lb'
-__default_spines_offsets = {'lrtb': 3}
-__default_spines_bounds = {'lrtb': 'full'}
-
-
-def __axes__init__(ax, *args, **kwargs):
-    """ Set some default formatting for a new Axes instance.
-
-    Used by plot_format().
-    """
-    ax.__init__orig(*args, **kwargs)
-    ax.show_spines(__default_spines)
-    ax.set_spines_outward(__default_spines_offsets)
-    ax.set_spines_bounds(__default_spines_bounds)
-
-
 def plot_format(fontsize=10.0, label_format=None,
                 spines=None, spines_offsets=None, spines_bounds=None):
     """ Set default plot format.
@@ -437,19 +420,15 @@ def plot_format(fontsize=10.0, label_format=None,
     if label_format:
         global axis_label_format
         axis_label_format = label_format
-    
-    # extend Axes constructor (for modifying spine appearence):
-    mpl.axes.Subplot.__init__orig = mpl.axes.Subplot.__init__
-    mpl.axes.Subplot.__init__ = __axes__init__
-    if spines is not None:
-        global __default_spines
-        __default_spines = spines
-    if spines_offsets is not None:
-        global __default_spines_offsets
-        __default_spines_offsets = spines_offsets
-    if spines_bounds is not None:
-        global __default_spines_bounds
-        __default_spines_bounds = spines_bounds
+
+    # spines:
+    if spines is None:
+        spines = 'lb'
+    if spines_offsets is None:
+        spines_offsets = {'lrtb': 3}
+    if spines_bounds is None:
+        spines_bounds = {'lrtb': 'full'}
+    set_default_spines(spines, spines_offsets, spines_bounds)
 
 
 def cm_size(*args):
@@ -766,10 +745,10 @@ def demo(mode=1):
         'comparison': plot the default color palette in comparison with colors_bendalab_vivid
     """
     # set default plot parameter:
-    plot_format()
+    plot_format(spines='')
     # figsize in centimeter:
     fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    fig.subplots_adjust(**adjust_fs(fig, left=4.5, bottom=2.5, top=2.0, right=2.0))
+    fig.subplots_adjust(**adjust_fs(fig, left=1.0, bottom=1.0, top=1.0, right=1.0))
     # colors and linestyles:
     if isinstance(mode, int):
         plot_colors(ax, colors, mode)

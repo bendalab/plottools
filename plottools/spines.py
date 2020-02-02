@@ -7,11 +7,15 @@ The following functions are added as a members to mpl.axes.Axes and mpl.figure.F
 - `show_spines()`: show and hide spines and corresponding tick marks.
 - `set_spines_outward()`: set the specified spines outward.
 - `set_spines_bounds()`: set bounds for the specified spines.
+
+- `set_default_spines()`: set default spine appearance.
+
 """
 
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 
 
 def show_spines(ax, spines):
@@ -58,14 +62,14 @@ def show_spines(ax, spines):
         # ticks:
         if len(xspines) == 0:
             ax.xaxis.set_ticks_position('none')
-            ax.set_xticks([])
+            ax.xaxis.set_major_locator(ticker.NullLocator())
         elif len(xspines) == 1:
             ax.xaxis.set_ticks_position(xspines[0])
         else:
             ax.xaxis.set_ticks_position('both')
         if len(yspines) == 0:
             ax.yaxis.set_ticks_position('none')
-            ax.set_yticks([])
+            ax.yaxis.set_major_locator(ticker.NullLocator())
         elif len(yspines) == 1:
             ax.yaxis.set_ticks_position(yspines[0])
         else:
@@ -128,7 +132,8 @@ def set_spines_outward(ax, spines, offset=0):
             spines_list.append('right')
         for ax in axs:
             for sp in spines_list:
-                ax.spines[sp].set_position(('outward', offset))
+                if ax.spines[sp].get_visible():
+                    ax.spines[sp].set_position(('outward', offset))
 
 
 def set_spines_bounds(ax, spines, bounds='full'):
@@ -291,9 +296,64 @@ plt.savefig = __plt_savefig_spines
 plt.show_orig_spines = plt.show
 plt.show = __plt_show_spines
 
-            
-def demo():
-    """ Run a demonstration of the spine module.
+
+""" Default spine properties (installed by install_default_spines()). """
+__default_spines = 'lrtb'
+__default_spines_offsets = {'lrtb': 0}
+__default_spines_bounds = {'lrtb': 'full'}
+
+
+def set_default_spines(spines=None, spines_offsets=None, spines_bounds=None):
+    """ Set default spine appearance.
+
+    Call this function *before* you create a matplotlib figure.
+
+    Parameters
+    ----------
+    spines: string
+        Spines to be shown. See spines.show_spines() for details.
+    spines_offsets: dict
+        Offsets for moving spines outward. See spines.set_spines_outward() for details.
+    spines_bounds: dict
+        Bounds for the spines. See spines.set_spines_bounds() for details.
+    """
+    install_default_spines()
+    if spines is not None:
+        global __default_spines
+        __default_spines = spines
+    if spines_offsets is not None:
+        global __default_spines_offsets
+        __default_spines_offsets = spines_offsets
+    if spines_bounds is not None:
+        global __default_spines_bounds
+        __default_spines_bounds = spines_bounds
+
+
+def __axes_init_spines__(ax, *args, **kwargs):
+    """ Apply default spine settings to a new Axes instance.
+
+    Installed by install_default_spines().
+    """
+    ax.__init__spines(*args, **kwargs)
+    ax.show_spines(__default_spines)
+    ax.set_spines_outward(__default_spines_offsets)
+    ax.set_spines_bounds(__default_spines_bounds)
+
+
+def install_default_spines():
+    """ Install code for formatting the spines into the axes constructor.
+
+    This function is also called by set_default_spines(), so usually you
+    do not need to explicitly call this function.
+    """
+    # extend Axes constructor for modifying spine appearence:
+    if not hasattr(mpl.axes.Subplot, '__init__spines'):
+        mpl.axes.Subplot.__init__spines = mpl.axes.Subplot.__init__
+        mpl.axes.Subplot.__init__ = __axes_init_spines__
+
+
+def demo_basic():
+    """ Run a basic demonstration of the spine module.
     """
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
     # spine visibility:
@@ -331,8 +391,12 @@ def demo():
             ax.set_ylim(-1.0, 2.0)
             ax.set_yticks([-0.5, 0, 0.5, 1])
             ax.text(0.05, 1.4, "fig.set_spines_outward('lrtb', 10)")
-    #fig.savefig('spines.pdf')
+    #fig.savefig('spinesbasic.pdf')
     plt.show()
+
+
+def demo():
+    demo_basic()
 
 
 if __name__ == "__main__":
