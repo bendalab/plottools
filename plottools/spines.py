@@ -65,15 +65,19 @@ def show_spines(ax, spines):
             ax.xaxis.set_major_locator(ticker.NullLocator())
         elif len(xspines) == 1:
             ax.xaxis.set_ticks_position(xspines[0])
+            ax.xaxis.set_major_locator(ticker.AutoLocator())
         else:
             ax.xaxis.set_ticks_position('both')
+            ax.xaxis.set_major_locator(ticker.AutoLocator())
         if len(yspines) == 0:
             ax.yaxis.set_ticks_position('none')
             ax.yaxis.set_major_locator(ticker.NullLocator())
         elif len(yspines) == 1:
             ax.yaxis.set_ticks_position(yspines[0])
+            ax.yaxis.set_major_locator(ticker.AutoLocator())
         else:
             ax.yaxis.set_ticks_position('both')
+            ax.yaxis.set_major_locator(ticker.AutoLocator())
 
 
 def set_spines_outward(ax, spines, offset=0):
@@ -301,32 +305,11 @@ plt.show = __plt_show_spines
 __default_spines = 'lrtb'
 __default_spines_offsets = {'lrtb': 0}
 __default_spines_bounds = {'lrtb': 'full'}
-
-
-def set_default_spines(spines=None, spines_offsets=None, spines_bounds=None):
-    """ Set default spine appearance.
-
-    Call this function *before* you create a matplotlib figure.
-
-    Parameters
-    ----------
-    spines: string
-        Spines to be shown. See spines.show_spines() for details.
-    spines_offsets: dict
-        Offsets for moving spines outward. See spines.set_spines_outward() for details.
-    spines_bounds: dict
-        Bounds for the spines. See spines.set_spines_bounds() for details.
-    """
-    install_default_spines()
-    if spines is not None:
-        global __default_spines
-        __default_spines = spines
-    if spines_offsets is not None:
-        global __default_spines_offsets
-        __default_spines_offsets = spines_offsets
-    if spines_bounds is not None:
-        global __default_spines_bounds
-        __default_spines_bounds = spines_bounds
+__default_twinx_spines = 'r'
+__default_twiny_spines = 't'
+__default_inset_spines = 'lrtb'
+__default_inset_spines_offsets = {'lrtb': 0}
+__default_inset_spines_bounds = {'lrtb': 'full'}
 
 
 def __axes_init_spines__(ax, *args, **kwargs):
@@ -340,16 +323,143 @@ def __axes_init_spines__(ax, *args, **kwargs):
     ax.set_spines_bounds(__default_spines_bounds)
 
 
+def __twinx_spines(ax, *args, **kwargs):
+    """ Mark a twinx axes such that the corresponding spine properties can be set. """
+    global __default_spines
+    ax_spines = __default_spines
+    if 'l' in __default_twinx_spines and 'l' not in ax_spines:
+        ax_spines += 'l'
+    if 'r' in __default_twinx_spines and 'r' not in ax_spines:
+        ax_spines += 'r'
+    axt_spines = __default_twinx_spines
+    if 'b' in __default_spines and 'b' not in axt_spines:
+        axt_spines += 'b'
+    if 't' in __default_spines and 't' not in axt_spines:
+        axt_spines += 'b'
+    ax.show_spines(ax_spines)
+    ax.set_spines_outward(__default_spines_offsets)
+    orig_default_spines = __default_spines
+    __default_spines = axt_spines
+    axt = ax.twinx_spines(*args, **kwargs)
+    __default_spines = orig_default_spines
+    return axt
+
+
+def __twiny_spines(ax, *args, **kwargs):
+    """ Mark a twiny axes such that the corresponding spine properties can be set. """
+    global __default_spines
+    ax_spines = __default_spines
+    if 't' in __default_twinx_spines and 't' not in ax_spines:
+        ax_spines += 't'
+    if 'b' in __default_twinx_spines and 'b' not in ax_spines:
+        ax_spines += 'b'
+    axt_spines = __default_twinx_spines
+    if 'l' in __default_spines and 'l' not in axt_spines:
+        axt_spines += 'l'
+    if 'r' in __default_spines and 'r' not in axt_spines:
+        axt_spines += 'r'
+    ax.show_spines(ax_spines)
+    ax.set_spines_outward(__default_spines_offsets)
+    orig_default_spines = __default_spines
+    __default_spines = axt_spines
+    axt = ax.twiny_spines(*args, **kwargs)
+    __default_spines = orig_default_spines
+    return axt
+
+
+def __inset_spines(ax, *args, **kwargs):
+    """ Mark an inset axes such that the corresponding spine properties can be set. """
+    global __default_spines
+    global __default_spines_offsets
+    global __default_spines_bounds
+    orig_default_spines = __default_spines
+    orig_default_spines_offsets = __default_spines_offsets
+    orig_default_spines_bounds = __default_spines_bounds
+    __default_spines = __default_inset_spines
+    __default_spines_offsets = __default_inset_spines_offsets
+    __default_spines_bounds = __default_inset_spines_bounds
+    axi = ax.inset_spines(*args, **kwargs)
+    __default_spines = orig_default_spines
+    __default_spines_offsets = orig_default_spines_offsets
+    __default_spines_bounds = orig_default_spines_bounds
+    return axi
+
+
 def install_default_spines():
     """ Install code for formatting the spines into the axes constructor.
 
     This function is also called by set_default_spines(), so usually you
     do not need to explicitly call this function.
     """
-    # extend Axes constructor for modifying spine appearence:
-    if not hasattr(mpl.axes.Subplot, '__init__spines'):
-        mpl.axes.Subplot.__init__spines = mpl.axes.Subplot.__init__
-        mpl.axes.Subplot.__init__ = __axes_init_spines__
+    # extend Axes constructor for modifying spine appearance:
+    if not hasattr(mpl.axes.Axes, '__init__spines'):
+        mpl.axes.Axes.__init__spines = mpl.axes.Axes.__init__
+        mpl.axes.Axes.__init__ = __axes_init_spines__
+    if not hasattr(mpl.axes.Axes, 'twinx_spines'):
+        mpl.axes.Axes.twinx_spines = mpl.axes.Axes.twinx
+        mpl.axes.Axes.twinx = __twinx_spines
+    if not hasattr(mpl.axes.Axes, 'twiny_spines'):
+        mpl.axes.Axes.twiny_spines = mpl.axes.Axes.twiny
+        mpl.axes.Axes.twiny = __twiny_spines
+    if not hasattr(mpl.axes.Axes, 'inset_spines') and hasattr(mpl.axes.Axes, 'inset'):
+        mpl.axes.Axes.inset_spines = mpl.axes.Axes.inset
+        mpl.axes.Axes.inset = __inset_spines
+
+
+def set_default_spines(spines=None, spines_offsets=None, spines_bounds=None,
+                       twinx_spines=None, twiny_spines=None,
+                       inset_spines=None, inset_spines_offsets=None, inset_spines_bounds=None):
+    """ Set default spine appearance.
+
+    Call this function *before* you create a matplotlib figure.
+
+    Parameters
+    ----------
+    spines: string
+        Spines to be shown. See spines.show_spines() for details.
+    spines_offsets: dict
+        Offsets for moving spines outward. See spines.set_spines_outward() for details.
+    spines_bounds: dict
+        Bounds for the spines. See spines.set_spines_bounds() for details.
+    twinx_spines: string
+        Spines to be shown for twinx() axes. See spines.show_spines() for details.
+        Twinned axes get the same default offsets and bounds as the defaults for normal axes.
+    twiny_spines: string
+        Spines to be shown for twiny() axes. See spines.show_spines() for details.
+        Twinned axes get the same default offsets and bounds as the defaults for normal axes.
+    inset_spines: string
+        Spines to be shown for an inset. See spines.show_spines() for details.
+    inset_spines_offsets: dict
+        Offsets for moving spines outward for an inset.
+        See spines.set_spines_outward() for details.
+    inset_spines_bounds: dict
+        Bounds for the spines of an inset. See spines.set_spines_bounds() for details.
+    """
+    install_default_spines()
+    if spines is not None:
+        global __default_spines
+        __default_spines = spines
+    if spines_offsets is not None:
+        global __default_spines_offsets
+        __default_spines_offsets = spines_offsets
+    if spines_bounds is not None:
+        global __default_spines_bounds
+        __default_spines_bounds = spines_bounds
+    if twinx_spines is not None:
+        global __default_twinx_spines
+        __default_twinx_spines = twinx_spines
+    if twiny_spines is not None:
+        global __default_twiny_spines
+        __default_twiny_spines = twiny_spines
+    if inset_spines is not None:
+        global __default_inset_spines
+        __default_inset_spines = inset_spines
+    if inset_spines_offsets is not None:
+        global __default_inset_spines_offsets
+        __default_inset_spines_offsets = inset_spines_offsets
+    if inset_spines_bounds is not None:
+        global __default_inset_spines_bounds
+        __default_inset_spines_bounds = inset_spines_bounds
 
 
 def demo_basic():
@@ -394,9 +504,36 @@ def demo_basic():
     #fig.savefig('spinesbasic.pdf')
     plt.show()
 
+            
+def demo_twin_inset():
+    """ Run a demonstration of the spine module showing twin behavior.
+    """
+    from .insets import inset
+    set_default_spines('lb', {'lrtb': 10}, {'lrtb': 'ticks'}, 'r', 't', 'lrb', {'tr': 5})
+    fig, axs = plt.subplots(1, 3, figsize=(14, 4))
+    fig.subplots_adjust(wspace=0.5)
+    axs[0].text(0.05, 1.85, "spines='lb'")
+    axt = axs[1].twinx()
+    axt.set_ylim(0.5, 5.5)
+    axs[1].text(0.05, 1.85, "ax.twinx()")
+    axs[1].text(0.05, 1.7, "twinx_spines='r'")
+    axi = axs[2].inset((0.5, 0.5, 0.9, 0.75))
+    axs[2].text(0.05, 1.85, "ax.inset((0.5, 0.5, 0.9, 0.75))")
+    axs[2].text(0.05, 1.7, "inset_spines='lrb'")
+    # plot and annotate:
+    x = np.linspace(0.0, 1.0, 100)
+    y = 0.5*np.sin(2.0*np.pi*x) + 0.5
+    for ax in axs:
+        ax.plot(x, y)
+        ax.set_xlim(0.0, 1.0)
+        ax.set_ylim(0.0, 2.0)
+    #fig.savefig('spinestwin.pdf')
+    plt.show()
+
 
 def demo():
     demo_basic()
+    demo_twin_inset()
 
 
 if __name__ == "__main__":
