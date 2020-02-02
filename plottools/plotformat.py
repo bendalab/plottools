@@ -26,7 +26,7 @@ from collections import OrderedDict
 from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
-from .labels import set_xlabel, set_ylabel, set_zlabel
+from .labels import set_label_format
 from .insets import inset, zoomed_inset
 from .labelaxes import label_axes
 from .scalebars import xscalebar, yscalebar, scalebars
@@ -385,6 +385,7 @@ def plot_format(fontsize=10.0, label_format=None,
         Fontsize for text in points.
     label_format: string
         Defines how an axis label is formatted from a label and an unit.
+        See labels.set_label_format() for details.
     spines: string
         Spines to be shown. See spines.show_spines() for details.
     spines_offsets: dict
@@ -417,9 +418,9 @@ def plot_format(fontsize=10.0, label_format=None,
         mpl.rcParams['axes.color_cycle'] = color_cycle
     
     # define the appearance of axis labels:
-    if label_format:
-        global axis_label_format
-        axis_label_format = label_format
+    if label_format is None:
+        label_format = '{label} [{unit}]'
+    set_label_format(label_format)
 
     # spines:
     if spines is None:

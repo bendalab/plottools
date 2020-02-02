@@ -16,7 +16,22 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 """ This string defines how an axis label is formatted from a label and an unit. """
-axis_label_format = '{label} [{unit}]'
+label_format = '{label} [{unit}]'
+
+
+def set_label_format(labelf):
+    """ Set the string for formatting the axes labels.
+    
+    Parameters
+    ----------
+    labelf: string
+        A string for formatting the axes labels.
+        In this string '{label}' is replaced by the axes' label,
+        and '{unit}' is replaced by the axes' unit.
+        The default format string is '{label} [{unit}]'.
+    """
+    global label_format
+    label_format = labelf
 
 
 def __axis_label(label, unit=None):
@@ -33,12 +48,12 @@ def __axis_label(label, unit=None):
     -------
     label: string
         An axis label formatted from `label` and `unit` according to
-        the `axis_label_format` string.
+        the `label_format` string.
     """
     if not unit:
         return label
     else:
-        return axis_label_format.format(label=label, unit=unit)
+        return label_format.format(label=label, unit=unit)
 
 
 def set_xlabel(ax, label, unit=None, **kwargs):
@@ -108,12 +123,12 @@ def demo():
     x = np.linspace(0.0, 4.0*np.pi, 200)
     y = np.sin(x)
     ax.plot(x, y)
-    ax.set_ylim(-1.1, 1.5)
-    ax.text(1.0, 1.3, "ax.set_xlabel('Time', 'ms')")
+    ax.set_ylim(-1.1, 1.6)
+    ax.text(1.0, 1.45, "ax.set_xlabel('Time', 'ms')")
+    ax.text(1.0, 1.3, "set_label_format('{label} / {unit}')")
     ax.text(1.0, 1.15, "ax.set_ylabel('Amplitude', 'Pa')")
     ax.set_xlabel('Time', 'ms')
-    global axis_label_format
-    axis_label_format = '{label} / {unit}'   # usually you would do this before any plotting!
+    set_label_format('{label} / {unit}')   # usually you would do this before any plotting!
     ax.set_ylabel('Amplitude', 'Pa')
     plt.show()
 
