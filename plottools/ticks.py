@@ -115,12 +115,6 @@ def set_yticks_blank(ax):
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 
-    
-def demo():
-    """ Run a demonstration of the ticks module.
-    """
-    pass
-
 
 # make functions available as member variables:
 mpl.axes.Axes.set_xticks_delta = set_xticks_delta
@@ -131,6 +125,36 @@ mpl.axes.Axes.set_xticks_format = set_xticks_format
 mpl.axes.Axes.set_yticks_format = set_yticks_format
 mpl.axes.Axes.set_xticks_blank = set_xticks_blank
 mpl.axes.Axes.set_yticks_blank = set_yticks_blank
+
+    
+def demo():
+    """ Run a demonstration of the ticks module.
+    """
+    fig, axs = plt.subplots(2, 2)
+
+    fig.suptitle('plottools.ticks')
+
+    axs[0,0].text(0.1, 0.8, 'ax.set_xticks_delta(1.0)')
+    axs[0,0].text(0.1, 0.6, 'ax.set_yticks_delta(0.5)')
+    axs[0,0].set_xticks_delta(1.0)
+    axs[0,0].set_yticks_delta(0.5)
+
+    axs[0,1].text(0.1, 0.8, 'ax.set_xticks_none()')
+    axs[0,1].text(0.1, 0.6, 'ax.set_yticks_none()')
+    axs[0,1].set_xticks_none()
+    axs[0,1].set_yticks_none()
+
+    axs[1,0].text(0.1, 0.8, "ax.set_xticks_format('%04.1f')")
+    axs[1,0].text(0.1, 0.6, "ax.set_yticks_format('%.2f')")
+    axs[1,0].set_xticks_format('%04.1f')
+    axs[1,0].set_yticks_format('%.2f')
+
+    axs[1,1].text(0.1, 0.8, 'ax.set_xticks_blank()')
+    axs[1,1].text(0.1, 0.6, 'ax.set_yticks_blank()')
+    axs[1,1].set_xticks_blank()
+    axs[1,1].set_yticks_blank()
+    
+    plt.show()
 
 
 if __name__ == "__main__":
