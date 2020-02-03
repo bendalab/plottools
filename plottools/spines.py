@@ -256,14 +256,14 @@ def __fig_show_spines(fig, *args, **kwargs):
     """ Call __update_spines() on the figure before showing it.
     """
     fig.update_spines()
-    fig.show_orig_spines(*args, **kwargs)
+    fig.__show_orig_spines(*args, **kwargs)
 
     
 def __fig_savefig_spines(fig, *args, **kwargs):
     """ Call __update_spines() on the figure before saving it.
     """
     fig.update_spines()
-    fig.savefig_orig_spines(*args, **kwargs)
+    fig.__savefig_orig_spines(*args, **kwargs)
 
 
 def __plt_show_spines(*args, **kwargs):
@@ -271,14 +271,14 @@ def __plt_show_spines(*args, **kwargs):
     """
     for fig in map(plt.figure, plt.get_fignums()):
         fig.update_spines()
-    plt.show_orig_spines(*args, **kwargs)
+    plt.__show_orig_spines(*args, **kwargs)
 
 
 def __plt_savefig_spines(*args, **kwargs):
     """ Call __update_spines() on the current figure before saving it.
     """
     plt.gcf().update_spines()
-    plt.savefig_orig_spines(*args, **kwargs)
+    plt.__savefig_orig_spines(*args, **kwargs)
 
 
 # make functions available as member variables:
@@ -291,14 +291,18 @@ mpl.figure.Figure.set_spines_bounds = set_spines_bounds
 mpl.figure.Figure.update_spines = __update_spines
 
 # install __update_spines():
-mpl.figure.Figure.savefig_orig_spines = mpl.figure.Figure.savefig
-mpl.figure.Figure.savefig = __fig_savefig_spines
-mpl.figure.Figure.show_orig_spines = mpl.figure.Figure.show
-mpl.figure.Figure.show = __fig_show_spines
-plt.savefig_orig_spines = plt.savefig
-plt.savefig = __plt_savefig_spines
-plt.show_orig_spines = plt.show
-plt.show = __plt_show_spines
+if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
+    mpl.figure.Figure.__savefig_orig_spines = mpl.figure.Figure.savefig
+    mpl.figure.Figure.savefig = __fig_savefig_spines
+if not hasattr(mpl.figure.Figure, '__show_orig_spines'):
+    mpl.figure.Figure.__show_orig_spines = mpl.figure.Figure.show
+    mpl.figure.Figure.show = __fig_show_spines
+if not hasattr(plt, '__savefig_orig_spines'):
+    plt.__savefig_orig_spines = plt.savefig
+    plt.savefig = __plt_savefig_spines
+if not hasattr(plt, '__show_orig_spines'):
+    plt.__show_orig_spines = plt.show
+    plt.show = __plt_show_spines
 
 
 """ Default spine properties (installed by install_default_spines()). """
