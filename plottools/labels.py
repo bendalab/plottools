@@ -183,14 +183,14 @@ def __fig_show_labels(fig, *args, **kwargs):
     """ Call align_labels() on the figure before showing it.
     """
     fig.align_labels(__default_xdist, __default_ydist)
-    fig.show_orig_labels(*args, **kwargs)
+    fig.__show_orig_labels(*args, **kwargs)
 
     
 def __fig_savefig_labels(fig, *args, **kwargs):
     """ Call align_labels() on the figure before saving it.
     """
     fig.align_labels(__default_xdist, __default_ydist)
-    fig.savefig_orig_labels(*args, **kwargs)
+    fig.__savefig_orig_labels(*args, **kwargs)
 
 
 def __plt_show_labels(*args, **kwargs):
@@ -198,14 +198,14 @@ def __plt_show_labels(*args, **kwargs):
     """
     for fig in map(plt.figure, plt.get_fignums()):
         fig.align_labels(__default_xdist, __default_ydist)
-    plt.show_orig_labels(*args, **kwargs)
+    plt.__show_orig_labels(*args, **kwargs)
 
 
 def __plt_savefig_labels(*args, **kwargs):
     """ Call align_labels() on the current figure before saving it.
     """
     plt.gcf().align_labels(__default_xdist, __default_ydist)
-    plt.savefig_orig_labels(*args, **kwargs)
+    plt.__savefig_orig_labels(*args, **kwargs)
 
 
 def install_align_labels(xdist=5, ydist=10):
@@ -223,14 +223,18 @@ def install_align_labels(xdist=5, ydist=10):
     global __default_ydist
     __default_ydist = ydist
     
-    mpl.figure.Figure.savefig_orig_labels = mpl.figure.Figure.savefig
-    mpl.figure.Figure.savefig = __fig_savefig_labels
-    mpl.figure.Figure.show_orig_labels = mpl.figure.Figure.show
-    mpl.figure.Figure.show = __fig_show_labels
-    plt.savefig_orig_labels = plt.savefig
-    plt.savefig = __plt_savefig_labels
-    plt.show_orig_labels = plt.show
-    plt.show = __plt_show_labels
+    if not hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
+        mpl.figure.Figure.__savefig_orig_labels = mpl.figure.Figure.savefig
+        mpl.figure.Figure.savefig = __fig_savefig_labels
+    if not hasattr(mpl.figure.Figure, '__show_orig_labels'):
+        mpl.figure.Figure.__show_orig_labels = mpl.figure.Figure.show
+        mpl.figure.Figure.show = __fig_show_labels
+    if not hasattr(plt, '__savefig_orig_labels'):
+        plt.__savefig_orig_labels = plt.savefig
+        plt.savefig = __plt_savefig_labels
+    if not hasattr(plt, '__show_orig_labels'):
+        plt.__show_orig_labels = plt.show
+        plt.show = __plt_show_labels
 
 
 # make functions available as member variables:
