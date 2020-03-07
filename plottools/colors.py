@@ -20,6 +20,7 @@ Converting colors:
 Manipulating colors:
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
+- `gradient()`: interpolate between two colors.
 
 Displaying colors:
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
@@ -199,13 +200,16 @@ def lighter(color, lightness):
 
     Returns
     -------
-    color: string
+    color: string or dict
         The lighter color as a hexadecimal RGB string (e.g. '#rrggbb').
+        If `color` is a dictionary, a copy of the dictionary is returned
+        with the value of `color` set to the lighter color.
     """
     try:
         c = color['color']
-        color['color'] = lighter(c, lightness)
-        return color
+        cd = {k: v for k, v in color.items()}
+        cd['color'] = lighter(c, lightness)
+        return cd
     except TypeError:
         r, g, b = rgb(color)
         if lightness < 0:
@@ -223,7 +227,7 @@ def darker(color, saturation):
 
     Parameters
     ----------
-    color: string
+    color: string or dict
         An RGB color as a hexadecimal string (e.g. '#rrggbb')
         or a dictionary with an 'color' key.
     saturation: float
@@ -233,23 +237,76 @@ def darker(color, saturation):
 
     Returns
     -------
-    color: string
+    color: string or dictionary
         The darker color as a hexadecimal RGB string (e.g. '#rrggbb').
+        If `color` is a dictionary, a copy of the dictionary is returned
+        with the value of `color` set to the lighter color.
     """
     try:
         c = color['color']
-        color['color'] = darker(c, saturation)
-        return color
+        cd = {k: v for k, v in color.items()}
+        cd['color'] = darker(c, saturation)
+        return cd
     except TypeError:
         r, g, b = rgb(color)
         if saturation < 0:
             saturation = 0
         if saturation > 1:
             saturation = 1
-        rd = r * saturation
-        gd = g * saturation
-        bd = b * saturation
+        rd = r*saturation
+        gd = g*saturation
+        bd = b*saturation
         return hexstr(rd, gd, bd)
+
+
+def gradient(color0, color1, r):
+    """ Interpolate between two colors.
+
+    Parameters
+    ----------
+    color0: string or dict
+        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+        or a dictionary with an 'color' key.
+    color1: string or dict
+        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+        or a dictionary with an 'color' key.
+    r: float
+        Value between 0 and for interpolating between the two colors.
+        r=0 returns color0, r=1 returns color1.
+
+    Returns
+    -------
+    color: string or dict
+        The interpolated color as a hexadecimal RGB string (e.g. '#rrggbb').
+        If at least one of the colors is a dictionary, then return a copy of the
+        dictionary with the value of `color` set to the interpolated color.
+    """
+    cd = None
+    try:
+        cd = {k: v for k, v in color0.items()}
+        color0 = color0['color']
+    except (AttributeError, TypeError):
+        cd = None
+    try:
+        cd = {k: v for k, v in color1.items()}
+        color1 = color1['color']
+    except (AttributeError, TypeError):
+        cd = None
+    r0, g0, b0 = rgb(color0)
+    r1, g1, b1 = rgb(color1)
+    if r < 0:
+        r = 0
+    if r > 1:
+        r = 1
+    rg = r0 + r*(r1 - r0)
+    gg = g0 + r*(g1 - g0)
+    bg = b0 + r*(b1 - b0)
+    cs = hexstr(rg, gg, bg)
+    if cd:
+        cd['color'] = cs
+        return cd
+    else:
+        return cs
 
 
 def plot_colors(ax, colors, n=1):
@@ -299,7 +356,7 @@ def plot_colors(ax, colors, n=1):
     ax.set_ylim(-0.2, 1.05)
 
 
-def plot_complementary_colors(ax, colors):
+def plot_complementary_colors(ax, colors, n=0):
     """ Plot complementary colors of a palette on top of each other.
 
     Parameters
@@ -308,32 +365,38 @@ def plot_complementary_colors(ax, colors):
         Subplot to use for plotting the colors.
     colors: dict
         A dictionary with names and rgb hex-strings of colors.
+    n: int
+        Number of additional gradient values to be plotted inbetween the complementary colors.
     """
     rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
     recty = np.array([0.0, 0.0, 1.0, 1.0, 0.0])
-    n = 0
+    if n > 0:
+        recty *= 0.9
+    n += 2
+    dx = 1.0/(n-1)
+    m = 0
     if 'red' in colors and 'green' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['red'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['green'])
-        n += 1
+        for k, x in enumerate(np.linspace(0.0, 1.0, n)):
+            ax.fill(rectx + 1.5*m, recty + k, color=gradient(colors['red'], colors['green'], x))
+        m += 1
     if 'orange' in colors and 'blue' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['orange'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['blue'])
-        n += 1
+        for k, x in enumerate(np.linspace(0.0, 1.0, n)):
+            ax.fill(rectx + 1.5*m, recty + k, color=gradient(colors['orange'], colors['blue'], x))
+        m += 1
     if 'yellow' in colors and 'magenta' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['yellow'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['magenta'])
-        n += 1
+        for k, x in enumerate(np.linspace(0.0, 1.0, n)):
+            ax.fill(rectx + 1.5*m, recty + k, color=gradient(colors['yellow'], colors['magenta'], x))
+        m += 1
     if 'pink' in colors and 'cyan' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['pink'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['cyan'])
-        n += 1
+        for k, x in enumerate(np.linspace(0.0, 1.0, n)):
+            ax.fill(rectx + 1.5*m, recty + k, color=gradient(colors['pink'], colors['cyan'], x))
+        m += 1
     if 'pink' in colors and 'blue' in colors:
-        ax.fill(rectx + 1.5*n, recty + 1.0, color=colors['blue'])
-        ax.fill(rectx + 1.5*n, recty + 0.0, color=colors['pink'])
-        n += 1
-    ax.set_xlim(-0.5, n*1.5)
-    ax.set_ylim(-0.1, 2.1)
+        for k, x in enumerate(np.linspace(0.0, 1.0, n)):
+            ax.fill(rectx + 1.5*m, recty + k, color=gradient(colors['blue'], colors['pink'], x))
+        m += 1
+    ax.set_xlim(-0.5, m*1.5)
+    ax.set_ylim(-0.1, n + 0.1)
 
 
 def plot_color_comparison(ax, colorsa, *args):
@@ -372,49 +435,56 @@ def plot_color_comparison(ax, colorsa, *args):
     ax.set_ylim(-0.2, 1.1 + len(args))
 
     
-def demo(mode=1):
+def demo(mode='default', n=1):
     """ Run a demonstration of the colors module.
 
     Parameters
     ----------
-    mode: int or string
-        - 1: plot the default color palette
-        - n>1: plot the default color palette with n-1 lighter and darker colors
+    mode: string
+        - 'default': plot the default color palette
         - 'complementary': plot complementary colors of the default color palette
         - 'comparison': plot the default color palette in comparison to all other palettes
         - name of a color palette: plot the specified color palette (see `color_palettes`)
+    n: int
+        - 1: plot the selected color palette
+        - n>1: plot the selected color palette with n-1 lighter and darker colors or
+          n gradient values for 'complementary'
     """
     fig, ax = plt.subplots()
-    if isinstance(mode, int):
-        plot_colors(ax, colors, mode)
+    if 'default' in mode:
+        plot_colors(ax, colors, n)
+    elif 'compl' in mode:
+        plot_complementary_colors(ax, colors, n-1)
+    elif 'compa' in mode:
+        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+                              (colors_vivid, 'vivid'),
+                              (colors_plain, 'plain'),
+                              (colors_henninger, 'henninger'),
+                              (colors_scicomp, 'scicomp'),
+                              (colors_unituebingen, 'unituebingen'))
+    elif 'blabhenn' in mode:
+        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+                              (colors_henninger, 'henninger'))
+    elif mode in color_palettes:
+        plot_colors(ax, color_palettes[mode], n)
+        ax.set_title('colors_' + mode)
     else:
-        if 'compl' in mode:
-            plot_complementary_colors(ax, colors)
-        elif 'compa' in mode:
-            plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
-                                  (colors_vivid, 'vivid'),
-                                  (colors_plain, 'plain'),
-                                  (colors_henninger, 'henninger'),
-                                  (colors_scicomp, 'scicomp'),
-                                  (colors_unituebingen, 'unituebingen'))
-        elif 'blabhenn' in mode:
-            plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
-                                  (colors_henninger, 'henninger'))
-        elif mode in color_palettes:
-            plot_colors(ax, color_palettes[mode], 1)
-            ax.set_title('colors_' + mode)
-        else:
-            print('unknown option %s!' % mode)
-            print('possible options are: an integer number, compa(rison), compl(ementary), or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
-            return
+        print('unknown option %s!' % mode)
+        print('possible options are: an integer number, compa(rison), compl(ementary), or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
+        return
     plt.show()
 
 
 if __name__ == "__main__":
     import sys
-    mode = 1
-    if len(sys.argv) > 1:
+    mode = 'default'
+    n = 1
+    if len(sys.argv) > 2:
         mode = sys.argv[1]
-        if mode.isdigit():
-            mode = int(mode)
-    demo(mode)
+        n = int(sys.argv[2])
+    elif len(sys.argv) > 1:
+        if sys.argv[1].isdigit():
+            n = int(sys.argv[1])
+        else:
+            mode = sys.argv[1]
+    demo(mode, n)
