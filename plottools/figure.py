@@ -113,13 +113,17 @@ def __gridspec_update_figure(gridspec, left=None, bottom=None, right=None, top=N
     gridspec.__update_orig_figure(**adjust_fs(figure, left, bottom, right, top, **kwargs))
 
 
-def __fig_add_gridspec(fig, nrows, ncols, **kwargs):
+def __fig_add_gridspec_figure(fig, nrows, ncols, **kwargs):
     """ This is from more current versions of matplotlib.
     """
-    _ = kwargs.pop('figure', None)  # pop in case user has added this...
-    gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **adjust_fs(**kwargs))
-    gs.figure = fig
-    return gs
+    if fig.__add_gridspec_orig_figure:
+        return fig.__add_gridspec_orig_figure(nrows=nrows, ncols=ncols,
+                                              **adjust_fs(fig, **kwargs))
+    else:
+        _ = kwargs.pop('figure', None)  # pop in case user has added this...
+        gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **adjust_fs(fig, **kwargs))
+        gs.figure = fig
+        return gs
 
 
 def install_figure():
@@ -132,8 +136,11 @@ def install_figure():
         mpl.figure.Figure.__subplots_adjust_orig_figure = mpl.figure.Figure.subplots_adjust
         mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust_figure
     if not hasattr(mpl.figure.Figure, 'add_gridspec'):
-        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
-        # TODO: we need to replace an existing add_gridspec()!
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
+        mpl.figure.Figure.__add_gridspec_orig_figure = None
+    if not hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
+        mpl.figure.Figure.__add_gridspec_orig_figure = mpl.figure.Figure.add_gridspec
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
     if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
         mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
         mpl.gridspec.GridSpec.update = __gridspec_update_figure
@@ -153,8 +160,10 @@ def demo():
     ax.set_ylim(-1.0, 2.0)
 
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
-    gs = fig.add_gridspec(3, 3)   # even with olf matplotlib versions!
-    gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+    # in fontsize margins and even with old matplotlib versions:
+    gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
+    #gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)  # in fontsize margins!
+    fig.suptitle('gs = fig.add_gridspec(3, 3, left=5.0, bottom=2.0, right=2.0, top=2.5)')
     for k in range(3):
         for j in range(3):
             ax = fig.add_subplot(gs[k,j])
