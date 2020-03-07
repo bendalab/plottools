@@ -105,7 +105,7 @@ colors_scicomp['yellow'] = '#FFFF66'
 colors_scicomp['green'] = '#99FF00'
 colors_scicomp['blue'] = '#0000CC'
 
-""" Colors of the corporate design of the university of Tuebingen.
+""" Colors of the corporate design of the University of Tuebingen.
 The first three are the primary colors, the remaining ones the secondary colors.
 """
 colors_unituebingen = OrderedDict()
