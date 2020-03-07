@@ -12,7 +12,10 @@ Dictionaries with colors:
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the university of Tuebingen.
 
-Functions for manipulating colors:
+Converting colors:
+- `latex_colors()`: print a \definecolor command for LaTeX.
+
+Manipulating colors:
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 
@@ -199,6 +202,29 @@ def darker(color, saturation):
         return '#%02X%02X%02X' % (rd, gd, bd)
 
 
+def latex_colors(colors):
+    """ Print a \definecolor command for LaTeX.
+
+    Parameters
+    ----------
+    colors: dict or string
+        A dictionary with names and rgb hex-strings of colors
+        or an rgb hex-string.
+    """
+    if isinstance(colors, dict):
+        for cn in colors:
+            color = colors[cn]
+            r = int(color[1:3], 16)
+            g = int(color[3:5], 16)
+            b = int(color[5:7], 16)
+            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
+    else:
+        r = int(colors[1:3], 16)
+        g = int(colors[3:5], 16)
+        b = int(colors[5:7], 16)
+        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
+        
+
 def plot_colors(ax, colors, n=1):
     """ Plot all colors of a palette and optionally some lighter and darker variants.
 
@@ -318,7 +344,7 @@ def plot_color_comparison(ax, colorsa, *args):
     ax.set_xlim(-0.5, len(colorsa)*1.5)
     ax.set_ylim(-0.2, 1.1 + len(args))
 
-
+    
 def demo(mode=1):
     """ Run a demonstration of the colors module.
 
