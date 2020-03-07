@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from plottools.plotformat import demo as plotformat_demo
+from plottools.colors import demo as colors_demo
 from plottools.spines import demo as spines_demo
 from plottools.ticks import demo as ticks_demo
 from plottools.labels import demo as labels_demo
@@ -14,6 +15,9 @@ if __name__ == "__main__":
 
     print('plottools.plotformat ...')
     plotformat_demo()
+
+    print('plottools.colors ...')
+    colors_demo()
 
     print('plottools.spines ...')
     spines_demo()

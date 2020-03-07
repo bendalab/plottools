@@ -3,6 +3,7 @@
 Simplify creation of publication-quality figures.
 
 - `plotformat`: layout settings for a plot figure.
+- `colors`: some color palettes and tools for manipulating colors.
 - `spines`: modify the appearance of spines.
 - `ticks`: convience functions for setting tick locations and formats.
 - `labels`: annotate axis with label and unit and align axes labels.

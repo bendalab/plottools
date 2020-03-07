@@ -1,7 +1,7 @@
 """
 # Colors
 
-Some color palettes and functions for manipulating colors.
+Some color palettes and tools for manipulating colors.
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
@@ -13,6 +13,8 @@ Dictionaries with colors:
 - `colors_unituebingen`: colors of the corporate design of the university of Tuebingen.
 
 Converting colors:
+- `rgb()`: integer RGB components of a hex string.
+- `hexstr()`: hex string from integer RGB components.
 - `latex_colors()`: print a \definecolor command for LaTeX.
 
 Manipulating colors:
@@ -130,6 +132,58 @@ color_palettes = {'bendalab': colors_bendalab,
 colors = colors_bendalab
 
 
+def rgb(hexcolor):
+    """ Integer RGB components of a hex string.
+
+    Parameters
+    ----------
+    hexcolor: string
+        A rgb hex-string, e.g. '#FF0000'.
+    """
+    r = int(hexcolor[1:3], 16)
+    g = int(hexcolor[3:5], 16)
+    b = int(hexcolor[5:7], 16)
+    return r, g, b
+    
+
+def hexstr(r, g, b):
+    """ Hex string from integer RGB components.
+
+    Parameters
+    ----------
+    r: int
+        Red component.
+    g: int
+        Green component.
+    b: int
+        Blue component.
+        
+    Returns
+    -------
+    color: string.
+        The color as a hexadecimal RGB string (e.g. '#rrggbb').
+    """
+    return '#%02X%02X%02X' % (r, g, b)
+
+    
+def latex_colors(colors):
+    """ Print a \definecolor command for LaTeX.
+
+    Parameters
+    ----------
+    colors: dict or string
+        A dictionary with names and rgb hex-strings of colors
+        or an rgb hex-string.
+    """
+    if isinstance(colors, dict):
+        for cn in colors:
+            r, g, b = rgb(colors[cn])
+            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
+    else:
+        r, g, b = rgb(colors)
+        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
+        
+
 def lighter(color, lightness):
     """ Make a color lighter.
 
@@ -153,9 +207,7 @@ def lighter(color, lightness):
         color['color'] = lighter(c, lightness)
         return color
     except TypeError:
-        r = int(color[1:3], 16)
-        g = int(color[3:5], 16)
-        b = int(color[5:7], 16)
+        r, g, b = rgb(color)
         if lightness < 0:
             lightness = 0
         if lightness > 1:
@@ -163,7 +215,7 @@ def lighter(color, lightness):
         rl = r + (1.0-lightness)*(0xff - r)
         gl = g + (1.0-lightness)*(0xff - g)
         bl = b + (1.0-lightness)*(0xff - b)
-        return '#%02X%02X%02X' % (rl, gl, bl)
+        return hexstr(rl, gl, bl)
 
 
 def darker(color, saturation):
@@ -189,9 +241,7 @@ def darker(color, saturation):
         color['color'] = darker(c, saturation)
         return color
     except TypeError:
-        r = int(color[1:3], 16)
-        g = int(color[3:5], 16)
-        b = int(color[5:7], 16)
+        r, g, b = rgb(color)
         if saturation < 0:
             saturation = 0
         if saturation > 1:
@@ -199,31 +249,8 @@ def darker(color, saturation):
         rd = r * saturation
         gd = g * saturation
         bd = b * saturation
-        return '#%02X%02X%02X' % (rd, gd, bd)
+        return hexstr(rd, gd, bd)
 
-
-def latex_colors(colors):
-    """ Print a \definecolor command for LaTeX.
-
-    Parameters
-    ----------
-    colors: dict or string
-        A dictionary with names and rgb hex-strings of colors
-        or an rgb hex-string.
-    """
-    if isinstance(colors, dict):
-        for cn in colors:
-            color = colors[cn]
-            r = int(color[1:3], 16)
-            g = int(color[3:5], 16)
-            b = int(color[5:7], 16)
-            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
-    else:
-        r = int(colors[1:3], 16)
-        g = int(colors[3:5], 16)
-        b = int(colors[5:7], 16)
-        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
-        
 
 def plot_colors(ax, colors, n=1):
     """ Plot all colors of a palette and optionally some lighter and darker variants.
