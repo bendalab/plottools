@@ -1,6 +1,6 @@
 from .version import __version__
 
-__all__ = ['plotformat',
+__all__ = ['styles',
            'figure',
            'colors',
            'spines',

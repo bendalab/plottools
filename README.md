@@ -2,7 +2,7 @@
 
 Simplify creation of publication-quality figures.
 
-- `plotformat`: layout settings for a plot figure.
+- `styles`: layout settings and plot styles.
 - `colors`: some color palettes and tools for manipulating colors.
 - `figure`: size and margins of a figure.
 - `spines`: modify the appearance of spines.

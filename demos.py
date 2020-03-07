@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from plottools.plotformat import demo as plotformat_demo
+from plottools.styles import demo as styles_demo
 from plottools.colors import demo as colors_demo
 from plottools.figure import demo as figure_demo
 from plottools.spines import demo as spines_demo
@@ -14,8 +14,8 @@ from plottools.significance import demo as significance_demo
 
 if __name__ == "__main__":
 
-    print('plottools.plotformat ...')
-    plotformat_demo()
+    print('plottools.styles ...')
+    styles_demo()
 
     print('plottools.colors ...')
     colors_demo()
