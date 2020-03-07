@@ -1,7 +1,7 @@
 """
 # Colors
 
-Some color palletes and functions for manipulating colors.
+Some color palettes and functions for manipulating colors.
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
@@ -10,7 +10,7 @@ Dictionaries with colors:
 - `colors_plain`: plain rgb colors.
 - `colors_henninger`: colors by Joerg Henninger.
 - `colors_scicomp`: colors from the scientific computing script.
-- `colors_uni_tuebingen`: colors of the corporate design of the university of Tuebingen.
+- `colors_unituebingen`: colors of the corporate design of the university of Tuebingen.
 
 Functions for manipulating colors:
 - `lighter()`: make a color lighter.
@@ -97,23 +97,32 @@ colors_scicomp['blue'] = '#0000CC'
 """ Colors of the corporate design of the university of Tuebingen.
 The first three are the primary colors, the remaining ones the secondary colors.
 """
-colors_uni_tuebingen = OrderedDict()
-colors_uni_tuebingen['red'] = '#A51E37'
-colors_uni_tuebingen['gold'] = '#B4A069'
-colors_uni_tuebingen['black'] = '#32414B'
-colors_uni_tuebingen['darkblue'] = '#415A8C'
-colors_uni_tuebingen['blue'] = '#0069AA'
-colors_uni_tuebingen['lightblue'] = '#50AAC8'
-colors_uni_tuebingen['cyan'] = '#82B9A0'
-colors_uni_tuebingen['green'] = '#7DA54B'
-colors_uni_tuebingen['darkgreen'] = '#326E1E'
-colors_uni_tuebingen['lightred'] = '#C8503C'
-colors_uni_tuebingen['magenta'] = '#AF6E96'
-colors_uni_tuebingen['gray'] = '#B4A096'
-colors_uni_tuebingen['lightorange'] = '#D7B469'
-colors_uni_tuebingen['orange'] = '#D29600'
-colors_uni_tuebingen['brown'] = '#916946'
+colors_unituebingen = OrderedDict()
+colors_unituebingen['red'] = '#A51E37'
+colors_unituebingen['gold'] = '#B4A069'
+colors_unituebingen['black'] = '#32414B'
+colors_unituebingen['darkblue'] = '#415A8C'
+colors_unituebingen['blue'] = '#0069AA'
+colors_unituebingen['lightblue'] = '#50AAC8'
+colors_unituebingen['cyan'] = '#82B9A0'
+colors_unituebingen['green'] = '#7DA54B'
+colors_unituebingen['darkgreen'] = '#326E1E'
+colors_unituebingen['lightred'] = '#C8503C'
+colors_unituebingen['magenta'] = '#AF6E96'
+colors_unituebingen['gray'] = '#B4A096'
+colors_unituebingen['lightorange'] = '#D7B469'
+colors_unituebingen['orange'] = '#D29600'
+colors_unituebingen['brown'] = '#916946'
 
+
+""" All color palettes. """
+color_palettes = {'bendalab': colors_bendalab,
+                  'vivid': colors_vivid,
+                  'plain': colors_plain,
+                  'henninger': colors_henninger,
+                  'scicomp': colors_scicomp,
+                  'unituebingen': colors_unituebingen }
+    
 """ Default color palette. """
 colors = colors_bendalab
 
@@ -311,7 +320,7 @@ def plot_color_comparison(ax, colorsa, *args):
 
 
 def demo(mode=1):
-    """ Run a demonstration of the plotformat module.
+    """ Run a demonstration of the colors module.
 
     Parameters
     ----------
@@ -319,12 +328,12 @@ def demo(mode=1):
         - 1: plot the default color palette
         - n>1: plot the default color palette with n-1 lighter and darker colors
         - 'complementary': plot complementary colors of the default color palette
-        - 'comparison': plot the default color palette in comparison to the other palettes
+        - 'comparison': plot the default color palette in comparison to all other palettes
+        - name of a color palette: plot the specified color palette (see `color_palettes`)
     """
     fig, ax = plt.subplots()
     if isinstance(mode, int):
         plot_colors(ax, colors, mode)
-        ax.set_ylim(-0.27, 1.05)
     else:
         if 'compl' in mode:
             plot_complementary_colors(ax, colors)
@@ -334,13 +343,16 @@ def demo(mode=1):
                                   (colors_plain, 'plain'),
                                   (colors_henninger, 'henninger'),
                                   (colors_scicomp, 'scicomp'),
-                                  (colors_uni_tuebingen, 'uni_tuebingen'))
-        elif 'henn' in mode:
+                                  (colors_unituebingen, 'unituebingen'))
+        elif 'blabhenn' in mode:
             plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
                                   (colors_henninger, 'henninger'))
+        elif mode in color_palettes:
+            plot_colors(ax, color_palettes[mode], 1)
+            ax.set_title('colors_' + mode)
         else:
             print('unknown option %s!' % mode)
-            print('possible options are: compa(rison), compl(ementary), an integer number')
+            print('possible options are: an integer number, compa(rison), compl(ementary), or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
             return
     plt.show()
 
