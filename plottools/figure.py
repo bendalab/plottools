@@ -3,6 +3,29 @@
 
 Size and margins of a figure.
 
+Simply call
+```
+install_figure()
+```
+to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
+`figure.add_gridspec()`, `gridspec.update()`).
+
+Then `figsize` is in centimeters:
+```
+fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
+fig = plt.figure(figsize=(20.0, 16.0))         # in cm!
+```
+and subplot positions can be adjusted by margins given in multiples of the current font size:
+```
+fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
+gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
+```
+This way, margins do not need to be adjusted when changing the `figsize`!
+Further, `figure.add_gridspec()` is made available even for older
+matplotlib versions that do not have this function yet.
+
+Available functions:
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
@@ -162,7 +185,6 @@ def demo():
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
     # in fontsize margins and even with old matplotlib versions:
     gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
-    #gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)  # in fontsize margins!
     fig.suptitle('gs = fig.add_gridspec(3, 3, left=5.0, bottom=2.0, right=2.0, top=2.5)')
     for k in range(3):
         for j in range(3):
