@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from .colors import colors
+from .colors import colors, lighter, darker, gradient
 from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
