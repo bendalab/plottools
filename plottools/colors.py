@@ -15,6 +15,11 @@ Dictionaries with colors:
 Functions for manipulating colors:
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
+
+Displaying colors:
+- `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
+- `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
+- `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
 """
 
 import numpy as np
@@ -118,8 +123,9 @@ def lighter(color, lightness):
 
     Parameters
     ----------
-    color: string
-        An RGB color as a hexadecimal string (e.g. '#rrggbb').
+    color: string or dict
+        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+        or a dictionary with an 'color' key.
     lightness: float
         The smaller the lightness, the lighter the returned color.
         A lightness of 1 leaves the color untouched.
@@ -130,13 +136,22 @@ def lighter(color, lightness):
     color: string
         The lighter color as a hexadecimal RGB string (e.g. '#rrggbb').
     """
-    r = int(color[1:3], 16)
-    g = int(color[3:5], 16)
-    b = int(color[5:7], 16)
-    rl = r + (1.0-lightness)*(0xff - r)
-    gl = g + (1.0-lightness)*(0xff - g)
-    bl = b + (1.0-lightness)*(0xff - b)
-    return '#%02X%02X%02X' % (rl, gl, bl)
+    try:
+        c = color['color']
+        color['color'] = lighter(c, lightness)
+        return color
+    except TypeError:
+        r = int(color[1:3], 16)
+        g = int(color[3:5], 16)
+        b = int(color[5:7], 16)
+        if lightness < 0:
+            lightness = 0
+        if lightness > 1:
+            lightness = 1
+        rl = r + (1.0-lightness)*(0xff - r)
+        gl = g + (1.0-lightness)*(0xff - g)
+        bl = b + (1.0-lightness)*(0xff - b)
+        return '#%02X%02X%02X' % (rl, gl, bl)
 
 
 def darker(color, saturation):
@@ -145,7 +160,8 @@ def darker(color, saturation):
     Parameters
     ----------
     color: string
-        An RGB color as a hexadecimal string (e.g. '#rrggbb').
+        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+        or a dictionary with an 'color' key.
     saturation: float
         The smaller the saturation, the darker the returned color.
         A saturation of 1 leaves the color untouched.
@@ -156,13 +172,22 @@ def darker(color, saturation):
     color: string
         The darker color as a hexadecimal RGB string (e.g. '#rrggbb').
     """
-    r = int(color[1:3], 16)
-    g = int(color[3:5], 16)
-    b = int(color[5:7], 16)
-    rd = r * saturation
-    gd = g * saturation
-    bd = b * saturation
-    return '#%02X%02X%02X' % (rd, gd, bd)
+    try:
+        c = color['color']
+        color['color'] = darker(c, saturation)
+        return color
+    except TypeError:
+        r = int(color[1:3], 16)
+        g = int(color[3:5], 16)
+        b = int(color[5:7], 16)
+        if saturation < 0:
+            saturation = 0
+        if saturation > 1:
+            saturation = 1
+        rd = r * saturation
+        gd = g * saturation
+        bd = b * saturation
+        return '#%02X%02X%02X' % (rd, gd, bd)
 
 
 def plot_colors(ax, colors, n=1):
