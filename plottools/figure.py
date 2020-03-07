@@ -96,10 +96,11 @@ def __fig_subplots_adjust_figure(fig, left=None, bottom=None, right=None, top=No
     fig.__subplots_adjust_orig_figure(**kwargs)
 
     
-def __gridspec_update_figure(gridspec, left=None, bottom=None, right=None, top=None, **kwargs):
+def __gridspec_update_figure(gridspec, fig=None,
+                             left=None, bottom=None, right=None, top=None, **kwargs):
     """ gridspec.update() with margins in multiples of the current font size.
     """
-    kwargs.update(adjust_fs(None, left, bottom, right, top))
+    kwargs.update(adjust_fs(fig, left, bottom, right, top))
     gridspec.__update_orig_figure(**kwargs)
 
 
@@ -121,6 +122,7 @@ def demo():
     """ Run a demonstration of the figure module.
     """
     install_figure()
+    
     fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
     fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
     ax.text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0))  # in cm!')
@@ -131,7 +133,7 @@ def demo():
 
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
     gs = gridspec.GridSpec(3, 3)
-    gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+    gs.update(fig, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
     for k in range(3):
         for j in range(3):
             ax = fig.add_subplot(gs[k,j])
