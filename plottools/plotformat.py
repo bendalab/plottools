@@ -18,7 +18,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 from .colors import colors, lighter, darker, gradient
-from .figure import cm_size, adjust_fs
+from .figure import install_figure
 from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
@@ -335,7 +335,10 @@ def plot_format(fontsize=10.0, label_format=None,
         mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
     else:
         mpl.rcParams['axes.color_cycle'] = color_cycle
-    
+
+    # figsize in centimeter:
+    install_figure()
+            
     # define the appearance of axis labels:
     if label_format is None:
         label_format = '{label} [{unit}]'

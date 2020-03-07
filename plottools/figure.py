@@ -5,11 +5,14 @@ Size and margins of a figure.
 
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
+- `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
 """
 
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
 
 def cm_size(*args):
     """ Convert dimensions from cm to inch.
@@ -36,7 +39,7 @@ def cm_size(*args):
         return [v/cm_per_inch for v in args]
 
 
-def adjust_fs(fig=None, left=5.5, right=0.5, bottom=2.8, top=0.5):
+def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5):
     """ Compute plot margins from multiples of the current font size.
 
     Parameters
@@ -46,14 +49,14 @@ def adjust_fs(fig=None, left=5.5, right=0.5, bottom=2.8, top=0.5):
     left: float
         the left margin of the plots given in multiples of the width of a character
         (in fact, simply 60% of the current font size).
+    bottom: float
+        the bottom margin of the plots given in multiples of the height of a character
+        (the current font size).
     right: float
         the right margin of the plots given in multiples of the width of a character
         (in fact, simply 60% of the current font size).
         *Note:* in contrast to the matplotlib `right` parameters, this specifies the
         width of the right margin, not its position relative to the origin.
-    bottom: float
-        the bottom margin of the plots given in multiples of the height of a character
-        (the current font size).
     top: float
         the right margin of the plots given in multiples of the height of a character
         (the current font size).
@@ -73,18 +76,67 @@ def adjust_fs(fig=None, left=5.5, right=0.5, bottom=2.8, top=0.5):
     w, h = fig.get_size_inches()*ppi
     fs = plt.rcParams['font.size']
     return { 'left': left*0.6*fs/w,
-             'right': 1.0 - right*0.6*fs/w,
              'bottom': bottom*fs/h,
+             'right': 1.0 - right*0.6*fs/w,
              'top': 1.0 - top*fs/h }
+
+    
+def __figure_figure(num=None, figsize=None, **kwargs):
+    """ plt.figure() with figsize in centimeters.
+    """
+    if figsize:
+        figsize = cm_size(*figsize)
+    return plt.__figure_orig_figure(num, figsize, **kwargs)
+
+    
+def __fig_subplots_adjust_figure(fig, left=None, bottom=None, right=None, top=None, **kwargs):
+    """ figure.subplots_adjust() with margins in multiples of the current font size.
+    """
+    kwargs.update(adjust_fs(fig, left, bottom, right, top))
+    fig.__subplots_adjust_orig_figure(**kwargs)
+
+    
+def __gridspec_update_figure(gridspec, left=None, bottom=None, right=None, top=None, **kwargs):
+    """ gridspec.update() with margins in multiples of the current font size.
+    """
+    kwargs.update(adjust_fs(None, left, bottom, right, top))
+    gridspec.__update_orig_figure(**kwargs)
+
+
+def install_figure():
+    """ Install code for figsize in centimeters and margins in multiples of fontsize.
+    """
+    if not hasattr(plt, '__figure_orig_figure'):
+        plt.__figure_orig_figure = plt.figure
+        plt.figure = __figure_figure
+    if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
+        mpl.figure.Figure.__subplots_adjust_orig_figure = mpl.figure.Figure.subplots_adjust
+        mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust_figure
+    if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
+        mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
+        mpl.gridspec.GridSpec.update = __gridspec_update_figure
 
 
 def demo():
     """ Run a demonstration of the figure module.
     """
-    fig, ax = plt.subplots(figsize=cm_size(16.0, 10.0))
-    fig.subplots_adjust(**adjust_fs(fig, left=5.0, bottom=2.0, top=1.0, right=2.0))
+    install_figure()
+    fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
+    fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+    ax.text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0))  # in cm!')
+    ax.text(0.1, 1.4, 'fig.subplots_adjust(left=5.0, bottom=2.0, top=1.0, right=2.0)  # in fontsize margins!')
     x = np.linspace(0.0, 2.0, 200)
     ax.plot(x, np.sin(2.0*np.pi*x))
+    ax.set_ylim(-1.0, 2.0)
+
+    fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
+    gs = gridspec.GridSpec(3, 3)
+    gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+    for k in range(3):
+        for j in range(3):
+            ax = fig.add_subplot(gs[k,j])
+            ax.plot(x, np.sin(2.0*np.pi*x+k*j))
+    
     plt.show()
 
 
