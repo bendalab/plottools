@@ -39,7 +39,7 @@ def cm_size(*args):
         return [v/cm_per_inch for v in args]
 
 
-def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5):
+def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5, **kwargs):
     """ Compute plot margins from multiples of the current font size.
 
     Parameters
@@ -62,6 +62,13 @@ def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5):
         (the current font size).
         *Note:* in contrast to the matplotlib `top` parameters, this specifies the
         width of the top margin, not its position relative to the origin.
+    kwargs: dict
+        Any further key-word arguments that are simply passed on.
+
+    Returns
+    -------
+    kwargs: dict
+        The margins and the kwargs combined.
 
     Example
     -------
@@ -75,10 +82,12 @@ def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5):
     ppi = 72.0 # points per inch:
     w, h = fig.get_size_inches()*ppi
     fs = plt.rcParams['font.size']
-    return { 'left': left*0.6*fs/w,
-             'bottom': bottom*fs/h,
-             'right': 1.0 - right*0.6*fs/w,
-             'top': 1.0 - top*fs/h }
+    margins = { 'left': left*0.6*fs/w,
+                'bottom': bottom*fs/h,
+                'right': 1.0 - right*0.6*fs/w,
+                'top': 1.0 - top*fs/h }
+    margins.update(kwargs)
+    return margins
 
     
 def __figure_figure(num=None, figsize=None, **kwargs):
@@ -92,16 +101,25 @@ def __figure_figure(num=None, figsize=None, **kwargs):
 def __fig_subplots_adjust_figure(fig, left=None, bottom=None, right=None, top=None, **kwargs):
     """ figure.subplots_adjust() with margins in multiples of the current font size.
     """
-    kwargs.update(adjust_fs(fig, left, bottom, right, top))
-    fig.__subplots_adjust_orig_figure(**kwargs)
+    fig.__subplots_adjust_orig_figure(**adjust_fs(fig, left, bottom, right, top, **kwargs))
 
     
-def __gridspec_update_figure(gridspec, fig=None,
-                             left=None, bottom=None, right=None, top=None, **kwargs):
+def __gridspec_update_figure(gridspec, left=None, bottom=None, right=None, top=None, **kwargs):
     """ gridspec.update() with margins in multiples of the current font size.
     """
-    kwargs.update(adjust_fs(fig, left, bottom, right, top))
-    gridspec.__update_orig_figure(**kwargs)
+    figure = None
+    if hasattr(gridspec, 'figure'):
+        figure = gridspec.figure
+    gridspec.__update_orig_figure(**adjust_fs(figure, left, bottom, right, top, **kwargs))
+
+
+def __fig_add_gridspec(fig, nrows, ncols, **kwargs):
+    """ This is from more current versions of matplotlib.
+    """
+    _ = kwargs.pop('figure', None)  # pop in case user has added this...
+    gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **adjust_fs(**kwargs))
+    gs.figure = fig
+    return gs
 
 
 def install_figure():
@@ -113,6 +131,9 @@ def install_figure():
     if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
         mpl.figure.Figure.__subplots_adjust_orig_figure = mpl.figure.Figure.subplots_adjust
         mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust_figure
+    if not hasattr(mpl.figure.Figure, 'add_gridspec'):
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
+        # TODO: we need to replace an existing add_gridspec()!
     if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
         mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
         mpl.gridspec.GridSpec.update = __gridspec_update_figure
@@ -132,8 +153,8 @@ def demo():
     ax.set_ylim(-1.0, 2.0)
 
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
-    gs = gridspec.GridSpec(3, 3)
-    gs.update(fig, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
+    gs = fig.add_gridspec(3, 3)   # even with olf matplotlib versions!
+    gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
     for k in range(3):
         for j in range(3):
             ax = fig.add_subplot(gs[k,j])
