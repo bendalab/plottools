@@ -110,96 +110,109 @@ fsA1a = {'facecolor': colors['red'], 'edgecolor': 'none', 'alpha': fillalpha}
 fsA2a = {'facecolor': colors['orange'], 'edgecolor': 'none', 'alpha': fillalpha}
 fsA3a = {'facecolor': colors['yellow'], 'edgecolor': 'none', 'alpha': fillalpha}
 
-lsB1 = dict({'color': colors['blue']}, **mainline)
-lsB2 = dict({'color': colors['purple']}, **mainline)
-lsB3 = dict({'color': colors['magenta']}, **mainline)
-lsB4 = dict({'color': colors['pink']}, **mainline)
-lsB1m = dict({'color': colors['blue']}, **minorline)
-lsB2m = dict({'color': colors['purple']}, **minorline)
-lsB3m = dict({'color': colors['magenta']}, **minorline)
-lsB4m = dict({'color': colors['pink']}, **minorline)
-psB1 = dict({'color': colors['blue'], 'marker': 'v'}, **largemarker)
+lsB1 = dict({'color': colors['lightblue']}, **mainline)
+lsB2 = dict({'color': colors['blue']}, **mainline)
+lsB3 = dict({'color': colors['purple']}, **mainline)
+lsB4 = dict({'color': colors['magenta']}, **mainline)
+lsB1m = dict({'color': colors['lightblue']}, **minorline)
+lsB2m = dict({'color': colors['blue']}, **minorline)
+lsB3m = dict({'color': colors['purple']}, **minorline)
+lsB4m = dict({'color': colors['magenta']}, **minorline)
+psB1 = dict({'color': colors['lightblue'], 'marker': 'v'}, **largemarker)
 psB1.update({'markersize': 1.3*psB1['markersize']})
-psB2 = dict({'color': colors['purple'], 'marker': '^'}, **largemarker)
+psB2 = dict({'color': colors['blue'], 'marker': '^'}, **largemarker)
 psB2.update({'markersize': 1.3*psB2['markersize']})
-psB3 = dict({'color': colors['magenta'], 'marker': '<'}, **largemarker)
+psB3 = dict({'color': colors['purple'], 'marker': '<'}, **largemarker)
 psB3.update({'markersize': 1.3*psB3['markersize']})
-psB4 = dict({'color': colors['pink'], 'marker': '>'}, **largemarker)
+psB4 = dict({'color': colors['magenta'], 'marker': '>'}, **largemarker)
 psB4.update({'markersize': 1.3*psB4['markersize']})
-psB1c = dict({'color': colors['blue']}, **largecirclemarker)
-psB2c = dict({'color': colors['purple']}, **largecirclemarker)
-psB3c = dict({'color': colors['magenta']}, **largecirclemarker)
-psB4c = dict({'color': colors['pink']}, **largecirclemarker)
-psB1m = dict({'color': colors['blue']}, **smallcirclemarker)
-psB2m = dict({'color': colors['purple']}, **smallcirclemarker)
-psB3m = dict({'color': colors['magenta']}, **smallcirclemarker)
-psB4m = dict({'color': colors['pink']}, **smallcirclemarker)
-lpsB1 = dict({'color': colors['blue'], 'marker': 'v'}, **largelinepoints)
+psB1c = dict({'color': colors['lightblue']}, **largecirclemarker)
+psB2c = dict({'color': colors['blue']}, **largecirclemarker)
+psB3c = dict({'color': colors['purple']}, **largecirclemarker)
+psB4c = dict({'color': colors['magenta']}, **largecirclemarker)
+psB1m = dict({'color': colors['lightblue']}, **smallcirclemarker)
+psB2m = dict({'color': colors['blue']}, **smallcirclemarker)
+psB3m = dict({'color': colors['purple']}, **smallcirclemarker)
+psB4m = dict({'color': colors['magenta']}, **smallcirclemarker)
+lpsB1 = dict({'color': colors['lightblue'], 'marker': 'v'}, **largelinepoints)
 lpsB1.update({'markersize': 1.3*lpsB1['markersize']})
-lpsB2 = dict({'color': colors['purple'], 'marker': '^'}, **largelinepoints)
+lpsB2 = dict({'color': colors['blue'], 'marker': '^'}, **largelinepoints)
 lpsB2.update({'markersize': 1.3*lpsB2['markersize']})
-lpsB3 = dict({'color': colors['magenta'], 'marker': '<'}, **largelinepoints)
+lpsB3 = dict({'color': colors['purple'], 'marker': '<'}, **largelinepoints)
 lpsB3.update({'markersize': 1.3*lpsB3['markersize']})
-lpsB4 = dict({'color': colors['pink'], 'marker': '>'}, **largelinepoints)
+lpsB4 = dict({'color': colors['magenta'], 'marker': '>'}, **largelinepoints)
 lpsB4.update({'markersize': 1.3*lpsB4['markersize']})
-lpsB1c = dict({'color': colors['blue']}, **largecirclelinepoints)
-lpsB2c = dict({'color': colors['purple']}, **largecirclelinepoints)
-lpsB3c = dict({'color': colors['magenta']}, **largecirclelinepoints)
-lpsB4c = dict({'color': colors['pink']}, **largecirclelinepoints)
-lpsB1m = dict({'color': colors['blue']}, **smallcirclelinepoints)
-lpsB2m = dict({'color': colors['purple']}, **smallcirclelinepoints)
-lpsB3m = dict({'color': colors['magenta']}, **smallcirclelinepoints)
-lpsB4m = dict({'color': colors['pink']}, **smallcirclelinepoints)
-fsB1 = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
-fsB2 = {'facecolor': colors['purple'], 'edgecolor': fillec, 'linewidth': filllw}
-fsB3 = {'facecolor': colors['magenta'], 'edgecolor': fillec, 'linewidth': filllw}
-fsB4 = {'facecolor': colors['pink'], 'edgecolor': fillec, 'linewidth': filllw}
-fsB1s = {'facecolor': colors['blue'], 'edgecolor': 'none'}
-fsB2s = {'facecolor': colors['purple'], 'edgecolor': 'none'}
-fsB3s = {'facecolor': colors['magenta'], 'edgecolor': 'none'}
-fsB4s = {'facecolor': colors['pink'], 'edgecolor': 'none'}
-fsB1a = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB2a = {'facecolor': colors['purple'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB3a = {'facecolor': colors['magenta'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsB4a = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
+lpsB1c = dict({'color': colors['lightblue']}, **largecirclelinepoints)
+lpsB2c = dict({'color': colors['blue']}, **largecirclelinepoints)
+lpsB3c = dict({'color': colors['purple']}, **largecirclelinepoints)
+lpsB4c = dict({'color': colors['magenta']}, **largecirclelinepoints)
+lpsB1m = dict({'color': colors['lightblue']}, **smallcirclelinepoints)
+lpsB2m = dict({'color': colors['blue']}, **smallcirclelinepoints)
+lpsB3m = dict({'color': colors['purple']}, **smallcirclelinepoints)
+lpsB4m = dict({'color': colors['magenta']}, **smallcirclelinepoints)
+fsB1 = {'facecolor': colors['lightblue'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB2 = {'facecolor': colors['blue'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB3 = {'facecolor': colors['purple'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB4 = {'facecolor': colors['magenta'], 'edgecolor': fillec, 'linewidth': filllw}
+fsB1s = {'facecolor': colors['lightblue'], 'edgecolor': 'none'}
+fsB2s = {'facecolor': colors['blue'], 'edgecolor': 'none'}
+fsB3s = {'facecolor': colors['purple'], 'edgecolor': 'none'}
+fsB4s = {'facecolor': colors['magenta'], 'edgecolor': 'none'}
+fsB1a = {'facecolor': colors['lightblue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB2a = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB3a = {'facecolor': colors['purple'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsB4a = {'facecolor': colors['magenta'], 'edgecolor': 'none', 'alpha': fillalpha}
 
-lsC1 = dict({'color': colors['green']}, **mainline)
-lsC2 = dict({'color': colors['darkgreen']}, **mainline)
-lsC3 = dict({'color': colors['cyan']}, **mainline)
-lsC1m = dict({'color': colors['green']}, **minorline)
-lsC2m = dict({'color': colors['darkgreen']}, **minorline)
-lsC3m = dict({'color': colors['cyan']}, **minorline)
-psC1 = dict({'color': colors['green'], 'marker': 's'}, **largemarker)
-psC2 = dict({'color': colors['darkgreen'], 'marker': 'D'}, **largemarker)
+lsC1 = dict({'color': colors['lightgreen']}, **mainline)
+lsC2 = dict({'color': colors['green']}, **mainline)
+lsC3 = dict({'color': colors['darkgreen']}, **mainline)
+lsC4 = dict({'color': colors['cyan']}, **mainline)
+lsC1m = dict({'color': colors['lightgreen']}, **minorline)
+lsC2m = dict({'color': colors['green']}, **minorline)
+lsC3m = dict({'color': colors['darkgreen']}, **minorline)
+lsC4m = dict({'color': colors['cyan']}, **minorline)
+psC1 = dict({'color': colors['lightgreen'], 'marker': 's'}, **largemarker)
+psC2 = dict({'color': colors['green'], 'marker': 'D'}, **largemarker)
 psC2.update({'markersize': 0.95*psC2['markersize']})
-psC3 = dict({'color': colors['cyan'], 'marker': '*'}, **largemarker)
+psC3 = dict({'color': colors['darkgreen'], 'marker': '*'}, **largemarker)
 psC3.update({'markersize': 1.7*psC3['markersize']})
-psC1c = dict({'color': colors['green']}, **largecirclemarker)
-psC2c = dict({'color': colors['darkgreen']}, **largecirclemarker)
-psC3c = dict({'color': colors['cyan']}, **largecirclemarker)
-psC1m = dict({'color': colors['green']}, **smallcirclemarker)
-psC2m = dict({'color': colors['darkgreen']}, **smallcirclemarker)
-psC3m = dict({'color': colors['cyan']}, **smallcirclemarker)
-lpsC1 = dict({'color': colors['green'], 'marker': 's'}, **largelinepoints)
-lpsC2 = dict({'color': colors['darkgreen'], 'marker': 'D'}, **largelinepoints)
+psC4 = dict({'color': colors['cyan'], 'marker': (4, 1, 45)}, **largemarker)
+psC4.update({'markersize': 1.5*psC4['markersize']})
+psC1c = dict({'color': colors['lightgreen']}, **largecirclemarker)
+psC2c = dict({'color': colors['green']}, **largecirclemarker)
+psC3c = dict({'color': colors['darkgreen']}, **largecirclemarker)
+psC4c = dict({'color': colors['cyan']}, **largecirclemarker)
+psC1m = dict({'color': colors['lightgreen']}, **smallcirclemarker)
+psC2m = dict({'color': colors['green']}, **smallcirclemarker)
+psC3m = dict({'color': colors['darkgreen']}, **smallcirclemarker)
+psC4m = dict({'color': colors['cyan']}, **smallcirclemarker)
+lpsC1 = dict({'color': colors['lightgreen'], 'marker': 's'}, **largelinepoints)
+lpsC2 = dict({'color': colors['green'], 'marker': 'D'}, **largelinepoints)
 lpsC2.update({'markersize': 0.95*lpsC2['markersize']})
-lpsC3 = dict({'color': colors['cyan'], 'marker': '*'}, **largelinepoints)
+lpsC3 = dict({'color': colors['darkgreen'], 'marker': '*'}, **largelinepoints)
 lpsC3.update({'markersize': 1.7*lpsC3['markersize']})
-lpsC1c = dict({'color': colors['green']}, **largecirclelinepoints)
-lpsC2c = dict({'color': colors['darkgreen']}, **largecirclelinepoints)
-lpsC3c = dict({'color': colors['cyan']}, **largecirclelinepoints)
-lpsC1m = dict({'color': colors['green']}, **smallcirclelinepoints)
-lpsC2m = dict({'color': colors['darkgreen']}, **smallcirclelinepoints)
-lpsC3m = dict({'color': colors['cyan']}, **smallcirclelinepoints)
-fsC1 = {'facecolor': colors['green'], 'edgecolor': fillec, 'linewidth': filllw}
-fsC2 = {'facecolor': colors['darkgreen'], 'edgecolor': fillec, 'linewidth': filllw}
-fsC3 = {'facecolor': colors['cyan'], 'edgecolor': fillec, 'linewidth': filllw}
-fsC1s = {'facecolor': colors['green'], 'edgecolor': 'none'}
-fsC2s = {'facecolor': colors['darkgreen'], 'edgecolor': 'none'}
-fsC3s = {'facecolor': colors['cyan'], 'edgecolor': 'none'}
-fsC1a = {'facecolor': colors['green'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsC2a = {'facecolor': colors['darkgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
-fsC3a = {'facecolor': colors['cyan'], 'edgecolor': 'none', 'alpha': fillalpha}
+lpsC4 = dict({'color': colors['cyan'], 'marker': (4, 1, 45)}, **largelinepoints)
+lpsC4.update({'markersize': 1.5*lpsC4['markersize']})
+lpsC1c = dict({'color': colors['lightgreen']}, **largecirclelinepoints)
+lpsC2c = dict({'color': colors['green']}, **largecirclelinepoints)
+lpsC3c = dict({'color': colors['darkgreen']}, **largecirclelinepoints)
+lpsC4c = dict({'color': colors['cyan']}, **largecirclelinepoints)
+lpsC1m = dict({'color': colors['lightgreen']}, **smallcirclelinepoints)
+lpsC2m = dict({'color': colors['green']}, **smallcirclelinepoints)
+lpsC3m = dict({'color': colors['darkgreen']}, **smallcirclelinepoints)
+lpsC4m = dict({'color': colors['cyan']}, **smallcirclelinepoints)
+fsC1 = {'facecolor': colors['lightgreen'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC2 = {'facecolor': colors['green'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC3 = {'facecolor': colors['darkgreen'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC4 = {'facecolor': colors['cyan'], 'edgecolor': fillec, 'linewidth': filllw}
+fsC1s = {'facecolor': colors['lightgreen'], 'edgecolor': 'none'}
+fsC2s = {'facecolor': colors['green'], 'edgecolor': 'none'}
+fsC3s = {'facecolor': colors['darkgreen'], 'edgecolor': 'none'}
+fsC4s = {'facecolor': colors['cyan'], 'edgecolor': 'none'}
+fsC1a = {'facecolor': colors['lightgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC2a = {'facecolor': colors['green'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC3a = {'facecolor': colors['darkgreen'], 'edgecolor': 'none', 'alpha': fillalpha}
+fsC4a = {'facecolor': colors['cyan'], 'edgecolor': 'none', 'alpha': fillalpha}
 
 # lines for male female colors:
 lsMale = dict({'color': colors['blue']}, **mainline)
@@ -226,50 +239,50 @@ fsMalea = {'facecolor': colors['blue'], 'edgecolor': 'none', 'alpha': fillalpha}
 fsFemalea = {'facecolor': colors['pink'], 'edgecolor': 'none', 'alpha': fillalpha}
 
 # dictionaries for line, point, linepoint and fill styles:
-style_names = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'Male', 'Female')
+style_names = ('A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'B4', 'C1', 'C2', 'C3', 'C4', 'Male', 'Female')
 ls = {'A1': lsA1, 'A2': lsA2, 'A3': lsA3,
       'B1': lsB1, 'B2': lsB2, 'B3': lsB3, 'B4': lsB4,
-      'C1': lsC1, 'C2': lsC2, 'C3': lsC3,
+      'C1': lsC1, 'C2': lsC2, 'C3': lsC3, 'C4': lsC4,
       'Male': lsMale, 'Female': lsFemale}
 lsm = {'A1': lsA1m, 'A2': lsA2m, 'A3': lsA3m,
        'B1': lsB1m, 'B2': lsB2m, 'B3': lsB3m, 'B4': lsB4m,
-       'C1': lsC1m, 'C2': lsC2m, 'C3': lsC3m,
+       'C1': lsC1m, 'C2': lsC2m, 'C3': lsC3m, 'C4': lsC4m,
        'Male': lsMalem, 'Female': lsFemalem}
 ps = {'A1': psA1, 'A2': psA2, 'A3': psA3,
       'B1': psB1, 'B2': psB2, 'B3': psB3, 'B4': psB4,
-      'C1': psC1, 'C2': psC2, 'C3': psC3,
+      'C1': psC1, 'C2': psC2, 'C3': psC3, 'C4': psC4,
       'Male': psMale, 'Female': psFemale}
 psc = {'A1': psA1c, 'A2': psA2c, 'A3': psA3c,
        'B1': psB1c, 'B2': psB2c, 'B3': psB3c, 'B4': psB4c,
-       'C1': psC1c, 'C2': psC2c, 'C3': psC3c,
+       'C1': psC1c, 'C2': psC2c, 'C3': psC3c, 'C4': psC4c,
        'Male': psMalec, 'Female': psFemalec}
 psm = {'A1': psA1m, 'A2': psA2m, 'A3': psA3m,
        'B1': psB1m, 'B2': psB2m, 'B3': psB3m, 'B4': psB4m,
-       'C1': psC1m, 'C2': psC2m, 'C3': psC3m,
+       'C1': psC1m, 'C2': psC2m, 'C3': psC3m, 'C4': psC4m,
        'Male': psMalem, 'Female': psFemalem}
 lps = {'A1': lpsA1, 'A2': lpsA2, 'A3': lpsA3,
        'B1': lpsB1, 'B2': lpsB2, 'B3': lpsB3, 'B4': lpsB4,
-       'C1': lpsC1, 'C2': lpsC2, 'C3': lpsC3,
+       'C1': lpsC1, 'C2': lpsC2, 'C3': lpsC3, 'C4': lpsC4,
        'Male': lpsMale, 'Female': lpsFemale}
 lpsc = {'A1': lpsA1c, 'A2': lpsA2c, 'A3': lpsA3c,
         'B1': lpsB1c, 'B2': lpsB2c, 'B3': lpsB3c, 'B4': lpsB4c,
-        'C1': lpsC1c, 'C2': lpsC2c, 'C3': lpsC3c,
+        'C1': lpsC1c, 'C2': lpsC2c, 'C3': lpsC3c, 'C4': lpsC4c,
         'Male': lpsMalec, 'Female': lpsFemalec}
 lpsm = {'A1': lpsA1m, 'A2': lpsA2m, 'A3': lpsA3m,
         'B1': lpsB1m, 'B2': lpsB2m, 'B3': lpsB3m, 'B4': lpsB4m,
-        'C1': lpsC1m, 'C2': lpsC2m, 'C3': lpsC3m,
+        'C1': lpsC1m, 'C2': lpsC2m, 'C3': lpsC3m, 'C4': lpsC4m,
         'Male': lpsMalem, 'Female': lpsFemalem}
 fs = {'A1': fsA1, 'A2': fsA2, 'A3': fsA3,
       'B1': fsB1, 'B2': fsB2, 'B3': fsB3, 'B4': fsB4,
-      'C1': fsC1, 'C2': fsC2, 'C3': fsC3,
+      'C1': fsC1, 'C2': fsC2, 'C3': fsC3, 'C4': fsC4,
       'Male': fsMale, 'Female': fsFemale}
 fss = {'A1': fsA1s, 'A2': fsA2s, 'A3': fsA3s,
        'B1': fsB1s, 'B2': fsB2s, 'B3': fsB3s, 'B4': fsB4s,
-       'C1': fsC1s, 'C2': fsC2s, 'C3': fsC3s,
+       'C1': fsC1s, 'C2': fsC2s, 'C3': fsC3s, 'C4': fsC4s,
        'Male': fsMales, 'Female': fsFemales}
 fsa = {'A1': fsA1a, 'A2': fsA2a, 'A3': fsA3a,
        'B1': fsB1a, 'B2': fsB2a, 'B3': fsB3a, 'B4': fsB4a,
-       'C1': fsC1a, 'C2': fsC2a, 'C3': fsC3a,
+       'C1': fsC1a, 'C2': fsC2a, 'C3': fsC3a, 'C4': fsC4a,
        'Male': fsMalea, 'Female': fsFemalea}
 
 
@@ -311,7 +324,7 @@ def plot_format(fontsize=10.0, label_format=None,
     mpl.rcParams['axes.facecolor'] = 'none'
     mpl.rcParams['axes.edgecolor'] = lsSpine['c']
     mpl.rcParams['axes.linewidth'] = lsSpine['linewidth']
-    color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'green', 'magenta',
+    color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'lightgreen', 'magenta',
                                        'yellow', 'cyan', 'pink'] if c in colors]
     if 'axes.prop_cycle' in mpl.rcParams:
         from cycler import cycler

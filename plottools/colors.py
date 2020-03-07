@@ -5,12 +5,12 @@ Some color palettes and tools for manipulating colors.
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:
-- `colors_bendalab`: muted colors used by the Benda-lab.
-- `colors_vivid`: vivid colors used by the Benda-lab.
 - `colors_plain`: plain rgb colors.
-- `colors_henninger`: colors by Joerg Henninger.
+- `colors_vivid`: vivid colors.
+- `colors_muted`: muted colors.
+- `colors_henninger`: colors by Joerg Henninger upond which the muted colors are build.
 - `colors_scicomp`: colors from the scientific computing script.
-- `colors_unituebingen`: colors of the corporate design of the university of Tuebingen.
+- `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
 
 Converting colors:
 - `rgb()`: integer RGB components of a hex string.
@@ -33,48 +33,17 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from collections import OrderedDict
 
-
-""" Muted colors used by the Benda-lab. """
-colors_bendalab = OrderedDict()
-colors_bendalab['red'] = '#C02717'
-colors_bendalab['orange'] = '#F78017'
-colors_bendalab['yellow'] = '#F0D730'
-colors_bendalab['green'] = '#AAB71B'
-colors_bendalab['darkgreen'] = '#007030'
-colors_bendalab['cyan'] = '#40A787'
-colors_bendalab['blue'] = '#2060A7'
-colors_bendalab['purple'] = '#53379B'
-colors_bendalab['magenta'] = '#873770'
-colors_bendalab['pink'] = '#D03050'
-colors_bendalab['white'] = '#FFFFFF'
-colors_bendalab['gray'] = '#A0A0A0'
-colors_bendalab['black'] = '#000000'
-
-
-""" Vivid colors. """
-colors_vivid = OrderedDict()
-colors_vivid['red'] = '#D71000'
-colors_vivid['orange'] = '#FF9000'
-colors_vivid['yellow'] = '#FFF700'
-colors_vivid['green'] = '#30D700'
-colors_vivid['darkgreen'] = '#008020'
-colors_vivid['cyan'] = '#00F0B0'
-colors_vivid['blue'] = '#0020C0'
-colors_vivid['purple'] = '#8000C0'
-colors_vivid['magenta'] = '#B000B0'
-colors_vivid['pink'] = '#F00080'
-colors_vivid['white'] = '#FFFFFF'
-colors_vivid['gray'] = '#A7A7A7'
-colors_vivid['black'] = '#000000'
-
 """ Plain rgb colors. """
 colors_plain = OrderedDict()
 colors_plain['red'] = '#FF0000'
-colors_plain['orange'] = '#FFA500'
+colors_plain['orange'] = '#FF8000'
 colors_plain['yellow'] = '#FFFF00'
-colors_plain['green'] = '#00FF00'
-colors_plain['darkgreen'] = '#008000'
+colors_plain['lightgreen'] = '#80FF00' # Chartreuse
+colors_plain['green'] = '#00FF00'      # Lime
+#colors_plain['darkgreen'] = '#008000'  # Green
+colors_plain['greenblue'] = '#00FF80' # SpringGreen
 colors_plain['cyan'] = '#00FFFF'
+colors_plain['lightblue'] = '#0080FF'
 colors_plain['blue'] = '#0000FF'
 colors_plain['purple'] = '#8000FF'
 colors_plain['magenta'] = '#FF00FF'
@@ -83,11 +52,47 @@ colors_plain['white'] = '#FFFFFF'
 colors_plain['gray'] = '#808080'
 colors_plain['black'] = '#000000'
 
+""" Vivid colors. """
+colors_vivid = OrderedDict()
+colors_vivid['red'] = '#D71000'
+colors_vivid['orange'] = '#FF9000'
+colors_vivid['yellow'] = '#FFF700'
+colors_vivid['lightgreen'] = '#B0FF00'
+colors_vivid['green'] = '#30D700'
+colors_vivid['darkgreen'] = '#008020'
+colors_vivid['cyan'] = '#00F0B0'
+colors_vivid['lightblue'] = '#00B0C7'
+colors_vivid['blue'] = '#0020C0'
+colors_vivid['purple'] = '#8000C0'
+colors_vivid['magenta'] = '#B000B0'
+colors_vivid['pink'] = '#F00080'
+colors_vivid['white'] = '#FFFFFF'
+colors_vivid['gray'] = '#A7A7A7'
+colors_vivid['black'] = '#000000'
+
+""" Muted colors. """
+colors_muted = OrderedDict()
+colors_muted['red'] = '#C02717'
+colors_muted['orange'] = '#F78017'
+colors_muted['yellow'] = '#F0D730'
+colors_muted['lightgreen'] = '#AAB71B'
+colors_muted['green'] = '#408020'
+colors_muted['darkgreen'] = '#007030'
+colors_muted['cyan'] = '#40A787'
+colors_muted['lightblue'] = '#008797'
+colors_muted['blue'] = '#2060A7'
+colors_muted['purple'] = '#53379B'
+colors_muted['magenta'] = '#873770'
+colors_muted['pink'] = '#D03050'
+colors_muted['white'] = '#FFFFFF'
+colors_muted['gray'] = '#A0A0A0'
+colors_muted['black'] = '#000000'
+
 """ Colors by Joerg Henninger. """
 colors_henninger = OrderedDict()
 colors_henninger['red'] = '#BA2D22'
 colors_henninger['orange'] = '#F47F17'
-colors_henninger['green'] = '#AAB71B'
+colors_henninger['lightgreen'] = '#AAB71B'
 colors_henninger['blue'] = '#3673A4'
 colors_henninger['purple'] = '#53379B'
 
@@ -120,17 +125,17 @@ colors_unituebingen['lightorange'] = '#D7B469'
 colors_unituebingen['orange'] = '#D29600'
 colors_unituebingen['brown'] = '#916946'
 
-
 """ All color palettes. """
-color_palettes = {'bendalab': colors_bendalab,
-                  'vivid': colors_vivid,
-                  'plain': colors_plain,
-                  'henninger': colors_henninger,
-                  'scicomp': colors_scicomp,
-                  'unituebingen': colors_unituebingen }
+color_palettes = OrderedDict()
+color_palettes['plain'] = colors_plain
+color_palettes['vivid'] = colors_vivid
+color_palettes['muted'] = colors_muted
+color_palettes['henninger'] = colors_henninger
+color_palettes['scicomp'] = colors_scicomp
+color_palettes['unituebingen'] = colors_unituebingen
     
 """ Default color palette. """
-colors = colors_bendalab
+colors = colors_muted
 
 
 def rgb(hexcolor):
@@ -456,14 +461,10 @@ def demo(mode='default', n=1):
     elif 'compl' in mode:
         plot_complementary_colors(ax, colors, n-1)
     elif 'compa' in mode:
-        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
-                              (colors_vivid, 'vivid'),
-                              (colors_plain, 'plain'),
-                              (colors_henninger, 'henninger'),
-                              (colors_scicomp, 'scicomp'),
-                              (colors_unituebingen, 'unituebingen'))
+        palettes = [(color_palettes[c], c) for c in color_palettes]
+        plot_color_comparison(ax, *palettes)
     elif 'blabhenn' in mode:
-        plot_color_comparison(ax, (colors_bendalab, 'benda_lab'),
+        plot_color_comparison(ax, (colors_muted, 'muted'),
                               (colors_henninger, 'henninger'))
     elif mode in color_palettes:
         plot_colors(ax, color_palettes[mode], n)
