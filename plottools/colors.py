@@ -197,18 +197,19 @@ def lighter(color, lightness):
     ----------
     color: string or dict
         An RGB color as a hexadecimal string (e.g. '#rrggbb')
-        or a dictionary with an 'color' key.
+        or a dictionary with an 'color' or 'facecolor' key.
     lightness: float
         The smaller the lightness, the lighter the returned color.
-        A lightness of 1 leaves the color untouched.
         A lightness of 0 returns white.
+        A lightness of 1 leaves the color untouched.
+        A lightness of 2 returns black.
 
     Returns
     -------
     color: string or dict
         The lighter color as a hexadecimal RGB string (e.g. '#rrggbb').
         If `color` is a dictionary, a copy of the dictionary is returned
-        with the value of `color` set to the lighter color.
+        with the value of 'color' or 'facecolor' set to the lighter color.
     """
     try:
         c = color['color']
@@ -216,15 +217,23 @@ def lighter(color, lightness):
         cd['color'] = lighter(c, lightness)
         return cd
     except TypeError:
-        r, g, b = rgb(color)
-        if lightness < 0:
-            lightness = 0
-        if lightness > 1:
-            lightness = 1
-        rl = r + (1.0-lightness)*(0xff - r)
-        gl = g + (1.0-lightness)*(0xff - g)
-        bl = b + (1.0-lightness)*(0xff - b)
-        return hexstr(rl, gl, bl)
+        try:
+            c = color['facecolor']
+            cd = {k: v for k, v in color.items()}
+            cd['facecolor'] = lighter(c, lightness)
+            return cd
+        except TypeError:
+            if lightness > 2:
+                lightness = 2
+            if lightness > 1:
+                return darker(color, 2.0-lightness)
+            if lightness < 0:
+                lightness = 0
+            r, g, b = rgb(color)
+            rl = r + (1.0-lightness)*(0xff - r)
+            gl = g + (1.0-lightness)*(0xff - g)
+            bl = b + (1.0-lightness)*(0xff - b)
+            return hexstr(rl, gl, bl)
 
 
 def darker(color, saturation):
@@ -237,15 +246,16 @@ def darker(color, saturation):
         or a dictionary with an 'color' key.
     saturation: float
         The smaller the saturation, the darker the returned color.
-        A saturation of 1 leaves the color untouched.
         A saturation of 0 returns black.
+        A saturation of 1 leaves the color untouched.
+        A saturation of 2 returns white.
 
     Returns
     -------
     color: string or dictionary
         The darker color as a hexadecimal RGB string (e.g. '#rrggbb').
         If `color` is a dictionary, a copy of the dictionary is returned
-        with the value of `color` set to the lighter color.
+        with the value of 'color' or 'facecolor' set to the darker color.
     """
     try:
         c = color['color']
@@ -253,15 +263,23 @@ def darker(color, saturation):
         cd['color'] = darker(c, saturation)
         return cd
     except TypeError:
-        r, g, b = rgb(color)
-        if saturation < 0:
-            saturation = 0
-        if saturation > 1:
-            saturation = 1
-        rd = r*saturation
-        gd = g*saturation
-        bd = b*saturation
-        return hexstr(rd, gd, bd)
+        try:
+            c = color['facecolor']
+            cd = {k: v for k, v in color.items()}
+            cd['facecolor'] = darker(c, saturation)
+            return cd
+        except TypeError:
+            if saturation > 2:
+                sauration = 2
+            if saturation > 1:
+                return lighter(color, 2.0-saturation)
+            if saturation < 0:
+                saturation = 0
+            r, g, b = rgb(color)
+            rd = r*saturation
+            gd = g*saturation
+            bd = b*saturation
+            return hexstr(rd, gd, bd)
 
 
 def gradient(color0, color1, r):
@@ -271,10 +289,10 @@ def gradient(color0, color1, r):
     ----------
     color0: string or dict
         An RGB color as a hexadecimal string (e.g. '#rrggbb')
-        or a dictionary with an 'color' key.
+        or a dictionary with an 'color' or 'facecolor' key.
     color1: string or dict
         An RGB color as a hexadecimal string (e.g. '#rrggbb')
-        or a dictionary with an 'color' key.
+        or a dictionary with an 'color' or 'facecolor' key.
     r: float
         Value between 0 and for interpolating between the two colors.
         r=0 returns color0, r=1 returns color1.
@@ -284,19 +302,39 @@ def gradient(color0, color1, r):
     color: string or dict
         The interpolated color as a hexadecimal RGB string (e.g. '#rrggbb').
         If at least one of the colors is a dictionary, then return a copy of the
-        dictionary with the value of `color` set to the interpolated color.
+        first dictionary with the value of 'color' or 'facecolor'
+        set to the interpolated color.
+
+    Raises
+    ------
+    KeyError:
+        If a `color0` or `color1` is a dictionary, but does not contain a
+        'color' or 'facecolor' key.
     """
-    cd = None
     try:
-        cd = {k: v for k, v in color0.items()}
-        color0 = color0['color']
-    except (AttributeError, TypeError):
-        cd = None
+        cd0 = {k: v for k, v in color0.items()}
+        if 'color' in cd0:
+            key0 = 'color'
+            color0 = cd0[key0]
+        elif 'facecolor' in cd0:
+            key0 = 'facecolor'
+            color0 = cd0[key0]
+        else:
+            raise KeyError('no color in color0 dictionary')
+    except AttributeError:
+        cd0 = None
     try:
-        cd = {k: v for k, v in color1.items()}
-        color1 = color1['color']
-    except (AttributeError, TypeError):
-        cd = None
+        cd1 = {k: v for k, v in color1.items()}
+        if 'color' in cd1:
+            key1 = 'color'
+            color1 = cd1[key1]
+        elif 'facecolor' in cd1:
+            key1 = 'facecolor'
+            color1 = cd1[key1]
+        else:
+            raise KeyError('no color in color1 dictionary')
+    except AttributeError:
+        cd1 = None
     r0, g0, b0 = rgb(color0)
     r1, g1, b1 = rgb(color1)
     if r < 0:
@@ -307,9 +345,12 @@ def gradient(color0, color1, r):
     gg = g0 + r*(g1 - g0)
     bg = b0 + r*(b1 - b0)
     cs = hexstr(rg, gg, bg)
-    if cd:
-        cd['color'] = cs
-        return cd
+    if cd0:
+        cd0[key0] = cs
+        return cd0
+    elif cd1:
+        cd1[key1] = cs
+        return cd1
     else:
         return cs
 
