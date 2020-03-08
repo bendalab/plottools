@@ -29,6 +29,45 @@ from .significance import significance_bar
 
 
 def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
+    """ Generate dictionaries for line styles.
+
+    Add for each color a line style dictionary, add this to the
+    dictionary for the styles specified by their suffix and prefix, and
+    add its name to the `style_names` list to a namespace.
+    
+    For example
+    ```
+    make_linestyles('ls', 'Male', '', [#0000FF], '-', {'linestyle': '-', 'linewidth': 2'}, globals())
+    ```
+    generates a dictionary named `lsMale` defining a blue solid line,
+    adds `Male` to `style_names`, and adds the dictionary to `ls` under the key `Male`.
+    Throw the dictionary into a plot() command:
+    ```
+    plt.plot(x, y, **lsMale)
+    ```
+    this is the same as:
+    ```
+    plt.plot(x, y, **ls['Male'])
+    ```
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix appended to all line style names.
+    name: string or list of strings
+        For each color the name of the line style.
+        If string, then '%d' is replaced by the index of the color plus one.
+    suffix: string
+        Sufffix prepended to all line style names.
+    colors: list of RGB hex-strings
+        For each color in the list a line style is generated.
+    dashes: matplot linestyle or list of matplotlib linestyles
+        For each color a descriptor of a matplotlib linestyle.
+    linedict: dict
+        Dictionary with 'linestyle' and 'linewidth' items.
+    namespace: dict
+        Namespace to which the generated line styles are added.
+    """
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
@@ -47,6 +86,52 @@ def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
 
 
 def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdict, namespace):
+    """ Generate dictionaries for point styles.
+
+    Add for each color a point style dictionary, add this to the
+    dictionary for the styles specified by their suffix and prefix, and
+    add its name to the `style_names` list to a namespace.
+    
+    For example
+    ```
+    make_pointstyles('ps', 'Female', '', [#FF0000], '-', ('o', 1.0), 0.5, {'markersize': 8, 'markeredgewidth': 1.0, 'linestyle': 'none'}, globals())
+    ```
+    generates a dictionary named `psFemale` defining red filled markers with a lighter edge,
+    adds `Female` to `style_names`, and adds the dictionary to `ps` under the key `Female`.
+    Throw the dictionary into a plot() command:
+    ```
+    plt.plot(x, y, **psFemale)
+    ```
+    this is the same as:
+    ```
+    plt.plot(x, y, **ps['Female'])
+    ```
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix appended to all point style names.
+    name: string or list of strings
+        For each color the name of the point style.
+        If string, then '%d' is replaced by the index of the color plus one.
+    suffix: string
+        Sufffix prepended to all point style names.
+    colors: list of RGB hex-strings
+        For each color in the list a point style is generated.
+    dashes: matplot linestyle or list of matplotlib linestyles
+        For each color a descriptor of a matplotlib linestyle.
+    markers: tuple or list of tuples
+        For each color a marker. The first element of the tuple is the marker symbol,
+        the second on is a factor that is used to scale the markeredgewidth in `pointdict`.
+    mec: float
+        Defines the edge color. It is passed as the lightness argument to lighter()
+        using the face color form `colors`. That is 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    pointdict: dict
+        Dictionary with 'markersize', markeredgewidth', 'linestyle' and 'linewidth' items.
+    namespace: dict
+        Namespace to which the generated point styles are added.
+    """
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
@@ -61,12 +146,31 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
         mk = markers[k] if isinstance(markers, list) else markers
         namespace[sn] = dict({'color': c, 'marker': mk[0], 'markeredgecolor': lighter(c, mec)},
                              **pointdict)
+        if ds:
+            namespace[sn].update({'linestyle': ds})
         namespace[sn].update({'markersize': mk[1]*namespace[sn]['markersize']})
         namespace[ln].update({n: namespace[sn]})
 
 
 def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
                          linedict, pointdict, namespace):
+    """ Generate line styles, point styles, and line point styles.
+
+    Passes the arguments on to make_linestyles() and make_pointstyles(),
+    and again to make_pointstyles() with `pointdict` and `linedict` merged.
+    See those functions for a detailed description.
+
+    Parameters
+    ----------
+    prefixes: list of strings
+        If the first string is not None, generate line styles using make_linestyles().
+        If the second string is not None, generate point styles using make_pointstyles().
+        If the third string is not None, generate linepoint styles using make_pointstyles()
+        with `pointdict` and `linedict` merged.
+    *args:
+        All remaining arguments are explained in the make_linestyles() and make_pointstyles()
+        functions.
+    """
     if prefixes[0]:
         make_linestyles(prefixes[0], name, suffix, colors, dashes, linedict, namespace)
     if prefixes[1]:
@@ -80,6 +184,57 @@ def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
 
 
 def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace):
+    """ Generate dictionaries for fill styles.
+
+    Add for each color three fill style dictionaries, add these to the
+    dictionary for the styles specified by their suffix and prefix, and
+    add their names to the `style_names` list to a namespace.
+    
+    For example
+    ```
+    make_fillstyles('fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4, globals())
+    ```
+    generates the dictionaries named `fsPSD`, `fsPSDs`, `fsPSDa` defining a green fill color.
+    The first, `fsPSD` gets a black edge color with linewidth set to 0.5.
+    The second, `fsPSDs` is without edge.
+    The third, `fsPSDa` is without edge and has an alpha set to 0.4.
+    Further, `PSD` is added to `style_names`, and the three dictionaries are added
+    to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
+    Throw the dictionaries into a fill_between() command:
+    ```
+    plt.fill_between(x, y0, y1, **fsPSD)
+    ```
+    or like this for a transparent fill style:
+    ```
+    plt.plot(x, y, **fsa['PSD'])
+    ```
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix appended to all fill style names.
+    name: string or list of strings
+        For each color the name of the fill style.
+        If string, then '%d' is replaced by the index of the color plus one.
+    suffixes: list of strings or None
+        Sufffixes prepended to all fill style names.  The first is for a
+        fill style with edge color, the second for a solid fill style
+        without edge, and the third for a transparent fill style without
+        edge. If None the corresponding style is not generated.
+    colors: list of RGB hex-strings
+        For each color in the list a fill style is generated.
+    ec: float
+        Defines the edge color for the first fill style.
+        It is passed as the lightness argument to lighter()
+        using the face color form `colors`. That is 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    ew: float
+        Line width for the edge color of the first fill style.
+    fillalpha: float
+        Alpha value for the transparent fill style.
+    namespace: dict
+        Namespace to which the generated fill styles are added.
+    """
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     for suffix in suffixes:
