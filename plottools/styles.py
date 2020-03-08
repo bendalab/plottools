@@ -44,23 +44,26 @@ def make_linestyles(prefix, name, suffix, colors, linedict, namespace):
         namespace[ln].update({n: namespace[sn]})
 
 
-def make_pointstyles(prefix, name, suffix, colors, markers, pointdict, namespace):
+def make_pointstyles(prefix, name, suffix, colors, markers, mec, pointdict, namespace):
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
     if ln not in namespace:
         namespace[ln] = {}
+    if not isinstance(markers, list):
+        markers = len(colors)*[markers]
     for k, (c, m) in enumerate(zip(colors, markers)):
         n = name[k] if isinstance(name, list) else name % (k+1)
         if n not in namespace['style_names']:
             namespace['style_names'].append(n)
         sn = prefix + n + suffix
-        namespace[sn] = dict({'color': c, 'marker': m[0]}, **pointdict)
+        namespace[sn] = dict({'color': c, 'marker': m[0], 'markeredgecolor': lighter(c, mec)},
+                             **pointdict)
         namespace[sn].update({'markersize': m[1]*namespace[sn]['markersize']})
         namespace[ln].update({n: namespace[sn]})
 
 
-def make_fillstyles(prefix, name, suffix, colors, filldict, namespace):
+def make_fillstyles(prefix, name, suffix, colors, ec, filldict, namespace):
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
@@ -71,13 +74,21 @@ def make_fillstyles(prefix, name, suffix, colors, filldict, namespace):
         if n not in namespace['style_names']:
             namespace['style_names'].append(n)
         sn = prefix + n + suffix
-        namespace[sn] = dict({'facecolor': c}, **filldict)
+        namespace[sn] = dict({'facecolor': c, 'edgecolor': lighter(c, ec)}, **filldict)
         namespace[ln].update({n: namespace[sn]})
 
 
 def plot_styles(colors, lwthick=2.0, lwthin=1.0, lwspines=1.0,
-                markerlarge=7.5, markersmall=5.5, mec='white', mew=1.0,
+                markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
                 fillalpha=0.4, namespace=globals()):
+    """
+    Parameters
+    ----------
+    mec: float
+        Edge color for markers and fill. A factor between 0 and 2 passed together
+        with the facecolor to lighter(). I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge color.
+    """
     # line (ls), point (ps), and fill styles (fs).
 
     # Each style is derived from a main color as indicated by the capital letter.
@@ -104,19 +115,13 @@ def plot_styles(colors, lwthick=2.0, lwthin=1.0, lwspines=1.0,
     # - alpha (e.g. fsA3a) for a transparent fill color.
     mainline = {'linestyle': '-', 'linewidth': lwthick}
     minorline = {'linestyle': '-', 'linewidth': lwthin}
-    largemarker = {'markersize': markerlarge, 'markeredgecolor': colors[mec],
-                   'markeredgewidth': mew, 'linestyle': 'none'}
-    smallmarker = {'markersize': markersmall, 'markeredgecolor': colors[mec],
-                   'markeredgewidth': mew, 'linestyle': 'none'}
-    largecirclemarker = dict({'marker': 'o'}, **largemarker)
-    smallcirclemarker = dict({'marker': 'o'}, **smallmarker)
+    largemarker = {'markersize': markerlarge, 'markeredgewidth': mew, 'linestyle': 'none'}
+    smallmarker = {'markersize': markersmall, 'markeredgewidth': mew, 'linestyle': 'none'}
     largelinepoints = {'linestyle': '-', 'linewidth': lwthick, 'markersize': markerlarge,
-                       'markeredgecolor': colors['white'], 'markeredgewidth': mew}
+                       'markeredgewidth': mew}
     smalllinepoints = {'linestyle': '-', 'linewidth': lwthin, 'markersize': markersmall,
-                       'markeredgecolor': colors['white'], 'markeredgewidth': mew}
-    largecirclelinepoints = dict({'marker': 'o'}, **largelinepoints)
-    smallcirclelinepoints = dict({'marker': 'o'}, **smalllinepoints)
-    mainfill = {'edgecolor': colors[mec], 'linewidth': mew}
+                       'markeredgewidth': mew}
+    mainfill = {'linewidth': mew}
     solidfill = {'edgecolor': 'none'}
     alphafill = {'edgecolor': 'none', 'alpha': fillalpha}
 
@@ -127,9 +132,9 @@ def plot_styles(colors, lwthick=2.0, lwthin=1.0, lwspines=1.0,
     colorsS = [colors['blue'], colors['pink']]
 
     # marker groups:
-    markersA = [('o', 1.0), ('p', 1.3), ('h', 1.2)]
-    markersB = [('v', 1.3), ('^', 1.3), ('<', 1.3), ('>', 1.3)]
-    markersC = [('s', 1.0), ('D', 0.95), ('*', 1.7), ((4, 1, 45), 1.5)]
+    markersA = [('o', 1.0), ('p', 1.1), ('h', 1.1)]
+    markersB = [((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25)]
+    markersC = [('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4)]
     markersS = [('o', 1.0), ('o', 1.0)]
 
     # helper lines:
@@ -150,58 +155,58 @@ def plot_styles(colors, lwthick=2.0, lwthin=1.0, lwspines=1.0,
     make_linestyles('ls', ['Male', 'Female'], 'm', colorsS, minorline, namespace)
 
     # point styles:
-    make_pointstyles('ps', 'A%d', '', colorsA, markersA, largemarker, namespace)
-    make_pointstyles('ps', 'B%d', '', colorsB, markersB, largemarker, namespace)
-    make_pointstyles('ps', 'C%d', '', colorsC, markersC, largemarker, namespace)
-    make_pointstyles('ps', ['Male', 'Female'], '', colorsS, markersS, largemarker, namespace)
+    make_pointstyles('ps', 'A%d', '', colorsA, markersA, mec, largemarker, namespace)
+    make_pointstyles('ps', 'B%d', '', colorsB, markersB, mec, largemarker, namespace)
+    make_pointstyles('ps', 'C%d', '', colorsC, markersC, mec, largemarker, namespace)
+    make_pointstyles('ps', ['Male', 'Female'], '', colorsS, markersS, mec, largemarker, namespace)
 
     # circular point styles:
-    make_linestyles('ps', 'A%d', 'c', colorsA, largecirclemarker, namespace)
-    make_linestyles('ps', 'B%d', 'c', colorsB, largecirclemarker, namespace)
-    make_linestyles('ps', 'C%d', 'c', colorsC, largecirclemarker, namespace)
-    make_linestyles('ps', ['Male', 'Female'], 'c', colorsS, largecirclemarker, namespace)
+    make_pointstyles('ps', 'A%d', 'c', colorsA, ('o', 1.0), mec, largemarker, namespace)
+    make_pointstyles('ps', 'B%d', 'c', colorsB, ('o', 1.0), mec, largemarker, namespace)
+    make_pointstyles('ps', 'C%d', 'c', colorsC, ('o', 1.0), mec, largemarker, namespace)
+    make_pointstyles('ps', ['Male', 'Female'], 'c', colorsS, ('o', 1.0), mec, largemarker, namespace)
 
     # minor point styles:
-    make_linestyles('ps', 'A%d', 'm', colorsA, smallcirclemarker, namespace)
-    make_linestyles('ps', 'B%d', 'm', colorsB, smallcirclemarker, namespace)
-    make_linestyles('ps', 'C%d', 'm', colorsC, smallcirclemarker, namespace)
-    make_linestyles('ps', ['Male', 'Female'], 'm', colorsS, smallcirclemarker, namespace)
+    make_pointstyles('ps', 'A%d', 'm', colorsA, ('o', 1.0), mec, smallmarker, namespace)
+    make_pointstyles('ps', 'B%d', 'm', colorsB, ('o', 1.0), mec, smallmarker, namespace)
+    make_pointstyles('ps', 'C%d', 'm', colorsC, ('o', 1.0), mec, smallmarker, namespace)
+    make_pointstyles('ps', ['Male', 'Female'], 'm', colorsS, ('o', 1.0), mec, smallmarker, namespace)
 
     # line point styles:
-    make_pointstyles('lps', 'A%d', '', colorsA, markersA, largelinepoints, namespace)
-    make_pointstyles('lps', 'B%d', '', colorsB, markersB, largelinepoints, namespace)
-    make_pointstyles('lps', 'C%d', '', colorsC, markersC, largelinepoints, namespace)
-    make_pointstyles('lps', ['Male', 'Female'], '', colorsS, markersS, largelinepoints, namespace)
+    make_pointstyles('lps', 'A%d', '', colorsA, markersA, mec, largelinepoints, namespace)
+    make_pointstyles('lps', 'B%d', '', colorsB, markersB, mec, largelinepoints, namespace)
+    make_pointstyles('lps', 'C%d', '', colorsC, markersC, mec, largelinepoints, namespace)
+    make_pointstyles('lps', ['Male', 'Female'], '', colorsS, markersS, mec, largelinepoints, namespace)
 
     # circular line point styles:
-    make_linestyles('lps', 'A%d', 'c', colorsA, largecirclelinepoints, namespace)
-    make_linestyles('lps', 'B%d', 'c', colorsB, largecirclelinepoints, namespace)
-    make_linestyles('lps', 'C%d', 'c', colorsC, largecirclelinepoints, namespace)
-    make_linestyles('lps', ['Male', 'Female'], 'c', colorsS, largecirclelinepoints, namespace)
+    make_pointstyles('lps', 'A%d', 'c', colorsA, ('o', 1.0), mec, largelinepoints, namespace)
+    make_pointstyles('lps', 'B%d', 'c', colorsB, ('o', 1.0), mec, largelinepoints, namespace)
+    make_pointstyles('lps', 'C%d', 'c', colorsC, ('o', 1.0), mec, largelinepoints, namespace)
+    make_pointstyles('lps', ['Male', 'Female'], 'c', colorsS, ('o', 1.0), mec, largelinepoints, namespace)
 
     # minor line point styles:
-    make_linestyles('lps', 'A%d', 'm', colorsA, smallcirclelinepoints, namespace)
-    make_linestyles('lps', 'B%d', 'm', colorsB, smallcirclelinepoints, namespace)
-    make_linestyles('lps', 'C%d', 'm', colorsC, smallcirclelinepoints, namespace)
-    make_linestyles('lps', ['Male', 'Female'], 'm', colorsS, smallcirclelinepoints, namespace)
+    make_pointstyles('lps', 'A%d', 'm', colorsA, ('o', 1.0), mec, smalllinepoints, namespace)
+    make_pointstyles('lps', 'B%d', 'm', colorsB, ('o', 1.0), mec, smalllinepoints, namespace)
+    make_pointstyles('lps', 'C%d', 'm', colorsC, ('o', 1.0), mec, smalllinepoints, namespace)
+    make_pointstyles('lps', ['Male', 'Female'], 'm', colorsS, ('o', 1.0), mec, smalllinepoints, namespace)
 
     # fill styles:
-    make_fillstyles('fs', 'A%d', '', colorsA, mainfill, namespace)
-    make_fillstyles('fs', 'B%d', '', colorsB, mainfill, namespace)
-    make_fillstyles('fs', 'C%d', '', colorsC, mainfill, namespace)
-    make_fillstyles('fs', ['Male', 'Female'], '', colorsS, mainfill, namespace)
+    make_fillstyles('fs', 'A%d', '', colorsA, mec, mainfill, namespace)
+    make_fillstyles('fs', 'B%d', '', colorsB, mec, mainfill, namespace)
+    make_fillstyles('fs', 'C%d', '', colorsC, mec, mainfill, namespace)
+    make_fillstyles('fs', ['Male', 'Female'], '', colorsS, mec, mainfill, namespace)
 
     # solid fill styles:
-    make_fillstyles('fs', 'A%d', 's', colorsA, solidfill, namespace)
-    make_fillstyles('fs', 'B%d', 's', colorsB, solidfill, namespace)
-    make_fillstyles('fs', 'C%d', 's', colorsC, solidfill, namespace)
-    make_fillstyles('fs', ['Male', 'Female'], 's', colorsS, solidfill, namespace)
+    make_fillstyles('fs', 'A%d', 's', colorsA, 0.0, solidfill, namespace)
+    make_fillstyles('fs', 'B%d', 's', colorsB, 0.0, solidfill, namespace)
+    make_fillstyles('fs', 'C%d', 's', colorsC, 0.0, solidfill, namespace)
+    make_fillstyles('fs', ['Male', 'Female'], 's', colorsS, 0.0, solidfill, namespace)
 
     # transparent fill styles:
-    make_fillstyles('fs', 'A%d', 'a', colorsA, alphafill, namespace)
-    make_fillstyles('fs', 'B%d', 'a', colorsB, alphafill, namespace)
-    make_fillstyles('fs', 'C%d', 'a', colorsC, alphafill, namespace)
-    make_fillstyles('fs', ['Male', 'Female'], 'a', colorsS, alphafill, namespace)
+    make_fillstyles('fs', 'A%d', 'a', colorsA, 0.0, alphafill, namespace)
+    make_fillstyles('fs', 'B%d', 'a', colorsB, 0.0, alphafill, namespace)
+    make_fillstyles('fs', 'C%d', 'a', colorsC, 0.0, alphafill, namespace)
+    make_fillstyles('fs', ['Male', 'Female'], 'a', colorsS, 0.0, alphafill, namespace)
 
     # color cycler:
     color_cycle = [colors[c] for c in ['blue', 'red', 'orange', 'lightgreen', 'magenta',
@@ -267,7 +272,7 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     
 def screen_style(namespace=globals()):
     plot_styles(colors_vivid, lwthick=2.5, lwthin=1.5, lwspines=1.0,
-                markerlarge=9.0, markersmall=6.5, mec='white', mew=1.0,
+                markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
                 fillalpha=0.4, namespace=namespace)
     plot_params(font_size=10.0, font_family='sans-serif',
                 label_size='small', label_format='{label} [{unit}]',
@@ -279,8 +284,8 @@ def screen_style(namespace=globals()):
 
     
 def paper_style(namespace=globals()):
-    plot_styles(colors_muted, lwthick=2.0, lwthin=1.0, lwspines=1.0,
-                markerlarge=7.5, markersmall=5.5, mec='white', mew=1.0,
+    plot_styles(colors_muted, lwthick=1.7, lwthin=0.8, lwspines=0.8,
+                markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                 fillalpha=0.4, namespace=namespace)
     plot_params(font_size=10.0, font_family='sans-serif',
                 label_size='small', label_format='{label} [{unit}]',
@@ -317,13 +322,14 @@ def plot_pointstyles(ax):
     ax: matplotlib axes
         Subplot to use for plotting the point styles.
     """
+    dy = 0.2
     for k, name in enumerate(reversed(style_names)):
         ax.text(0.1, k, 'ps'+name)
-        ax.plot([0.6], [k], **ps[name])
+        ax.plot([0.6], [k+dy], **ps[name])
         ax.text(1.1, k, 'ps'+name+'c')
-        ax.plot([1.6], [k], **psc[name])
+        ax.plot([1.6], [k+dy], **psc[name])
         ax.text(2.1, k, 'ps'+name+'m')
-        ax.plot([2.6], [k], **psm[name])
+        ax.plot([2.6], [k+dy], **psm[name])
     ax.set_xlim(0.0, 3.0)
     ax.set_ylim(-1.0, len(style_names))
     ax.set_title('point styles')
@@ -337,12 +343,13 @@ def plot_linepointstyles(ax):
     ax: matplotlib axes
         Subplot to use for plotting the linepoint styles.
     """
+    dy = 0.2
     for k, name in enumerate(reversed(style_names)):
-        ax.text(0.1, k, 'lps'+name)
+        ax.text(0.1, k-dy, 'lps'+name)
         ax.plot([0.8, 1.1, 1.4], [k, k, k], **lps[name])
-        ax.text(2.1, k, 'lps'+name+'c')
+        ax.text(2.1, k-dy, 'lps'+name+'c')
         ax.plot([2.8, 3.1, 3.4], [k, k, k], **lpsc[name])
-        ax.text(4.1, k, 'lps'+name+'m')
+        ax.text(4.1, k-dy, 'lps'+name+'m')
         ax.plot([4.8, 5.1, 5.4], [k, k, k], **lpsm[name])
     ax.set_xlim(0.0, 6.0)
     ax.set_ylim(-1.0, len(style_names))
