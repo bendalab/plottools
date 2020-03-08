@@ -300,14 +300,12 @@ def plot_linestyles(ax):
         Subplot to use for plotting the line styles.
     """
     for k, name in enumerate(style_names):
-        ax.text(k, 1.9, 'fs'+name+'a')
-        ax.fill_between([k, k+3.5], [1.9, 2.7], [2.1, 2.9], **fsa[name])
-        ax.plot([k, k+3.5], [2.0, 2.8], **ls[name])
         ax.text(k, 0.9, 'ls'+name)
         ax.plot([k, k+3.5], [1.0, 1.8], **ls[name])
         ax.text(k, -0.1, 'ls'+name+'m')
         ax.plot([k, k+3.5], [0.0, 0.8], **lsm[name])
-    ax.set_ylim(-0.15, 3.1)
+    ax.set_xlim(-0.2, len(style_names)+2.8)
+    ax.set_ylim(-0.15, 1.9)
     ax.set_title('line styles')
         
 
@@ -351,6 +349,38 @@ def plot_linepointstyles(ax):
     ax.set_title('linepoint styles')
         
 
+def plot_fillstyles(ax):
+    """ Plot names and patches of all available fill styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the fill styles.
+    """
+    x = np.linspace(0.0, 0.8, 50)
+    y0 = np.zeros(len(x))
+    y1 = -x*(x-0.6)*0.6/0.3/0.3
+    y1[y1<0.0] = 0.0
+    y2 = np.zeros(len(x))
+    y2[x>0.3] = 0.7
+    ax.text(0.0, 2.75, 'plain')
+    ax.text(0.0, 1.75, 'solid')
+    ax.text(0.0, 0.75, 'alpha')
+    for k, name in enumerate(style_names):
+        ax.text(k, 1.9, 'fs'+name)
+        ax.fill_between(x+k, y0+2, y2+2, **fs[name])
+        ax.fill_between(x+k, y0+2, y1+2, **fs[name])
+        ax.text(k, 0.9, 'fs'+name+'s')
+        ax.fill_between(x+k, y0+1, y2+1, **fss[name])
+        ax.fill_between(x+k, y0+1, y1+1, **fss[name])
+        ax.text(k, -0.1, 'fs'+name+'a')
+        ax.fill_between(x+k, y0+0, y2+0, **fsa[name])
+        ax.fill_between(x+k, y0+0, y1+0, **fsa[name])
+    ax.set_xlim(-0.2, len(style_names))
+    ax.set_ylim(-0.15, 2.9)
+    ax.set_title('fill styles')
+        
+
 def demo(mode='line'):
     """ Run a demonstration of the plotformat module.
 
@@ -360,6 +390,7 @@ def demo(mode='line'):
         'linestyles': plot the names and lines of all available line styles
         'pointstyles': plot the names and points (markers) of all available point styles
         'linepointstyles': plot the names and lines of all available linepoint styles
+        'fillstyles': plot the names and patches of all available fill styles
     """
     fig, ax = plt.subplots()
     if 'linep' in mode:
@@ -368,9 +399,11 @@ def demo(mode='line'):
         plot_linestyles(ax)
     elif 'point' in mode:
         plot_pointstyles(ax)
+    elif 'fill' in mode:
+        plot_fillstyles(ax)
     else:
         print('unknown option %s!' % mode)
-        print('possible options are: line, point, linep(oints)')
+        print('possible options are: line, point, linep(oints), fill')
         return
     plt.show()
 
