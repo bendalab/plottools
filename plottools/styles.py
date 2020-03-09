@@ -3,8 +3,9 @@
 
 Layout settings and plot styles.
 
-- `screen_style()`: 
-- `paper_style()`: 
+- `screen_style()`: layout and plot styles optimized for display on a screen.
+- `paper_style()`: layout and plot styles optimized for inclusion into a paper.
+- `sketch_style()`: layout and plot styles with xkcd style activated.
 
 Helper functions:
 - `make_linestyles()`: generate dictionaries for line styles.
@@ -14,14 +15,38 @@ Helper functions:
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
 - `line_style()`: generate a single line style.
 - `color_cycler()`: set colors for the matplotlib color cycler.
-- `plot_params()`: set default plot parameter.
+- `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 
-Display line, point and fill styles:
+Display line, point, linepoint and fill styles:
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
 - `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
 - `plot_fillstyles()`: plot names and patches of all available fill styles.
 """
+# line (ls), point (ps), and fill styles (fs).
+
+# Each style is derived from a main color as indicated by the capital letter.
+# Substyles, indicated by the number following the capital letter, have
+# the same style and similar hues.
+
+# Line styles come in two variants:
+# - plain style with a thick/solid line (e.g. lsA1), and
+# - minor style with a thinner or dashed line (e.g. lsA1m).
+
+# Point (marker) styles come in four variants:
+# - plain style with large solid markers (e.g. psB1),
+# - plain style with large circular markers (e.g. psB1c), and
+# - minor style with smaller (circular) markers (e.g. psB1m).
+
+# Linepoint styles (markers connected by lines) come in two variants:
+# - plain style with large solid markers (e.g. lpsA2),
+# - plain style with large circular markers (e.g. lpsA2c),
+# - minor style with smaller (circular) markers (e.g. lpsA2m).
+
+# Fill styles come in three variants:
+# - plain (e.g. fsA3) for a solid fill color and an edge color,
+# - solid (e.g. fsA3s) for a solid fill color without edge color, and
+# - alpha (e.g. fsA3a) for a transparent fill color.
 
 import numpy as np
 import matplotlib as mpl
@@ -354,7 +379,7 @@ def line_style(name, color, dash, lw, clip_on=None, namespace=globals()):
     Parameters
     ----------
     name: string
-        The full name of the line style.
+        The name of the line style, the prefix 'ls' is prepended.
     color: any matplotlib color
         The color of the line
     dash: matplotlib linestyle
@@ -391,13 +416,10 @@ def color_cycler(palette, colors):
 
 
 def plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', label_format='{label} [{unit}]',
-                label_xdist=5, label_ydist=10,
-                tick_dir='out', tick_size=2.5,
+                label_size='small', tick_dir='out', tick_size=2.5,
                 legend_size='x-small', fig_color='none', axes_color='none',
-                spines='lb', spines_offsets={'lrtb': 3}, spines_bounds={'lrtb': 'full'},
                 namespace=globals()):
-    """ Set default plot parameter.
+    """ Set some default plot parameter via matplotlib's rc settings.
 
     Call this function *before* you create any matplotlib figure.
 
@@ -407,17 +429,10 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     ----------
     font_size: float
         Fontsize for text in points.
-    font_family: string
-        Name of font to be used.
+    font_family: string or None
+        Name of font to be used. If None do not set it and keep the default.
     label_size: float or string
         Fontsize for axis labels.
-    label_format: string
-        Defines how an axis label is formatted from a label and an unit.
-        See labels.set_label_format() for details.
-    label_xdist: float
-        Minimum vertical distance between xtick labels and label of x-axis.
-    label_ydist: float
-        Minimum horizontal distance between ytick labels and label of y-axis.
     tick_dir: string
         Direction of tick marks ('in', 'out', or 'inout')
     tick_size: float
@@ -428,17 +443,13 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         Background color for the whole figure.
     axes_color: matplotlib color specification or 'none'
         Background color for each subplot.
-    spines: string
-        Spines to be shown. See spines.show_spines() for details.
-    spines_offsets: dict
-        Offsets for moving spines outward. See spines.set_spines_outward() for details.
-    spines_bounds: dict
-        Bounds for the spines. See spines.set_spines_bounds() for details.
     namespace: dict
-        Namespace to which the generated line style is added.
+        Namespace to which generated line, point, linepoint and fill styles were added.
+        Uses `lsSpine` and `lsGrid` to set spine and grid properties.
     """
     mpl.rcParams['figure.facecolor'] = fig_color
-    mpl.rcParams['font.family'] = font_family
+    if font_family is not None:
+        mpl.rcParams['font.family'] = font_family
     mpl.rcParams['font.size'] = font_size
     mpl.rcParams['xtick.labelsize'] = label_size
     mpl.rcParams['ytick.labelsize'] = label_size
@@ -447,46 +458,45 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     mpl.rcParams['xtick.major.size'] = tick_size
     mpl.rcParams['ytick.major.size'] = tick_size
     mpl.rcParams['legend.fontsize'] = legend_size
-    mpl.rcParams['grid.color'] = namespace['lsGrid']['color']
-    mpl.rcParams['grid.linestyle'] = namespace['lsGrid']['linestyle']
-    mpl.rcParams['grid.linewidth'] = namespace['lsGrid']['linewidth']
+    if 'lsGrid' in namespace:
+        mpl.rcParams['grid.color'] = namespace['lsGrid']['color']
+        mpl.rcParams['grid.linestyle'] = namespace['lsGrid']['linestyle']
+        mpl.rcParams['grid.linewidth'] = namespace['lsGrid']['linewidth']
     mpl.rcParams['axes.facecolor'] = axes_color
-    mpl.rcParams['axes.edgecolor'] = namespace['lsSpine']['color']
-    mpl.rcParams['axes.linewidth'] = namespace['lsSpine']['linewidth']
-    # figsize in centimeter:
-    install_figure()
-    # define the appearance of axis labels:
-    set_label_format(label_format)
-    install_align_labels(label_xdist, label_ydist)
-    # spines:
-    set_default_spines(spines, spines_offsets, spines_bounds)
+    if 'lsSpine' in namespace:
+        mpl.rcParams['axes.edgecolor'] = namespace['lsSpine']['color']
+        mpl.rcParams['axes.linewidth'] = namespace['lsSpine']['linewidth']
 
     
 def screen_style(namespace=globals()):
-    # line (ls), point (ps), and fill styles (fs).
+    """ Layout and plot styles optimized for display on a screen.
 
-    # Each style is derived from a main color as indicated by the capital letter.
-    # Substyles, indicated by the number following the capital letter, have
-    # the same style and similar hues.
+    You might want to copy this function and adjust it according to your needs.
 
-    # Line styles come in two variants:
-    # - plain style with a thick/solid line (e.g. lsA1), and
-    # - minor style with a thinner or dashed line (e.g. lsA1m).
+    Call this function *before* you create any matplotlib figure
+    to have the following features in effect:
+    - modified rc settings.
+    - figure sizes are to be specified in centimeter.
+    - detailed control over spine appearance.
+    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - automatic alignment of x- and ylabels.
+    - a range of line, point, linepoint and fill styles defined in `namespace`, called
+      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+      ```
+      ax.plot(x, y, **lsA1)   # major line only
+      ax.plot(x, y, **lsB2m)  # minor line only
+      ax.plot(x, y, **psA2)   # markers (points) only
+      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+      ```
+      See plot_styles() for details. 
+    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
 
-    # Point (marker) styles come in four variants:
-    # - plain style with large solid markers (e.g. psB1),
-    # - plain style with large circular markers (e.g. psB1c), and
-    # - minor style with smaller (circular) markers (e.g. psB1m).
-
-    # Linepoint styles (markers connected by lines) come in two variants:
-    # - plain style with large solid markers (e.g. lpsA2),
-    # - plain style with large circular markers (e.g. lpsA2c),
-    # - minor style with smaller (circular) markers (e.g. lpsA2m).
-
-    # Fill styles come in three variants:
-    # - plain (e.g. fsA3) for a solid fill color and an edge color,
-    # - solid (e.g. fsA3s) for a solid fill color without edge color, and
-    # - alpha (e.g. fsA3a) for a transparent fill color.
+    Parameters
+    ----------
+    namespace: dict
+        Namespace to which the generated line, point, linepoint and fill styles are added.
+    """
     palette = colors_vivid
     lwthick=2.5
     lwthin=1.5
@@ -513,18 +523,54 @@ def screen_style(namespace=globals()):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
+    # rc settings:
+    mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', label_format='{label} [{unit}]',
-                label_xdist=5, label_ydist=10,
-                tick_dir='out', tick_size=4.0, legend_size='x-small',
+                label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
                 fig_color=palette['white'], axes_color='none',
-                spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
                 namespace=namespace)
+    # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
+    # figsize in centimeter:
+    install_figure()
+    # spines:
+    set_default_spines(spines='lbrt', spines_offsets={'lrtb': 0},
+                       spines_bounds={'lrtb': 'full'})
+    # define the appearance of axis labels:
+    set_label_format('{label} [{unit}]')
+    install_align_labels(xdist=5, ydist=10)
 
     
 def paper_style(namespace=globals()):
+    """ Layout and plot styles optimized for inclusion into a paper.
+
+    You might want to copy this function and adjust it according to your needs.
+
+    Call this function *before* you create any matplotlib figure
+    to have the following features in effect:
+    - modified rc settings.
+    - figure sizes are to be specified in centimeter.
+    - detailed control over spine appearance.
+    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - automatic alignment of x- and ylabels.
+    - a range of line, point, linepoint and fill styles defined in `namespace`, called
+      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+      ```
+      ax.plot(x, y, **lsA1)   # major line only
+      ax.plot(x, y, **lsB2m)  # minor line only
+      ax.plot(x, y, **psA2)   # markers (points) only
+      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+      ```
+      See plot_styles() for details. 
+    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+
+    Parameters
+    ----------
+    namespace: dict
+        Namespace to which the generated line, point, linepoint and fill styles are added.
+    """
     palette = colors_muted
     lwthick=1.7
     lwthin=0.8
@@ -551,16 +597,101 @@ def paper_style(namespace=globals()):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
+    # rc settings:
+    mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', label_format='{label} [{unit}]',
-                label_xdist=5, label_ydist=10,
-                tick_dir='out', tick_size=2.5, legend_size='x-small',
-                fig_color=palette['white'], axes_color='none',
-                spines='lb', spines_offsets={'lrtb': 3}, spines_bounds={'lrtb': 'full'},
+                label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
+                fig_color='none', axes_color='none',
                 namespace=namespace)
+    # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
+    # figsize in centimeter:
+    install_figure()
+    # spines:
+    set_default_spines(spines='lb', spines_offsets={'lrtb': 3},
+                       spines_bounds={'lrtb': 'full'})
+    # define the appearance of axis labels:
+    set_label_format('{label} [{unit}]')
+    install_align_labels(xdist=5, ydist=10)
 
+   
+def sketch_style(namespace=globals()):
+    """ Layout and plot styles with xkcd style activated.
+
+    You might want to copy this function and adjust it according to your needs.
+
+    Call this function *before* you create any matplotlib figure
+    to have the following features in effect:
+    - modified rc settings.
+    - figure sizes are to be specified in centimeter.
+    - detailed control over spine appearance.
+    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - automatic alignment of x- and ylabels.
+    - a range of line, point, linepoint and fill styles defined in `namespace`, called
+      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+      ```
+      ax.plot(x, y, **lsA1)   # major line only
+      ax.plot(x, y, **lsB2m)  # minor line only
+      ax.plot(x, y, **psA2)   # markers (points) only
+      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+      ```
+      See plot_styles() for details. 
+    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+
+    Parameters
+    ----------
+    namespace: dict
+        Namespace to which the generated line, point, linepoint and fill styles are added.
+    """
+    #global bar_fac
+    #bar_fac = 0.9
+    palette = colors_vivid
+    lwthick=3.0
+    lwthin=1.8
+    lwspines=1.8    
+    names = ['A1', 'A2', 'A3',
+             'B1', 'B2', 'B3', 'B4',
+             'C1', 'C2', 'C3', 'C4',
+             'Male', 'Female']
+    colors = [palette['red'], palette['orange'], palette['yellow'],
+              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
+              palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan'],
+              palette['blue'], palette['pink']]
+    dashes = ['-', '-', '-',
+              '-', '-', '-', '-.',
+              '-', '-', '-', '-',
+              '-', '-']
+    markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
+               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
+               ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
+               ('o', 1.0), ('o', 1.0)]
+    plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
+                markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                fillalpha=0.4, namespace=namespace)
+    line_style('Spine', palette['black'], '-', lwspines, False, namespace)
+    line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
+    line_style('Marker', palette['black'], '-', lwthick, False, namespace)
+    # rc settings:
+    mpl.rcdefaults()
+    plt.xkcd()
+    plot_params(font_size=14.0, font_family=None,
+                label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
+                fig_color=palette['white'], axes_color='none',
+                namespace=namespace)
+    # color cycle:
+    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
+    color_cycler(palette, cycle_colors)
+    # figsize in centimeter:
+    install_figure()
+    # spines:
+    set_default_spines(spines='lb', spines_offsets={'lrtb': 0},
+                       spines_bounds={'lrtb': 'full'})
+    # define the appearance of axis labels:
+    set_label_format('{label} ({unit})')
+    install_align_labels(xdist=5, ydist=10)
+    
 
 def plot_linestyles(ax):
     """ Plot names and lines of all available line styles.
@@ -725,4 +856,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         mode = sys.argv[1]
     screen_style()
+    #paper_style()
+    #sketch_style()
     demo(mode)
