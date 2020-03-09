@@ -6,6 +6,16 @@ Layout settings and plot styles.
 - `screen_style()`: 
 - `paper_style()`: 
 
+Helper functions:
+- `make_linestyles()`: generate dictionaries for line styles.
+- `make_pointstyles()`: generate dictionaries for point styles.
+- `make_linepointstyles()`: generate line styles, point styles, and line point styles.
+- `make_fillstyles()`: generate dictionaries for fill styles.
+- `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
+- `line_style()`: generate a single line style.
+- `color_cycler()`: set colors for the matplotlib color cycler.
+- `plot_params()`: set default plot parameter.
+
 Display line, point and fill styles:
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
@@ -61,7 +71,7 @@ def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
         Sufffix prepended to all line style names.
     colors: list of RGB hex-strings
         For each color in the list a line style is generated.
-    dashes: matplot linestyle or list of matplotlib linestyles
+    dashes: matplotlib linestyle or list of matplotlib linestyles
         For each color a descriptor of a matplotlib linestyle.
     linedict: dict
         Dictionary with 'linestyle' and 'linewidth' items.
@@ -118,7 +128,7 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
         Sufffix prepended to all point style names.
     colors: list of RGB hex-strings
         For each color in the list a point style is generated.
-    dashes: matplot linestyle or list of matplotlib linestyles
+    dashes: matplotlib linestyle or list of matplotlib linestyles
         For each color a descriptor of a matplotlib linestyle.
         Set to 'none' if the points should not be connected.
     markers: tuple or list of tuples
@@ -265,13 +275,60 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
                 markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
                 fillalpha=0.4, namespace=globals()):
     """ Generate plot styles from names, dashes, colors, and markers.
+
+    For each color and name a variety of plot styles are generated
+    (for the example name is 'Female'):
+    - Major line styles (prefix 'ls', no suffix, e.g. 'lsFemale')
+      for normal lines without markers.
+    - Minor line styles (prefix 'ls', suffix 'm', e.g. 'lsFemalem')
+      for thinner lines without markers.
+    - Major point styles (prefix 'ps', no suffix, e.g. 'psFemale')
+      for large markers without connecting lines.
+    - Major circular point styles (prefix 'ps', suffix 'c', e.g. 'psFemalec')
+      for large circular markers without connecting lines.
+    - Minor point styles (prefix 'ps', suffix 'm', e.g. 'psFemalem')
+      for small circular markers without connecting lines.
+    - Major linepoint styles (prefix 'lps', no suffix, e.g. 'lpsFemale')
+      for large markers with connecting lines.
+    - Major circular linepoint styles (prefix 'lps', suffix 'c', e.g. 'lpsFemalec')
+      for large circular markers with connecting lines.
+    - Minor linepoint styles (prefix 'lps', suffix 'm', e.g. 'lpsFemalem')
+      for small circular markers with connecting lines.
+    - Fill styles with edge color (prefix 'fs', no suffix, e.g. 'fsFemale')
+    - Fill styles with solid fill color and no edge color (prefix 'fs', suffix 's', e.g. 'fsFemals')
+    - Fill styles with transparent fill color and no edge color (prefix 'fs', suffix 'a', e.g. 'fsFemala')
                 
     Parameters
     ----------
+    names: list of strings
+        For each color in `colors` a name.
+    colors: list of RGB hex-strings
+        For each color in the list line, point, linepoint, and fill styles are generated.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        For each color a descriptor of a matplotlib linestyle
+        that is used for line and linepoint styles.
+    markers: tuple or list of tuples
+        For each color a marker that is used for point and linepoint styles.
+        The first element of the tuple is the marker symbol,
+        the second on is a factor that is used to scale the markeredgewidth in `pointdict`.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
     mec: float
-        Edge color for markers and fill. A factor between 0 and 2 passed together
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
         with the facecolor to lighter(). I.e. 0 results in a white edge,
         1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
+    namespace: dict
+        Namespace to which the generated styles are added.
     """    
     mainline = {'linestyle': '-', 'linewidth': lwthick}
     minorline = {'linestyle': '-', 'linewidth': lwthin}
@@ -292,6 +349,23 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
 
 
 def line_style(name, color, dash, lw, clip_on=None, namespace=globals()):
+    """ Generate a single line style.
+
+    Parameters
+    ----------
+    name: string
+        The full name of the line style.
+    color: any matplotlib color
+        The color of the line
+    dash: matplotlib linestyle
+        The dash style of the line.
+    lw: float
+        The line width.
+    clip_on: bool or None
+        Whether the line is clipped. If None this property is left unspecified.
+    namespace: dict
+        Namespace to which the generated line style is added.
+    """
     linedict = {'linestyle': '-', 'linewidth': lw}
     if clip_on is not None:
         linedict.update({'clip_on': clip_on})
@@ -299,6 +373,15 @@ def line_style(name, color, dash, lw, clip_on=None, namespace=globals()):
 
     
 def color_cycler(palette, colors):
+    """ Set colors for the matplotlib color cycler.
+
+    Parameters
+    ----------
+    palette: dict
+        A dictionary with named colors.
+    colors: list of strings
+        Names of the colors from `palette` that should go into the color cycler.
+    """
     color_cycle = [palette[c] for c in colors if c in palette]
     if 'axes.prop_cycle' in mpl.rcParams:
         from cycler import cycler
@@ -318,21 +401,41 @@ def plot_params(font_size=10.0, font_family='sans-serif',
 
     Call this function *before* you create any matplotlib figure.
 
-    You most likely want to copy it and adjust it according to your needs.
+    You might want to copy this function and adjust it according to your needs.
 
     Parameters
     ----------
-    fontsize: float
+    font_size: float
         Fontsize for text in points.
+    font_family: string
+        Name of font to be used.
+    label_size: float or string
+        Fontsize for axis labels.
     label_format: string
         Defines how an axis label is formatted from a label and an unit.
         See labels.set_label_format() for details.
+    label_xdist: float
+        Minimum vertical distance between xtick labels and label of x-axis.
+    label_ydist: float
+        Minimum horizontal distance between ytick labels and label of y-axis.
+    tick_dir: string
+        Direction of tick marks ('in', 'out', or 'inout')
+    tick_size: float
+        Length of tick marks in points.
+    legend_size: float or string
+        Fontsize for legend.
+    fig_color: matplotlib color specification or 'none'
+        Background color for the whole figure.
+    axes_color: matplotlib color specification or 'none'
+        Background color for each subplot.
     spines: string
         Spines to be shown. See spines.show_spines() for details.
     spines_offsets: dict
         Offsets for moving spines outward. See spines.set_spines_outward() for details.
     spines_bounds: dict
         Bounds for the spines. See spines.set_spines_bounds() for details.
+    namespace: dict
+        Namespace to which the generated line style is added.
     """
     mpl.rcParams['figure.facecolor'] = fig_color
     mpl.rcParams['font.family'] = font_family
