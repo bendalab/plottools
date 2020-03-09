@@ -441,7 +441,7 @@ def paper_style(namespace=globals()):
                ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
                ('o', 1.0), ('o', 1.0)]
-    plot_styles(names, ncolors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
+    plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
                 markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                 fillalpha=0.4, namespace=namespace)
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)

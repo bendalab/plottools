@@ -131,9 +131,11 @@ def align_labels(fig, xdist=5, ydist=10):
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     yap = np.zeros((len(fig.get_axes()), 2))
+    yph = np.zeros(len(fig.get_axes()))
     ylh = np.zeros(len(fig.get_axes()))
     ylx = np.zeros(len(fig.get_axes()))
     xap = np.zeros((len(fig.get_axes()), 2))
+    xpw = np.zeros(len(fig.get_axes()))
     xlw = np.zeros(len(fig.get_axes()))
     xly = np.zeros(len(fig.get_axes()))
     for k, ax in enumerate(fig.get_axes()):
@@ -144,10 +146,10 @@ def align_labels(fig, xdist=5, ydist=10):
             th = xax.get_text_heights(renderer)[1]
             th -= np.abs(np.diff(xax.get_label().get_window_extent(renderer).get_points()[:,1]))[0]
             th += xdist
-            yc = th/pixely
-            ylh[k] = yc
+            ylh[k] = th
+            yph[k] = pixely
             ylx[k] = xax.get_label().get_position()[0]
-            yap[k,:] = (ax_bbox[0,0], xax.get_label().get_rotation())
+            yap[k,:] = (ax_bbox[0,1], xax.get_label().get_rotation())
         yax = ax.yaxis
         if yax.get_label_text():
             ax_bbox = ax.get_window_extent().get_points()
@@ -155,8 +157,8 @@ def align_labels(fig, xdist=5, ydist=10):
             tw = yax.get_text_widths(renderer)[0]
             tw -= np.abs(np.diff(yax.get_label().get_window_extent(renderer).get_points()[:,0]))[0]
             tw += ydist
-            xc = tw/pixelx
-            xlw[k] = xc
+            xlw[k] = tw
+            xpw[k] = pixelx
             xly[k] = yax.get_label().get_position()[1]
             xap[k,:] = (ax_bbox[0,0], yax.get_label().get_rotation())
     # compute label position for axes with same position:
@@ -169,9 +171,9 @@ def align_labels(fig, xdist=5, ydist=10):
     # set label position:
     for k, ax in enumerate(fig.get_axes()):
         if yap[k, 0] > 0:
-            ax.xaxis.set_label_coords(ylx[k], -ylh[k], None)
+            ax.xaxis.set_label_coords(ylx[k], -ylh[k]/yph[k], None)
         if xap[k, 0] > 0:
-            ax.yaxis.set_label_coords(-xlw[k], xly[k], None)
+            ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
 
 
 """ Default distances between axis labels and tick labels. """
