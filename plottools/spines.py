@@ -95,7 +95,7 @@ def set_spines_outward(ax, spines, offset=0):
           'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
           E.g. 'lb' applies the offset to the left and bottom spine.
         - dictionary: apply offsets for several sets of spines individually.
-          Dictionary keys are strings spcifying the spines as described above.
+          Dictionary keys are strings specifying the spines as described above.
           The corresponding values specify the offset by which the spines are move outwards.
     offset: float
         Move the specified spines outward by that many pixels.
@@ -155,7 +155,7 @@ def set_spines_bounds(ax, spines, bounds='full'):
           'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
           E.g. 'lb' applies the bounds settings to the left and bottom spine.
         - dictionary: apply bound settings for several sets of spines.
-          Dictionary keys are strings spcifying the spines as described above.
+          Dictionary keys are strings specifying the spines as described above.
           The corresponding values specify the bound settings
           (see `bounds` below for possible values and their effects).
     bounds: 'full', 'data', 'ticks' or tuple
