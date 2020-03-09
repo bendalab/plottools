@@ -120,6 +120,7 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
         For each color in the list a point style is generated.
     dashes: matplot linestyle or list of matplotlib linestyles
         For each color a descriptor of a matplotlib linestyle.
+        Set to 'none' if the points should not be connected.
     markers: tuple or list of tuples
         For each color a marker. The first element of the tuple is the marker symbol,
         the second on is a factor that is used to scale the markeredgewidth in `pointdict`.
@@ -174,10 +175,10 @@ def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
     if prefixes[0]:
         make_linestyles(prefixes[0], name, suffix, colors, dashes, linedict, namespace)
     if prefixes[1]:
-        make_pointstyles(prefixes[1], name, suffix, colors, dashes, markers, mec,
+        make_pointstyles(prefixes[1], name, suffix, colors, 'none', markers, mec,
                          pointdict, namespace)
     if prefixes[2]:
-        linepointdict = pointdict
+        linepointdict = {k: v for k, v in pointdict.items()}
         linepointdict.update(linedict)
         make_pointstyles(prefixes[2], name, suffix, colors, dashes, markers, mec,
                          linepointdict, namespace)
