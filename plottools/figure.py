@@ -12,8 +12,8 @@ to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
 
 Then `figsize` is in centimeters:
 ```
-fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
 fig = plt.figure(figsize=(20.0, 16.0))         # in cm!
+fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
 ```
 and subplot positions can be adjusted by margins given in multiples of the current font size:
 ```
@@ -21,7 +21,13 @@ fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize mar
 gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
 gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
 ```
+That is, `left` specifies the distance of the leftmost axes from the left margin of the figure,
+`bottom` specifies the distance of the bottom axes from the bottom margin of the figure,
+`right` specifies the distance of the rightmost axes from the right margin of the figure, and
+`top` specifies the distance of the top axes from the top margin of the figure,
+all as multiples of the font size.
 This way, margins do not need to be adjusted when changing the `figsize`!
+
 Further, `figure.add_gridspec()` is made available even for older
 matplotlib versions that do not have this function yet.
 
@@ -62,7 +68,7 @@ def cm_size(*args):
         return [v/cm_per_inch for v in args]
 
 
-def adjust_fs(fig=None, left=5.5, bottom=2.8, right=0.5, top=0.5, **kwargs):
+def adjust_fs(fig=None, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
     """ Compute plot margins from multiples of the current font size.
 
     Parameters
@@ -118,39 +124,65 @@ def __figure_figure(num=None, figsize=None, **kwargs):
     """
     if figsize:
         figsize = cm_size(*figsize)
-    return plt.__figure_orig_figure(num, figsize, **kwargs)
+    fig = plt.__figure_orig_figure(num, figsize, **kwargs)
+    fig.canvas.mpl_connect('resize_event', __resize)
+    return fig
 
-    
-def __fig_subplots_adjust_figure(fig, left=None, bottom=None, right=None, top=None, **kwargs):
+
+def __fig_subplots_adjust_figure(fig, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
     """ figure.subplots_adjust() with margins in multiples of the current font size.
     """
+    fig.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
     fig.__subplots_adjust_orig_figure(**adjust_fs(fig, left, bottom, right, top, **kwargs))
 
     
-def __gridspec_update_figure(gridspec, left=None, bottom=None, right=None, top=None, **kwargs):
+def __gridspec_update_figure(gridspec, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
     """ gridspec.update() with margins in multiples of the current font size.
     """
     figure = None
     if hasattr(gridspec, 'figure'):
         figure = gridspec.figure
+    gridspec.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
     gridspec.__update_orig_figure(**adjust_fs(figure, left, bottom, right, top, **kwargs))
 
 
-def __fig_add_gridspec_figure(fig, nrows, ncols, **kwargs):
-    """ This is from more current versions of matplotlib.
+def __fig_add_gridspec_figure(fig, nrows, ncols, left=6.0, bottom=3.0, right=1.5, top=0.5,
+                              **kwargs):
+    """ This emulates more current versions of matplotlib.
     """
     if fig.__add_gridspec_orig_figure:
-        return fig.__add_gridspec_orig_figure(nrows=nrows, ncols=ncols,
-                                              **adjust_fs(fig, **kwargs))
+        gs = fig.__add_gridspec_orig_figure(nrows=nrows, ncols=ncols,
+                                            **adjust_fs(fig, left, bottom,
+                                                        right, top,**kwargs))
     else:
         _ = kwargs.pop('figure', None)  # pop in case user has added this...
-        gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **adjust_fs(fig, **kwargs))
-        gs.figure = fig
-        return gs
+        gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **adjust_fs(fig, left, bottom,
+                                                                     right, top, **kwargs))
+    if not hasattr(fig, '__gridspecs'):
+        fig.__gridspecs = []
+    fig.__gridspecs.append(gs)    
+    gs.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
+    gs.figure = fig
+    return gs
+
+
+def __resize(event):
+    """ Resize event updating subplot margins.
+    """
+    fig = event.canvas.figure
+    if hasattr(fig, '__subplots_margins'):
+        fig.subplots_adjust(**fig.__subplots_margins)
+    if hasattr(fig, '__gridspecs'):
+        for gs in fig.__gridspecs:
+            if hasattr(gs, '__subplots_margins'):
+                gs.update(**gs.__subplots_margins)
 
 
 def install_figure():
     """ Install code for figsize in centimeters and margins in multiples of fontsize.
+
+    In addition, each new figure gets an resize event handler installed, that applies
+    the supplied margins whenever a figure is resized.
     """
     if not hasattr(plt, '__figure_orig_figure'):
         plt.__figure_orig_figure = plt.figure
