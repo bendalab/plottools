@@ -23,6 +23,7 @@ Display line, point, linepoint and fill styles:
 - `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
 - `plot_fillstyles()`: plot names and patches of all available fill styles.
 """
+
 # line (ls), point (ps), and fill styles (fs).
 
 # Each style is derived from a main color as indicated by the capital letter.
@@ -48,6 +49,7 @@ Display line, point, linepoint and fill styles:
 # - solid (e.g. fsA3s) for a solid fill color without edge color, and
 # - alpha (e.g. fsA3a) for a transparent fill color.
 
+import inspect
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -63,7 +65,7 @@ from .scalebars import xscalebar, yscalebar, scalebars
 from .significance import significance_bar
 
 
-def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
+def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace=None):
     """ Generate dictionaries for line styles.
 
     Add for each color a line style dictionary, add this to the
@@ -72,11 +74,11 @@ def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
     
     For example
     ```
-    make_linestyles('ls', 'Male', '', [#0000FF], '-', {'linestyle': '-', 'linewidth': 2'}, globals())
+    make_linestyles('ls', 'Male', '', [#0000FF], '-', {'linestyle': '-', 'linewidth': 2'})
     ```
     generates a dictionary named `lsMale` defining a blue solid line,
     adds `Male` to `style_names`, and adds the dictionary to `ls` under the key `Male`.
-    Throw the dictionary into a plot() command:
+    Simply throw the dictionary into a plot() command:
     ```
     plt.plot(x, y, **lsMale)
     ```
@@ -100,9 +102,13 @@ def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
         For each color a descriptor of a matplotlib linestyle.
     linedict: dict
         Dictionary with 'linestyle' and 'linewidth' items.
-    namespace: dict
+    namespace: dict or None
         Namespace to which the generated line styles are added.
+        If None add line styles to the global namespace of the caller.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
@@ -120,7 +126,8 @@ def make_linestyles(prefix, name, suffix, colors, dashes, linedict, namespace):
         namespace[ln].update({n: namespace[sn]})
 
 
-def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdict, namespace):
+def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec,
+                     pointdict, namespace=None):
     """ Generate dictionaries for point styles.
 
     Add for each color a point style dictionary, add this to the
@@ -129,11 +136,11 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
     
     For example
     ```
-    make_pointstyles('ps', 'Female', '', [#FF0000], '-', ('o', 1.0), 0.5, {'markersize': 8, 'markeredgewidth': 1.0, 'linestyle': 'none'}, globals())
+    make_pointstyles('ps', 'Female', '', [#FF0000], '-', ('o', 1.0), 0.5, {'markersize': 8, 'markeredgewidth': 1.0, 'linestyle': 'none'})
     ```
     generates a dictionary named `psFemale` defining red filled markers with a lighter edge,
     adds `Female` to `style_names`, and adds the dictionary to `ps` under the key `Female`.
-    Throw the dictionary into a plot() command:
+    Simply throw the dictionary into a plot() command:
     ```
     plt.plot(x, y, **psFemale)
     ```
@@ -167,7 +174,11 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
         Dictionary with 'markersize', markeredgewidth', 'linestyle' and 'linewidth' items.
     namespace: dict
         Namespace to which the generated point styles are added.
+        If None add line styles to the global namespace of the caller.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     ln = prefix + suffix 
@@ -189,7 +200,7 @@ def make_pointstyles(prefix, name, suffix, colors, dashes, markers, mec, pointdi
 
 
 def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
-                         linedict, pointdict, namespace):
+                         linedict, pointdict, namespace=None):
     """ Generate line styles, point styles, and line point styles.
 
     Passes the arguments on to make_linestyles() and make_pointstyles(),
@@ -207,6 +218,9 @@ def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
         All remaining arguments are explained in the make_linestyles() and make_pointstyles()
         functions.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     if prefixes[0]:
         make_linestyles(prefixes[0], name, suffix, colors, dashes, linedict, namespace)
     if prefixes[1]:
@@ -219,7 +233,7 @@ def make_linepointstyles(prefixes, name, suffix, colors, dashes, markers, mec,
                          linepointdict, namespace)
 
 
-def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace):
+def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace=None):
     """ Generate dictionaries for fill styles.
 
     Add for each color three fill style dictionaries, add these to the
@@ -228,7 +242,7 @@ def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace
     
     For example
     ```
-    make_fillstyles('fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4, globals())
+    make_fillstyles('fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4)
     ```
     generates the dictionaries named `fsPSD`, `fsPSDs`, `fsPSDa` defining a green fill color.
     The first, `fsPSD` gets a black edge color with linewidth set to 0.5.
@@ -236,7 +250,7 @@ def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace
     The third, `fsPSDa` is without edge and has an alpha set to 0.4.
     Further, `PSD` is added to `style_names`, and the three dictionaries are added
     to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
-    Throw the dictionaries into a fill_between() command:
+    Simply throw the dictionaries into a fill_between() command:
     ```
     plt.fill_between(x, y0, y1, **fsPSD)
     ```
@@ -270,7 +284,11 @@ def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace
         Alpha value for the transparent fill style.
     namespace: dict
         Namespace to which the generated fill styles are added.
+        If None add line styles to the global namespace of the caller.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     if 'style_names' not in namespace:
         namespace['style_names'] = []
     for suffix in suffixes:
@@ -298,7 +316,7 @@ def make_fillstyles(prefix, name, suffixes, colors, ec, ew, fillalpha, namespace
     
 def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
                 markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
-                fillalpha=0.4, namespace=globals()):
+                fillalpha=0.4, namespace=None):
     """ Generate plot styles from names, dashes, colors, and markers.
 
     For each color and name a variety of plot styles are generated
@@ -354,7 +372,12 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
         Alpha value for transparent fill styles.
     namespace: dict
         Namespace to which the generated styles are added.
+        If None add line styles to the global namespace of the caller.
     """    
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
+        
     mainline = {'linestyle': '-', 'linewidth': lwthick}
     minorline = {'linestyle': '-', 'linewidth': lwthin}
     largemarker = {'markersize': markerlarge, 'markeredgewidth': mew, 'linestyle': 'none'}
@@ -373,7 +396,7 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
     make_fillstyles('fs', names, ['', 's', 'a'], colors, mec, mew, fillalpha, namespace)
 
 
-def line_style(name, color, dash, lw, clip_on=None, namespace=globals()):
+def line_style(name, color, dash, lw, clip_on=None, namespace=None):
     """ Generate a single line style.
 
     Parameters
@@ -390,7 +413,11 @@ def line_style(name, color, dash, lw, clip_on=None, namespace=globals()):
         Whether the line is clipped. If None this property is left unspecified.
     namespace: dict
         Namespace to which the generated line style is added.
+        If None add line styles to the global namespace of the caller.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     linedict = {'linestyle': '-', 'linewidth': lw}
     if clip_on is not None:
         linedict.update({'clip_on': clip_on})
@@ -418,7 +445,7 @@ def color_cycler(palette, colors):
 def plot_params(font_size=10.0, font_family='sans-serif',
                 label_size='small', tick_dir='out', tick_size=2.5,
                 legend_size='x-small', fig_color='none', axes_color='none',
-                namespace=globals()):
+                namespace=None):
     """ Set some default plot parameter via matplotlib's rc settings.
 
     Call this function *before* you create any matplotlib figure.
@@ -445,8 +472,12 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         Background color for each subplot.
     namespace: dict
         Namespace to which generated line, point, linepoint and fill styles were added.
-        Uses `lsSpine` and `lsGrid` to set spine and grid properties.
+        If None use the global namespace of the caller.
+        `lsSpine` and `lsGrid` of naespace are used to set spine and grid properties.
     """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     mpl.rcParams['figure.facecolor'] = fig_color
     if font_family is not None:
         mpl.rcParams['font.family'] = font_family
@@ -468,7 +499,7 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         mpl.rcParams['axes.linewidth'] = namespace['lsSpine']['linewidth']
 
     
-def screen_style(namespace=globals()):
+def screen_style(namespace=None):
     """ Layout and plot styles optimized for display on a screen.
 
     You might want to copy this function and adjust it according to your needs.
@@ -496,6 +527,7 @@ def screen_style(namespace=globals()):
     ----------
     namespace: dict
         Namespace to which the generated line, point, linepoint and fill styles are added.
+        If None add line styles to the global namespace of the caller.
     """
     palette = colors_vivid
     lwthick=2.5
@@ -517,6 +549,9 @@ def screen_style(namespace=globals()):
                ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
                ('o', 1.0), ('o', 1.0)]
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
                 markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
                 fillalpha=0.4, namespace=namespace)
@@ -542,7 +577,7 @@ def screen_style(namespace=globals()):
     install_align_labels(xdist=5, ydist=10)
 
     
-def paper_style(namespace=globals()):
+def paper_style(namespace=None):
     """ Layout and plot styles optimized for inclusion into a paper.
 
     You might want to copy this function and adjust it according to your needs.
@@ -570,6 +605,7 @@ def paper_style(namespace=globals()):
     ----------
     namespace: dict
         Namespace to which the generated line, point, linepoint and fill styles are added.
+        If None add line styles to the global namespace of the caller.
     """
     palette = colors_muted
     lwthick=1.7
@@ -591,6 +627,9 @@ def paper_style(namespace=globals()):
                ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
                ('o', 1.0), ('o', 1.0)]
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
                 markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                 fillalpha=0.4, namespace=namespace)
@@ -616,7 +655,7 @@ def paper_style(namespace=globals()):
     install_align_labels(xdist=5, ydist=10)
 
    
-def sketch_style(namespace=globals()):
+def sketch_style(namespace=None):
     """ Layout and plot styles with xkcd style activated.
 
     You might want to copy this function and adjust it according to your needs.
@@ -644,6 +683,7 @@ def sketch_style(namespace=globals()):
     ----------
     namespace: dict
         Namespace to which the generated line, point, linepoint and fill styles are added.
+        If None add line styles to the global namespace of the caller.
     """
     #global bar_fac
     #bar_fac = 0.9
@@ -667,6 +707,9 @@ def sketch_style(namespace=globals()):
                ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
                ('o', 1.0), ('o', 1.0)]
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
     plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
                 markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                 fillalpha=0.4, namespace=namespace)
