@@ -8,6 +8,7 @@ Simplify creation of publication-quality figures.
 - `spines`: modify the appearance of spines.
 - `ticks`: convience functions for setting tick locations and formats.
 - `labels`: annotate axis with label and unit and align axes labels.
+- `arrwos`: 
 - `labelaxes`: mark panels with a label.
 - `insets`: insets made easy.
 - `scalebars`: labeled scale bars.

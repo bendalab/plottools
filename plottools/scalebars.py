@@ -104,7 +104,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         # get y coordinate of text bottom in figure pixel coordinates:
         ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,1]
         dty = ly-0.5*lw - 2.0 - ty
-    th.set_position((0.5*(x0+x1), y+np.abs(unity)*dty/pixely))
+    th.set_position((0.5*(x0+x1), y+dyu*dty))
     return x0, x1, y
 
         
@@ -199,7 +199,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         # get x coordinate of text bottom in figure pixel coordinates:
         tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,0]
         dtx = lx-0.5*lw - 1.0 - tx
-    th.set_position((x+np.abs(unitx)*dtx/pixelx, 0.5*(y0+y1)))
+    th.set_position((x+dxu*dtx, 0.5*(y0+y1)))
     return x, y0, y1
 
         

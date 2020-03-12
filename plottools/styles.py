@@ -59,6 +59,7 @@ from .spines import show_spines, set_spines_outward, set_spines_bounds, set_defa
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_none, set_yticks_none
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels
+from .arrows import harrow, varrow
 from .insets import inset, zoomed_inset
 from .labelaxes import label_axes
 from .scalebars import xscalebar, yscalebar, scalebars

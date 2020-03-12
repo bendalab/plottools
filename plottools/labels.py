@@ -250,7 +250,7 @@ mpl.figure.Figure.align_labels = align_labels
 
 
 def demo():
-    """ Run a demonstration of the axislabels module.
+    """ Run a demonstration of the labels module.
     """
     install_align_labels()
     
