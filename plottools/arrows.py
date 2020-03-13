@@ -9,30 +9,66 @@ The following functions are also provided as mpl.axes.Axes member functions:
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.patches import ArrowStyle
 
 
 def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
-           style='>', shrink=0, lw=1, color='k', scale=20.0, **kwargs):
+           style='>', shrink=0, lw=1, color='k',
+           head_width=15, head_length=15, **kwargs):
     """
     heads: string
         left, right, both, none
+    head_width: float
+        In points, same unit as linewidth
     """
-    if style == '|':
-        scale /= 4.0
-    bstyle = style[::-1]
-    if bstyle[0] == '>':
-        bstyle = '<' + bstyle[1:]
-    arrowstyle = '-'
-    if heads == 'right':
-        arrowstyle = '-' + style
-    elif heads == 'left':
-        arrowstyle = bstyle + '-'
-    elif heads == 'both':
-        arrowstyle = bstyle + '-' + style
-    ax.annotate('', (x+dx, y), (x, y),
-                arrowprops=dict(arrowstyle=arrowstyle, edgecolor=color, facecolor=color,
-                                linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                mutation_scale=scale, clip_on=False))
+    if heads == 'none':
+        style = '>'
+    if style == '>>':
+        arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
+                                      head_width=0.07*head_width, tail_width=0.01)
+        if heads in ['right', 'both']:
+            ax.annotate('', (x+dx, y), (x, y),
+                        arrowprops=dict(arrowstyle=arrowstyle,
+                                        edgecolor='none', facecolor=color,
+                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        clip_on=False))
+        if heads in ['left', 'both']:
+            ax.annotate('', (x, y), (x+dx, y),
+                        arrowprops=dict(arrowstyle=arrowstyle,
+                                        edgecolor='none', facecolor=color,
+                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        clip_on=False))
+    else:
+        scale = head_width*2.0
+        if style == '|':
+            scale /= 4.0
+        bstyle = style[::-1]
+        if bstyle[0] == '>':
+            bstyle = '<' + bstyle[1:]
+        arrowstyle = '-'
+        if heads == 'right':
+            arrowstyle = '-' + style
+        elif heads == 'left':
+            arrowstyle = bstyle + '-'
+        elif heads == 'both':
+            arrowstyle = bstyle + '-' + style
+        ec = color
+        lww = lw
+        if style == '|>':
+            ec = 'none'
+            lww = 0
+        ax.annotate('', (x+dx, y), (x, y),
+                    arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
+                                    linewidth=lww, shrinkA=shrink, shrinkB=shrink,
+                                    mutation_scale=scale, clip_on=False))
+    if style in ['|>', '>>']:
+        pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
+        xmin, xmax = ax.get_xlim()
+        dxu = np.abs(xmax - xmin)/pixelx
+        ddx = 0.5*head_length*dxu
+        ddxr = ddx if heads in ['right', 'both'] else 0
+        ddxl = ddx if heads in ['left', 'both'] else 0
+        ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color, solid_capstyle='butt')
     if text:
         # ax dimensions:
         ax.autoscale(False)
@@ -49,25 +85,56 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
 
 
 def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
-           style='>', shrink=0, lw=1, color='k', scale=20.0, **kwargs):
+           style='>', shrink=0, lw=1, color='k',
+           head_width=15, head_length=15, **kwargs):
     """
     """
-    if style == '|':
-        scale /= 4.0
-    bstyle = style[::-1]
-    if bstyle[0] == '>':
-        bstyle = '<' + bstyle[1:]
-    arrowstyle = '-'
-    if heads == 'right':
-        arrowstyle = '-' + style
-    elif heads == 'left':
-        arrowstyle = bstyle + '-'
-    elif heads == 'both':
-        arrowstyle = bstyle + '-' + style
-    ax.annotate('', (x, y+dy), (x, y),
-                arrowprops=dict(arrowstyle=arrowstyle, edgecolor=color, facecolor=color,
-                                linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                mutation_scale=scale, clip_on=False))
+    if style == '>>':
+        arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
+                                      head_width=0.07*head_width, tail_width=0.01)
+        if heads in ['right', 'both']:
+            ax.annotate('', (x, y+dy), (x, y),
+                        arrowprops=dict(arrowstyle=arrowstyle,
+                                        edgecolor='none', facecolor=color,
+                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        clip_on=False))
+        if heads in ['left', 'both']:
+            ax.annotate('', (x, y), (x, y+dy),
+                        arrowprops=dict(arrowstyle=arrowstyle,
+                                        edgecolor='none', facecolor=color,
+                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        clip_on=False))
+    else:
+        scale = head_width*2.0
+        if style == '|':
+            scale /= 4.0
+        bstyle = style[::-1]
+        if bstyle[0] == '>':
+            bstyle = '<' + bstyle[1:]
+        arrowstyle = '-'
+        if heads == 'right':
+            arrowstyle = '-' + style
+        elif heads == 'left':
+            arrowstyle = bstyle + '-'
+        elif heads == 'both':
+            arrowstyle = bstyle + '-' + style
+        ec = color
+        lww = lw
+        if style == '|>':
+            ec = 'none'
+            lww = 0
+        ax.annotate('', (x, y+dy), (x, y),
+                    arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
+                                    linewidth=lww, shrinkA=shrink, shrinkB=shrink,
+                                    mutation_scale=scale, clip_on=False))
+    if style in ['|>', '>>']:
+        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
+        ymin, ymax = ax.get_ylim()
+        dyu = np.abs(ymax - ymin)/pixely
+        ddy = 0.5*head_length*dyu
+        ddyr = ddy if heads in ['right', 'both'] else 0
+        ddyl = ddy if heads in ['left', 'both'] else 0
+        ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color, solid_capstyle='butt')
     if text:
         # ax dimensions:
         ax.autoscale(False)
@@ -95,14 +162,24 @@ def demo():
     fig, ax = plt.subplots()
     ax.set_xlim(0.0, 2.0)
     ax.set_ylim(0.0, 2.0)
-    ax.harrow(0.2, 1.9, 1.6, 'right', 'these', lw=4)
-    ax.harrow(0.2, 1.6, 1.6, 'both', 'are', lw=2)
-    ax.harrow(0.2, 1.3, 1.6, 'left', 'all', style='|>', lw=1)
-    ax.harrow(0.2, 1.0, 1.6, 'both', 'arrows', style='|', va='top', lw=2)
+    for y in [1.1, 1.3, 1.5, 1.7, 1.9]:
+        ax.plot([0.2, 1.8], [y, y], '-c', lw=15, solid_capstyle='butt')
+    ax.harrow(0.2, 1.9, 1.6, 'right', 'these', lw=1)
+    ax.harrow(0.2, 1.7, 1.6, 'both', 'are', style='|>', lw=1)
+    ax.harrow(0.2, 1.5, 1.6, 'left', 'all', style='>>', lw=2)
+    ax.harrow(0.2, 1.3, 1.6, 'both', 'arrows', style='|', va='top', lw=2)
+    ax.harrow(0.2, 1.1, 1.6, 'both', 'fancy', style='>>', va='top', lw=2)
+    for x in [0.2, 0.5, 0.8, 1.1, 1.4]:
+        ax.plot([x, x], [0.1, 0.8], '-c', lw=15, solid_capstyle='butt')
     ax.varrow(0.2, 0.1, 0.7, 'right', 'these', lw=4)
-    ax.varrow(0.5, 0.1, 0.7, 'both', 'are', lw=2)
-    ax.varrow(0.8, 0.1, 0.7, 'left', 'all', ha='left', style='|>', lw=1)
-    ax.varrow(1.1, 0.1, 0.7, 'both', 'arrows', lw=2, style='|', rotation=90)
+    ax.varrow(0.5, 0.1, 0.7, 'both', 'are', style='|>', lw=4)
+    ax.varrow(0.8, 0.1, 0.7, 'left', 'all', ha='left', style='>>', lw=2)
+    ax.varrow(1.1, 0.1, 0.7, 'both', 'arrows', style='|', lw=4, rotation=90)
+    ax.varrow(1.4, 0.1, 0.7, 'both', 'fancy', style='>>', lw=2, rotation=90)
+    x = 1.7
+    ax.plot([x, x], [0.1, 0.8], '-c', lw=25, solid_capstyle='butt')
+    ax.varrow(x, 0.1, 0.7, 'both', 'big fancy', style='>>', lw=5, rotation=90,
+              head_width=25, head_length=35)
     plt.show()
 
 
