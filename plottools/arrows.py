@@ -6,6 +6,7 @@ The following functions are also provided as mpl.axes.Axes member functions:
 - `varrow()`: 
 """
 
+import inspect
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -155,6 +156,34 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             ax.text(x-dx*dxu, y+0.5*dy, text, ha='right', va='center',
                     clip_on=False, **kwargs)
 
+
+def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
+                head_width=15, head_length=15, namespace=None):
+    """ Generate a single arrow style.
+
+    Parameters
+    ----------
+    name: string
+        The name of the arrow style, the prefix 'as' is prepended.
+    color: any matplotlib color
+        The color of the arrow. 
+    namespace: dict
+        Namespace to which the generated line style is added.
+        If None add line styles to the global namespace of the caller.
+    """
+    if namespace is None:
+        frame = inspect.currentframe()
+        namespace = frame.f_back.f_globals
+    if 'style_names' not in namespace:
+        namespace['style_names'] = []
+    if name not in namespace['style_names']:
+        namespace['style_names'].append(name)
+    if 'as' not in namespace:
+        namespace['as'] = {}
+    an = 'as' + name 
+    namespace[an] = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
+                         head_width=head_width, head_length=head_length)
+    namespace['as'].update({name: namespace[an]})
 
 
 # make functions available as member variables:
