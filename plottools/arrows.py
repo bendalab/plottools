@@ -68,6 +68,9 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         ddx = 0.5*head_length*dxu
         ddxr = ddx if heads in ['right', 'both'] else 0
         ddxl = ddx if heads in ['left', 'both'] else 0
+        if dx < 0:
+            ddxl = -ddxl
+            ddxr = -ddxr
         ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color, solid_capstyle='butt')
     if text:
         # ax dimensions:
@@ -96,13 +99,13 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             ax.annotate('', (x, y+dy), (x, y),
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
-                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        linewidth=0, shrinkA=shrink, shrinkB=shrink,
                                         clip_on=False))
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x, y+dy),
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
-                                        linewidth=lw, shrinkA=shrink, shrinkB=shrink,
+                                        linewidth=0, shrinkA=shrink, shrinkB=shrink,
                                         clip_on=False))
     else:
         scale = head_width*2.0
@@ -134,6 +137,9 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         ddy = 0.5*head_length*dyu
         ddyr = ddy if heads in ['right', 'both'] else 0
         ddyl = ddy if heads in ['left', 'both'] else 0
+        if dy < 0:
+            ddyl = -ddyl
+            ddyr = -ddyr
         ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color, solid_capstyle='butt')
     if text:
         # ax dimensions:
