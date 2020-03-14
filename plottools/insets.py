@@ -75,7 +75,7 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
         Axes of the inset.
     """
     # inset:
-    axins = inset(ax, pos)
+    axins = ax.inset(pos)
     # box to data coordinates:
     xmin, xmax = ax.get_xlim()
     ymin, ymax = ax.get_ylim()
