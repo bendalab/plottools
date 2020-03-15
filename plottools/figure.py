@@ -1,14 +1,14 @@
 """
 # Figure
 
-Size and margins of a figure.
+Size, margins and default filename of a figure.
 
 Simply call
 ```
 install_figure()
 ```
 to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
-`figure.add_gridspec()`, `gridspec.update()`).
+`figure.add_gridspec()`, `gridspec.update()`, `fig.savefig()`, `plt.savefig()`).
 
 Then `figsize` is in centimeters:
 ```
@@ -31,12 +31,18 @@ This way, margins do not need to be adjusted when changing the `figsize`!
 Further, `figure.add_gridspec()` is made available even for older
 matplotlib versions that do not have this function yet.
 
+If no file name or only an file extension is specified in fig.savefig(),
+then the file name of the main script is used.
+If no file extension is specified, '.pdf' is appended.
+
 Available functions:
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
 """
 
+import __main__
+import os
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -177,9 +183,33 @@ def __resize(event):
             if hasattr(gs, '__subplots_margins'):
                 gs.update(**gs.__subplots_margins)
 
+    
+def __fig_savefig_figure(fig, fname='', *args, **kwargs):
+    """ Set default file name to the one of the main script and default extension to '.pdf'.
+    """
+    if len(fname) == 0:
+        fname = '.pdf'
+    if fname[0] == '.':
+        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+    if len(os.path.splitext(fname)[1]) <= 1:
+        fname = os.path.splitext(fname)[0] + '.pdf'
+    fig.__savefig_orig_figure(fname, *args, **kwargs)
+
+
+def __plt_savefig_figure(fname='', *args, **kwargs):
+    """ Set default file name to the one of the main script and default extension to '.pdf'.
+    """
+    if len(fname) == 0:
+        fname = '.pdf'
+    if fname[0] == '.':
+        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+    if len(os.path.splitext(fname)[1]) <= 1:
+        fname = os.path.splitext(fname)[0] + '.pdf'
+    plt.__savefig_orig_figure(fname, *args, **kwargs)
+
 
 def install_figure():
-    """ Install code for figsize in centimeters and margins in multiples of fontsize.
+    """ Install code for figsize in centimeters, margins in multiples of fontsize, and default filename for savefig().
 
     In addition, each new figure gets an resize event handler installed, that applies
     the supplied margins whenever a figure is resized.
@@ -199,6 +229,13 @@ def install_figure():
     if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
         mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
         mpl.gridspec.GridSpec.update = __gridspec_update_figure
+    if not hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
+        mpl.figure.Figure.__savefig_orig_figure = mpl.figure.Figure.savefig
+        mpl.figure.Figure.savefig = __fig_savefig_figure
+    if not hasattr(plt, '__savefig_orig_figure'):
+        plt.__savefig_orig_figure = plt.savefig
+        plt.savefig = __plt_savefig_figure
+
 
 
 def demo():

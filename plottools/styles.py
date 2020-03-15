@@ -572,14 +572,14 @@ def screen_style(namespace=None):
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # figsize in centimeter:
-    install_figure()
     # spines:
     set_default_spines(spines='lbrt', spines_offsets={'lrtb': 0},
                        spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
+    # figsize in centimeter:
+    install_figure()
 
     
 def paper_style(namespace=None):
@@ -654,14 +654,14 @@ def paper_style(namespace=None):
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # figsize in centimeter:
-    install_figure()
     # spines:
     set_default_spines(spines='lb', spines_offsets={'lrtb': 3},
                        spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
+    # figsize in centimeter:
+    install_figure()
 
    
 def sketch_style(namespace=None):
@@ -739,14 +739,14 @@ def sketch_style(namespace=None):
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # figsize in centimeter:
-    install_figure()
     # spines:
     set_default_spines(spines='lb', spines_offsets={'lrtb': 0},
                        spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} ({unit})')
     install_align_labels(xdist=5, ydist=10)
+    # figsize in centimeter:
+    install_figure()
     
 
 def plot_linestyles(ax):
