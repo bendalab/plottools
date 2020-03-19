@@ -6,12 +6,18 @@ Convience functions for setting tick locations and formats.
 The following functions are also added as members to mpl.axes.Axes:
 - `set_xticks_delta()`: set distance between xticks.
 - `set_yticks_delta()`: set distance between yticks.
+- `set_xticks_fixed()`: set custom xticks at fixed positions.
+- `set_yticks_fixed()`: set custom yticks at fixed positions.
 - `set_xticks_none()`: do not draw any xticks.
 - `set_yticks_none()`: do not draw any yticks.
 - `set_xticks_format()`: format xticks according to formatter string.
 - `set_yticks_format()`: format yticks according to formatter string.
 - `set_xticks_blank()`: draw xticks without labeling them.
 - `set_yticks_blank()`: draw yticks without labeling them.
+
+- `set_minor_xticks_none()`: do not draw any minor xticks.
+- `set_minor_yticks_none()`: do not draw any minor yticks.
+
 """
 
 import numpy as np
@@ -44,6 +50,46 @@ def set_yticks_delta(ax, delta):
         Distance between yticks.
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
+
+
+def set_xticks_fixed(ax, locs, labels='%g'):
+    """ Set custom xticks at fixed positions.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    locs: list of floats
+        Locations of xticks.
+    labels: string or list of strings
+        Either a format string (e.g. '%.1f') or a list of labels
+        for each tick position in `locs`.
+    """
+    ax.xaxis.set_major_locator(ticker.FixedLocator(locs))
+    if isinstance(labels, (tuple, list)):
+        ax.xaxis.set_major_formatter(ticker.FixedFormatter(labels))
+    else:
+        ax.xaxis.set_major_formatter(ticker.FormatStrFormatter(labels))
+
+
+def set_yticks_fixed(ax, locs, labels='%g'):
+    """ Set custom yticks at fixed positions.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the yticks are set.
+    locs: list of floats
+        Locations of yticks.
+    labels: string or list of strings
+        Either a format string (e.g. '%.1f') or a list of labels
+        for each tick position in `locs`.
+    """
+    ax.yaxis.set_major_locator(ticker.FixedLocator(locs))
+    if isinstance(labels, (tuple, list)):
+        ax.yaxis.set_major_formatter(ticker.FixedFormatter(labels))
+    else:
+        ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(labels))
 
 
 def set_xticks_none(ax):
@@ -116,15 +162,41 @@ def set_yticks_blank(ax):
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 
 
+def set_minor_xticks_none(ax):
+    """ Do not draw any minor xticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the minor xticks are set.
+    """
+    ax.xaxis.set_minor_locator(ticker.NullLocator())
+
+
+def set_minor_yticks_none(ax):
+    """ Do not draw any minor yticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the minor yticks are set.
+    """
+    ax.yaxis.set_minor_locator(ticker.NullLocator())
+
+
 # make functions available as member variables:
 mpl.axes.Axes.set_xticks_delta = set_xticks_delta
 mpl.axes.Axes.set_yticks_delta = set_yticks_delta
+mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
+mpl.axes.Axes.set_yticks_fixed = set_yticks_fixed
 mpl.axes.Axes.set_xticks_none = set_xticks_none
 mpl.axes.Axes.set_yticks_none = set_yticks_none
 mpl.axes.Axes.set_xticks_format = set_xticks_format
 mpl.axes.Axes.set_yticks_format = set_yticks_format
 mpl.axes.Axes.set_xticks_blank = set_xticks_blank
 mpl.axes.Axes.set_yticks_blank = set_yticks_blank
+mpl.axes.Axes.set_minor_xticks_none = set_minor_xticks_none
+mpl.axes.Axes.set_minor_yticks_none = set_minor_yticks_none
 
     
 def demo():
