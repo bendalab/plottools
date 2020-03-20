@@ -5,6 +5,7 @@ Annotate axis with label and unit and align axes labels.
 
 - `set_label_format()`: set the string for formatting the axes labels.
 - `install_align_labels()`: install code for aligning axes labels into show() and savefig() functions.
+- `uninstall_align_labels()`: uninstall code for aligning axes labels in show() and savefig() functions.
 
 The following functions are also provided as mpl.axes.Axes member functions:
 - `set_xlabel()`: format the xlabel from a label and an unit.
@@ -237,6 +238,23 @@ def install_align_labels(xdist=5, ydist=10):
     if not hasattr(plt, '__show_orig_labels'):
         plt.__show_orig_labels = plt.show
         plt.show = __plt_show_labels
+
+
+def uninstall_align_labels():
+    """ Uninstall code for aligning axes labels in show() and savefig() functions.
+    """
+    if hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
+        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_labels
+        delattr(mpl.figure.Figure, '__savefig_orig_labels')
+    if hasattr(mpl.figure.Figure, '__show_orig_labels'):
+        mpl.figure.Figure.show = mpl.figure.Figure.__show_orig_labels
+        delattr(mpl.figure.Figure, '__show_orig_labels')
+    if hasattr(plt, '__savefig_orig_labels'):
+        plt.savefig = plt.__savefig_orig_labels
+        delattr(plt, '__savefig_orig_labels')
+    if hasattr(plt, '__show_orig_labels'):
+        plt.show = plt.__show_orig_labels
+        delattr(plt, '__show_orig_labels')
 
 
 # make functions available as member variables:
