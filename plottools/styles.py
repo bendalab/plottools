@@ -879,17 +879,25 @@ def plot_fillstyles(ax):
     ax.set_title('fill styles')
         
 
-def demo(mode='line'):
+def demo(style='screen', mode='line'):
     """ Run a demonstration of the plotformat module.
 
     Parameters
     ----------
+    style: string
+        'screen', 'print', or 'sketch': style to use.
     mode: string
         'linestyles': plot the names and lines of all available line styles
         'pointstyles': plot the names and points (markers) of all available point styles
         'linepointstyles': plot the names and lines of all available linepoint styles
         'fillstyles': plot the names and patches of all available fill styles
     """
+    if style == 'sketch':
+        sketch_style()
+    elif style == 'paper':
+        paper_style()
+    else:
+        screen_style()
     fig, ax = plt.subplots()
     if 'linep' in mode:
         plot_linepointstyles(ax)
@@ -911,7 +919,4 @@ if __name__ == "__main__":
     mode = 'line'
     if len(sys.argv) > 1:
         mode = sys.argv[1]
-    screen_style()
-    #paper_style()
-    #sketch_style()
     demo(mode)
