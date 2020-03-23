@@ -216,13 +216,13 @@ def lighter(color, lightness):
         cd = {k: v for k, v in color.items()}
         cd['color'] = lighter(c, lightness)
         return cd
-    except TypeError:
+    except (KeyError, TypeError):
         try:
             c = color['facecolor']
             cd = {k: v for k, v in color.items()}
             cd['facecolor'] = lighter(c, lightness)
             return cd
-        except TypeError:
+        except (KeyError, TypeError):
             if lightness > 2:
                 lightness = 2
             if lightness > 1:
@@ -262,13 +262,13 @@ def darker(color, saturation):
         cd = {k: v for k, v in color.items()}
         cd['color'] = darker(c, saturation)
         return cd
-    except TypeError:
+    except (KeyError, TypeError):
         try:
             c = color['facecolor']
             cd = {k: v for k, v in color.items()}
             cd['facecolor'] = darker(c, saturation)
             return cd
-        except TypeError:
+        except (KeyError, TypeError):
             if saturation > 2:
                 sauration = 2
             if saturation > 1:
