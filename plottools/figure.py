@@ -28,10 +28,12 @@ That is, `left` specifies the distance of the leftmost axes from the left margin
 all as multiples of the font size.
 This way, margins do not need to be adjusted when changing the `figsize`!
 
-Further, `figure.add_gridspec()` is made available even for older
+`plt.subplots()` can be called with `width_ratios` and `height_ratios`.
+
+Further, `figure.add_gridspec()` is made available for older
 matplotlib versions that do not have this function yet.
 
-If no file name or only an file extension is specified in fig.savefig(),
+If no file name or only a file extension is specified in fig.savefig(),
 then the file name of the main script is used.
 If no file extension is specified, '.pdf' is appended.
 
@@ -138,8 +140,12 @@ def __figure_figure(num=None, figsize=None, **kwargs):
 def __fig_subplots_adjust_figure(fig, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
     """ figure.subplots_adjust() with margins in multiples of the current font size.
     """
-    fig.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
-    fig.__subplots_adjust_orig_figure(**adjust_fs(fig, left, bottom, right, top, **kwargs))
+    if hasattr(fig, '__gridspecs'):
+        for gs in fig.__gridspecs:
+            gs.update(left, bottom, right, top, **kwargs)
+    else:
+        fig.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
+        fig.__subplots_adjust_orig_figure(**adjust_fs(fig, left, bottom, right, top, **kwargs))
 
     
 def __gridspec_update_figure(gridspec, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
@@ -170,6 +176,39 @@ def __fig_add_gridspec_figure(fig, nrows, ncols, left=6.0, bottom=3.0, right=1.5
     gs.__subplots_margins = {'left': left, 'bottom': bottom, 'right': right, 'top': top}
     gs.figure = fig
     return gs
+
+
+def __plt_subplots_figure(nrows, ncols, *args, **kwargs):
+    """ plt.subplots() with width_ratios and height_ratios.
+    
+    Missing: sharex, sharey support together with width_ratios, height_ratios!
+    """
+    gskwargs = {}
+    for k in ['width_ratios', 'height_ratios']:
+        if k in kwargs:
+            gskwargs[k] = kwargs.pop(k)
+    if len(gskwargs) > 0:
+        figkwargs = {}
+        for k in ['num', 'figsize', 'dpi', 'facecolor', 'edgecolor', 'frameon', 'clear']:
+            if k in kwargs:
+                figkwargs[k] = kwargs.pop(k)
+        upkwargs = {}
+        for k in ['left', 'right', 'top', 'bottom', 'hspace', 'wspace']:
+            if k in kwargs:
+                upkwargs[k] = kwargs.pop(k)
+        squeeze = True
+        if 'squeeze' in kwargs:
+            squeeze = kwargs.pop('squeeze')
+        fig = plt.figure(**figkwargs)
+        gs = fig.add_gridspec(nrows, ncols, **gskwargs)
+        gs.update(**upkwargs)
+        axs = np.zeros((nrows, ncols), np.object)
+        for r in range(nrows):
+            for c in range(ncols):
+                axs[r,c] = fig.add_subplot(gs[r,c], **kwargs)
+        return fig, np.squeeze(axs) if squeeze else axs
+    else:
+        return plt.__subplots_orig_figure(nrows, ncols, *args, **kwargs)
 
 
 def __resize(event):
@@ -232,6 +271,9 @@ def install_figure():
     if not hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
         mpl.figure.Figure.__savefig_orig_figure = mpl.figure.Figure.savefig
         mpl.figure.Figure.savefig = __fig_savefig_figure
+    if not hasattr(plt, '__subplots_orig_figure'):
+        plt.__subplots_orig_figure = plt.subplots
+        plt.subplots = __plt_subplots_figure
     if not hasattr(plt, '__savefig_orig_figure'):
         plt.__savefig_orig_figure = plt.savefig
         plt.savefig = __plt_savefig_figure
@@ -243,13 +285,14 @@ def demo():
     """
     install_figure()
     
-    fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
+    #fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0))  # figsize in cm!
+    fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
-    ax.text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0))  # in cm!')
-    ax.text(0.1, 1.4, 'fig.subplots_adjust(left=5.0, bottom=2.0, top=1.0, right=2.0)  # in fontsize margins!')
+    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0))  # in cm!')
+    axs[0].text(0.1, 1.4, 'fig.subplots_adjust(left=5.0, bottom=2.0, top=1.0, right=2.0)  # in fontsize margins!')
     x = np.linspace(0.0, 2.0, 200)
-    ax.plot(x, np.sin(2.0*np.pi*x))
-    ax.set_ylim(-1.0, 2.0)
+    axs[0].plot(x, np.sin(2.0*np.pi*x))
+    axs[0].set_ylim(-1.0, 2.0)
 
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
     # in fontsize margins and even with old matplotlib versions:
