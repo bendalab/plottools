@@ -174,16 +174,12 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
     if namespace is None:
         frame = inspect.currentframe()
         namespace = frame.f_back.f_globals
-    if 'style_names' not in namespace:
-        namespace['style_names'] = []
-    if name not in namespace['style_names']:
-        namespace['style_names'].append(name)
-    if 'as' not in namespace:
-        namespace['as'] = {}
+    if 'ahvs' not in namespace:
+        namespace['ahvs'] = {}
     an = 'as' + name 
     namespace[an] = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
                          head_width=head_width, head_length=head_length)
-    namespace['as'].update({name: namespace[an]})
+    namespace['ahvs'].update({name: namespace[an]})
 
 
 # make functions available as member variables:

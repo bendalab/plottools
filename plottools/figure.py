@@ -158,7 +158,7 @@ def __gridspec_update_figure(gridspec, left=6.0, bottom=3.0, right=1.5, top=0.5,
     gridspec.__update_orig_figure(**adjust_fs(figure, left, bottom, right, top, **kwargs))
 
 
-def __fig_add_gridspec_figure(fig, nrows, ncols, left=6.0, bottom=3.0, right=1.5, top=0.5,
+def __fig_add_gridspec_figure(fig, nrows=1, ncols=1, left=6.0, bottom=3.0, right=1.5, top=0.5,
                               **kwargs):
     """ This emulates more current versions of matplotlib.
     """
@@ -178,7 +178,7 @@ def __fig_add_gridspec_figure(fig, nrows, ncols, left=6.0, bottom=3.0, right=1.5
     return gs
 
 
-def __plt_subplots_figure(nrows, ncols, *args, **kwargs):
+def __plt_subplots_figure(nrows=1, ncols=1, *args, **kwargs):
     """ plt.subplots() with width_ratios and height_ratios.
     
     Missing: sharex, sharey support together with width_ratios, height_ratios!

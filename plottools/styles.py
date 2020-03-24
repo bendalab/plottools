@@ -498,6 +498,7 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     if 'lsSpine' in namespace:
         mpl.rcParams['axes.edgecolor'] = namespace['lsSpine']['color']
         mpl.rcParams['axes.linewidth'] = namespace['lsSpine']['linewidth']
+    # mpl.rcParams['image.cmap'] = ''  set from some cmap style
 
     
 def screen_style(namespace=None):
@@ -879,6 +880,21 @@ def plot_fillstyles(ax):
     ax.set_title('fill styles')
         
 
+def plot_arrowstyles(ax):
+    """ Plot names and arrows of all available arrow styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the arrow styles.
+    """
+    for k, name in enumerate(ahvs):
+        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ahvs[name])
+    ax.set_xlim(0.0, 2.0)
+    ax.set_ylim(0.0, 0.5*k+1)
+    ax.set_title('arrow styles')
+        
+
 def demo(style='screen', mode='line'):
     """ Run a demonstration of the plotformat module.
 
@@ -891,6 +907,7 @@ def demo(style='screen', mode='line'):
         'pointstyles': plot the names and points (markers) of all available point styles
         'linepointstyles': plot the names and lines of all available linepoint styles
         'fillstyles': plot the names and patches of all available fill styles
+        'arrowstyles': plot the names and arrows of all available arrow styles
     """
     if style == 'sketch':
         sketch_style()
@@ -907,6 +924,8 @@ def demo(style='screen', mode='line'):
         plot_pointstyles(ax)
     elif 'fill' in mode:
         plot_fillstyles(ax)
+    elif 'arrow' in mode:
+        plot_arrowstyles(ax)
     else:
         print('unknown option %s!' % mode)
         print('possible options are: line, point, linep(oints), fill')
@@ -919,4 +938,4 @@ if __name__ == "__main__":
     mode = 'line'
     if len(sys.argv) > 1:
         mode = sys.argv[1]
-    demo(mode)
+    demo(mode=mode)
