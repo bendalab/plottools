@@ -560,10 +560,10 @@ def screen_style(namespace=None):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8, color=palette['black'],
-                head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1, color=palette['black'],
-                head_length=10, head_width=6, namespace=namespace)
+    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
+                color=palette['black'], head_length=5, head_width=5)
+    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
+                color=palette['black'], head_length=10, head_width=6)
     # rc settings:
     mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
@@ -642,10 +642,10 @@ def paper_style(namespace=None):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8, color=palette['black'],
-                head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1, color=palette['black'],
-                head_length=10, head_width=6, namespace=namespace)
+    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
+                color=palette['black'], head_length=5, head_width=5)
+    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
+                color=palette['black'], head_length=10, head_width=6)
     # rc settings:
     mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
@@ -726,10 +726,10 @@ def sketch_style(namespace=None):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8, color=palette['black'],
-                head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1, color=palette['black'],
-                head_length=10, head_width=6, namespace=namespace)
+    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
+                color=palette['black'], head_length=5, head_width=5)
+    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
+                color=palette['black'], head_length=10, head_width=6)
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
@@ -888,8 +888,8 @@ def plot_arrowstyles(ax):
     ax: matplotlib axes
         Subplot to use for plotting the arrow styles.
     """
-    for k, name in enumerate(ahvs):
-        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ahvs[name])
+    for k, name in enumerate(ars):
+        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ars[name])
     ax.set_xlim(0.0, 2.0)
     ax.set_ylim(0.0, 0.5*k+1)
     ax.set_title('arrow styles')

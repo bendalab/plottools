@@ -4,6 +4,8 @@
 The following functions are also provided as mpl.axes.Axes member functions:
 - `harrow()`: draw a horizontal arrow with annotation on the arrow. 
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
+- `point_to()`: text with arrow pointing to a point.
+- `arrow_style()`: generate an arrow style.
 """
 
 import inspect
@@ -241,41 +243,94 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                     clip_on=False, **kwargs)
 
 
-def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
-                head_width=15, head_length=15, namespace=None):
-    """ Generate a single arrow style.
+def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
+             style='>', shrink=0, lw=1, color='k',
+             head_width=15, head_length=15, **kwargs):
+    """ Text with arrow pointing to a point.
+           
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which to draw the text and arrow.
+    text: string
+        Text placed at `xyfrom`.
+    xyfrom: tuple of floats
+        X- and y-coordinates of text position in data coordinates.
+    xyto: tuple of floats
+        X- and y-coordinates of arrow point in data coordinates.
+    radius: float
+        Radius of arrow line. Negative curves to the right. Relative to arrow length.
+    relpos: tuple of floats
+        X- and y-coordinate of starting point of arrow on text box. Between 0 and 1.
+    style: string
+        Appearance of the arrow head:
+        '>': line arrow, '|>': filled arrow, '>>': fancy arrow
+    shrink: float
+        Shrink arrow away from endpoints.
+    lw: float
+        Linewidth of line in points.
+    color: matplotlib color
+        Color of line and arrow.
+    head_width: float
+        Width of arrow head in points.
+    head_length: float
+        Length of arrow head in points.
+    **kwargs: key-word arguments
+        Formatting of the text, passed on to annotate().
+    """
+    if style == '>>':
+        arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
+                                      head_width=0.07*head_width, tail_width=0.12*lw)
+        arrowprops = dict(arrowstyle=arrowstyle, edgecolor='none', linewidth=0)
+    else:
+        scale = head_width*2.0
+        if style == '|':
+            scale /= 4.0
+        arrowprops = dict(arrowstyle='-' + style, edgecolor=color,
+                          mutation_scale=scale, linewidth=lw)
+    arrowprops.update(dict(facecolor=color, relpos=relpos,
+                           shrinkA=shrink, shrinkB=shrink, clip_on=False))
+    arrowprops.update(dict(connectionstyle='arc3,rad=%g' % radius))
+    if 'dist' in kwargs:
+        kwargs.pop('dist')
+    ax.annotate(text, xy=xyto, xytext=xyfrom, arrowprops=arrowprops,
+                annotation_clip=False, **kwargs)
+
+
+def arrow_style(namespace, name, dist=3.0, style='>', shrink=0, lw=1, color='k',
+                head_width=15, head_length=15, **kwargs):
+    """ Generate an arrow style.
 
     Parameters
     ----------
+    namespace: dict or None
+        Namespace to which the generated arrow style is added.
+        If None add arrow style to the global namespace of the caller.
     name: string
         The name of the arrow style, the prefix 'as' is prepended.
-    color: any matplotlib color
-        The color of the arrow. 
-    namespace: dict
-        Namespace to which the generated line style is added.
-        If None add line styles to the global namespace of the caller.
     """
     if namespace is None:
         frame = inspect.currentframe()
         namespace = frame.f_back.f_globals
-    if 'ahvs' not in namespace:
-        namespace['ahvs'] = {}
+    if 'ars' not in namespace:
+        namespace['ars'] = {}
     an = 'as' + name 
     namespace[an] = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
-                         head_width=head_width, head_length=head_length)
-    namespace['ahvs'].update({name: namespace[an]})
+                         head_width=head_width, head_length=head_length, **kwargs)
+    namespace['ars'].update({name: namespace[an]})
 
 
 # make functions available as member variables:
 mpl.axes.Axes.harrow = harrow
 mpl.axes.Axes.varrow = varrow
+mpl.axes.Axes.point_to = point_to
 
 
 def demo():
     """ Run a demonstration of the arrow module.
     """
     fig, ax = plt.subplots()
-    ax.set_xlim(0.0, 2.0)
+    ax.set_xlim(0.0, 3.0)
     ax.set_ylim(0.0, 2.0)
     for y in [1.1, 1.3, 1.5, 1.7, 1.9]:
         ax.plot([0.2, 1.8], [y, y], '-c', lw=15, solid_capstyle='butt')
@@ -295,6 +350,12 @@ def demo():
     ax.plot([x, x], [0.1, 0.8], '-c', lw=25, solid_capstyle='butt')
     ax.varrow(x, 0.1, 0.7, 'both', 'big fancy', style='>>', lw=5, rotation=90,
               head_width=25, head_length=35)
+    ax.point_to('point_to', (2.0, 1.9), (2.8, 1.7), -0.3, (1, 0.5))
+    ax.point_to('point_to', (2.0, 1.6), (2.8, 1.4), -0.3, (1, 0.5), style='>>')
+    ax.point_to('point_to', (2.0, 1.3), (2.8, 1.1), -0.3, (1, 0.5), style='|>', head_width=10)
+    ax.point_to('point_to', (2.0, 1.0), (2.8, 0.8), -0.3, (1, 0.5), style='>', lw=2)
+    ax.point_to('point_to', (2.0, 0.7), (2.8, 0.5), -0.3, (1, 0.5), style='|>', lw=4)
+    ax.point_to('point_to', (2.0, 0.4), (2.8, 0.2), -0.3, (1, 0.5), style='>>', lw=4)
     plt.show()
 
 
