@@ -2,8 +2,8 @@
 # Arrows
 
 The following functions are also provided as mpl.axes.Axes member functions:
-- `harrow()`: 
-- `varrow()`: 
+- `harrow()`: draw a horizontal arrow with annotation on the arrow. 
+- `varrow()`: draw a vertical arrow with annotation on the arrow. 
 """
 
 import inspect
@@ -16,12 +16,48 @@ from matplotlib.patches import ArrowStyle
 def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
            style='>', shrink=0, lw=1, color='k',
            head_width=15, head_length=15, **kwargs):
-    """
+    """ Draw a horizontal arrow with annotation on the arrow.
+           
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which to draw the arrow.
+    x: float
+        X-coordinate of starting point of arrow in data coordinates.
+    y: float
+        Y-coordinate of starting point of arrow in data coordinates.
+    dx: float
+        Length of arrow in data x-coordinates.
     heads: string
-        left, right, both, none
+        One of 'left', '<', 'right', '>', 'both', '<>', 'none', or '',
+        Specifies whether to draw the arrow head at the starting point ('left', '<'),
+        at the end ('right', '>'), on both ends ('both', '<>'), or none ('none', '').
+    text: string
+        Text for annotating the arrow. A formatting instruction within text (e.g. 'd=%.1fm')
+        is replaced by `dx`.
+    va: string
+        Place text annotation above ('top') or below ('bottom') the arrow.
+    dist: float
+        Distance of text annotation from arrow in points.
+    style: string
+        Appearance of the arrow head:
+        '>': line arrow, '|>': filled arrow, '>>': fancy arrow, '|': bar
+    shrink: float
+        Shrink arrow away from endpoints.
+    lw: float
+        Linewidth of line in points.
+    color: matplotlib color
+        Color of line and arrow.
     head_width: float
-        In points, same unit as linewidth
+        Width of arrow head in points.
+    head_length: float
+        Length of arrow head in points.
+    **kwargs: key-word arguments
+        Formatting of the annotation text, passed on to text().
     """
+    heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
+               'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
+    heads = heads_d[heads+'x']
     if heads == 'none':
         style = '>'
     if style == '>>':
@@ -32,13 +68,13 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False))
+                                        clip_on=False), annotation_clip=False)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x+dx, y),
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False))
+                                        clip_on=False), annotation_clip=False)
     else:
         scale = head_width*2.0
         if style == '|':
@@ -61,7 +97,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         ax.annotate('', (x+dx, y), (x, y),
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
-                                    mutation_scale=scale, clip_on=False))
+                                    mutation_scale=scale, clip_on=False), annotation_clip=False)
     if style in ['|>', '>>']:
         pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
         xmin, xmax = ax.get_xlim()
@@ -72,8 +108,11 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         if dx < 0:
             ddxl = -ddxl
             ddxr = -ddxr
-        ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color, solid_capstyle='butt')
+        ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color,
+                solid_capstyle='butt', clip_on=False)
     if text:
+        if '%' in text and text[-1] != '%':
+            text = text % dx
         # ax dimensions:
         ax.autoscale(False)
         pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
@@ -91,8 +130,50 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
 def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
            style='>', shrink=0, lw=1, color='k',
            head_width=15, head_length=15, **kwargs):
+    """ Draw a vertical arrow with annotation on the arrow.
+           
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which to draw the arrow.
+    x: float
+        X-coordinate of starting point of arrow in data coordinates.
+    y: float
+        Y-coordinate of starting point of arrow in data coordinates.
+    dx: float
+        Length of arrow in data x-coordinates.
+    heads: string
+        One of 'left', '<', 'right', '>', 'both', '<>', 'none', or '',
+        Specifies whether to draw the arrow head at the starting point ('left', '<'),
+        at the end ('right', '>'), on both ends ('both', '<>'), or none ('none', '').
+    text: string
+        Text for annotating the arrow. A formatting instruction within text (e.g. 'd=%.1fm')
+        is replaced by `dy`.
+    ha: string
+        Place text annotation to the left ('left') or right ('right') of the arrow.
+    dist: float
+        Distance of text annotation from arrow in points.
+    style: string
+        Appearance of the arrow head:
+        '>': line arrow, '|>': filled arrow, '>>': fancy arrow, '|': bar
+    shrink: float
+        Shrink arrow away from endpoints.
+    lw: float
+        Linewidth of line in points.
+    color: matplotlib color
+        Color of line and arrow.
+    head_width: float
+        Width of arrow head in points.
+    head_length: float
+        Length of arrow head in points.
+    **kwargs: key-word arguments
+        Formatting of the annotation text, passed on to text().
     """
-    """
+    heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
+               'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
+    heads = heads_d[heads+'x']
+    if heads == 'none':
+        style = '>'
     if style == '>>':
         arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
                                       head_width=0.07*head_width, tail_width=0.01)
@@ -101,13 +182,13 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False))
+                                        clip_on=False), annotation_clip=False)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x, y+dy),
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False))
+                                        clip_on=False), annotation_clip=False)
     else:
         scale = head_width*2.0
         if style == '|':
@@ -130,7 +211,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         ax.annotate('', (x, y+dy), (x, y),
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
-                                    mutation_scale=scale, clip_on=False))
+                                    mutation_scale=scale, clip_on=False), annotation_clip=False)
     if style in ['|>', '>>']:
         pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
         ymin, ymax = ax.get_ylim()
@@ -141,8 +222,11 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         if dy < 0:
             ddyl = -ddyl
             ddyr = -ddyr
-        ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color, solid_capstyle='butt')
+        ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color,
+                solid_capstyle='butt', clip_on=False)
     if text:
+        if '%' in text and text[-1] != '%':
+            text = text % dy
         # ax dimensions:
         ax.autoscale(False)
         pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
@@ -202,11 +286,11 @@ def demo():
     ax.harrow(0.2, 1.1, 1.6, 'both', 'fancy', style='>>', va='top', lw=2)
     for x in [0.2, 0.5, 0.8, 1.1, 1.4]:
         ax.plot([x, x], [0.1, 0.8], '-c', lw=15, solid_capstyle='butt')
-    ax.varrow(0.2, 0.1, 0.7, 'right', 'these', lw=4)
-    ax.varrow(0.5, 0.1, 0.7, 'both', 'are', style='|>', lw=4)
-    ax.varrow(0.8, 0.1, 0.7, 'left', 'all', ha='left', style='>>', lw=2)
+    ax.varrow(0.2, 0.1, 0.7, '>', 'these', lw=4)
+    ax.varrow(0.5, 0.1, 0.7, '<>', 'are', style='|>', lw=4)
+    ax.varrow(0.8, 0.1, 0.7, '<', 'all', ha='left', style='>>', lw=2)
     ax.varrow(1.1, 0.1, 0.7, 'both', 'arrows', style='|', lw=4, rotation=90)
-    ax.varrow(1.4, 0.1, 0.7, 'both', 'fancy', style='>>', lw=2, rotation=90)
+    ax.varrow(1.4, 0.1, 0.7, 'both', 'fancy', style='>>', lw=2, rotation='vertical')
     x = 1.7
     ax.plot([x, x], [0.1, 0.8], '-c', lw=25, solid_capstyle='butt')
     ax.varrow(x, 0.1, 0.7, 'both', 'big fancy', style='>>', lw=5, rotation=90,
