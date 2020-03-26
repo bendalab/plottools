@@ -279,8 +279,8 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
         Formatting of the text, passed on to annotate().
     """
     if style == '>>':
-        arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
-                                      head_width=0.07*head_width, tail_width=0.12*lw)
+        arrowstyle = ArrowStyle.Fancy(head_length=0.09*head_length,
+                                      head_width=0.09*head_width, tail_width=0.14*lw)
         arrowprops = dict(arrowstyle=arrowstyle, edgecolor='none', linewidth=0)
     else:
         scale = head_width*2.0
@@ -351,9 +351,9 @@ def demo():
     ax.varrow(x, 0.1, 0.7, 'both', 'big fancy', style='>>', lw=5, rotation=90,
               head_width=25, head_length=35)
     ax.point_to('point_to', (2.0, 1.9), (2.8, 1.7), -0.3, (1, 0.5))
-    ax.point_to('point_to', (2.0, 1.6), (2.8, 1.4), -0.3, (1, 0.5), style='>>')
-    ax.point_to('point_to', (2.0, 1.3), (2.8, 1.1), -0.3, (1, 0.5), style='|>', head_width=10)
-    ax.point_to('point_to', (2.0, 1.0), (2.8, 0.8), -0.3, (1, 0.5), style='>', lw=2)
+    ax.point_to('point_to', (2.0, 1.6), (2.8, 1.4), -0.3, (1, 0.5), style='|>')
+    ax.point_to('point_to', (2.0, 1.3), (2.8, 1.1), -0.3, (1, 0.5), style='>>')
+    ax.point_to('point_to', (2.0, 1.0), (2.8, 0.8), -0.3, (1, 0.5), style='>', lw=4)
     ax.point_to('point_to', (2.0, 0.7), (2.8, 0.5), -0.3, (1, 0.5), style='|>', lw=4)
     ax.point_to('point_to', (2.0, 0.4), (2.8, 0.2), -0.3, (1, 0.5), style='>>', lw=4)
     plt.show()
