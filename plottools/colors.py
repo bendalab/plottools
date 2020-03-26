@@ -12,15 +12,13 @@ Dictionaries with colors:
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
 
-Converting colors:
-- `rgb()`: integer RGB components of a hex string.
-- `hexstr()`: hex string from integer RGB components.
-- `latex_colors()`: print a \definecolor command for LaTeX.
-
 Manipulating colors:
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 - `gradient()`: interpolate between two colors.
+
+Exporting colors:
+- `latex_colors()`: print a \definecolor command for LaTeX.
 
 Displaying colors:
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
@@ -28,10 +26,19 @@ Displaying colors:
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
 """
 
+from collections import OrderedDict
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from collections import OrderedDict
+try:
+    from matplotlib.colors import colorConverter as cc
+except ImportError:
+    import matplotlib.colors as cc
+try:
+    from matplotlib.colors import to_hex
+except ImportError:
+    from matplotlib.colors import rgb2hex as to_hex
+
 
 """ Plain rgb colors. """
 colors_plain = OrderedDict()
@@ -138,65 +145,13 @@ color_palettes['unituebingen'] = colors_unituebingen
 colors = colors_muted
 
 
-def rgb(hexcolor):
-    """ Integer RGB components of a hex string.
-
-    Parameters
-    ----------
-    hexcolor: string
-        A rgb hex-string, e.g. '#FF0000'.
-    """
-    r = int(hexcolor[1:3], 16)
-    g = int(hexcolor[3:5], 16)
-    b = int(hexcolor[5:7], 16)
-    return r, g, b
-    
-
-def hexstr(r, g, b):
-    """ Hex string from integer RGB components.
-
-    Parameters
-    ----------
-    r: int
-        Red component.
-    g: int
-        Green component.
-    b: int
-        Blue component.
-        
-    Returns
-    -------
-    color: string.
-        The color as a hexadecimal RGB string (e.g. '#rrggbb').
-    """
-    return '#%02X%02X%02X' % (r, g, b)
-
-    
-def latex_colors(colors):
-    """ Print a \definecolor command for LaTeX.
-
-    Parameters
-    ----------
-    colors: dict or string
-        A dictionary with names and rgb hex-strings of colors
-        or an rgb hex-string.
-    """
-    if isinstance(colors, dict):
-        for cn in colors:
-            r, g, b = rgb(colors[cn])
-            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
-    else:
-        r, g, b = rgb(colors)
-        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
-        
-
 def lighter(color, lightness):
     """ Make a color lighter.
 
     Parameters
     ----------
-    color: string or dict
-        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+    color: dict or matplotlib color spec
+        A matplotlib color (hex string, name color string, rgb tuple)
         or a dictionary with an 'color' or 'facecolor' key.
     lightness: float
         The smaller the lightness, the lighter the returned color.
@@ -213,13 +168,13 @@ def lighter(color, lightness):
     """
     try:
         c = color['color']
-        cd = {k: v for k, v in color.items()}
+        cd = dict(**color)
         cd['color'] = lighter(c, lightness)
         return cd
     except (KeyError, TypeError):
         try:
             c = color['facecolor']
-            cd = {k: v for k, v in color.items()}
+            cd = dict(**color)
             cd['facecolor'] = lighter(c, lightness)
             return cd
         except (KeyError, TypeError):
@@ -229,11 +184,11 @@ def lighter(color, lightness):
                 return darker(color, 2.0-lightness)
             if lightness < 0:
                 lightness = 0
-            r, g, b = rgb(color)
-            rl = r + (1.0-lightness)*(0xff - r)
-            gl = g + (1.0-lightness)*(0xff - g)
-            bl = b + (1.0-lightness)*(0xff - b)
-            return hexstr(rl, gl, bl)
+            r, g, b = cc.to_rgb(color)
+            rl = r + (1.0-lightness)*(1.0 - r)
+            gl = g + (1.0-lightness)*(1.0 - g)
+            bl = b + (1.0-lightness)*(1.0 - b)
+            return to_hex((rl, gl, bl)).upper()
 
 
 def darker(color, saturation):
@@ -241,9 +196,9 @@ def darker(color, saturation):
 
     Parameters
     ----------
-    color: string or dict
-        An RGB color as a hexadecimal string (e.g. '#rrggbb')
-        or a dictionary with an 'color' key.
+    color: dict or matplotlib color spec
+        A matplotlib color (hex string, name color string, rgb tuple)
+        or a dictionary with an 'color' or 'facecolor' key.
     saturation: float
         The smaller the saturation, the darker the returned color.
         A saturation of 0 returns black.
@@ -259,13 +214,13 @@ def darker(color, saturation):
     """
     try:
         c = color['color']
-        cd = {k: v for k, v in color.items()}
+        cd = dict(**color)
         cd['color'] = darker(c, saturation)
         return cd
     except (KeyError, TypeError):
         try:
             c = color['facecolor']
-            cd = {k: v for k, v in color.items()}
+            cd = dict(**color)
             cd['facecolor'] = darker(c, saturation)
             return cd
         except (KeyError, TypeError):
@@ -275,11 +230,11 @@ def darker(color, saturation):
                 return lighter(color, 2.0-saturation)
             if saturation < 0:
                 saturation = 0
-            r, g, b = rgb(color)
+            r, g, b = cc.to_rgb(color)
             rd = r*saturation
             gd = g*saturation
             bd = b*saturation
-            return hexstr(rd, gd, bd)
+            return to_hex((rd, gd, bd)).upper()
 
 
 def gradient(color0, color1, r):
@@ -287,11 +242,11 @@ def gradient(color0, color1, r):
 
     Parameters
     ----------
-    color0: string or dict
-        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+    color0: dict or matplotlib color spec
+        A matplotlib color (hex string, name color string, rgb tuple)
         or a dictionary with an 'color' or 'facecolor' key.
-    color1: string or dict
-        An RGB color as a hexadecimal string (e.g. '#rrggbb')
+    color1: dict or matplotlib color spec
+        A matplotlib color (hex string, name color string, rgb tuple)
         or a dictionary with an 'color' or 'facecolor' key.
     r: float
         Value between 0 and for interpolating between the two colors.
@@ -312,7 +267,7 @@ def gradient(color0, color1, r):
         'color' or 'facecolor' key.
     """
     try:
-        cd0 = {k: v for k, v in color0.items()}
+        cd0 = dict(**color0)
         if 'color' in cd0:
             key0 = 'color'
             color0 = cd0[key0]
@@ -321,10 +276,10 @@ def gradient(color0, color1, r):
             color0 = cd0[key0]
         else:
             raise KeyError('no color in color0 dictionary')
-    except AttributeError:
+    except (TypeError, AttributeError):
         cd0 = None
     try:
-        cd1 = {k: v for k, v in color1.items()}
+        cd1 = dict(**color0)
         if 'color' in cd1:
             key1 = 'color'
             color1 = cd1[key1]
@@ -333,10 +288,10 @@ def gradient(color0, color1, r):
             color1 = cd1[key1]
         else:
             raise KeyError('no color in color1 dictionary')
-    except AttributeError:
+    except (TypeError, AttributeError):
         cd1 = None
-    r0, g0, b0 = rgb(color0)
-    r1, g1, b1 = rgb(color1)
+    r0, g0, b0 = cc.to_rgb(color0)
+    r1, g1, b1 = cc.to_rgb(color1)
     if r < 0:
         r = 0
     if r > 1:
@@ -344,7 +299,7 @@ def gradient(color0, color1, r):
     rg = r0 + r*(r1 - r0)
     gg = g0 + r*(g1 - g0)
     bg = b0 + r*(b1 - b0)
-    cs = hexstr(rg, gg, bg)
+    cs = to_hex((rg, gg, bg)).upper()
     if cd0:
         cd0[key0] = cs
         return cd0
@@ -354,6 +309,24 @@ def gradient(color0, color1, r):
     else:
         return cs
 
+    
+def latex_colors(colors):
+    """ Print a \definecolor command for LaTeX.
+
+    Parameters
+    ----------
+    colors: dict or string
+        A dictionary with names and rgb hex-strings of colors
+        or an rgb hex-string.
+    """
+    if isinstance(colors, dict):
+        for cn in colors:
+            r, g, b = cc.to_rgb(colors[cn])
+            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
+    else:
+        r, g, b = cc.to_rgb(colors)
+        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
+        
 
 def plot_colors(ax, colors, n=1):
     """ Plot all colors of a palette and optionally some lighter and darker variants.
