@@ -63,7 +63,7 @@ from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_y
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
 from .arrows import harrow, varrow, arrow_style
 from .insets import inset, zoomed_inset
-from .labelaxes import label_axes
+from .labelaxes import label_axes, labelaxes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
 
@@ -572,6 +572,8 @@ def screen_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
+    labelaxes_params(labels='A', font=dict(fontsize='x-large', fontstyle='normal',
+                                           fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
@@ -655,6 +657,8 @@ def paper_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
                 fig_color='none', axes_color='none',
                 namespace=namespace)
+    labelaxes_params(labels='A', font=dict(fontsize='x-large', fontstyle='normal',
+                                           fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
@@ -741,6 +745,8 @@ def sketch_style(namespace=None):
                 label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
+    labelaxes_params(labels='A', font=dict(fontsize='x-large', fontstyle='normal',
+                                           fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']

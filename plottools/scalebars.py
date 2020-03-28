@@ -318,7 +318,7 @@ mpl.rcParams.update({'scalebar.format.large': '%.0f',
                      'scalebar.caplinewidth': 0.5,
                      'scalebar.font': dict(fontsize='medium',
                                            fontstyle='normal',
-                                           fontweigth='normal')})
+                                           fontweight='normal')})
 
 
 def scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -341,7 +341,7 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
     clw: int, float
         Line width of the cap lines.
     font: dict
-        Dictionary with fonr settings
+        Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
     mpl.rcParams.update({'scalebar.format.large': format_large,

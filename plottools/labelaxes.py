@@ -3,8 +3,10 @@
 
 Mark panels with a label.
 
-The following function is also added as a member to mpl.figure.Figure:
-- `label_axes()`: put on each axes a label.
+The following function is added as a member to mpl.figure.Figure:
+- `label_axes()`: put a label on each axes.
+
+- `labelaxes_params()`: set rc settings for labelsaxes.
 """
 
 import numpy as np
@@ -13,7 +15,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
 
-def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs):
+def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwargs):
     """ Put on each axes a label.
 
     Labels are left/top aligned.
@@ -32,15 +34,19 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs
         Y-coordinate of label relative to top end of left yaxis in pixel coordinates.
         If None, set it to the distance of the top-most axis to the top figure border.
     labels: string or list of strings
-        If string labels are increments of the first alphanumeric character in the string.
+        If string, labels are increments of the first alphanumeric character in the string.
         With a list arbitary labels can be specified.
+        If None, set to figure.axeslabels.labels rc settings.
     kwargs: keyword arguments
-        Passed on to ax.text(). If no fontsize is specified, 'x-large' is used.
+        Passed on to ax.text().
+        Defaults to figure.axeslabels.font rc settings.
     """
     if fig is None:
         fig = axes[0].get_figure()
     if axes is None:
         axes = fig.get_axes()
+    if labels is None:
+        labels = mpl.rcParams['figure.axeslabels.labels']
     if not isinstance(labels, (list, tuple)):
         label = '%s'
         c = 'A'
@@ -50,8 +56,10 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs
                 label = labels[:i] + '%s' + labels[i+1:]
                 break
         labels = [label % chr(c + k) for k in range(len(axes))]
-    if not 'fontsize' in kwargs:
-        kwargs['fontsize'] = 'x-large'
+    # font settings:
+    for k in mpl.rcParams['figure.axeslabels.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['figure.axeslabels.font'][k]
     # get offsets:
     xo = -1.0
     yo = 1.0
@@ -89,6 +97,34 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels='A', **kwargs
         ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **kwargs)
 
 
+# make the functions available as member variables:
+mpl.figure.Figure.label_axes = label_axes
+
+
+""" Add labelaxes parameter to rc configuration.
+"""
+mpl.rcParams.update({'figure.axeslabels.labels': 'A',
+                     'figure.axeslabels.font': dict(fontsize='x-large',
+                                              fontstyle='sans-serif',
+                                              fontweight='normal')})
+
+
+def labelaxes_params(labels='A', font=None):
+    """ Set rc settings for labelsaxes.
+
+    Parameter
+    ---------
+    labels: string
+        Labels are increments of the first alphanumeric character in the string.
+    font: dict
+        Dictionary with font settings
+        (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+    """
+    mpl.rcParams.update({'figure.axeslabels.labels': labels})
+    if font is not None:
+        mpl.rcParams.update({'figure.axeslabels.font': font})
+
+
 def demo():
     """ Run a demonstration of the labelaxes module.
     """
@@ -103,6 +139,8 @@ def demo():
         ax4 = fig.add_subplot(gs[1,2])
         return fig, (ax1, ax2, ax3, ax4)
 
+    labelaxes_params(labels='A', font=dict(fontweight='bold'))
+    
     fig, axs = afigure()
     axs[0].text(0.5, 0.5, 'fig.label_axes()', transform=axs[0].transAxes, ha='center')
     fig.label_axes()
@@ -115,12 +153,8 @@ def demo():
     fig, axs = afigure()
     axs[0].text(0.5, 0.5, "fig.label_axes([0, 2, 3],\n labels='(a)', fontsize='large')",
                 transform=axs[0].transAxes, ha='center')
-    fig.label_axes([0, 2, 3], labels='(a)', fontsize='large')
+    fig.label_axes([0, 2, 3], labels='(a)', fontweight='normal', fontstyle='italic')
     plt.show()
-
-
-# make the functions available as member variables:
-mpl.figure.Figure.label_axes = label_axes
 
 
 if __name__ == "__main__":
