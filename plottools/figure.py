@@ -85,7 +85,7 @@ def adjust_fs(fig=None, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
         The figure from which the figure size is taken. If None use the current figure.
     left: float
         the left margin of the plots given in multiples of the width of a character
-        (in fact, simply 60% of the current font size).
+        (simply 60% of the current font size).
     bottom: float
         the bottom margin of the plots given in multiples of the height of a character
         (the current font size).
@@ -116,9 +116,9 @@ def adjust_fs(fig=None, left=6.0, bottom=3.0, right=1.5, top=0.5, **kwargs):
     """
     if fig is None:
         fig = plt.gcf()
+    w, h = fig.get_window_extent().bounds[2:]
     ppi = 72.0 # points per inch:
-    w, h = fig.get_size_inches()*ppi
-    fs = plt.rcParams['font.size']
+    fs = plt.rcParams['font.size']*fig.dpi/ppi
     margins = { 'left': left*0.6*fs/w,
                 'bottom': bottom*fs/h,
                 'right': 1.0 - right*0.6*fs/w,

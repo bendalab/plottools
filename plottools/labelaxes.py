@@ -6,7 +6,7 @@ Mark panels with a label.
 The following function is added as a member to mpl.figure.Figure:
 - `label_axes()`: put a label on each axes.
 
-- `labelaxes_params()`: set rc settings for labelsaxes.
+- `labelaxes_params()`: set rc settings for labelaxes.
 """
 
 import numpy as np
@@ -27,14 +27,23 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
     axes: None or list of matplotlib axes or int.
         If None label all axes of the figure.
         Integers in the list are indices to the axes of the figure.
-    xoffs: float or None
-        X-coordinate of label relative to origin of axis in pixel coordinates.
-        If None, set it to the distance of the right-most axis to the left figure border.
-    yoffs: float
-        Y-coordinate of label relative to top end of left yaxis in pixel coordinates.
-        If None, set it to the distance of the top-most axis to the top figure border.
+    xoffs: float, 'auto', or None
+        X-coordinate of label relative to origin of axis in multiples of the width
+        of a character (simply 60% of the current font size).
+        If 'auto' and this is the first call of this function on the figure,
+        set it to the distance of the right-most axis to the left figure border,
+        otherwise use the value computed by the first call.
+        If None take value from rc settings 'figure.axeslabels.xoffs'.
+    yoffs: float, 'auto', or None
+        Y-coordinate of label relative to top end of left yaxis in multiples
+        of the height of a character (the current font size).
+        If 'auto' and this is the first call of this function on the figure,
+        set it to the distance of the top-most axis to the top figure border,
+        otherwise use the value computed by the first call.
+        If None take value from rc settings 'figure.axeslabels.yoffs'.
     labels: string or list of strings
         If string, labels are increments of the first alphanumeric character in the string.
+        Subsequent calls to label_axes() keep incrementing the label.
         With a list arbitary labels can be specified.
         If None, set to figure.axeslabels.labels rc settings.
     kwargs: keyword arguments
@@ -52,15 +61,18 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
         c = 'A'
         for i, c in enumerate(labels):
             if c.isalnum():
-                c = ord(c)
                 label = labels[:i] + '%s' + labels[i+1:]
                 break
+        if hasattr(fig, 'labelaxes_counter'):
+            c = fig.labelaxes_counter
+        c = ord(c)
         labels = [label % chr(c + k) for k in range(len(axes))]
+        fig.labelaxes_counter = chr(c + len(axes))
     # font settings:
     for k in mpl.rcParams['figure.axeslabels.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['figure.axeslabels.font'][k]
-    # get offsets:
+    # get axes offsets:
     xo = -1.0
     yo = 1.0
     for ax, l in zip(axes, labels):
@@ -72,17 +84,30 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
         if 1.0-y0-height < yo:
             yo = 1.0-y0-height
     # get figure size in pixel:
-    figwidth = fig.get_window_extent().width
-    figheight = fig.get_window_extent().height
+    w, h = fig.get_window_extent().bounds[2:]
+    ppi = 72.0 # points per inch:
+    fs = mpl.rcParams['font.size']*fig.dpi/ppi
     # set offsets:
     if xoffs is None:
-        xoffs = xo - 1.0/figwidth
-    else:
-        xoffs /= figwidth
+        xoffs = mpl.rcParams['figure.axeslabels.xoffs']
     if yoffs is None:
-        yoffs = yo - 1.0/figheight
+        yoffs = mpl.rcParams['figure.axeslabels.yoffs']
+    if xoffs == 'auto':
+        if hasattr(fig, 'labelaxes_xoffs'):
+            xoffs = fig.labelaxes_xoffs
+        else:
+            xoffs = xo
     else:
-        yoffs /= figheight
+        xoffs *= 0.6*fs/w
+    if yoffs == 'auto':
+        if hasattr(fig, 'labelaxes_yoffs'):
+            yoffs = fig.labelaxes_yoffs
+        else:
+            yoffs = yo
+    else:
+        yoffs *= fs/h
+    fig.labelaxes_xoffs = xoffs
+    fig.labelaxes_yoffs = yoffs
     # put labels onto axes:
     for ax, l in zip(axes, labels):
         if isinstance(ax, int):
@@ -103,24 +128,38 @@ mpl.figure.Figure.label_axes = label_axes
 
 """ Add labelaxes parameter to rc configuration.
 """
-mpl.rcParams.update({'figure.axeslabels.labels': 'A',
+mpl.rcParams.update({'figure.axeslabels.xoffs': 'auto',
+                     'figure.axeslabels.yoffs': 'auto',
+                     'figure.axeslabels.labels': 'A',
                      'figure.axeslabels.font': dict(fontsize='x-large',
                                               fontstyle='sans-serif',
                                               fontweight='normal')})
 
 
-def labelaxes_params(labels='A', font=None):
-    """ Set rc settings for labelsaxes.
+def labelaxes_params(xoffs='auto', yoffs='auto', labels=None, font=None):
+    """ Set rc settings for labelaxes.
 
     Parameter
     ---------
+    xoffs: float or 'auto'
+        X-coordinate of label relative to origin of axis in multiples of the width
+        of a character (simply 60% of the current font size).
+        If 'auto', set it to the distance of the right-most axis to the left figure border,
+        or to a previously computed value from that figure.
+    yoffs: float or 'auto'
+        Y-coordinate of label relative to top end of left yaxis in multiples
+        of the height of a character (the current font size).
+        If 'auto', set it to the distance of the top-most axis to the top figure border,
+        or to a previously computed value from that figure.
     labels: string
         Labels are increments of the first alphanumeric character in the string.
     font: dict
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
-    mpl.rcParams.update({'figure.axeslabels.labels': labels})
+    mpl.rcParams.update({'figure.axeslabels.xoffs': xoffs,
+                         'figure.axeslabels.yoffs': yoffs,
+                         'figure.axeslabels.labels': labels})
     if font is not None:
         mpl.rcParams.update({'figure.axeslabels.font': font})
 
@@ -139,20 +178,24 @@ def demo():
         ax4 = fig.add_subplot(gs[1,2])
         return fig, (ax1, ax2, ax3, ax4)
 
-    labelaxes_params(labels='A', font=dict(fontweight='bold'))
+    labelaxes_params(xoffs='auto', yoffs='auto', labels='A', font=dict(fontweight='bold'))
     
     fig, axs = afigure()
     axs[0].text(0.5, 0.5, 'fig.label_axes()', transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.0, 0.0, 'X', transform=fig.transFigure, ha='left', va='bottom')
     fig.label_axes()
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.5, 'label_axes(None, [ax2, ax4],\n -50.0, 20.0)',
+    axs[0].text(0.5, 0.6, 'fig,label_axes([ax1])',
                 transform=axs[0].transAxes, ha='center')
-    label_axes(None, [axs[1], axs[3]], -50.0, 20.0)
+    axs[0].text(0.5, 0.4, 'fig,label_axes([ax2, ax4], \'auto\', 1, \'B\')',
+                transform=axs[0].transAxes, ha='center')
+    fig.label_axes([axs[0]])
+    fig.label_axes([axs[1], axs[3]], 'auto', 1)
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.5, "fig.label_axes([0, 2, 3],\n labels='(a)', fontsize='large')",
-                transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.05, 0.7, "fig.label_axes([0, 2, 3],\n labels='(a)',\n fontweight='normal',\n fontstyle='italic')",
+                transform=axs[0].transAxes)
     fig.label_axes([0, 2, 3], labels='(a)', fontweight='normal', fontstyle='italic')
     plt.show()
 
