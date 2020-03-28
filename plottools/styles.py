@@ -7,13 +7,15 @@ Layout settings and plot styles.
 - `paper_style()`: layout and plot styles optimized for inclusion into a paper.
 - `sketch_style()`: layout and plot styles with xkcd style activated.
 
-Helper functions:
+Generate plotting styles:
 - `make_linestyles()`: generate dictionaries for line styles.
 - `make_pointstyles()`: generate dictionaries for point styles.
 - `make_linepointstyles()`: generate line styles, point styles, and line point styles.
 - `make_fillstyles()`: generate dictionaries for fill styles.
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
 - `line_style()`: generate a single line style.
+
+Set rc settings:
 - `color_cycler()`: set colors for the matplotlib color cycler.
 - `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 
@@ -62,7 +64,7 @@ from .labels import set_label_format, install_align_labels, uninstall_align_labe
 from .arrows import harrow, varrow, arrow_style
 from .insets import inset, zoomed_inset
 from .labelaxes import label_axes
-from .scalebars import xscalebar, yscalebar, scalebars
+from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
 
 
@@ -570,6 +572,7 @@ def screen_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
+    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -652,6 +655,7 @@ def paper_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
                 fig_color='none', axes_color='none',
                 namespace=namespace)
+    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -737,6 +741,7 @@ def sketch_style(namespace=None):
                 label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
+    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
