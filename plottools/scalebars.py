@@ -52,6 +52,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         If None take value from rc setting 'scalebar.caplinewidth'.
     kwargs: key-word arguments
         Passed on to ax.text() used to print the scale bar label.
+        Defaults to scalebar.font rc settings.
     """
     ax.autoscale(False)
     # ax dimensions:
@@ -106,6 +107,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     # label:
     if wunit:
         ls += u'\u2009%s' % wunit
+    for k in mpl.rcParams['scalebar.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['scalebar.font'][k]
     if va == 'top':
         th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
                      ha='center', va='bottom', **kwargs)
@@ -159,6 +163,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         If None take value from rc setting 'scalebar.caplinewidth'.
     kwargs: key-word arguments
         Passed on to ax.text() used to print the scale bar label.
+        Defaults to scalebar.font rc settings.
     """
     ax.autoscale(False)
     # ax dimensions:
@@ -213,6 +218,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     # label:
     if hunit:
         ls += u'\u2009%s' % hunit
+    for k in mpl.rcParams['scalebar.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['scalebar.font'][k]
     if ha == 'right':
         th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
                      ha='left', va='center', **kwargs)
@@ -270,6 +278,7 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
         Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
     kwargs: key-word arguments
         Passed on to ax.text() used to print the scale bar labels.
+        Defaults to scalebar.font rc settings.
     """
     # line width:
     if lw is None:
@@ -294,17 +303,26 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
                     solid_joinstyle='miter', clip_on=False)
 
 
+# make the functions available as member variables:
+mpl.axes.Axes.xscalebar = xscalebar
+mpl.axes.Axes.yscalebar = yscalebar
+mpl.axes.Axes.scalebars = scalebars
+
+
 """ Add scalebar parameter to rc configuration.
 """
 mpl.rcParams.update({'scalebar.format.large': '%.0f',
                      'scalebar.format.small': '%.1f',
                      'scalebar.linewidth': 2,
                      'scalebar.capsize': 0,
-                     'scalebar.caplinewidth': 0.5})
+                     'scalebar.caplinewidth': 0.5,
+                     'scalebar.font': dict(fontsize='medium',
+                                           fontstyle='normal',
+                                           fontweigth='normal')})
 
 
 def scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, capsize=0, clw=0.5):
+                    lw=2, capsize=0, clw=0.5, font=None):
     """ Set rc settings for scalebars.
 
     Parameter
@@ -322,12 +340,20 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
         The length of the lines is given in points (same unit as linewidth).
     clw: int, float
         Line width of the cap lines.
+    font: dict
+        Dictionary with fonr settings
+        (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
     mpl.rcParams.update({'scalebar.format.large': format_large,
                          'scalebar.format.small': format_small,
                          'scalebar.linewidth': lw,
                          'scalebar.capsize': capsize,
-                         'scalebar.caplinewidth': clw})
+                         'scalebar.caplinewidth': clw,
+                         'scalebar.fontsize': 'medium',
+                         'scalebar.fontstyle': 'normal',
+                         'scalebar.fontweight': 'normal'})
+    if font is not None:
+        mpl.rcParams.update({'scalebar.font': font})
 
     
 def demo():
@@ -337,7 +363,8 @@ def demo():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
 
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5,
+                    font=dict(fontweight='bold'))
     
     fig, ax = plt.subplots()
     x = np.arange(-2.0, 5.0, 0.01)
@@ -369,12 +396,6 @@ def demo():
     ax.scalebars(0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top', lw=4)
         
     plt.show()
-
-
-# make the functions available as member variables:
-mpl.axes.Axes.xscalebar = xscalebar
-mpl.axes.Axes.yscalebar = yscalebar
-mpl.axes.Axes.scalebars = scalebars
 
 
 if __name__ == "__main__":
