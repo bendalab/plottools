@@ -9,7 +9,7 @@ The following functions are also provided as mpl.axes.Axes member functions:
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
 """
 
-import inspect
+import __main__
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -298,27 +298,45 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
                 annotation_clip=False, **kwargs)
 
 
-def arrow_style(namespace, name, dist=3.0, style='>', shrink=0, lw=1, color='k',
-                head_width=15, head_length=15, **kwargs):
+def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
+                head_width=15, head_length=15, namespace=None, **kwargs):
     """ Generate an arrow style.
+
+    Add dictionary with name 'as'+name to namespace and to ars
 
     Parameters
     ----------
-    namespace: dict or None
-        Namespace to which the generated arrow style is added.
-        If None add arrow style to the global namespace of the caller.
     name: string
         The name of the arrow style, the prefix 'as' is prepended.
+    dist: float
+        Distance of text annotation from arrow in points (for harrow() and varrow()).
+    style: string
+        Appearance of the arrow head:
+        '>': line arrow, '|>': filled arrow, '>>': fancy arrow, '|': bar
+    shrink: float
+        Shrink arrow away from endpoints.
+    lw: float
+        Linewidth of line in points.
+    color: matplotlib color
+        Color of line and arrow.
+    head_width: float
+        Width of arrow head in points.
+    head_length: float
+        Length of arrow head in points.
+    **kwargs: key-word arguments
+        Formatting of the annotation text, passed on to text().
+    namespace: dict or None
+        Namespace to which the generated arrow style is added.
+        If None add arrow style to the __main__ module.
     """
     if namespace is None:
-        frame = inspect.currentframe()
-        namespace = frame.f_back.f_globals
+        namespace = __main__
     if 'ars' not in namespace:
         namespace['ars'] = {}
     an = 'as' + name 
     namespace[an] = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
                          head_width=head_width, head_length=head_length, **kwargs)
-    namespace['ars'].update({name: namespace[an]})
+    namespace['ars'][name] = namespace[an]
 
 
 def plot_arrowstyles(ax):
@@ -329,8 +347,9 @@ def plot_arrowstyles(ax):
     ax: matplotlib axes
         Subplot to use for plotting the arrow styles.
     """
-    for k, name in enumerate(ars):
-        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ars[name])
+    namespace = __main__
+    for k, name in enumerate(namespace.ars):
+        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **namespace.ars[name])
     ax.set_xlim(0.0, 2.0)
     ax.set_ylim(0.0, 0.5*k+1)
     ax.set_title('arrow styles')

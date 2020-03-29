@@ -562,10 +562,10 @@ def screen_style(namespace=None):
     line_style('Spine', palette['black'], '-', lwspines, False, namespace)
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
-    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5)
-    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6)
+    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
+                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
+    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
+                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
@@ -649,9 +649,9 @@ def paper_style(namespace=None):
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
     arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5)
+                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
     arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6)
+                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
@@ -737,9 +737,9 @@ def sketch_style(namespace=None):
     line_style('Grid', palette['gray'], '--', lwthin, None, namespace)
     line_style('Marker', palette['black'], '-', lwthick, False, namespace)
     arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5)
+                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
     arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6)
+                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
