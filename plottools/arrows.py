@@ -6,6 +6,7 @@ The following functions are also provided as mpl.axes.Axes member functions:
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
 - `point_to()`: text with arrow pointing to a point.
 - `arrow_style()`: generate an arrow style.
+- `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
 """
 
 import inspect
@@ -319,6 +320,21 @@ def arrow_style(namespace, name, dist=3.0, style='>', shrink=0, lw=1, color='k',
                          head_width=head_width, head_length=head_length, **kwargs)
     namespace['ars'].update({name: namespace[an]})
 
+
+def plot_arrowstyles(ax):
+    """ Plot names and arrows of all available arrow styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the arrow styles.
+    """
+    for k, name in enumerate(ars):
+        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ars[name])
+    ax.set_xlim(0.0, 2.0)
+    ax.set_ylim(0.0, 0.5*k+1)
+    ax.set_title('arrow styles')
+        
 
 # make functions available as member variables:
 mpl.axes.Axes.harrow = harrow

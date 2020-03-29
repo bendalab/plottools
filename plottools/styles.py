@@ -61,7 +61,7 @@ from .spines import show_spines, set_spines_outward, set_spines_bounds, set_defa
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
-from .arrows import harrow, varrow, arrow_style
+from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
 from .labelaxes import label_axes, labelaxes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
@@ -894,21 +894,6 @@ def plot_fillstyles(ax):
     ax.set_title('fill styles')
         
 
-def plot_arrowstyles(ax):
-    """ Plot names and arrows of all available arrow styles.
-
-    Parameters
-    ----------
-    ax: matplotlib axes
-        Subplot to use for plotting the arrow styles.
-    """
-    for k, name in enumerate(ars):
-        ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **ars[name])
-    ax.set_xlim(0.0, 2.0)
-    ax.set_ylim(0.0, 0.5*k+1)
-    ax.set_title('arrow styles')
-        
-
 def demo(style='screen', mode='line'):
     """ Run a demonstration of the plotformat module.
 
@@ -917,11 +902,11 @@ def demo(style='screen', mode='line'):
     style: string
         'screen', 'print', or 'sketch': style to use.
     mode: string
-        'linestyles': plot the names and lines of all available line styles
-        'pointstyles': plot the names and points (markers) of all available point styles
-        'linepointstyles': plot the names and lines of all available linepoint styles
-        'fillstyles': plot the names and patches of all available fill styles
-        'arrowstyles': plot the names and arrows of all available arrow styles
+        'line': plot the names and lines of all available line styles
+        'point': plot the names and points (markers) of all available point styles
+        'linepoint': plot the names and lines of all available linepoint styles
+        'fill': plot the names and patches of all available fill styles
+        'arrow': plot the names and arrows of all available arrow styles
     """
     if style == 'sketch':
         sketch_style()
@@ -942,7 +927,7 @@ def demo(style='screen', mode='line'):
         plot_arrowstyles(ax)
     else:
         print('unknown option %s!' % mode)
-        print('possible options are: line, point, linep(oints), fill')
+        print('possible options are: line, point, linep(oints), fill, arrow')
         return
     plt.show()
 
