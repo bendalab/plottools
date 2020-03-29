@@ -16,8 +16,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def xscalebar(ax, x, y, width, wunit=None, wformat=None,
-              ha='left', va='bottom', lw=None, capsize=None, clw=None, **kwargs):
+def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
+              lw=None, color=None, capsize=None, clw=None, **kwargs):
     """ Horizontal scale bar with label.
 
     Parameter
@@ -43,6 +43,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         Label of the scale bar either above or below the scale bar.
     lw: int, float, None
         Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+    color: matplotlib color
+        Color of the scalebar.
     capsize: float or None
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
@@ -90,7 +92,12 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     # line width:
     if lw is None:
         lw = mpl.rcParams['scalebar.linewidth']
-    lh = ax.plot([x0, x1], [y, y], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    # color:
+    if color is None:
+        color = mpl.rcParams['scalebar.color']
+    # scalebar:
+    lh = ax.plot([x0, x1], [y, y], '-', color=color, lw=lw,
+                 solid_capstyle='butt', clip_on=False)
     # get y position of line in figure pixel coordinates:
     ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     # caps:
@@ -100,9 +107,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dy = capsize*dyu
-        ax.plot([x0, x0], [y-dy, y+dy], 'k', lw=clw,
+        ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
                 solid_capstyle='butt', clip_on=False)
-        ax.plot([x1, x1], [y-dy, y+dy], 'k', lw=clw,
+        ax.plot([x1, x1], [y-dy, y+dy], '-', color=color, lw=clw,
                 solid_capstyle='butt', clip_on=False)
     # label:
     if wunit:
@@ -126,8 +133,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     return x0, x1, y
 
         
-def yscalebar(ax, x, y, height, hunit=None, hformat=None,
-              ha='left', va='bottom', lw=None, capsize=None, clw=None, **kwargs):
+def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom',
+              lw=None, color=None, capsize=None, clw=None, **kwargs):
     """ Vertical scale bar with label.
 
     Parameter
@@ -154,6 +161,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         Scale bar aligned above, below, or centered on (x, y).
     lw: int, float, None
         Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+    color: matplotlib color
+        Color of the scalebar.
     capsize: float or None
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
@@ -201,7 +210,12 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     # line width:
     if lw is None:
         lw = mpl.rcParams['scalebar.linewidth']
-    lh = ax.plot([x, x], [y0, y1], 'k', lw=lw, solid_capstyle='butt', clip_on=False)
+    # color:
+    if color is None:
+        color = mpl.rcParams['scalebar.color']
+    # scalebar:
+    lh = ax.plot([x, x], [y0, y1], '-', color=color, lw=lw,
+                 solid_capstyle='butt', clip_on=False)
     # get x position of line in figure pixel coordinates:
     lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
     # caps:
@@ -211,9 +225,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dx = capsize*dxu
-        ax.plot([x-dx, x+dx], [y0, y0], 'k', lw=clw, solid_capstyle='butt',
+        ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw, solid_capstyle='butt',
                 clip_on=False)
-        ax.plot([x-dx, x+dx], [y1, y1], 'k', lw=clw, solid_capstyle='butt',
+        ax.plot([x-dx, x+dx], [y1, y1], '-', color=color, lw=clw, solid_capstyle='butt',
                 clip_on=False)
     # label:
     if hunit:
@@ -239,7 +253,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         
 def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
               wformat=None, hformat=None, ha='left', va='bottom',
-              lw=None, **kwargs):
+              lw=None, color=None, **kwargs):
     """ Horizontal and vertical scale bars with labels.
 
     Parameter
@@ -276,6 +290,8 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
         Horizontal scale bar on top or a the bottom.
     lw: int, float, None
         Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+    color: matplotlib color
+        Color of the scalebar.
     kwargs: key-word arguments
         Passed on to ax.text() used to print the scale bar labels.
         Defaults to scalebar.font rc settings.
@@ -283,23 +299,28 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     # line width:
     if lw is None:
         lw = mpl.rcParams['scalebar.linewidth']
-    x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va, lw, 0.0, 1, **kwargs)
+    # color:
+    if color is None:
+        color = mpl.rcParams['scalebar.color']
+    x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
+                           lw, color, 0.0, 1, **kwargs)
     ax.lines.pop()
-    xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va, lw, 0.0, 1, **kwargs)
+    xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va,
+                           lw, color, 0.0, 1, **kwargs)
     ax.lines.pop()
     if x0 == xx:
         if y0 == yy:
-            ax.plot([x0, x0, x1], [y1, y0, y0], 'k', lw=lw, solid_capstyle='butt',
+            ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color, lw=lw, solid_capstyle='butt',
                     solid_joinstyle='miter', clip_on=False)
         else:
-            ax.plot([x0, x0, x1], [y0, y1, y1], 'k', lw=lw, solid_capstyle='butt',
+            ax.plot([x0, x0, x1], [y0, y1, y1], '-', color=color, lw=lw, solid_capstyle='butt',
                     solid_joinstyle='miter', clip_on=False)
     else:
         if y0 == yy:
-            ax.plot([x0, x1, x1], [y0, y0, y1], 'k', lw=lw, solid_capstyle='butt',
+            ax.plot([x0, x1, x1], [y0, y0, y1], '-', color=color, lw=lw, solid_capstyle='butt',
                     solid_joinstyle='miter', clip_on=False)
         else:
-            ax.plot([x0, x1, x1], [y1, y1, y0], 'k', lw=lw, solid_capstyle='butt',
+            ax.plot([x0, x1, x1], [y1, y1, y0], '-', color=color, lw=lw, solid_capstyle='butt',
                     solid_joinstyle='miter', clip_on=False)
 
 
@@ -314,6 +335,7 @@ mpl.axes.Axes.scalebars = scalebars
 mpl.rcParams.update({'scalebar.format.large': '%.0f',
                      'scalebar.format.small': '%.1f',
                      'scalebar.linewidth': 2,
+                     'scalebar.color': 'k',
                      'scalebar.capsize': 0,
                      'scalebar.caplinewidth': 0.5,
                      'scalebar.font': dict(fontsize='medium',
@@ -322,7 +344,7 @@ mpl.rcParams.update({'scalebar.format.large': '%.0f',
 
 
 def scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, capsize=0, clw=0.5, font=None):
+                    lw=2, color='k', capsize=0, clw=0.5, font=None):
     """ Set rc settings for scalebars.
 
     Parameter
@@ -335,6 +357,8 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
         for scalebars shorter than one.
     lw: int, float
         Line width of a scale bar.
+    color: matplotlib color
+        Color of the scalebar.
     capsize: float
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
@@ -347,6 +371,7 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
     mpl.rcParams.update({'scalebar.format.large': format_large,
                          'scalebar.format.small': format_small,
                          'scalebar.linewidth': lw,
+                         'scalebar.color': color,
                          'scalebar.capsize': capsize,
                          'scalebar.caplinewidth': clw,
                          'scalebar.fontsize': 'medium',

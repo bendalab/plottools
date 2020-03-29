@@ -574,7 +574,8 @@ def screen_style(namespace=None):
                 namespace=namespace)
     labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f',
+                    lw=2, color=palette['black'], capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -659,7 +660,8 @@ def paper_style(namespace=None):
                 namespace=namespace)
     labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f',
+                    lw=2, color=palette['black'], capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -747,7 +749,8 @@ def sketch_style(namespace=None):
                 namespace=namespace)
     labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f',
+                    lw=2, color=palette['black'], capsize=0, clw=0.5)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
