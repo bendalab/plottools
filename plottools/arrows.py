@@ -1,10 +1,12 @@
 """
 # Arrows
 
-The following functions are also provided as mpl.axes.Axes member functions:
+The following functions are provided as mpl.axes.Axes member functions:
 - `harrow()`: draw a horizontal arrow with annotation on the arrow. 
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
 - `point_to()`: text with arrow pointing to a point.
+
+Setting and plotting arrow styles:
 - `arrow_style()`: generate an arrow style.
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
 """
@@ -331,12 +333,12 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
     """
     if namespace is None:
         namespace = __main__
-    if 'ars' not in namespace:
-        namespace['ars'] = {}
-    an = 'as' + name 
-    namespace[an] = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
-                         head_width=head_width, head_length=head_length, **kwargs)
-    namespace['ars'][name] = namespace[an]
+    if not hasattr(namespace, 'ars'):
+        setattr(namespace, 'ars', {})
+    ad = dict(dist=dist, style=style, shrink=shrink, lw=lw, color=color,
+              head_width=head_width, head_length=head_length, **kwargs)
+    setattr(namespace, 'as' + name, ad)
+    getattr(namespace, 'ars')[name] = ad
 
 
 def plot_arrowstyles(ax):
