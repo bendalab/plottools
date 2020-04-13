@@ -552,6 +552,8 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     mpl.rcParams['ytick.direction'] = tick_dir
     mpl.rcParams['xtick.major.size'] = tick_size
     mpl.rcParams['ytick.major.size'] = tick_size
+    mpl.rcParams['xtick.minor.size'] = 0.6*tick_size
+    mpl.rcParams['ytick.minor.size'] = 0.6*tick_size
     mpl.rcParams['legend.fontsize'] = legend_size
     if hasattr(namespace, 'lsGrid'):
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
