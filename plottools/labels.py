@@ -7,12 +7,14 @@ Annotate axis with label and unit and align axes labels.
 - `install_align_labels()`: install code for aligning axes labels into show() and savefig() functions.
 - `uninstall_align_labels()`: uninstall code for aligning axes labels in show() and savefig() functions.
 
-The following functions are also provided as mpl.axes.Axes member functions:
+The following functions are avilable as members of mpl.axes.Axes:
 - `set_xlabel()`: format the xlabel from a label and an unit.
 - `set_ylabel()`: format the ylabel from a label and an unit.
 - `set_zlabel()`: format the zlabel from a label and an unit.
 
-The following function is also provided as mpl.figure.Figure member function:
+The following functions are available as members of mpl.figure.Figure:
+- `common_xlabels()`: simplify common xlabels.
+- `common_ylabels()`: simplify common ylabels.
 - `align_labels()`: align x- and ylabels of a figure.
 """
 
@@ -112,6 +114,73 @@ def set_zlabel(ax, label, unit=None, **kwargs):
         Further arguments passed on to the set_zlabel() function.
     """
     ax.set_zlabel_labels(__axis_label(label, unit), **kwargs)
+
+
+def common_xlabels(fig, axes=None):
+    """ Simplify common xlabels.
+
+    Remove all xlabels except for one that is centered at the bottommost axes.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xlabels should be merged.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    miny = np.min(coords[:,1])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    xl = 0.5*(minx+maxx)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[1] > miny + 1e-6:
+            ax.set_xlabel('')
+        elif done:
+            ax.set_xlabel('')
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_ylabels(fig, axes=None):
+    """ Simplify common ylabels.
+
+    Remove all ylabels except for one that is centered at the leftmost axes.
+    
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose ylabels should be merged.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    # center common ylabel:
+    minx = np.min(coords[:,0])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[0] > minx + 1e-6:
+            ax.set_ylabel('')
+        elif done:
+            ax.set_ylabel('')
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
 
 
 def align_labels(fig, xdist=5, ydist=10):
@@ -264,6 +333,8 @@ mpl.axes.Axes.set_ylabel_labels = mpl.axes.Axes.set_ylabel
 mpl.axes.Axes.set_ylabel = set_ylabel
 Axes3D.set_zlabel_labels = Axes3D.set_zlabel
 Axes3D.set_zlabel = set_zlabel
+mpl.figure.Figure.common_xlabels = common_xlabels
+mpl.figure.Figure.common_ylabels = common_ylabels
 mpl.figure.Figure.align_labels = align_labels
 
 

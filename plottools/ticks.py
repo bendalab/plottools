@@ -235,6 +235,8 @@ def set_minor_yticks_off(ax):
 
 def common_xtick_labels(fig, axes=None):
     """ Simplify common xtick labels.
+    
+    Keep xtick labels only at the lowest axes and center the common xlabel.
 
     Parameters
     ----------
@@ -243,12 +245,10 @@ def common_xtick_labels(fig, axes=None):
     axes: None or sequence of matplotlib axes
         Axes whose xticks should be combined.
         If None take all axes of the figure.
-
     """
     if axes is None:
         axes = fig.get_axes()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    # keep the xtick labels only at the lowest axes and center the common xlabel:
     miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
     maxx = np.max(coords[:,2])
@@ -269,6 +269,8 @@ def common_xtick_labels(fig, axes=None):
 
 def common_ytick_labels(fig, axes=None):
     """ Simplify common ytick labels.
+    
+    Keep ytick labels only at the leftmost axes and center the common ylabel.
 
     Parameters
     ----------
@@ -277,12 +279,10 @@ def common_ytick_labels(fig, axes=None):
     axes: None or sequence of matplotlib axes
         Axes whose yticks should be combined.
         If None take all axes of the figure.
-
     """
     if axes is None:
         axes = fig.get_axes()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    # keep the ytick labels only at the leftmost axes and center the common ylabel:
     minx = np.min(coords[:,0])
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
