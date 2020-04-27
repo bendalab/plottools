@@ -509,8 +509,8 @@ def color_cycler(palette, colors):
 
 def plot_params(font_size=10.0, font_family='sans-serif',
                 label_size='small', tick_dir='out', tick_size=2.5,
-                legend_size='x-small', fig_color='none', axes_color='none',
-                namespace=None):
+                legend_size='x-small', latex=False, preamble=None,
+                fig_color='none', axes_color='none', namespace=None):
     """ Set some default plot parameter via matplotlib's rc settings.
 
     Call this function *before* you create any matplotlib figure.
@@ -531,6 +531,11 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         Length of tick marks in points.
     legend_size: float or string
         Fontsize for legend.
+    latex: boolean
+        If True use LaTeX for setting text and enable unicode support.
+    preamble: sequence of strings or None
+        Lines for the latex preamble. Strings starting with 'p:xxx' are translated into
+        '\\usepackage{xxx}'.
     fig_color: matplotlib color specification or 'none'
         Background color for the whole figure.
     axes_color: matplotlib color specification or 'none'
@@ -564,8 +569,14 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
         mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
     # mpl.rcParams['image.cmap'] = ''  set from some cmap style
+    mpl.rcParams['text.usetex'] = latex
+    if latex:
+        mpl.rcParams['text.latex.unicode'] = True
+    if latex and preamble is not None:
+        mpl.rcParams['text.latex.preamble'] = [r'\usepackage{%s}' % line[2:] \
+                                if line[:2] == 'p:' else line for line in preamble]
 
-    
+
 def screen_style(namespace=None):
     """ Layout and plot styles optimized for display on a screen.
 
