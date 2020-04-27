@@ -10,6 +10,8 @@ The following functions are available as members of mpl.axes.Axes:
 - `set_yticks_fixed()`: set custom yticks at fixed positions.
 - `set_xticks_prefix()`: format xticks with SI prefixes.
 - `set_yticks_prefix()`: format yticks with SI prefixes.
+- `set_xticks_fracs()`: format and place xticks as fractions.
+- `set_yticks_fracs()`: format and place xticks as fractions.
 - `set_xticks_off()`: do not draw and label any xticks.
 - `set_yticks_off()`: do not draw and label any yticks.
 - `set_xticks_format()`: format xticks according to formatter string.
@@ -27,6 +29,7 @@ The following functions are available as members of mpl.figure.Figure:
 """
 
 import numpy as np
+from fractions import Fraction
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -40,7 +43,7 @@ def set_xticks_delta(ax, delta):
     ax: matplotlib axis
         Axis on which the xticks are set.
     delta: float
-        Distance between xticks.
+        Interval between xticks.
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(delta))
 
@@ -53,7 +56,7 @@ def set_yticks_delta(ax, delta):
     ax: matplotlib axis
         Axis on which the yticks are set.
     delta: float
-        Distance between yticks.
+        Interval between yticks.
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
 
@@ -116,7 +119,7 @@ def set_xticks_prefix(ax):
     """ Format xticks with SI prefixes.
 
     Ensures ticks to be numbers between 1 and 999 by appending necessary
-    SI prefix. That is, numbers between 1 and 999 are not modified and
+    SI prefixes. That is, numbers between 1 and 999 are not modified and
     are formatted with '%g'. Numbers between 1000 and 999999 are
     divdided by 1000 and get an 'k' appended, e.g. 10000 ->
     '10k'. Numbers between 0.001 and 0.999 are multiplied with 1000 and
@@ -133,12 +136,122 @@ def set_xticks_prefix(ax):
 def set_yticks_prefix(ax):
     """ Format yticks with SI prefixes.
 
+    Ensures ticks to be numbers between 1 and 999 by appending necessary
+    SI prefixes. That is, numbers between 1 and 999 are not modified and
+    are formatted with '%g'. Numbers between 1000 and 999999 are
+    divdided by 1000 and get an 'k' appended, e.g. 10000 ->
+    '10k'. Numbers between 0.001 and 0.999 are multiplied with 1000 and
+    get an 'm' appended, e.g. 0.02 -> '20m'. And so on.
+
     Parameters
     ----------
     ax: matplotlib axis
         Axis on which the yticks are set.
     """
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(prefix_formatter))
+
+
+def fraction_formatter(denominator, factor=1, fstring=''):
+    """ Function formatter used by set_xticks_fracs() and set_yticks_fracs().
+
+    Parameters
+    ----------
+    denominator: int
+        Ticks are located at multiples of factor/denominator.
+    factor: float
+        Tick values are interpreted as multiples of factor, i.e.
+        they are divided by factor, before turning them into fractions.
+    fstring: string
+        Textual representation of factor that is appended to the fractions.
+
+    Returns
+    -------
+    Function formatter.
+    """
+    def _fraction_formatter(x, pos):
+        denom = int(np.round(denominator))
+        num = int(np.round(x*denominator/factor))
+        f = Fraction(num, denom)
+        denom = f.denominator
+        num = f.numerator
+        sign = ''
+        if num < 0:
+            num = -num
+            sign = '-'
+        if denom == 1:
+            if num == 0:
+                return '$0$'
+            elif num == 1 and fstring:
+                return '$%s%s$' % (sign, fstring)
+            else:
+                return '$%s%d%s$' % (sign, num, fstring)
+        else:
+            return r'$%s\frac{%d}{%d}%s$' % (sign, num, denom, fstring)
+    return _fraction_formatter
+
+
+def set_xticks_fracs(ax, denominator, factor=1, fstring=''):
+    """ Format and place xticks as fractions.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    denominator: int
+        XTicks are located at multiples of factor/denominator.
+    factor: float
+        Tick values are interpreted as multiples of factor, i.e.
+        they are divided by factor, before turning them into fractions.
+    fstring: string
+        Textual representation of factor that is appended to the fractions.
+    """
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
+    ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring)))
+
+    
+def set_yticks_fracs(ax, denominator, factor=1, fstring=''):
+    """ Format and place xticks as fractions.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    denominator: int
+        YTicks are located at multiples of factor/denominator.
+    factor: float
+        Tick values are interpreted as multiples of factor, i.e.
+        they are divided by factor, before turning them into fractions.
+    fstring: string
+        Textual representation of factor that is appended to the fractions.
+    """
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring)))
+
+
+def set_xticks_pifracs(ax, denominator):
+    """ Format and place xticks as mutiples of pi.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    denominator: int
+        XTicks are located at multiples of pi/denominator.
+    """
+    ax.set_xticks_fracs(denominator, np.pi, '\pi')
+
+
+def set_yticks_pifracs(ax, denominator):
+    """ Format and place yticks as mutiples of pi.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    denominator: int
+        YTicks are located at multiples of pi/denominator.
+    """
+    ax.set_yticks_fracs(denominator, np.pi, '\pi')
 
 
 def set_xticks_off(ax):
@@ -308,6 +421,10 @@ mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
 mpl.axes.Axes.set_yticks_fixed = set_yticks_fixed
 mpl.axes.Axes.set_xticks_prefix = set_xticks_prefix
 mpl.axes.Axes.set_yticks_prefix = set_yticks_prefix
+mpl.axes.Axes.set_xticks_fracs = set_xticks_fracs
+mpl.axes.Axes.set_yticks_fracs = set_yticks_fracs
+mpl.axes.Axes.set_xticks_pifracs = set_xticks_pifracs
+mpl.axes.Axes.set_yticks_pifracs = set_yticks_pifracs
 mpl.axes.Axes.set_xticks_off = set_xticks_off
 mpl.axes.Axes.set_yticks_off = set_yticks_off
 mpl.axes.Axes.set_xticks_format = set_xticks_format
@@ -323,7 +440,7 @@ mpl.figure.Figure.common_ytick_labels = common_ytick_labels
 def demo():
     """ Run a demonstration of the ticks module.
     """
-    fig, axs = plt.subplots(3, 2)
+    fig, axs = plt.subplots(4, 2)
 
     fig.suptitle('plottools.ticks')
 
@@ -348,7 +465,7 @@ def demo():
     axs[1,1].set_yticks_blank()
 
     axs[2,0].text(0.1, 0.8, 'ax.set_xticks_fixed((0, 0.3, 1))')
-    axs[2,0].text(0.1, 0.6, "ax.set_yticks_fixed((0, 0.5, 1), ('a', 'b', 'c')")
+    axs[2,0].text(0.1, 0.6, "ax.set_yticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))")
     axs[2,0].set_xticks_fixed((0, 0.3, 1))
     axs[2,0].set_yticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))
 
@@ -360,6 +477,20 @@ def demo():
     axs[2,1].set_yscale('log')
     axs[2,1].set_ylim(1e0, 1e6)
     axs[2,1].set_yticks_prefix()
+
+    axs[3,0].text(0.1, 0.8, 'ax.set_xticks_fracs(4)', transform=axs[3,0].transAxes)
+    axs[3,0].text(0.1, 0.6, "ax.set_yticks_fracs(3)", transform=axs[3,0].transAxes)
+    axs[3,0].set_xlim(-1, 1)
+    axs[3,0].set_ylim(-1, 1)
+    axs[3,0].set_xticks_fracs(4)
+    axs[3,0].set_yticks_fracs(3)
+
+    axs[3,1].text(0.1, 0.8, 'ax.set_xticks_pifracs(2)', transform=axs[3,1].transAxes)
+    axs[3,1].text(0.1, 0.6, "ax.set_yticks_pifracs(3)", transform=axs[3,1].transAxes)
+    axs[3,1].set_xlim(-np.pi, 2*np.pi)
+    axs[3,1].set_ylim(0, 4*np.pi/3)
+    axs[3,1].set_xticks_pifracs(2)
+    axs[3,1].set_yticks_pifracs(3)
 
     fig, axs = plt.subplots(2, 2)
     for ax in axs.ravel():
