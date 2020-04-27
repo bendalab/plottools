@@ -109,10 +109,15 @@ def prefix_formatter(x, pos):
     if x <= 0:
         return '%g' % x
     prefixes = {-4: 'p', -3: 'n', -2: u'\u00B5', -1: 'm', 0: '', 1: 'k', 2: 'M', 3: 'G', 4: 'T'}
+    if plt.rcParams['text.usetex']:
+        prefixes[-2] = r'\micro'
     e = int(np.log10(x)//3)
     prefix = prefixes[e]
     if prefix:
-        return u'%g\u2009%s' % (x/10**(3*e), prefix)
+        if plt.rcParams['text.usetex']:
+            return u'%g\,%s' % (x/10**(3*e), prefix)
+        else:
+            return u'%g\u2009%s' % (x/10**(3*e), prefix)
     else:
         return '%g' % x
 
