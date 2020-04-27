@@ -4,14 +4,16 @@
 Convience functions for setting tick locations and formats.
 
 The following functions are available as members of mpl.axes.Axes:
-- `set_xticks_delta()`: set distance between xticks.
-- `set_yticks_delta()`: set distance between yticks.
+- `set_xticks_delta()`: set interval between xticks.
+- `set_yticks_delta()`: set interval between yticks.
 - `set_xticks_fixed()`: set custom xticks at fixed positions.
 - `set_yticks_fixed()`: set custom yticks at fixed positions.
 - `set_xticks_prefix()`: format xticks with SI prefixes.
 - `set_yticks_prefix()`: format yticks with SI prefixes.
 - `set_xticks_fracs()`: format and place xticks as fractions.
 - `set_yticks_fracs()`: format and place xticks as fractions.
+- `set_xticks_pifracs()`: format and place xticks as mutiples of pi.
+- `set_yticks_pifracs()`: format and place yticks as mutiples of pi.
 - `set_xticks_off()`: do not draw and label any xticks.
 - `set_yticks_off()`: do not draw and label any yticks.
 - `set_xticks_format()`: format xticks according to formatter string.
@@ -36,7 +38,7 @@ import matplotlib.ticker as ticker
 
 
 def set_xticks_delta(ax, delta):
-    """ Set distance between xticks.
+    """ Set interval between xticks.
 
     Parameters
     ----------
@@ -49,7 +51,7 @@ def set_xticks_delta(ax, delta):
 
 
 def set_yticks_delta(ax, delta):
-    """ Set distance between yticks.
+    """ Set interval between yticks.
 
     Parameters
     ----------
@@ -151,7 +153,7 @@ def set_yticks_prefix(ax):
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(prefix_formatter))
 
 
-def fraction_formatter(denominator, factor=1, fstring=''):
+def fraction_formatter(denominator, factor=1, fstring='', ontop=False):
     """ Function formatter used by set_xticks_fracs() and set_yticks_fracs().
 
     Parameters
@@ -163,6 +165,8 @@ def fraction_formatter(denominator, factor=1, fstring=''):
         they are divided by factor, before turning them into fractions.
     fstring: string
         Textual representation of factor that is appended to the fractions.
+    ontop: boolean
+        Place fstring into the numerator instead of after the fraction.
 
     Returns
     -------
@@ -186,11 +190,17 @@ def fraction_formatter(denominator, factor=1, fstring=''):
             else:
                 return '$%s%d%s$' % (sign, num, fstring)
         else:
-            return r'$%s\frac{%d}{%d}%s$' % (sign, num, denom, fstring)
+            if ontop:
+                if num == 1 and fstring:
+                    return r'$%s\frac{%s}{%d}$' % (sign, fstring, denom)
+                else:
+                    return r'$%s\frac{%d%s}{%d}$' % (sign, num, fstring, denom)
+            else:
+                return r'$%s\frac{%d}{%d}%s$' % (sign, num, denom, fstring)
     return _fraction_formatter
 
 
-def set_xticks_fracs(ax, denominator, factor=1, fstring=''):
+def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
     """ Format and place xticks as fractions.
 
     Parameters
@@ -204,12 +214,14 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring=''):
         they are divided by factor, before turning them into fractions.
     fstring: string
         Textual representation of factor that is appended to the fractions.
+    ontop: boolean
+        Place fstring into the numerator instead of after the fraction.
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
-    ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring)))
+    ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
 
     
-def set_yticks_fracs(ax, denominator, factor=1, fstring=''):
+def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
     """ Format and place xticks as fractions.
 
     Parameters
@@ -223,12 +235,14 @@ def set_yticks_fracs(ax, denominator, factor=1, fstring=''):
         they are divided by factor, before turning them into fractions.
     fstring: string
         Textual representation of factor that is appended to the fractions.
+    ontop: boolean
+        Place fstring into the numerator instead of after the fraction.
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
-    ax.yaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring)))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
 
 
-def set_xticks_pifracs(ax, denominator):
+def set_xticks_pifracs(ax, denominator, ontop=False):
     """ Format and place xticks as mutiples of pi.
 
     Parameters
@@ -237,11 +251,13 @@ def set_xticks_pifracs(ax, denominator):
         Axis on which the xticks are set.
     denominator: int
         XTicks are located at multiples of pi/denominator.
+    ontop: boolean
+        Place fstring into the numerator instead of after the fraction.
     """
-    ax.set_xticks_fracs(denominator, np.pi, '\pi')
+    ax.set_xticks_fracs(denominator, np.pi, '\pi', ontop)
 
 
-def set_yticks_pifracs(ax, denominator):
+def set_yticks_pifracs(ax, denominator, ontop=False):
     """ Format and place yticks as mutiples of pi.
 
     Parameters
@@ -250,8 +266,10 @@ def set_yticks_pifracs(ax, denominator):
         Axis on which the xticks are set.
     denominator: int
         YTicks are located at multiples of pi/denominator.
+    ontop: boolean
+        Place fstring into the numerator instead of after the fraction.
     """
-    ax.set_yticks_fracs(denominator, np.pi, '\pi')
+    ax.set_yticks_fracs(denominator, np.pi, '\pi', ontop)
 
 
 def set_xticks_off(ax):
@@ -486,11 +504,11 @@ def demo():
     axs[3,0].set_yticks_fracs(3)
 
     axs[3,1].text(0.1, 0.8, 'ax.set_xticks_pifracs(2)', transform=axs[3,1].transAxes)
-    axs[3,1].text(0.1, 0.6, "ax.set_yticks_pifracs(3)", transform=axs[3,1].transAxes)
+    axs[3,1].text(0.1, 0.6, "ax.set_yticks_pifracs(3, True)", transform=axs[3,1].transAxes)
     axs[3,1].set_xlim(-np.pi, 2*np.pi)
     axs[3,1].set_ylim(0, 4*np.pi/3)
     axs[3,1].set_xticks_pifracs(2)
-    axs[3,1].set_yticks_pifracs(3)
+    axs[3,1].set_yticks_pifracs(3, True)
 
     fig, axs = plt.subplots(2, 2)
     for ax in axs.ravel():
