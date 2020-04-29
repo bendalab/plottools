@@ -55,7 +55,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from .colors import colors_vivid, colors_muted, lighter, darker, gradient
-from .figure import install_figure
+from .figure import install_figure, figure_params
 from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
@@ -651,6 +651,7 @@ def screen_style(namespace=None):
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
+    figure_params(format='png', compression=6, fonttype=3, stripfonts=False)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -736,6 +737,7 @@ def paper_style(namespace=None):
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
+    figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
@@ -824,6 +826,7 @@ def sketch_style(namespace=None):
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
+    figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)

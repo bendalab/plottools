@@ -41,10 +41,12 @@ Available functions:
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
+- `figure_params()`: set savefig options via matplotlib's rc settings.
 """
 
 import __main__
 import os
+import subprocess
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -223,28 +225,46 @@ def __resize(event):
                 gs.update(**gs.__subplots_margins)
 
     
-def __fig_savefig_figure(fig, fname='', *args, **kwargs):
-    """ Set default file name to the one of the main script and default extension to '.pdf'.
+def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
+    """ Set default file name to the one of the main script.
+    If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if len(fname) == 0:
-        fname = '.pdf'
+        fname = '.' + mpl.rcParams['savefig.format']
     if fname[0] == '.':
         fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
     if len(os.path.splitext(fname)[1]) <= 1:
-        fname = os.path.splitext(fname)[0] + '.pdf'
+        fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
     fig.__savefig_orig_figure(fname, *args, **kwargs)
+    if stripfonts is None:
+        if 'pdf.stripfonts' in mpl.rcParams:
+            stripfonts = mpl.rcParams['pdf.stripfonts']
+        else:
+            stripfonts = False
+    if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
+       subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+       os.rename('tmp-'+fname, fname)
 
 
-def __plt_savefig_figure(fname='', *args, **kwargs):
-    """ Set default file name to the one of the main script and default extension to '.pdf'.
+def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
+    """ Set default file name to the one of the main script. 
+    If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if len(fname) == 0:
-        fname = '.pdf'
+        fname = '.' + mpl.rcParams['savefig.format']
     if fname[0] == '.':
         fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
     if len(os.path.splitext(fname)[1]) <= 1:
-        fname = os.path.splitext(fname)[0] + '.pdf'
+        fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
     plt.__savefig_orig_figure(fname, *args, **kwargs)
+    if stripfonts is None:
+        if 'pdf.stripfonts' in mpl.rcParams:
+            stripfonts = mpl.rcParams['pdf.stripfonts']
+        else:
+            stripfonts = False
+    if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
+       subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+       os.rename('tmp-'+fname, fname)
 
 
 def install_figure():
@@ -279,7 +299,35 @@ def install_figure():
         plt.savefig = __plt_savefig_figure
 
 
+def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
+    """ Set savefig options via matplotlib's rc settings.
 
+    Parameters
+    ----------
+    format: 'png', 'ps', 'pdf', 'svg'
+        File format of the saved figure.
+    compression: int
+        Compression level of pdf file from 0 to 9
+    fonttype: 3 or 42
+        Type 3 (Type3) or Type 42 (TrueType) fonts.
+        Type3 use less disk space but are less well editable,
+        Type42 use more disk space but are better editable in vector graphics software
+        (says the internet).
+    stripfonts: boolean
+        If output file format is pdf, then run ps2pdf on the generated pdf file to
+        strip it from embedded fonts. This might then look ugly as a standalone figure,
+        but results in nice plots within a latex documents at a fraction of the file size.
+    """
+    mpl.rcParams['savefig.format'] = format
+    mpl.rcParams.update({'pdf.stripfonts': stripfonts})
+    # these all have only minor effects on file size:
+    mpl.rcParams['pdf.compression'] = compression
+    mpl.rcParams['pdf.fonttype'] = fonttype
+    mpl.rcParams['pdf.use14corefonts'] = False
+    mpl.rcParams['pdf.inheritcolor'] = False
+    mpl.rcParams['ps.fonttype'] = fonttype
+
+        
 def demo():
     """ Run a demonstration of the figure module.
     """
@@ -288,11 +336,12 @@ def demo():
     #fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0))  # figsize in cm!
     fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
-    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0))  # in cm!')
+    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
     axs[0].text(0.1, 1.4, 'fig.subplots_adjust(left=5.0, bottom=2.0, top=1.0, right=2.0)  # in fontsize margins!')
     x = np.linspace(0.0, 2.0, 200)
     axs[0].plot(x, np.sin(2.0*np.pi*x))
     axs[0].set_ylim(-1.0, 2.0)
+    fig.savefig('.pdf', stripfonts=False)
 
     fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
     # in fontsize margins and even with old matplotlib versions:
