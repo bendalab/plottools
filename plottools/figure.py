@@ -299,6 +299,11 @@ def install_figure():
         plt.savefig = __plt_savefig_figure
 
 
+""" Add figure parameter to rc configuration.
+"""
+mpl.rcParams.update({'pdf.stripfonts': False})
+
+
 def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
     """ Set savefig options via matplotlib's rc settings.
 
