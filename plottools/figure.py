@@ -272,6 +272,10 @@ def install_figure():
 
     In addition, each new figure gets an resize event handler installed, that applies
     the supplied margins whenever a figure is resized.
+
+    See also
+    --------
+    uninstall_figure()
     """
     if not hasattr(plt, '__figure_orig_figure'):
         plt.__figure_orig_figure = plt.figure
@@ -297,6 +301,35 @@ def install_figure():
     if not hasattr(plt, '__savefig_orig_figure'):
         plt.__savefig_orig_figure = plt.savefig
         plt.savefig = __plt_savefig_figure
+
+
+def uninstall_figure():
+    """ Uninstall all code that has been installed by install_figure().
+    """
+    if hasattr(plt, '__figure_orig_figure'):
+        plt.figure = plt.__figure_orig_figure
+        delattr(plt, '__figure_orig_figure')
+    if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
+        mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_figure
+        delattr(mpl.figure.Figure, '__subplots_adjust_orig_figure')
+    if hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
+        if mpl.figure.Figure.__add_gridspec_orig_figure is None:
+            delattr(mpl.figure.Figure, 'add_gridspec')
+        else:
+            mpl.figure.Figure.add_gridspec = mpl.figure.Figure.__add_gridspec_orig_figure
+            delattr(mpl.figure.Figure, '__add_gridspec_orig_figure')
+    if hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
+        mpl.gridspec.GridSpec.update = mpl.gridspec.GridSpec.__update_orig_figure
+        delattr(mpl.gridspec.GridSpec, '__update_orig_figure')
+    if hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
+        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_figure
+        delattr(mpl.figure.Figure, '__savefig_orig_figure')
+    if hasattr(plt, '__subplots_orig_figure'):
+        plt.subplots = plt.__subplots_orig_figure
+        delattr(plt, '__subplots_orig_figure')
+    if hasattr(plt, '__savefig_orig_figure'):
+        plt.savefig = plt.__savefig_orig_figure
+        delattr(plt, '__savefig_orig_figure')
 
 
 """ Add figure parameter to rc configuration.
@@ -358,6 +391,7 @@ def demo():
             ax.plot(x, np.sin(2.0*np.pi*x+k*j))
     
     plt.show()
+    uninstall_figure()
 
 
 if __name__ == "__main__":

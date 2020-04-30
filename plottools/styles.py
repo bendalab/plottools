@@ -646,7 +646,7 @@ def screen_style(namespace=None):
     mpl.rcdefaults()
     plot_params(font_size=10.0, font_family='sans-serif',
                 label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
-                fig_color=palette['white'], axes_color='none',
+                fig_color=palette['gray'], axes_color=palette['white'],
                 namespace=namespace)
     labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
