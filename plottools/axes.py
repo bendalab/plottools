@@ -1,7 +1,7 @@
 """
-# Label axes
+# Axes
 
-Mark panels with a label.
+Mark axes with a label.
 
 The following function is added as a member to mpl.figure.Figure:
 - `label_axes()`: put a label on each axes.

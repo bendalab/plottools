@@ -62,7 +62,7 @@ from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_y
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
-from .labelaxes import label_axes, labelaxes_params
+from .axes import label_axes, labelaxes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
 

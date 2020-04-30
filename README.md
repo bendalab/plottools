@@ -30,7 +30,7 @@ The following modules are provided by the plottools package:
 - `ticks`: setting tick locations and formats.
 - `labels`: annotate axis with label and unit and align axes labels.
 - `arrows`: arrows.
-- `labelaxes`: mark panels with a label.
+- `axes`: mark axes with a label.
 - `insets`: insets made easy.
 - `scalebars`: labeled scale bars.
 - `significance`: indicating statsitical significance.
