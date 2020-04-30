@@ -5,6 +5,10 @@ Mark axes with a label.
 
 The following function is added as a member to mpl.figure.Figure:
 - `label_axes()`: put a label on each axes.
+- `common_xlabels()`: simplify common xlabels.
+- `common_ylabels()`: simplify common ylabels.
+- `common_xtick_labels()`: simplify common xtick labels.
+- `common_ytick_labels()`: simplify common ytick labels.
 
 - `labelaxes_params()`: set rc settings for labelaxes.
 """
@@ -12,7 +16,143 @@ The following function is added as a member to mpl.figure.Figure:
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import matplotlib.gridspec as gridspec
+
+
+def common_xlabels(fig, axes=None):
+    """ Simplify common xlabels.
+
+    Remove all xlabels except for one that is centered at the bottommost axes.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xlabels should be merged.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    miny = np.min(coords[:,1])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    xl = 0.5*(minx+maxx)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[1] > miny + 1e-6:
+            ax.set_xlabel('')
+        elif done:
+            ax.set_xlabel('')
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_ylabels(fig, axes=None):
+    """ Simplify common ylabels.
+
+    Remove all ylabels except for one that is centered at the leftmost axes.
+    
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose ylabels should be merged.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    # center common ylabel:
+    minx = np.min(coords[:,0])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[0] > minx + 1e-6:
+            ax.set_ylabel('')
+        elif done:
+            ax.set_ylabel('')
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_xtick_labels(fig, axes=None):
+    """ Simplify common xtick labels.
+    
+    Keep xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    miny = np.min(coords[:,1])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    xl = 0.5*(minx+maxx)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[1] > miny + 1e-6:
+            ax.set_xlabel('')
+            ax.xaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.set_xlabel('')
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_ytick_labels(fig, axes=None):
+    """ Simplify common ytick labels.
+    
+    Keep ytick labels only at the leftmost axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[0] > minx + 1e-6:
+            ax.set_ylabel('')
+            ax.yaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.set_ylabel('')
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
 
 
 def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwargs):
@@ -123,6 +263,10 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
 
 
 # make the functions available as member variables:
+mpl.figure.Figure.common_xlabels = common_xlabels
+mpl.figure.Figure.common_ylabels = common_ylabels
+mpl.figure.Figure.common_xtick_labels = common_xtick_labels
+mpl.figure.Figure.common_ytick_labels = common_ytick_labels
 mpl.figure.Figure.label_axes = label_axes
 
 
@@ -176,6 +320,9 @@ def demo():
         ax2 = fig.add_subplot(gs[0,1:])
         ax3 = fig.add_subplot(gs[1,1])
         ax4 = fig.add_subplot(gs[1,2])
+        for ax in [ax1, ax2, ax3, ax4]:
+            ax.set_xlabel('xlabel')
+            ax.set_ylabel('ylabel')
         return fig, (ax1, ax2, ax3, ax4)
 
     labelaxes_params(xoffs='auto', yoffs='auto', labels='A', font=dict(fontweight='bold'))
@@ -186,19 +333,31 @@ def demo():
     fig.label_axes()
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.6, 'fig,label_axes([ax1])',
+    axs[0].text(0.5, 0.7, 'fig,label_axes([ax1])',
                 transform=axs[0].transAxes, ha='center')
-    axs[0].text(0.5, 0.4, 'fig,label_axes([ax2, ax4], \'auto\', 1, \'B\')',
+    axs[0].text(0.5, 0.5, 'fig,label_axes([ax2, ax4], \'auto\', 1, \'B\')',
                 transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.5, 0.3, 'fig.common_xlabels()',
+                transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.5, 0.1, 'fig.common_ylabels(axs[1:])',
+                transform=axs[0].transAxes, ha='center')
+    fig.common_xlabels() 
+    fig.common_ylabels(axs[1:])
     fig.label_axes([axs[0]])
     fig.label_axes([axs[1], axs[3]], 'auto', 1)
 
     fig, axs = afigure()
     axs[0].text(0.05, 0.7, "fig.label_axes([0, 2, 3],\n labels='(a)',\n fontweight='normal',\n fontstyle='italic')",
                 transform=axs[0].transAxes)
-    fig.label_axes([0, 2, 3], labels='(a)', fontweight='normal', fontstyle='italic')
+    axs[0].text(0.5, 0.5, 'fig.common_xtick_labels()',
+                transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.5, 0.3, 'fig.common_ytick_labels(axs[1:])',
+                transform=axs[0].transAxes, ha='center')
+    fig.common_xtick_labels() 
+    fig.common_ytick_labels(axs[1:])
+    fig.label_axes([0, 1, 3], labels='(a)', fontweight='normal', fontstyle='italic')
     plt.show()
-
+        
 
 if __name__ == "__main__":
     demo()

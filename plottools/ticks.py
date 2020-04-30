@@ -14,20 +14,15 @@ The following functions are available as members of mpl.axes.Axes:
 - `set_yticks_fracs()`: format and place xticks as fractions.
 - `set_xticks_pifracs()`: format and place xticks as mutiples of pi.
 - `set_yticks_pifracs()`: format and place yticks as mutiples of pi.
-- `set_xticks_off()`: do not draw and label any xticks.
-- `set_yticks_off()`: do not draw and label any yticks.
 - `set_xticks_format()`: format xticks according to formatter string.
 - `set_yticks_format()`: format yticks according to formatter string.
 - `set_xticks_blank()`: draw xticks without labeling them.
 - `set_yticks_blank()`: draw yticks without labeling them.
+- `set_xticks_off()`: do not draw and label any xticks.
+- `set_yticks_off()`: do not draw and label any yticks.
 
 - `set_minor_xticks_off()`: do not draw any minor xticks.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
-
-The following functions are available as members of mpl.figure.Figure:
-- `common_xtick_labels()`: simplify common xtick labels.
-- `common_ytick_labels()`: simplify common ytick labels.
-
 """
 
 import numpy as np
@@ -277,28 +272,6 @@ def set_yticks_pifracs(ax, denominator, ontop=False):
     ax.set_yticks_fracs(denominator, np.pi, '\pi', ontop)
 
 
-def set_xticks_off(ax):
-    """ Do not draw and label any xticks.
-
-    Parameters
-    ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
-    """
-    ax.xaxis.set_major_locator(ticker.NullLocator())
-
-
-def set_yticks_off(ax):
-    """ Do not draw and label any yticks.
-
-    Parameters
-    ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
-    """
-    ax.yaxis.set_major_locator(ticker.NullLocator())
-
-
 def set_xticks_format(ax, fs):
     """ Format xticks according to formatter string.
 
@@ -332,6 +305,10 @@ def set_xticks_blank(ax):
     ----------
     ax: matplotlib axis
         Axis on which the xticks are set.
+
+    See also
+    --------
+    axes.common_xtick_labels(): simplify common xtick labels.
     """
     ax.xaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -343,8 +320,34 @@ def set_yticks_blank(ax):
     ----------
     ax: matplotlib axis
         Axis on which the yticks are set.
+
+    See also
+    --------
+    axes.common_ytick_labels(): simplify common xtick labels.
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
+
+
+def set_xticks_off(ax):
+    """ Do not draw and label any xticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    """
+    ax.xaxis.set_major_locator(ticker.NullLocator())
+
+
+def set_yticks_off(ax):
+    """ Do not draw and label any yticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the yticks are set.
+    """
+    ax.yaxis.set_major_locator(ticker.NullLocator())
 
 
 def set_minor_xticks_off(ax):
@@ -368,74 +371,6 @@ def set_minor_yticks_off(ax):
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
-
-def common_xtick_labels(fig, axes=None):
-    """ Simplify common xtick labels.
-    
-    Keep xtick labels only at the lowest axes and center the common xlabel.
-
-    Parameters
-    ----------
-    fig: matplotlib figure
-        The figure containing the axes.
-    axes: None or sequence of matplotlib axes
-        Axes whose xticks should be combined.
-        If None take all axes of the figure.
-    """
-    if axes is None:
-        axes = fig.get_axes()
-    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    miny = np.min(coords[:,1])
-    minx = np.min(coords[:,0])
-    maxx = np.max(coords[:,2])
-    xl = 0.5*(minx+maxx)
-    done = False
-    for ax in axes:
-        if ax.get_position().p0[1] > miny + 1e-6:
-            ax.set_xlabel('')
-            ax.xaxis.set_major_formatter(ticker.NullFormatter())
-        elif done:
-            ax.set_xlabel('')
-        else:
-            x, y = ax.xaxis.get_label().get_position()
-            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
-            ax.xaxis.get_label().set_position((x, y))
-            done = True
-
-
-def common_ytick_labels(fig, axes=None):
-    """ Simplify common ytick labels.
-    
-    Keep ytick labels only at the leftmost axes and center the common ylabel.
-
-    Parameters
-    ----------
-    fig: matplotlib figure
-        The figure containing the axes.
-    axes: None or sequence of matplotlib axes
-        Axes whose yticks should be combined.
-        If None take all axes of the figure.
-    """
-    if axes is None:
-        axes = fig.get_axes()
-    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    minx = np.min(coords[:,0])
-    miny = np.min(coords[:,1])
-    maxy = np.max(coords[:,3])
-    yl = 0.5*(miny+maxy)
-    done = False
-    for ax in axes:
-        if ax.get_position().p0[0] > minx + 1e-6:
-            ax.set_ylabel('')
-            ax.yaxis.set_major_formatter(ticker.NullFormatter())
-        elif done:
-            ax.set_ylabel('')
-        else:
-            x, y = ax.yaxis.get_label().get_position()
-            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
-            ax.yaxis.get_label().set_position((x, y))
-            done = True
-
             
 # make functions available as member variables:
 mpl.axes.Axes.set_xticks_delta = set_xticks_delta
@@ -448,16 +383,14 @@ mpl.axes.Axes.set_xticks_fracs = set_xticks_fracs
 mpl.axes.Axes.set_yticks_fracs = set_yticks_fracs
 mpl.axes.Axes.set_xticks_pifracs = set_xticks_pifracs
 mpl.axes.Axes.set_yticks_pifracs = set_yticks_pifracs
-mpl.axes.Axes.set_xticks_off = set_xticks_off
-mpl.axes.Axes.set_yticks_off = set_yticks_off
 mpl.axes.Axes.set_xticks_format = set_xticks_format
 mpl.axes.Axes.set_yticks_format = set_yticks_format
 mpl.axes.Axes.set_xticks_blank = set_xticks_blank
 mpl.axes.Axes.set_yticks_blank = set_yticks_blank
+mpl.axes.Axes.set_xticks_off = set_xticks_off
+mpl.axes.Axes.set_yticks_off = set_yticks_off
 mpl.axes.Axes.set_minor_xticks_off = set_minor_xticks_off
 mpl.axes.Axes.set_minor_yticks_off = set_minor_yticks_off
-mpl.figure.Figure.common_xtick_labels = common_xtick_labels
-mpl.figure.Figure.common_ytick_labels = common_ytick_labels
 
     
 def demo():
@@ -514,15 +447,6 @@ def demo():
     axs[3,1].set_ylim(0, 4*np.pi/3)
     axs[3,1].set_xticks_pifracs(2)
     axs[3,1].set_yticks_pifracs(3, True)
-
-    fig, axs = plt.subplots(2, 2)
-    for ax in axs.ravel():
-        ax.set_xlabel('xlabel')
-        ax.set_ylabel('ylabel')
-    axs[0,0].text(0.1, 0.8, 'fig.common_xtick_labels()')
-    axs[0,0].text(0.1, 0.6, 'fig.common_ytick_labels()')
-    fig.common_xtick_labels() 
-    fig.common_ytick_labels()
     
     plt.show()
 
