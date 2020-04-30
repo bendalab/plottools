@@ -1,7 +1,7 @@
 """
 # Colors
 
-Some color palettes and tools for manipulating colors.
+Color palettes and tools for manipulating colors.
 
 Dictionaries with colors:
 - `colors`: the default colors, set to one of the following:

@@ -1,7 +1,7 @@
 """
 # Ticks
 
-Convience functions for setting tick locations and formats.
+Setting tick locations and formats.
 
 The following functions are available as members of mpl.axes.Axes:
 - `set_xticks_delta()`: set interval between xticks.
