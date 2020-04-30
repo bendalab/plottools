@@ -51,6 +51,7 @@ Display line, point, linepoint and fill styles:
 # - alpha (e.g. fsA3a) for a transparent fill color.
 
 import __main__
+import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -985,11 +986,11 @@ def demo(style='screen', mode='line'):
         'arrow': plot the names and arrows of all available arrow styles
     """
     if style == 'sketch':
-        sketch_style()
+        sketch_style(sys.modules[__name__])
     elif style == 'paper':
-        paper_style()
+        paper_style(sys.modules[__name__])
     else:
-        screen_style()
+        screen_style(sys.modules[__name__])
     fig, ax = plt.subplots()
     if 'linep' in mode:
         plot_linepointstyles(ax)
@@ -1009,7 +1010,6 @@ def demo(style='screen', mode='line'):
 
 
 if __name__ == "__main__":
-    import sys
     mode = 'line'
     if len(sys.argv) > 1:
         mode = sys.argv[1]

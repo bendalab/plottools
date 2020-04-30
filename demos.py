@@ -16,7 +16,7 @@ from plottools.significance import demo as significance_demo
 if __name__ == "__main__":
 
     print('plottools.styles ...')
-    #styles_demo()
+    styles_demo()
 
     print('plottools.colors ...')
     colors_demo()
