@@ -32,7 +32,7 @@ The following modules are provided by the plottools package:
 - `arrows`: arrows.
 - `axes`: mark axes with a label.
 - `insets`: insets made easy.
-- `scalebars`: labeled scale bars.
+- `scalebars`: labeled scale bars. [More...](doc/scalebars.md)
 - `significance`: indicating statsitical significance.
 
 See documentation in the modules for more infos.
