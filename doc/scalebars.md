@@ -39,8 +39,10 @@ ax.xscalebar(1.05, 0.0, 2, 's', ha='right', va='bottom')
 ```
 
 The first two arguments of the scalebar functions set the anchor point
-on which the scalebar is positioned in relative coordinates of the
-axes (ranging from 0 to 1). For horizontal scalebars, `ha` (horizontal
+on which the scalebar is positioned. The scalebar position is given in
+relative coordinates of the axes (ranging from 0 to 1).
+
+For horizontal scalebars, `ha` (horizontal
 alignment) determines whether the anchor is on the 'left', 'center',
 or 'right' of the scalebar. The vertical alignment (`va`) determines
 whether the annotation is on top ('top') or below ('bottom') the
@@ -124,10 +126,10 @@ of their length is set by `capsize` and their width by `clw`.
 ![styles](figures/scalebars-styles.png)
 
 ```
-ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='bottom', lw=3)
-ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom', lw=6)
-ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='bottom', lw=4, capsize=4, clw=2)
-ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom', lw=4, capsize=6, clw=1)
+ax.xscalebar(0.0, 0.8, 2, 'mm', ha='left', va='bottom', lw=3)
+ax.xscalebar(0.0, 0.3, 2, 'mm', ha='left', va='bottom', lw=6)
+ax.xscalebar(1.0, 0.8, 2, 'mm', ha='right', va='bottom', lw=4, capsize=4, clw=2)
+ax.xscalebar(1.0, 0.3, 2, 'mm', ha='right', va='bottom', lw=4, capsize=6, clw=1)
 ```
 
 Use the `scalebar_params()` function to modify default rc settings
