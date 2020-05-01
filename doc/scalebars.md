@@ -35,7 +35,7 @@ the scale of the x-axis.
 ![xscalebar](figures/scalebars-xscalebar.png)
 
 ```
-ax.xscalebar(1.05, 0.0, 2, 's', ha='right', va='bottom')
+ax.xscalebar(1.0, 0.0, 2, 's', ha='right', va='bottom')
 ```
 
 The first two arguments of the scalebar functions set the anchor point

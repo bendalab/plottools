@@ -44,7 +44,7 @@ def scalebars_figures():
     save_fig(fig, 'scalebars')
     
     fig, ax = draw_sine()
-    ax.xscalebar(1.05, 0.0, 2, 's', ha='right', va='bottom')
+    ax.xscalebar(1.0, 0.0, 2, 's', ha='right', va='bottom')
     save_fig(fig, 'xscalebar')
     
     fig, ax = draw_sine()
