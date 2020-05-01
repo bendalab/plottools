@@ -15,6 +15,7 @@ The scalebar module provides the three functions
 - `xscalebar()`
 - `yscalebar()`
 - `scalebars()`
+
 for drawing and annotating horizontal or vertical scalebars, or both.
 
 ```
@@ -41,9 +42,10 @@ The first two arguments of the scalebar functions set the anchor point
 on which the scalebar is positioned in relative coordinates of the
 axes (ranging from 0 to 1). For horizontal scalebars, `ha` (horizontal
 alignment) determines whether the anchor is on the 'left', 'center',
-or 'right' of the scalebar. The vertical alignment ('va') determines
+or 'right' of the scalebar. The vertical alignment (`va`) determines
 whether the annotation is on top ('top') or below ('bottom') the
-scalebar.
+scalebar. In the figure the position of the scalebar, the anchor
+point, is shown as a red circle.
 
 ![xpos](figures/scalebars-xpos.png)
 
@@ -74,8 +76,9 @@ ax.yscalebar(1.05, 0.0, 1, 'mV', ha='right', va='bottom')
 
 For vertical scalebars, `va` (vertical alignment) determines whether
 the anchor is on the 'top', 'center', or 'bottom' of the scalebar. The
-horizontal alignment ('ha') determines whether the annotation is to
-the 'left' or to the 'right' of the scale bar.
+horizontal alignment (`ha`) determines whether the annotation is to
+the 'left' or to the 'right' of the scale bar. In the figure the
+position of the scalebar, the anchor point, is shown as a red circle.
 
 ![ypos](figures/scalebars-ypos.png)
 
@@ -92,11 +95,12 @@ ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom', lw=4)
 
 scalebars() draws and annotates both a horizontal and a vertical
 scalebar, visualizing the scale of the x- and the y-axis.  Horizontal
-alignment ('ha') determines whether the anchor point and the vertical
+alignment (`ha`) determines whether the anchor point and the vertical
 scalebar is on the 'left' or on the 'right' of the horizontal
-scalebar. Vertical alignment ('va') determines whether the anchor
+scalebar. Vertical alignment (`va`) determines whether the anchor
 point and the horizontal scalebar are at the 'top' or 'bottom' of the
-vertical scalebar.
+vertical scalebar. In the figure the position of the scalebar, the
+anchor point, is shown as a red circle.
 
 ![pos](figures/scalebars-pos.png)
 
@@ -110,12 +114,12 @@ ax.scalebars(0.8, 0.1, 2, 1, 's', 'mV', ha='right', va='bottom')
 
 ## Styles
 
-The line width and the color of the scalebar can be set by the 'lw'
-and 'color' keyword arguments.
+The line width and the color of the scalebar can be set by the `lw`
+and `color` keyword arguments.
 
 The horizontal and vertical scalebars can have in addition start and
-stop markers. These are lines perpendicular to the scalebar
-line. There lenght is set by 'capsize' and their width by 'clw'.
+stop markers. These are lines perpendicular to the scalebar line. Half
+of their length is set by `capsize` and their width by `clw`.
 
 ![styles](figures/scalebars-styles.png)
 
@@ -131,6 +135,6 @@ defining the style of the scalebars:
 ```
 scalebar_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
 ```
-Ideally you use the scalebar functions without specifying the 'lw',
-'capsize', 'clw', and font arguments and control them by a central
-call to `scalebar_params()`.
+Ideally you use the scalebar functions without specifying the `lw`,
+`color`, `capsize`, `clw`, and `font` arguments and control them by a
+central call to `scalebar_params()`.
