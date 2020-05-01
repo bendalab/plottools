@@ -16,9 +16,6 @@ colors are valid matplotlib colors and can be passed on to `color`,
 `facecolor`, `edgecolor`, etc. arguments of the various plotting
 functions.
 
-The following sections display the colors of all palettes together
-with their names.
-
 ```
 c.color
 ```
@@ -31,6 +28,8 @@ c.color_palettes
 is a dictionary referencing all color palettes provoded by the module
 by their name.
 
+The following sections display the colors and their names of all provided palettes.
+
 
 ### Plain RGB colors
 
@@ -39,6 +38,10 @@ c.colors_plain
 ```
 
 ![plain](figures/colors-plain.png)
+
+This palette is provided for completeness. The colors are made up of
+either full or half saturated RGB values, e.g. red is '#ff0000', green
+is '#00ff00', and orange is '#ff8000'.
 
 
 ### Muted colors
@@ -49,6 +52,8 @@ c.colors_muted
 
 ![muted](figures/colors-muted.png)
 
+This palette extends the `colors_henninger` palette.
+
 
 ### Vivid colors
 
@@ -57,6 +62,8 @@ c.colors_vivid
 ```
 
 ![vivid](figures/colors-vivid.png)
+
+Vivid but not plain basic colors for a fresh look.
 
 
 ### Color palette by J&ouml;rg Henninger
@@ -75,6 +82,8 @@ c.colors_scicomp
 ```
 
 ![scicomp](figures/colors-scicomp.png)
+
+Nice red, orange and yellow, but blue and green need some improvement.
 
 
 ### Color palette of the corporate design of the University of T&uuml;bingen
@@ -121,11 +130,11 @@ Mix two colors.
 
 ![lighter](figures/colors-gradient.png)
 
-For 40% transition between blue and orange do
+For 30% transition between blue and orange do
 ```
 cb = c.colors['blue']
 co = c.colors['orange']
-color = c.gradient(cb, co, 0.4)
+color = c.gradient(cb, co, 0.3)
 ```
 
 
@@ -153,7 +162,15 @@ writes to the console
 \definecolor{yellow}{RGB}{1.000,0.969,0.000}
 ...
 ```
-
+You then can copy the color definitions into you LaTeX preamble. Do not forget to
+load the `color` or `xcolor` packages before:
+```
+\usepackage{color}
+```
+Then you can use the colors with the usual commands, like for example:
+```
+\textcolor{red}{Some text in red.}
+```
 
 
 ## Display colors
