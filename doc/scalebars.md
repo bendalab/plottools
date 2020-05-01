@@ -29,8 +29,8 @@ ax.show_spines('')
 
 ## X Scalebars
 
-xscalebar() draws and annotates a horizontal scalebar, visualizing the
-scale of the x-axis.
+`xscalebar()` draws and annotates a horizontal scalebar, visualizing
+the scale of the x-axis.
 
 ![xscalebar](figures/scalebars-xscalebar.png)
 
@@ -50,12 +50,12 @@ point, is shown as a red circle.
 ![xpos](figures/scalebars-xpos.png)
 
 ```
-ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='top', lw=4)
-ax.xscalebar(0.5, 0.8, 2, 's', ha='center', va='top', lw=4)
-ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='top', lw=4)
-ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom', lw=4)
-ax.xscalebar(0.5, 0.3, 2, 's', ha='center', va='bottom', lw=4)
-ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom', lw=4)
+ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='top')
+ax.xscalebar(0.5, 0.8, 2, 's', ha='center', va='top')
+ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='top')
+ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom')
+ax.xscalebar(0.5, 0.3, 2, 's', ha='center', va='bottom')
+ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom')
 ```
 
 The third argument sets the length of the scale bar in data
@@ -65,7 +65,7 @@ the scale.
 
 ## Y Scalebars
 
-yscalebar() draws and annotates a vertical scalebar, visualizing the
+`yscalebar()` draws and annotates a vertical scalebar, visualizing the
 scale of the y-axis.
 
 ![yscalebar](figures/scalebars-yscalebar.png)
@@ -83,17 +83,17 @@ position of the scalebar, the anchor point, is shown as a red circle.
 ![ypos](figures/scalebars-ypos.png)
 
 ```
-ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top', lw=4)
-ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center', lw=4)
-ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom', lw=4)
-ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top', lw=4)
-ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center', lw=4)
-ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom', lw=4)
+ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top')
+ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center')
+ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom')
+ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top')
+ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center')
+ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom')
 ```
 
 ## X-Y Scalebars
 
-scalebars() draws and annotates both a horizontal and a vertical
+`scalebars()` draws and annotates both a horizontal and a vertical
 scalebar, visualizing the scale of the x- and the y-axis.  Horizontal
 alignment (`ha`) determines whether the anchor point and the vertical
 scalebar is on the 'left' or on the 'right' of the horizontal

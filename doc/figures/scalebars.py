@@ -52,10 +52,10 @@ def scalebars_figures():
     save_fig(fig, 'yscalebar')
 
     fig, ax = new_figure(10, 3)
-    ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='bottom', lw=3)
-    ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom', lw=6)
-    ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='bottom', lw=4, capsize=4, clw=2)
-    ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom', lw=4, capsize=6, clw=1)
+    ax.xscalebar(0.0, 0.8, 2, 'mm', ha='left', va='bottom', lw=3)
+    ax.xscalebar(0.0, 0.3, 2, 'mm', ha='left', va='bottom', lw=6)
+    ax.xscalebar(1.0, 0.8, 2, 'mm', ha='right', va='bottom', lw=4, capsize=4, clw=2)
+    ax.xscalebar(1.0, 0.3, 2, 'mm', ha='right', va='bottom', lw=4, capsize=6, clw=1)
     save_fig(fig, 'styles')
 
     fig, ax = new_figure(10, 3)
