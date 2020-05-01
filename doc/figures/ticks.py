@@ -6,7 +6,7 @@ import plottools.spines
 import plottools.ticks
 
     
-def ticks_figure():
+def ticks_figures():
     """ Generate figure demonstrating functionality of the ticks module.
     """
 
@@ -71,4 +71,4 @@ def ticks_figure():
     
 
 if __name__ == "__main__":
-    ticks_figure()
+    ticks_figures()

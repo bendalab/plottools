@@ -310,22 +310,23 @@ def gradient(color0, color1, r):
         return cs
 
     
-def latex_colors(colors):
+def latex_colors(colors, name=''):
     """ Print a \definecolor command for LaTeX.
 
     Parameters
     ----------
-    colors: dict or string
+    colors: matplotlib color or dict of matplotlib colors
         A dictionary with names and rgb hex-strings of colors
-        or an rgb hex-string.
+        or a single matplotlib color.
+    name: string
+        If colors is a single color, then name is the name of the color.
     """
     if isinstance(colors, dict):
         for cn in colors:
-            r, g, b = cc.to_rgb(colors[cn])
-            print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}  %% %s' % (r, g, b, cn))
+            latex_colors(colors[cn], cn)
     else:
         r, g, b = cc.to_rgb(colors)
-        print('\\definecolor{darkblue}{RGB}{%3d,%3d,%3d}' % (r, g, b))
+        print('\\definecolor{%s}{RGB}{%.3f,%.3f,%.3f}' % (name, r, g, b))
         
 
 def plot_colors(ax, colors, n=1):
