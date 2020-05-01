@@ -1,6 +1,18 @@
-# ticks module
+# Ticks module
+
+The `ticks` module adds a couple of functions to
+`matplotlib.axes.Axes` as shortcuts to the locators and formatters
+provided by `matplotlib.ticker`.
+
+Here, their usage is demonstrated for the x-axis, but of course the
+equivalent functions for the y-axis exist as well. Simply replace
+`xticks` by `yticks` in the function name.
 
 ```
+import numpy as np
+import matplotlib.pyplot as plt
+import plottools.ticks
+
 fig, ax = plt.subplots()
 ```
 
@@ -20,7 +32,7 @@ ax.set_xticks_format('%04.1f')
 ![format](figures/ticks-format.png)
 
 
-## SU unit prefixes
+## SI unit prefixes
 
 ```
 ax.set_xscale('log')
@@ -79,6 +91,8 @@ ax.set_xticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))
 ax.set_xticks_blank()
 ```
 ![blank](figures/ticks-blank.png)
+
+You most likely want to use `common_xtick_labels()` from the `axes` module. 
 
 
 ## No ticks at all
