@@ -1,9 +1,9 @@
 """
 # Axes
 
-Mark axes with a label.
+Mark axes with a label and simplify common axis labels.
 
-The following function is added as a member to mpl.figure.Figure:
+The following functions are added as a member to mpl.figure.Figure:
 - `label_axes()`: put a label on each axes.
 - `common_xlabels()`: simplify common xlabels.
 - `common_ylabels()`: simplify common ylabels.
@@ -11,6 +11,16 @@ The following function is added as a member to mpl.figure.Figure:
 - `common_ytick_labels()`: simplify common ytick labels.
 
 - `labelaxes_params()`: set rc settings for labelaxes.
+
+RC settings defined by the axes module:
+```
+figure.labelaxes.xoffs : 'auto',
+figure.labelaxes.yoffs : 'auto',
+figure.labelaxes.labels: 'A',
+figure.labelaxes.font  : dict(fontsize='x-large',
+                              fontstyle='sans-serif',
+                              fontweight='normal')
+```
 """
 
 import numpy as np
@@ -280,8 +290,10 @@ mpl.rcParams.update({'figure.labelaxes.xoffs': 'auto',
                                                    fontweight='normal')})
 
 
-def labelaxes_params(xoffs='auto', yoffs='auto', labels=None, font=None):
+def labelaxes_params(xoffs=None, yoffs=None, labels=None, font=None):
     """ Set rc settings for labelaxes.
+
+    Only update those parameters that are not None.
 
     Parameter
     ---------
@@ -301,9 +313,12 @@ def labelaxes_params(xoffs='auto', yoffs='auto', labels=None, font=None):
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
-    mpl.rcParams.update({'figure.labelaxes.xoffs': xoffs,
-                         'figure.labelaxes.yoffs': yoffs,
-                         'figure.labelaxes.labels': labels})
+    if xoffs is not None:
+        mpl.rcParams.update({'figure.labelaxes.xoffs': xoffs})
+    if yoffs is not None:
+        mpl.rcParams.update({'figure.labelaxes.yoffs': yoffs})
+    if labels is not None:
+        mpl.rcParams.update({'figure.labelaxes.labels': labels})
     if font is not None:
         mpl.rcParams.update({'figure.labelaxes.font': font})
 
