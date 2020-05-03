@@ -9,7 +9,7 @@ The following functions are added as a members to mpl.axes.Axes and mpl.figure.F
 - `set_spines_bounds()`: set bounds for the specified spines.
 
 The following functions enable and disable spine control:
-- `set_default_spines()`: set default spine appearance.
+- `spines_params()`: set default spine appearance.
 - `install_spines()`: install code for controlling spines.
 - `uninstall_spines()`: uninstall code for controlling spines.
 - `install_default_spines()`: install code and rc settings for formatting spines.
@@ -315,7 +315,7 @@ def install_spines():
     Call this function before creating any figure to make show_spines(),
     set_spines_outwards() and set_spines_bounds() available and working.
 
-    This function is also called by install_default_spines() or set_default_spines(),
+    This function is also called by install_default_spines() or spines_params(),
     so usually you do not need to explicitly call this function.
 
     See also
@@ -471,7 +471,7 @@ def install_default_spines():
     Patches the matplotlib axes constructor, the twinx(), twiny(),
     and the plottools.inset() functions.    
 
-    This function is also called by set_default_spines(), so usually you
+    This function is also called by spines_params(), so usually you
     do not need to explicitly call this function.
 
     See also
@@ -536,9 +536,9 @@ def uninstall_default_spines():
         delattr(mpl.axes.Axes, '__inset_orig_spines')
 
 
-def set_default_spines(spines=None, spines_offsets=None, spines_bounds=None,
-                       twinx_spines=None, twiny_spines=None,
-                       inset_spines=None, inset_spines_offsets=None, inset_spines_bounds=None):
+def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
+                  twinx_spines=None, twiny_spines=None,
+                  inset_spines=None, inset_spines_offsets=None, inset_spines_bounds=None):
     """ Set default spine appearance.
 
     Call this function *before* you create a matplotlib figure.
@@ -633,7 +633,7 @@ def demo_twin_inset():
     """ Run a demonstration of the spine module showing twin behavior.
     """
     from .insets import inset
-    set_default_spines('lb', {'lrtb': 10}, {'lrtb': 'ticks'}, 'r', 't', 'lrb', {'tr': 5})
+    spines_params('lb', {'lrtb': 10}, {'lrtb': 'ticks'}, 'r', 't', 'lrb', {'tr': 5})
     fig, axs = plt.subplots(1, 3, figsize=(14, 4))
     fig.subplots_adjust(wspace=0.5)
     axs[0].text(0.05, 1.85, "spines='lb'")

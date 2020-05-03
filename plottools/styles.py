@@ -57,7 +57,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from .colors import colors_vivid, colors_muted, lighter, darker, gradient
 from .figure import install_figure, figure_params
-from .spines import show_spines, set_spines_outward, set_spines_bounds, set_default_spines
+from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
@@ -653,12 +653,10 @@ def screen_style(namespace=None):
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='png', compression=6, fonttype=3, stripfonts=False)
+    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # spines:
-    set_default_spines(spines='lbrt', spines_offsets={'lrtb': 0},
-                       spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
@@ -739,12 +737,10 @@ def paper_style(namespace=None):
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
+    spines_params(spines='lb', spines_offsets={'lrtb': 3}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # spines:
-    set_default_spines(spines='lb', spines_offsets={'lrtb': 3},
-                       spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
@@ -828,12 +824,10 @@ def sketch_style(namespace=None):
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
+    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # spines:
-    set_default_spines(spines='lb', spines_offsets={'lrtb': 0},
-                       spines_bounds={'lrtb': 'full'})
     # define the appearance of axis labels:
     set_label_format('{label} ({unit})')
     install_align_labels(xdist=5, ydist=10)
