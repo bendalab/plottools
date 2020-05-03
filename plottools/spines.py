@@ -62,21 +62,27 @@ def show_spines(ax, spines):
         # ticks:
         if len(xspines) == 0:
             ax.xaxis.set_ticks_position('none')
+            ax.xaxis.label.set_visible(False)
             ax.xaxis.set_major_locator(ticker.NullLocator())
         elif len(xspines) == 1:
             ax.xaxis.set_ticks_position(xspines[0])
+            ax.xaxis.set_label_position(xspines[0])
             ax.xaxis.set_major_locator(ticker.AutoLocator())
         else:
             ax.xaxis.set_ticks_position('both')
+            ax.xaxis.set_label_position('bottom')
             ax.xaxis.set_major_locator(ticker.AutoLocator())
         if len(yspines) == 0:
             ax.yaxis.set_ticks_position('none')
+            ax.yaxis.label.set_visible(False)
             ax.yaxis.set_major_locator(ticker.NullLocator())
         elif len(yspines) == 1:
             ax.yaxis.set_ticks_position(yspines[0])
+            ax.yaxis.set_label_position(yspines[0])
             ax.yaxis.set_major_locator(ticker.AutoLocator())
         else:
             ax.yaxis.set_ticks_position('both')
+            ax.yaxis.set_label_position('left')
             ax.yaxis.set_major_locator(ticker.AutoLocator())
 
 
