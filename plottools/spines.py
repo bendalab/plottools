@@ -63,27 +63,37 @@ def show_spines(ax, spines):
         if len(xspines) == 0:
             ax.xaxis.set_ticks_position('none')
             ax.xaxis.label.set_visible(False)
+            ax.xaxis._orig_major_locator = ax.xaxis.get_major_locator()
             ax.xaxis.set_major_locator(ticker.NullLocator())
-        elif len(xspines) == 1:
-            ax.xaxis.set_ticks_position(xspines[0])
-            ax.xaxis.set_label_position(xspines[0])
-            ax.xaxis.set_major_locator(ticker.AutoLocator())
         else:
-            ax.xaxis.set_ticks_position('both')
-            ax.xaxis.set_label_position('bottom')
-            ax.xaxis.set_major_locator(ticker.AutoLocator())
+            if hasattr(ax.xaxis, '_orig_major_locator'):
+                ax.xaxis.set_major_locator(ax.xaxis._orig_major_locator)
+                delattr(ax.xaxis, '_orig_major_locator')
+            elif isinstance(ax.xaxis.get_major_locator(), ticker.NullLocator):
+                ax.xaxis.set_major_locator(ticker.AutoLocator())
+            if len(xspines) == 1:
+                ax.xaxis.set_ticks_position(xspines[0])
+                ax.xaxis.set_label_position(xspines[0])
+            else:
+                ax.xaxis.set_ticks_position('both')
+                ax.xaxis.set_label_position('bottom')
         if len(yspines) == 0:
             ax.yaxis.set_ticks_position('none')
             ax.yaxis.label.set_visible(False)
+            ax.yaxis._orig_major_locator = ax.yaxis.get_major_locator()
             ax.yaxis.set_major_locator(ticker.NullLocator())
-        elif len(yspines) == 1:
-            ax.yaxis.set_ticks_position(yspines[0])
-            ax.yaxis.set_label_position(yspines[0])
-            ax.yaxis.set_major_locator(ticker.AutoLocator())
         else:
-            ax.yaxis.set_ticks_position('both')
-            ax.yaxis.set_label_position('left')
-            ax.yaxis.set_major_locator(ticker.AutoLocator())
+            if hasattr(ax.yaxis, '_orig_major_locator'):
+                ax.yaxis.set_major_locator(ax.yaxis._orig_major_locator)
+                delattr(ax.yaxis, '_orig_major_locator')
+            elif isinstance(ax.yaxis.get_major_locator(), ticker.NullLocator):
+                ax.yaxis.set_major_locator(ticker.AutoLocator())
+            if len(yspines) == 1:
+                ax.yaxis.set_ticks_position(yspines[0])
+                ax.yaxis.set_label_position(yspines[0])
+            else:
+                ax.yaxis.set_ticks_position('both')
+                ax.yaxis.set_label_position('left')
 
 
 def set_spines_outward(ax, spines, offset=0):
@@ -143,7 +153,9 @@ def set_spines_outward(ax, spines, offset=0):
         for ax in axs:
             for sp in spines_list:
                 if ax.spines[sp].get_visible():
+                    loc = ax.yaxis.get_major_locator()
                     ax.spines[sp].set_position(('outward', offset))
+                    ax.yaxis.set_major_locator(loc)
 
 
 def set_spines_bounds(ax, spines, bounds='full'):
