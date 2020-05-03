@@ -12,9 +12,9 @@ installing functions is needed.
 
 ```
 import matplotlib.pyplot as plt
-from plottools.spines import set_default_spines
+from plottools.spines import spines_params
 
-set_default_spines('lb')
+spines_params('lb')
 fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
 ```
 
@@ -61,5 +61,5 @@ ax2.set_spines_outward('lb', -10)
 
 ## Default spine appearance
 
-The `set_default_spines()` controls the default appearance of spines.
+The `spines_params()` controls the default appearance of spines.
 
