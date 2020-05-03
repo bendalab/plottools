@@ -26,7 +26,7 @@ The following modules are provided by the plottools package:
 - `styles`: layout settings and plot styles.
 - `colors`: color palettes and tools for manipulating colors. [More...](doc/colors.md)
 - `figure`: size and margins of a figure.
-- `spines`: modify the appearance of spines.
+- `spines`: modify the appearance of spines. [More...](doc/spines.md)
 - `ticks`: setting tick locations and formats. [More...](doc/ticks.md)
 - `labels`: annotate axis with label and unit and align axes labels.
 - `arrows`: arrows.
