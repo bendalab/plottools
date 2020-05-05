@@ -7,7 +7,7 @@ import plottools.ticks
 
     
 def spines_figures():
-    """ Generate figure demonstrating functionality of the spines module.
+    """ Generate figures demonstrating functionality of the spines module.
     """
 
     def new_figure(fac=0.8, maxx=1, miny=-1, maxy=1, margin='all'):

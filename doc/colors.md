@@ -25,7 +25,7 @@ is a default color palette set to one of the available color palettes
 ```
 c.color_palettes
 ```
-is a dictionary referencing all color palettes provoded by the module
+is a dictionary referencing all color palettes provided by the module
 by their name.
 
 The following sections display the colors and their names of all provided palettes.

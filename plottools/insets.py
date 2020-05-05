@@ -3,9 +3,15 @@
 
 Insets made easy.
 
-The following functions are also added as members to mpl.axes.Axes:
+The following functions are available as members of mpl.axes.Axes:
 - `inset()`: add an inset in relative axes coordinates.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
+
+When loading the module, the above functions are automatically installed
+as member functions of matplotlib axes. So you usually do not need to
+call the following functions:
+- `install_insets()`: install inset functions on matplotlib axes.
+- `uninstall_insets()`: uninstall inset functions from matplotlib axes.
 """
 
 import numpy as np
@@ -21,7 +27,7 @@ def inset(ax, pos):
     ----------
     ax: matplotlib axes
         Axes to which the inset is added.
-    pos: list of floats
+    pos: sequence of floats
         Position of the inset in axes coordinates (x0, y0, x1, y1)
         each ranging between 0 and 1.
 
@@ -32,10 +38,10 @@ def inset(ax, pos):
     """
     # inset:
     x0, y0, width, height = ax.get_position().bounds
-    axins = ax.get_figure().add_axes([x0+pos[0]*width, y0+pos[1]*height,
-                                      (pos[2]-pos[0])*width,
-                                      (pos[3]-pos[1])*height])
-    return axins
+    axi = ax.get_figure().add_axes([x0+pos[0]*width, y0+pos[1]*height,
+                                    (pos[2]-pos[0])*width,
+                                    (pos[3]-pos[1])*height])
+    return axi
     
 
 def zoomed_inset(ax, pos, box, lines=None, **kwargs):
@@ -52,13 +58,13 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
     ----------
     ax: matplotlib axes
         Axes to which the inset is added.
-    pos: list of floats
+    pos: sequence of floats
         Position of the inset in axes coordinates (x0, y0, x1, y1)
         each ranging between 0 and 1.
-    box: list of floats
+    box: sequence of floats
         Zoomed in region in data coordinates (x0, y0, x1, y1)
         used for drawing a frame and setting the limits of the inset.
-    lines: list of two-tuples
+    lines: sequence of two-tuples
         Additional lines to be drawn from the zoomed-in region to the inset.
         Each element in the list specifies a line by a tuple of two numbers.
         The first number specifies the corner on the zoomed region
@@ -75,7 +81,7 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
         Axes of the inset.
     """
     # inset:
-    axins = ax.inset(pos)
+    axi = ax.inset(pos)
     # box to data coordinates:
     xmin, xmax = ax.get_xlim()
     ymin, ymax = ax.get_ylim()
@@ -91,10 +97,10 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
         kwargs['lw'] = 1.0
     lw = kwargs['lw']
     # inset limits:
-    axins.set_xlim(box[0], box[2])
-    axins.set_ylim(box[1], box[3])
+    axi.set_xlim(box[0], box[2])
+    axi.set_ylim(box[1], box[3])
     # linewidth of inset spines:
-    for s in axins.spines.values():
+    for s in axi.spines.values():
         s.set_linewidth(lw)
     # draw zoomed box:
     ax.plot([box[0], box[0], box[2], box[2], box[0]],
@@ -108,8 +114,40 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
             x = [box[(((p0+1)%4)//2)*2], pos[(((p1+1)%4)//2)*2]]
             y = [box[1+(p0//2)*2], pos[1+(p1//2)*2]]
             ax.plot(x, y, clip_on=False, **kwargs)
-    return axins
+    return axi
 
+
+def install_insets():
+    """ Install inset functions on matplotlib axes.
+
+    This makes inset() and zoomed_inset() available as member functions
+    for matplib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    uninstall_insets()
+    """
+    if not hasattr(mpl.axes.Axes, 'inset'):
+        mpl.axes.Axes.inset = inset
+    if not hasattr(mpl.axes.Axes, 'zoomed_inset'):
+        mpl.axes.Axes.zoomed_inset = zoomed_inset
+
+
+def uninstall_insets():
+    """ Uninstall inset functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by install_insets().
+    """
+    if hasattr(mpl.axes.Axes, 'inset'):
+        delattr(mpl.axes.Axes, 'inset')
+    if hasattr(mpl.axes.Axes, 'zoomed_inset'):
+        delattr(mpl.axes.Axes, 'zoomed_inset')
+
+
+install_insets()        
+    
 
 def demo():
     """ Run a demonstration of the insets module.
@@ -123,20 +161,16 @@ def demo():
     
     fig, ax = plt.subplots()
     x = np.arange(-2.0, 5.0, 0.01)
-    ax.plot(x, np.sin(2.0*np.pi*4.0*x))
+    y = np.sin(2.0*np.pi*4.0*x)
+    ax.plot(x, y)
     ax.set_xlim(-2.0, 5.0)
     ax.set_ylim(-1.5, 4.5)
     ax.set_xlabel('Time [s]')
-    axi = ax.zoomed_inset([0.1, 0.6, 0.9, 0.95], [0.0, -1.0, 2.0, 1.0],
-                          [(4, 1), (3, 2)], lw=0.5)
-    axi.plot(x, np.sin(2.0*np.pi*4.0*x))
+    axi = ax.zoomed_inset((0.1, 0.6, 0.9, 0.95), (0.0, -1.0, 2.0, 1.0),
+                          ((4, 1), (3, 2)), lw=0.5)
+    axi.plot(x, y)
     label_corners(axi)
     plt.show()
-
-
-# make the functions available as member variables:
-mpl.axes.Axes.inset = inset
-mpl.axes.Axes.zoomed_inset = zoomed_inset
 
 
 if __name__ == "__main__":

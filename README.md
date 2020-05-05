@@ -31,7 +31,7 @@ The following modules are provided by the plottools package:
 - `labels`: annotate axis with label and unit and align axes labels.
 - `arrows`: arrows.
 - `axes`: mark axes with a label and simplify common axis labels.
-- `insets`: insets made easy.
+- `insets`: insets made easy. [More...](doc/insets.md)
 - `scalebars`: labeled scale bars. [More...](doc/scalebars.md)
 - `significance`: indicating statsitical significance.
 

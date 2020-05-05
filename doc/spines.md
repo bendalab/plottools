@@ -6,9 +6,9 @@ Control spine visibility, bounds (extend of spine), and position
 To be able to use the show_spines(), set_spines_bounds() and
 set_spines_outward() functions they need to be installed first by
 means of the install_spines() function. For setting default spine
-appearance import and call set_default_spines(). This function
-implicitely installs all necessary functions, so no further call to
-installing functions is needed.
+appearance import and call spines_params(). This function implicitely
+installs all necessary functions, so no further call to installing
+functions is needed.
 
 ```
 import matplotlib.pyplot as plt
