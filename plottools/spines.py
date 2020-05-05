@@ -510,17 +510,15 @@ def uninstall_default_spines():
     Call this code to disable anything that was installed by install_default_spines().
     """
     # remove spine parameter from rc configuration:
-    """
     if 'axes.spines.show' in mpl.rcParams:
-        delattr(mpl.rcParams, 'axes.spines.show')
-        delattr(mpl.rcParams, 'axes.spines.offsets')
-        delattr(mpl.rcParams, 'axes.spines.bounds')
-        delattr(mpl.rcParams, 'axes.spines.twinx')
-        delattr(mpl.rcParams, 'axes.spines.twiny')
-        delattr(mpl.rcParams, 'axes.spines.inset.show')
-        delattr(mpl.rcParams, 'axes.spines.inset.offsets')
-        delattr(mpl.rcParams, 'axes.spines.inset.bounds')
-    """
+        mpl.rcParams.pop('axes.spines.show', None)
+        mpl.rcParams.pop('axes.spines.offsets', None)
+        mpl.rcParams.pop('axes.spines.bounds', None)
+        mpl.rcParams.pop('axes.spines.twinx', None)
+        mpl.rcParams.pop('axes.spines.twiny', None)
+        mpl.rcParams.pop('axes.spines.inset.show', None)
+        mpl.rcParams.pop('axes.spines.inset.offsets', None)
+        mpl.rcParams.pop('axes.spines.inset.bounds', None)
     # reinstall original Axes constructors:
     if hasattr(mpl.axes.Axes, '__init__orig_spines'):
         mpl.axes.Axes.__init__ = mpl.axes.Axes.__init__orig_spines
