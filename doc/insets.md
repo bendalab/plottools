@@ -22,7 +22,7 @@ ax.set_ylabel('Voltage [mV]')
 `inset()` creates new axes at the specified relative axes coordinates
 (x0, y0, x1, y1).
 
-![inset](figures/insets-inset.png
+![inset](figures/insets-inset.png)
 
 ```
 axi = ax.inset((0.2, 0.6, 0.9, 0.95))
@@ -42,7 +42,7 @@ The third argument specifies lines to be drawn from the data box to
 the inset. Each tuple specifies a corne on the data box that is to be
 connected with another corner of the inset.
 
-![zoomed_inset](figures/insets-zoomed_inset.png
+![zoomed_inset](figures/insets-zoomed_inset.png)
 
 ```
 axi = ax.zoomed_inset([0.2, 0.6, 0.9, 0.95], [0.0, -1.1, 2.0, 1.1],
