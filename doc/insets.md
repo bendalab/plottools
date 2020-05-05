@@ -39,7 +39,7 @@ original data (second argument, in data coordinates: x0, y0, x1, y1)
 and sets the limits of the inset axes accordingly.
 
 The third argument specifies lines to be drawn from the data box to
-the inset. Each tuple specifies a corne on the data box that is to be
+the inset. Each tuple specifies a corner on the data box that is to be
 connected with another corner of the inset.
 
 ![zoomed_inset](figures/insets-zoomed_inset.png)
