@@ -279,7 +279,7 @@ def gradient(color0, color1, r):
     except (TypeError, AttributeError):
         cd0 = None
     try:
-        cd1 = dict(**color0)
+        cd1 = dict(**color1)
         if 'color' in cd1:
             key1 = 'color'
             color1 = cd1[key1]
