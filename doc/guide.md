@@ -24,6 +24,7 @@ your figure. Modifying a figure is a hassle if
 - it takes some effort to find the spot where to edit the script,
 - running the script takes a lot of time because data are computed,
 - manual postprocessing is required.
+
 Having small scripts (1.) that are simple to find (2.) and run quickly
 (3.) without any manual postprocessing (7.) significantly lowers the
 effort to actually modify a figure.
@@ -39,15 +40,16 @@ The second reason is: *figures want to be used*.
 
 Ideally, the figures you generate are not only used for that
 particular manuscript you are currently writing. You yourself or your
-college, or your supervisor might want to use thefigure in a different
-context, like a poster, a talk, or another manuscript, a review paper,
-a book chapter. Particularly for the latter chances for your figure to
-be used are dramatically increased, if the figure can be easily
-modified. For this it is not sufficient to provide the pdf (or even
-worse, a pixel file) of the figure. Rather, a simple dedicated script
-(1.) with all necessary data (3.) that are readable even ten years
-later (4.) that produces the complete figure (7.) ensure that the
-figure can be easily adapted to another context as needed.
+college, or your supervisor might want to use your figures in a
+different context, like a poster, a talk, or another manuscript, a
+review paper, a book chapter. Particularly for the latter, chances for
+your figure to be used are dramatically increased, if the figure can
+be easily modified. For this it is not sufficient to provide the pdf
+(or even worse, a pixel file) of the figure. Rather, a simple
+dedicated script (1.) with all necessary data (3.) that are readable
+even ten years later (4.) that produces the complete figure (7.)
+ensures that the figure can be easily adapted to another context as
+needed.
 
 The third reason is: *you need to provide the data of the figures anyways*.
 
