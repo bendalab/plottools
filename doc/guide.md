@@ -7,7 +7,7 @@ we suggest the following guidlines for preparing figures:
 2. The basename of the generated figure is the same as the one of the python script generating it.
 3. The python script only generates the figure, it does not do any computations.
 4. The data needed for plotting are available as numpy `.npz` files or `.csv` tables,
-   do not use numpy pickles (`.pkl`) for storing data.
+   do not use pickles (`.pkl`) for storing data.
 6. Have a single central python module that defines basic figure layout settings.
 7. No manual postprocessing by whatever graphics software.
 
