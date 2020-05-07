@@ -46,3 +46,7 @@ run, for example,
 ```
 python -m plottools.spines
 ```
+
+## How to prepare figures
+
+Read our [guidline](doc/guide.md) for preparing figures for your next paper manuscript or thesis.
