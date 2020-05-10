@@ -61,6 +61,7 @@ from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_p
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
+from .text import install_text, uninstall_text
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
 from .axes import label_axes, labelaxes_params
@@ -662,6 +663,7 @@ def screen_style(namespace=None):
     install_align_labels(xdist=5, ydist=10)
     # figsize in centimeter:
     install_figure()
+    install_text()
 
     
 def paper_style(namespace=None):
@@ -746,6 +748,7 @@ def paper_style(namespace=None):
     install_align_labels(xdist=5, ydist=10)
     # figsize in centimeter:
     install_figure()
+    install_text()
 
    
 def sketch_style(namespace=None):
@@ -833,6 +836,7 @@ def sketch_style(namespace=None):
     install_align_labels(xdist=5, ydist=10)
     # figsize in centimeter:
     install_figure()
+    install_text()
     
 
 def plot_linestyles(ax):

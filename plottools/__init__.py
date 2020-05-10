@@ -7,6 +7,8 @@ __all__ = ['styles',
            'ticks',
            'labels',
            'axes',
+           'text',
+           'arrows',
            'insets',
            'scalebars',
            'significance']
