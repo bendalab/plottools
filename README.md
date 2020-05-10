@@ -29,6 +29,7 @@ The following modules are provided by the plottools package:
 - `spines`: modify the appearance of spines. [More...](doc/spines.md)
 - `ticks`: setting tick locations and formats. [More...](doc/ticks.md)
 - `labels`: annotate axis with label and unit and align axes labels.
+- `text`: enhance textual annotations.
 - `arrows`: arrows.
 - `axes`: mark axes with a label and simplify common axis labels.
 - `insets`: insets made easy. [More...](doc/insets.md)
