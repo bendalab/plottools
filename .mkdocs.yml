@@ -1,0 +1,23 @@
+site_name: plottools
+
+repo_url: https://github.com/bendalab/plottools/
+
+edit_uri: ""
+
+site_author: Benda-Lab
+
+theme: readthedocs
+
+markdown_extensions:
+    - markdown_include.include
+    
+nav:
+    - Home: 'index.md'
+    - 'Plotting guidelines': 'guide.md'
+    - 'User Guide':
+        - 'Colors': 'colors.md'
+        - 'Spines': 'spines.md'
+        - 'Insets': 'insets.md'
+        - 'Ticks': 'ticks.md'
+        - 'Scalebars': 'scalebars.md'
+    - API reference: 'api/index.html'

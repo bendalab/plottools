@@ -24,16 +24,16 @@ plottools package expands on this. See the styles module for details.
 
 The following modules are provided by the plottools package:
 - `styles`: layout settings and plot styles.
-- `colors`: color palettes and tools for manipulating colors. [More...](doc/colors.md)
+- `colors`: color palettes and tools for manipulating colors. [More...](docs/colors.md)
 - `figure`: size and margins of a figure.
-- `spines`: modify the appearance of spines. [More...](doc/spines.md)
-- `ticks`: setting tick locations and formats. [More...](doc/ticks.md)
+- `spines`: modify the appearance of spines. [More...](docs/spines.md)
+- `ticks`: setting tick locations and formats. [More...](docs/ticks.md)
 - `labels`: annotate axis with label and unit and align axes labels.
 - `text`: enhance textual annotations.
 - `arrows`: arrows.
 - `axes`: mark axes with a label and simplify common axis labels.
-- `insets`: insets made easy. [More...](doc/insets.md)
-- `scalebars`: labeled scale bars. [More...](doc/scalebars.md)
+- `insets`: insets made easy. [More...](docs/insets.md)
+- `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
 - `significance`: indicating statsitical significance.
 
 See documentation in the modules for more infos.
@@ -50,4 +50,4 @@ python -m plottools.spines
 
 ## How to prepare figures
 
-Read our [guidline](doc/guide.md) for preparing figures for your next paper manuscript or thesis.
+Read our [guidline](docs/guide.md) for preparing figures for your next paper manuscript or thesis.

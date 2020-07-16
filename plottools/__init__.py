@@ -1,7 +1,10 @@
+"""
+Simplify production of publication-quality figures based on matplotlib.
+"""
+
 from .version import __version__
 
-__all__ = ['styles',
-           'figure',
+__all__ = ['figure',
            'colors',
            'spines',
            'ticks',
@@ -11,4 +14,5 @@ __all__ = ['styles',
            'arrows',
            'insets',
            'scalebars',
-           'significance']
+           'significance',
+           'styles']
