@@ -51,3 +51,8 @@ python -m plottools.spines
 ## How to prepare figures
 
 Read our [guidline](docs/guide.md) for preparing figures for your next paper manuscript or thesis.
+
+
+## Documentation
+
+[Documentation](https://bendalab.github.io/plottools)
