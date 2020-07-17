@@ -10,9 +10,9 @@ The following functions are added as a member to mpl.figure.Figure:
 - `common_xtick_labels()`: simplify common xtick labels.
 - `common_ytick_labels()`: simplify common ytick labels.
 
-- `labelaxes_params()`: set rc settings for labelaxes.
+- `labelaxes_params()`: set mpl.ptParams for labelaxes.
 
-RC settings defined by the axes module:
+mpl.ptParams defined by the axes module:
 ```
 figure.labelaxes.xoffs : 'auto',
 figure.labelaxes.yoffs : 'auto',
@@ -183,29 +183,29 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the right-most axis to the left figure border,
         otherwise use the value computed by the first call.
-        If None take value from rc settings 'figure.labelaxes.xoffs'.
+        If None take value from mpl.ptParams 'figure.labelaxes.xoffs'.
     yoffs: float, 'auto', or None
         Y-coordinate of label relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the top-most axis to the top figure border,
         otherwise use the value computed by the first call.
-        If None take value from rc settings 'figure.labelaxes.yoffs'.
+        If None take value from mpl.ptParams 'figure.labelaxes.yoffs'.
     labels: string or list of strings
         If string, labels are increments of the first alphanumeric character in the string.
         Subsequent calls to label_axes() keep incrementing the label.
         With a list arbitary labels can be specified.
-        If None, set to figure.labelaxes.labels rc settings.
+        If None, set to mpl.ptParams figure.labelaxes.labels.
     kwargs: keyword arguments
         Passed on to ax.text().
-        Defaults to figure.labelaxes.font rc settings.
+        Defaults to mpl.ptParams figure.labelaxes.font.
     """
     if fig is None:
         fig = axes[0].get_figure()
     if axes is None:
         axes = fig.get_axes()
     if labels is None:
-        labels = mpl.rcParams['figure.labelaxes.labels']
+        labels = mpl.ptParams['figure.labelaxes.labels']
     if not isinstance(labels, (list, tuple)):
         label = '%s'
         c = 'A'
@@ -219,9 +219,9 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
         labels = [label % chr(c + k) for k in range(len(axes))]
         fig.labelaxes_counter = chr(c + len(axes))
     # font settings:
-    for k in mpl.rcParams['figure.labelaxes.font']:
+    for k in mpl.ptParams['figure.labelaxes.font']:
         if not k in kwargs:
-            kwargs[k] = mpl.rcParams['figure.labelaxes.font'][k]
+            kwargs[k] = mpl.ptParams['figure.labelaxes.font'][k]
     # get axes offsets:
     xo = -1.0
     yo = 1.0
@@ -239,9 +239,9 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
     fs = mpl.rcParams['font.size']*fig.dpi/ppi
     # set offsets:
     if xoffs is None:
-        xoffs = mpl.rcParams['figure.labelaxes.xoffs']
+        xoffs = mpl.ptParams['figure.labelaxes.xoffs']
     if yoffs is None:
-        yoffs = mpl.rcParams['figure.labelaxes.yoffs']
+        yoffs = mpl.ptParams['figure.labelaxes.yoffs']
     if xoffs == 'auto':
         if hasattr(fig, 'labelaxes_xoffs'):
             xoffs = fig.labelaxes_xoffs
@@ -282,7 +282,9 @@ mpl.figure.Figure.label_axes = label_axes
 
 """ Add labelaxes parameter to rc configuration.
 """
-mpl.rcParams.update({'figure.labelaxes.xoffs': 'auto',
+if not hasattr(mpl, 'ptParams'):
+    mpl.ptParams = {}
+mpl.ptParams.update({'figure.labelaxes.xoffs': 'auto',
                      'figure.labelaxes.yoffs': 'auto',
                      'figure.labelaxes.labels': 'A',
                      'figure.labelaxes.font': dict(fontsize='x-large',
@@ -314,13 +316,13 @@ def labelaxes_params(xoffs=None, yoffs=None, labels=None, font=None):
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
     if xoffs is not None:
-        mpl.rcParams.update({'figure.labelaxes.xoffs': xoffs})
+        mpl.ptParams.update({'figure.labelaxes.xoffs': xoffs})
     if yoffs is not None:
-        mpl.rcParams.update({'figure.labelaxes.yoffs': yoffs})
+        mpl.ptParams.update({'figure.labelaxes.yoffs': yoffs})
     if labels is not None:
-        mpl.rcParams.update({'figure.labelaxes.labels': labels})
+        mpl.ptParams.update({'figure.labelaxes.labels': labels})
     if font is not None:
-        mpl.rcParams.update({'figure.labelaxes.font': font})
+        mpl.ptParams.update({'figure.labelaxes.font': font})
 
 
 def demo():

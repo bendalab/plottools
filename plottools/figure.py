@@ -237,8 +237,8 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
         fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
     fig.__savefig_orig_figure(fname, *args, **kwargs)
     if stripfonts is None:
-        if 'pdf.stripfonts' in mpl.rcParams:
-            stripfonts = mpl.rcParams['pdf.stripfonts']
+        if 'pdf.stripfonts' in mpl.ptParams:
+            stripfonts = mpl.ptParams['pdf.stripfonts']
         else:
             stripfonts = False
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
@@ -258,8 +258,8 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
         fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
     plt.__savefig_orig_figure(fname, *args, **kwargs)
     if stripfonts is None:
-        if 'pdf.stripfonts' in mpl.rcParams:
-            stripfonts = mpl.rcParams['pdf.stripfonts']
+        if 'pdf.stripfonts' in mpl.ptParams:
+            stripfonts = mpl.ptParams['pdf.stripfonts']
         else:
             stripfonts = False
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
@@ -334,7 +334,9 @@ def uninstall_figure():
 
 """ Add figure parameter to rc configuration.
 """
-mpl.rcParams.update({'pdf.stripfonts': False})
+if not hasattr(mpl, 'ptParams'):
+    mpl.ptParams = {}
+mpl.ptParams.update({'pdf.stripfonts': False})
 
 
 def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):

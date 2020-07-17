@@ -387,76 +387,76 @@ def __axes_init_spines__(ax, *args, **kwargs):
     Installed by install_default_spines().
     """
     ax.__init__orig_spines(*args, **kwargs)
-    ax.show_spines(mpl.rcParams['axes.spines.show'])
-    ax.set_spines_outward(mpl.rcParams['axes.spines.offsets'])
-    ax.set_spines_bounds(mpl.rcParams['axes.spines.bounds'])
+    ax.show_spines(mpl.ptParams['axes.spines.show'])
+    ax.set_spines_outward(mpl.ptParams['axes.spines.offsets'])
+    ax.set_spines_bounds(mpl.ptParams['axes.spines.bounds'])
 
 
 def __twinx_spines(ax, *args, **kwargs):
     """ Mark a twinx axes such that the corresponding spine properties can be set. """
-    ax_spines = mpl.rcParams['axes.spines.show']
-    if 'l' in mpl.rcParams['axes.spines.twinx'] and 'l' not in ax_spines:
+    ax_spines = mpl.ptParams['axes.spines.show']
+    if 'l' in mpl.ptParams['axes.spines.twinx'] and 'l' not in ax_spines:
         ax_spines += 'l'
-    if 'r' in mpl.rcParams['axes.spines.twinx'] and 'r' not in ax_spines:
+    if 'r' in mpl.ptParams['axes.spines.twinx'] and 'r' not in ax_spines:
         ax_spines += 'r'
-    axt_spines = mpl.rcParams['axes.spines.twinx']
-    if 'b' in mpl.rcParams['axes.spines.show'] and 'b' not in axt_spines:
+    axt_spines = mpl.ptParams['axes.spines.twinx']
+    if 'b' in mpl.ptParams['axes.spines.show'] and 'b' not in axt_spines:
         axt_spines += 'b'
-    if 't' in mpl.rcParams['axes.spines.show'] and 't' not in axt_spines:
+    if 't' in mpl.ptParams['axes.spines.show'] and 't' not in axt_spines:
         axt_spines += 'b'
     ax.show_spines(ax_spines)
-    ax.set_spines_outward(mpl.rcParams['axes.spines.offsets'])
-    orig_default_spines = mpl.rcParams['axes.spines.show']
-    mpl.rcParams.update({'axes.spines.show': axt_spines})
+    ax.set_spines_outward(mpl.ptParams['axes.spines.offsets'])
+    orig_default_spines = mpl.ptParams['axes.spines.show']
+    mpl.ptParams.update({'axes.spines.show': axt_spines})
     axt = ax.__twinx_orig_spines(*args, **kwargs)
-    mpl.rcParams.update({'axes.spines.show': orig_default_spines})
+    mpl.ptParams.update({'axes.spines.show': orig_default_spines})
     return axt
 
 
 def __twiny_spines(ax, *args, **kwargs):
     """ Mark a twiny axes such that the corresponding spine properties can be set. """
-    ax_spines = mpl.rcParams['axes.spines.show']
-    if 't' in mpl.rcParams['axes.spines.twiny'] and 't' not in ax_spines:
+    ax_spines = mpl.ptParams['axes.spines.show']
+    if 't' in mpl.ptParams['axes.spines.twiny'] and 't' not in ax_spines:
         ax_spines += 't'
-    if 'b' in mpl.rcParams['axes.spines.twiny'] and 'b' not in ax_spines:
+    if 'b' in mpl.ptParams['axes.spines.twiny'] and 'b' not in ax_spines:
         ax_spines += 'b'
-    axt_spines = mpl.rcParams['axes.spines.twiny']
-    if 'l' in mpl.rcParams['axes.spines.show'] and 'l' not in axt_spines:
+    axt_spines = mpl.ptParams['axes.spines.twiny']
+    if 'l' in mpl.ptParams['axes.spines.show'] and 'l' not in axt_spines:
         axt_spines += 'l'
-    if 'r' in mpl.rcParams['axes.spines.show'] and 'r' not in axt_spines:
+    if 'r' in mpl.ptParams['axes.spines.show'] and 'r' not in axt_spines:
         axt_spines += 'r'
     ax.show_spines(ax_spines)
-    ax.set_spines_outward(mpl.rcParams['axes.spines.offsets'])
-    orig_default_spines = mpl.rcParams['axes.spines.show']
-    mpl.rcParams.update({'axes.spines.show': axt_spines})
+    ax.set_spines_outward(mpl.ptParams['axes.spines.offsets'])
+    orig_default_spines = mpl.ptParams['axes.spines.show']
+    mpl.ptParams.update({'axes.spines.show': axt_spines})
     axt = ax.__twiny_orig_spines(*args, **kwargs)
-    mpl.rcParams.update({'axes.spines.show': orig_default_spines})
+    mpl.ptParams.update({'axes.spines.show': orig_default_spines})
     return axt
 
 
 def __inset_spines(ax, *args, **kwargs):
     """ Mark an inset axes such that the corresponding spine properties can be set. """
     # save default settings for normal axes:
-    orig_default_spines = mpl.rcParams['axes.spines.show']
-    orig_default_spines_offsets = mpl.rcParams['axes.spines.offsets']
-    orig_default_spines_bounds = mpl.rcParams['axes.spines.bounds']
+    orig_default_spines = mpl.ptParams['axes.spines.show']
+    orig_default_spines_offsets = mpl.ptParams['axes.spines.offsets']
+    orig_default_spines_bounds = mpl.ptParams['axes.spines.bounds']
     # override settings with values for insets:
-    mpl.rcParams.update({'axes.spines.show': mpl.rcParams['axes.spines.inset.show']})
-    mpl.rcParams.update({'axes.spines.offsets': mpl.rcParams['axes.spines.inset.offsets']})
-    mpl.rcParams.update({'axes.spines.bounds': mpl.rcParams['axes.spines.inset.bounds']})
+    mpl.ptParams.update({'axes.spines.show': mpl.ptParams['axes.spines.inset.show']})
+    mpl.ptParams.update({'axes.spines.offsets': mpl.ptParams['axes.spines.inset.offsets']})
+    mpl.ptParams.update({'axes.spines.bounds': mpl.ptParams['axes.spines.inset.bounds']})
     # create inset axes:
     axi = ax.__inset_orig_spines(*args, **kwargs)
     # restore default settings for normal axes:
-    mpl.rcParams.update({'axes.spines.show': orig_default_spines})
-    mpl.rcParams.update({'axes.spines.offsets': orig_default_spines_offsets})
-    mpl.rcParams.update({'axes.spines.bounds': orig_default_spines_bounds})
+    mpl.ptParams.update({'axes.spines.show': orig_default_spines})
+    mpl.ptParams.update({'axes.spines.offsets': orig_default_spines_offsets})
+    mpl.ptParams.update({'axes.spines.bounds': orig_default_spines_bounds})
     return axi
 
 
 def install_default_spines():
-    """ Install code and rc settings for formatting spines.
+    """ Install code and mpl.ptParams for formatting spines.
 
-    Adds rc setting:
+    Adds mpl.ptParams:
     ```
     axes.spines.show   : 'lrtb'
     axes.spines.offsets: {'lrtb': 0}
@@ -480,8 +480,10 @@ def install_default_spines():
     """
     install_spines()
     # add spine parameter to rc configuration:
-    if 'axes.spines.show' not in mpl.rcParams:
-        mpl.rcParams.update({'axes.spines.show': 'lrtb',
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    if 'axes.spines.show' not in mpl.ptParams:
+        mpl.ptParams.update({'axes.spines.show': 'lrtb',
                              'axes.spines.offsets': {'lrtb': 0},
                              'axes.spines.bounds': {'lrtb': 'full'},
                              'axes.spines.twinx': 'r',
@@ -509,16 +511,17 @@ def uninstall_default_spines():
     
     Call this code to disable anything that was installed by install_default_spines().
     """
-    # remove spine parameter from rc configuration:
-    if 'axes.spines.show' in mpl.rcParams:
-        mpl.rcParams.pop('axes.spines.show', None)
-        mpl.rcParams.pop('axes.spines.offsets', None)
-        mpl.rcParams.pop('axes.spines.bounds', None)
-        mpl.rcParams.pop('axes.spines.twinx', None)
-        mpl.rcParams.pop('axes.spines.twiny', None)
-        mpl.rcParams.pop('axes.spines.inset.show', None)
-        mpl.rcParams.pop('axes.spines.inset.offsets', None)
-        mpl.rcParams.pop('axes.spines.inset.bounds', None)
+    # remove spine parameter from mpl.ptParams:
+    if hasattr(mpl, 'ptParams') and 'axes.spines.show' in mpl.ptParams:
+        mpl.ptParams.pop('axes.spines.show', None)
+        mpl.ptParams.pop('axes.spines.offsets', None)
+        mpl.ptParams.pop('axes.spines.bounds', None)
+        mpl.ptParams.pop('axes.spines.twinx', None)
+        mpl.ptParams.pop('axes.spines.twiny', None)
+        mpl.ptParams.pop('axes.spines.inset.show', None)
+        mpl.ptParams.pop('axes.spines.inset.offsets', None)
+        mpl.ptParams.pop('axes.spines.inset.bounds', None)
+        mpl.ptParams = {}
     # reinstall original Axes constructors:
     if hasattr(mpl.axes.Axes, '__init__orig_spines'):
         mpl.axes.Axes.__init__ = mpl.axes.Axes.__init__orig_spines
@@ -565,21 +568,21 @@ def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
     """
     install_default_spines()
     if spines is not None:
-        mpl.rcParams.update({'axes.spines.show': spines})
+        mpl.ptParams.update({'axes.spines.show': spines})
     if spines_offsets is not None:
-        mpl.rcParams.update({'axes.spines.offsets': spines_offsets})
+        mpl.ptParams.update({'axes.spines.offsets': spines_offsets})
     if spines_bounds is not None:
-        mpl.rcParams.update({'axes.spines.bounds': spines_bounds})
+        mpl.ptParams.update({'axes.spines.bounds': spines_bounds})
     if twinx_spines is not None:
-        mpl.rcParams.update({'axes.spines.twinx': twinx_spines})
+        mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
     if twiny_spines is not None:
-        mpl.rcParams.update({'axes.spines.twiny': twiny_spines})
+        mpl.ptParams.update({'axes.spines.twiny': twiny_spines})
     if inset_spines is not None:
-        mpl.rcParams.update({'axes.spines.inset.show': inset_spines})
+        mpl.ptParams.update({'axes.spines.inset.show': inset_spines})
     if inset_spines_offsets is not None:
-        mpl.rcParams.update({'axes.spines.inset.offsets': inset_spines_offsets})
+        mpl.ptParams.update({'axes.spines.inset.offsets': inset_spines_offsets})
     if inset_spines_bounds is not None:
-        mpl.rcParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
+        mpl.ptParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
 
 
 def demo_basic():

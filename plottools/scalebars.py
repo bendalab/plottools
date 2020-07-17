@@ -71,9 +71,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     y = ymin + y*unity
     # bar length:
     if wformat is None:
-        wformat = mpl.rcParams['scalebar.format.large']
+        wformat = mpl.ptParams['scalebar.format.large']
         if width < 1.0:
-            wformat = mpl.rcParams['scalebar.format.small']
+            wformat = mpl.ptParams['scalebar.format.small']
     try:
         ls = wformat % width
         width = float(ls)
@@ -91,10 +91,10 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         x1 = x+0.5*width
     # line width:
     if lw is None:
-        lw = mpl.rcParams['scalebar.linewidth']
+        lw = mpl.ptParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.rcParams['scalebar.color']
+        color = mpl.ptParams['scalebar.color']
     # scalebar:
     lh = ax.plot([x0, x1], [y, y], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
@@ -102,9 +102,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     # caps:
     if capsize is None:
-        capsize = mpl.rcParams['scalebar.capsize']
+        capsize = mpl.ptParams['scalebar.capsize']
     if clw is None:
-        clw = mpl.rcParams['scalebar.caplinewidth']
+        clw = mpl.ptParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dy = capsize*dyu
         ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
@@ -114,9 +114,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     # label:
     if wunit:
         ls += u'\u2009%s' % wunit
-    for k in mpl.rcParams['scalebar.font']:
+    for k in mpl.ptParams['scalebar.font']:
         if not k in kwargs:
-            kwargs[k] = mpl.rcParams['scalebar.font'][k]
+            kwargs[k] = mpl.ptParams['scalebar.font'][k]
     if va == 'top':
         th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
                      ha='center', va='bottom', **kwargs)
@@ -189,9 +189,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     y = ymin + y*unity
     # bar length:
     if hformat is None:
-        hformat = mpl.rcParams['scalebar.format.large']
+        hformat = mpl.ptParams['scalebar.format.large']
         if height < 1.0:
-            hformat = mpl.rcParams['scalebar.format.small']
+            hformat = mpl.ptParams['scalebar.format.small']
     try:
         ls = hformat % height
         width = float(ls)
@@ -209,10 +209,10 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
         y1 = y+0.5*height
     # line width:
     if lw is None:
-        lw = mpl.rcParams['scalebar.linewidth']
+        lw = mpl.ptParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.rcParams['scalebar.color']
+        color = mpl.ptParams['scalebar.color']
     # scalebar:
     lh = ax.plot([x, x], [y0, y1], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
@@ -220,9 +220,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
     # caps:
     if capsize is None:
-        capsize = mpl.rcParams['scalebar.capsize']
+        capsize = mpl.ptParams['scalebar.capsize']
     if clw is None:
-        clw = mpl.rcParams['scalebar.caplinewidth']
+        clw = mpl.ptParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dx = capsize*dxu
         ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw, solid_capstyle='butt',
@@ -232,9 +232,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     # label:
     if hunit:
         ls += u'\u2009%s' % hunit
-    for k in mpl.rcParams['scalebar.font']:
+    for k in mpl.ptParams['scalebar.font']:
         if not k in kwargs:
-            kwargs[k] = mpl.rcParams['scalebar.font'][k]
+            kwargs[k] = mpl.ptParams['scalebar.font'][k]
     if ha == 'right':
         th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
                      ha='left', va='center', **kwargs)
@@ -298,10 +298,10 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     """
     # line width:
     if lw is None:
-        lw = mpl.rcParams['scalebar.linewidth']
+        lw = mpl.ptParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.rcParams['scalebar.color']
+        color = mpl.ptParams['scalebar.color']
     x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
                            lw, color, 0.0, 1, **kwargs)
     ax.lines.pop()
@@ -332,7 +332,9 @@ mpl.axes.Axes.scalebars = scalebars
 
 """ Add scalebar parameter to rc configuration.
 """
-mpl.rcParams.update({'scalebar.format.large': '%.0f',
+if not hasattr(mpl, 'ptParams'):
+    mpl.ptParams = {}
+mpl.ptParams.update({'scalebar.format.large': '%.0f',
                      'scalebar.format.small': '%.1f',
                      'scalebar.linewidth': 2,
                      'scalebar.color': 'k',
@@ -368,7 +370,7 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
-    mpl.rcParams.update({'scalebar.format.large': format_large,
+    mpl.ptParams.update({'scalebar.format.large': format_large,
                          'scalebar.format.small': format_small,
                          'scalebar.linewidth': lw,
                          'scalebar.color': color,
@@ -378,7 +380,7 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
                          'scalebar.fontstyle': 'normal',
                          'scalebar.fontweight': 'normal'})
     if font is not None:
-        mpl.rcParams.update({'scalebar.font': font})
+        mpl.ptParams.update({'scalebar.font': font})
 
     
 def demo():
