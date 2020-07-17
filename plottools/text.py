@@ -22,7 +22,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     `fontweight` arguments to corresponding LaTeX commands. Escape
     special characters '%', '#', '&'.
 
-    In non-LaTeX mode translate '\,' to thin space, '\micro' to micro character.
+    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to micro character.
 
     Parameters
     ----------
