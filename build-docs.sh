@@ -15,10 +15,9 @@ echo
 echo "Clean up documentation of $PACKAGE"
 echo
 
+rm -rf "$BUILDROOT" 2> /dev/null || true
 mkdir -p "$BUILDROOT"
-rm -r "$BUILDROOT/$PACKAGE" 2> /dev/null || true
 
-echo
 echo "Building general documentation for $PACKAGE"
 echo
 
