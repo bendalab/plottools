@@ -110,7 +110,7 @@ def prefix_formatter(x, pos):
     prefix = prefixes[e]
     if prefix:
         if plt.rcParams['text.usetex']:
-            return u'%g\,%s' % (x/10**(3*e), prefix)
+            return u'%g\\,%s' % (x/10**(3*e), prefix)
         else:
             return u'%g\u2009%s' % (x/10**(3*e), prefix)
     else:
@@ -254,7 +254,7 @@ def set_xticks_pifracs(ax, denominator, ontop=False):
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
     """
-    ax.set_xticks_fracs(denominator, np.pi, '\pi', ontop)
+    ax.set_xticks_fracs(denominator, np.pi, '\\pi', ontop)
 
 
 def set_yticks_pifracs(ax, denominator, ontop=False):
@@ -269,7 +269,7 @@ def set_yticks_pifracs(ax, denominator, ontop=False):
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
     """
-    ax.set_yticks_fracs(denominator, np.pi, '\pi', ontop)
+    ax.set_yticks_fracs(denominator, np.pi, '\\pi', ontop)
 
 
 def set_xticks_format(ax, fs):

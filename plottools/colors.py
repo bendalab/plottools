@@ -18,7 +18,7 @@ Manipulating colors:
 - `gradient()`: interpolate between two colors.
 
 Exporting colors:
-- `latex_colors()`: print a \definecolor command for LaTeX.
+- `latex_colors()`: print a \\definecolor command for LaTeX.
 
 Displaying colors:
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
@@ -311,7 +311,7 @@ def gradient(color0, color1, r):
 
     
 def latex_colors(colors, name=''):
-    """ Print a \definecolor command for LaTeX.
+    """ Print a \\definecolor command for LaTeX.
 
     Parameters
     ----------
