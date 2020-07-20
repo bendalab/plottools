@@ -23,6 +23,7 @@ big step in this direction but do not completely reach this goal. The
 plottools package expands on this. See the styles module for details.
 
 The following modules are provided by the plottools package:
+
 - `styles`: layout settings and plot styles.
 - `colors`: color palettes and tools for manipulating colors. [More...](docs/colors.md)
 - `figure`: size and margins of a figure.

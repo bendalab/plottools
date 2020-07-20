@@ -1,6 +1,4 @@
 """
-# Figure
-
 Size, margins and default filename of a figure.
 
 Simply call
@@ -38,6 +36,7 @@ then the file name of the main script is used.
 If no file extension is specified, '.pdf' is appended.
 
 Available functions:
+
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.

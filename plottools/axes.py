@@ -1,15 +1,13 @@
 """
-# Axes
-
 Mark axes with a label and simplify common axis labels.
 
 The following functions are added as a member to mpl.figure.Figure:
+
 - `label_axes()`: put a label on each axes.
 - `common_xlabels()`: simplify common xlabels.
 - `common_ylabels()`: simplify common ylabels.
 - `common_xtick_labels()`: simplify common xtick labels.
 - `common_ytick_labels()`: simplify common ytick labels.
-
 - `labelaxes_params()`: set mpl.ptParams for labelaxes.
 
 mpl.ptParams defined by the axes module:
@@ -174,7 +172,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
     ----------
     fig: matplotlib figure
         If None take figure from first element in `axes`.
-    axes: None or list of matplotlib axes or int.
+    axes: None or list of matplotlib axes or int
         If None label all axes of the figure.
         Integers in the list are indices to the axes of the figure.
     xoffs: float, 'auto', or None
@@ -297,8 +295,8 @@ def labelaxes_params(xoffs=None, yoffs=None, labels=None, font=None):
 
     Only update those parameters that are not None.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     xoffs: float or 'auto'
         X-coordinate of label relative to origin of axis in multiples of the width
         of a character (simply 60% of the current font size).
@@ -326,7 +324,7 @@ def labelaxes_params(xoffs=None, yoffs=None, labels=None, font=None):
 
 
 def demo():
-    """ Run a demonstration of the labelaxes module.
+    """ Run a demonstration of the axes module.
     """
 
     def afigure():

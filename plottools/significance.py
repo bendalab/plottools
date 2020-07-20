@@ -1,9 +1,8 @@
 """
-# Significance
-
 Indicating statsitical significance.
 
 The following function is also added as a member to mpl.axes.Axes:
+
 - `significance_bar()`: horizontal bar with asterisks indicating significance level.
 
 """
@@ -38,7 +37,7 @@ def significance_bar(ax, p, x0, x1, y, **kwargs):
     y: float
         y-coordinate of significance bar in data units.
     kwargs: key-word arguments
-        Passed on to ax.text() used to print the asterisks.
+        Passed on to `ax.text()` used to print the asterisks.
     """
     # set label:
     if p < 0.001:

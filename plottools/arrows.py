@@ -1,12 +1,14 @@
 """
-# Arrows
+Arrows
 
 The following functions are provided as mpl.axes.Axes member functions:
+
 - `harrow()`: draw a horizontal arrow with annotation on the arrow. 
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
 - `point_to()`: text with arrow pointing to a point.
 
 Setting and plotting arrow styles:
+
 - `arrow_style()`: generate an arrow style.
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
 """

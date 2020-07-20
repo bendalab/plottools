@@ -1,6 +1,4 @@
 """
-# Text
-
 Enhance textual annotations.
 
 - `install_text()`: patch the mpl.axes.Axes.text() function.
@@ -22,19 +20,19 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     `fontweight` arguments to corresponding LaTeX commands. Escape
     special characters '%', '#', '&'.
 
-    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to micro character.
+    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to upright micro character.
 
     Parameters
     ----------
-    Same as mpl.axes.Axes.text().
+    Same as `mpl.axes.Axes.text()`.
 
     slope: float or None
         Slope to which the text should be rotated. If not otherwise specified set
         `rotation_mode` to 'anchor'.
-    fontstyle:
-        In LaTeX mode, if set to `italic` put text into `\textit{}` command.
-    fontweight:
-        In LaTeX mode, if set to `bold` put text into `\textbf{}` command.
+    fontstyle: string
+        In LaTeX mode, if set to `italic` put text into '\\textit{}' command.
+    fontweight: string
+        In LaTeX mode, if set to `bold` put text into '\\textbf{}' command.
     """
     # italics and bold LaTeX font:
     if mpl.rcParams['text.usetex']:
@@ -75,11 +73,11 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
 
 
 def install_text():
-    """ Patch the mpl.axes.Axes.text() function.
+    """ Patch the `mpl.axes.Axes.text()` function.
 
     See also
     --------
-    uninstall_figure()
+    `uninstall_text()`
     """
     if not hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.__text_orig_text = mpl.axes.Axes.text
@@ -89,7 +87,7 @@ def install_text():
 def uninstall_text():
     """ Uninstall code for text.
 
-    Call this code to disable anything that was installed by install_text().
+    Call this code to disable anything that was installed by `install_text()`.
     """
     if hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.text = mpl.axes.Axes.__text_orig_text

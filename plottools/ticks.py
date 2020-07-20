@@ -1,9 +1,8 @@
 """
-# Ticks
-
 Setting tick locations and formats.
 
 The following functions are available as members of mpl.axes.Axes:
+
 - `set_xticks_delta()`: set interval between xticks.
 - `set_yticks_delta()`: set interval between yticks.
 - `set_xticks_fixed()`: set custom xticks at fixed positions.
@@ -20,7 +19,6 @@ The following functions are available as members of mpl.axes.Axes:
 - `set_yticks_blank()`: draw yticks without labeling them.
 - `set_xticks_off()`: do not draw and label any xticks.
 - `set_yticks_off()`: do not draw and label any yticks.
-
 - `set_minor_xticks_off()`: do not draw any minor xticks.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
 """
@@ -99,7 +97,7 @@ def set_yticks_fixed(ax, locs, labels='%g'):
 
 
 def prefix_formatter(x, pos):
-    """ Function formatter used by set_xticks_prefix() and set_yticks_prefix().
+    """ Function formatter used by `set_xticks_prefix()` and `set_yticks_prefix()`.
     """
     if x <= 0:
         return '%g' % x
@@ -154,7 +152,7 @@ def set_yticks_prefix(ax):
 
 
 def fraction_formatter(denominator, factor=1, fstring='', ontop=False):
-    """ Function formatter used by set_xticks_fracs() and set_yticks_fracs().
+    """ Function formatter used by `set_xticks_fracs()` and `set_yticks_fracs()`.
 
     Parameters
     ----------
@@ -308,7 +306,7 @@ def set_xticks_blank(ax):
 
     See also
     --------
-    axes.common_xtick_labels(): simplify common xtick labels.
+    `plottools.axes.common_xtick_labels()`
     """
     ax.xaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -323,7 +321,7 @@ def set_yticks_blank(ax):
 
     See also
     --------
-    axes.common_ytick_labels(): simplify common xtick labels.
+    `plottools.axes.common_ytick_labels()`
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 

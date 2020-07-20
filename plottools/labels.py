@@ -1,6 +1,4 @@
 """
-# Labels
-
 Annotate axis with label and unit and align axes labels.
 
 - `set_label_format()`: set the string for formatting the axes labels.
@@ -8,11 +6,13 @@ Annotate axis with label and unit and align axes labels.
 - `uninstall_align_labels()`: uninstall code for aligning axes labels in show() and savefig() functions.
 
 The following functions are avilable as members of mpl.axes.Axes:
+
 - `set_xlabel()`: format the xlabel from a label and an unit.
 - `set_ylabel()`: format the ylabel from a label and an unit.
 - `set_zlabel()`: format the zlabel from a label and an unit.
 
 The following functions are available as members of mpl.figure.Figure:
+
 - `align_labels()`: align x- and ylabels of a figure.
 """
 
@@ -66,7 +66,7 @@ def __axis_label(label, unit=None):
 def set_xlabel(ax, label, unit=None, **kwargs):
     """ Format the xlabel from a label and an unit.
 
-    Uses the __axis_label() function to format the axis label.
+    Uses the `__axis_label()` function to format the axis label.
     
     Parameters
     ----------
@@ -75,7 +75,7 @@ def set_xlabel(ax, label, unit=None, **kwargs):
     unit: string
         The unit of the axis values.
     kwargs: key-word arguments
-        Further arguments passed on to the set_xlabel() function.
+        Further arguments passed on to the `set_xlabel()` function.
     """
     ax.set_xlabel_labels(__axis_label(label, unit), **kwargs)
 
@@ -83,7 +83,7 @@ def set_xlabel(ax, label, unit=None, **kwargs):
 def set_ylabel(ax, label, unit=None, **kwargs):
     """ Format the ylabel from a label and an unit.
 
-    Uses the __axis_label() function to format the axis label.
+    Uses the `__axis_label()` function to format the axis label.
     
     Parameters
     ----------
@@ -92,7 +92,7 @@ def set_ylabel(ax, label, unit=None, **kwargs):
     unit: string
         The unit of the axis values.
     kwargs: key-word arguments
-        Further arguments passed on to the set_ylabel() function.
+        Further arguments passed on to the `set_ylabel()` function.
     """
     ax.set_ylabel_labels(__axis_label(label, unit), **kwargs)
 
@@ -100,7 +100,7 @@ def set_ylabel(ax, label, unit=None, **kwargs):
 def set_zlabel(ax, label, unit=None, **kwargs):
     """ Format the zlabel from a label and an unit.
 
-    Uses the __axis_label() function to format the axis label.
+    Uses the `__axis_label()` function to format the axis label.
     
     Parameters
     ----------
@@ -109,7 +109,7 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     unit: string
         The unit of the axis values.
     kwargs: key-word arguments
-        Further arguments passed on to the set_zlabel() function.
+        Further arguments passed on to the `set_zlabel()` function.
     """
     ax.set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
@@ -183,21 +183,21 @@ __default_ydist = 10
 
     
 def __fig_show_labels(fig, *args, **kwargs):
-    """ Call align_labels() on the figure before showing it.
+    """ Call `align_labels()` on the figure before showing it.
     """
     fig.align_labels(__default_xdist, __default_ydist)
     fig.__show_orig_labels(*args, **kwargs)
 
     
 def __fig_savefig_labels(fig, *args, **kwargs):
-    """ Call align_labels() on the figure before saving it.
+    """ Call `align_labels()` on the figure before saving it.
     """
     fig.align_labels(__default_xdist, __default_ydist)
     fig.__savefig_orig_labels(*args, **kwargs)
 
 
 def __plt_show_labels(*args, **kwargs):
-    """ Call align_labels() on all figures before showing them.
+    """ Call `align_labels()` on all figures before showing them.
     """
     for fig in map(plt.figure, plt.get_fignums()):
         fig.align_labels(__default_xdist, __default_ydist)
@@ -205,14 +205,14 @@ def __plt_show_labels(*args, **kwargs):
 
 
 def __plt_savefig_labels(*args, **kwargs):
-    """ Call align_labels() on the current figure before saving it.
+    """ Call `align_labels()` on the current figure before saving it.
     """
     plt.gcf().align_labels(__default_xdist, __default_ydist)
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
 def install_align_labels(xdist=5, ydist=10):
-    """ Install code for aligning axes labels into show() and savefig() functions.
+    """ Install code for aligning axes labels into `show()` and `savefig()` functions.
 
     Parameter
     ---------
@@ -241,7 +241,7 @@ def install_align_labels(xdist=5, ydist=10):
 
 
 def uninstall_align_labels():
-    """ Uninstall code for aligning axes labels in show() and savefig() functions.
+    """ Uninstall code for aligning axes labels in `show()` and `savefig()` functions.
     """
     if hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_labels

@@ -1,14 +1,14 @@
 """
-# Spines
-
 Modify the appearance of spines.
 
 The following functions are added as a members to mpl.axes.Axes and mpl.figure.Figure:
+
 - `show_spines()`: show and hide spines and corresponding tick marks.
 - `set_spines_outward()`: set the specified spines outward.
 - `set_spines_bounds()`: set bounds for the specified spines.
 
 The following functions enable and disable spine control:
+
 - `spines_params()`: set default spine appearance.
 - `install_spines()`: install code for controlling spines.
 - `uninstall_spines()`: uninstall code for controlling spines.
@@ -237,9 +237,9 @@ def set_spines_bounds(ax, spines, bounds='full'):
 def __update_spines(fig):
     """ Update bounds of spines.
 
-    This is needed for applying the 'ticks' setting of set_spines_bounds().
-    The spines module patches the plt.show(), fig.show(), and fig.savefig()
-    functions to first call __update_spines(). This way this function is
+    This is needed for applying the 'ticks' setting of `set_spines_bounds()`.
+    The spines module patches the `plt.show()`, `fig.show()`, and `fig.savefig()`
+    functions to first call `__update_spines()`. This way this function is
     called automatically right before the figure is drawn.
 
     Parameters
@@ -275,21 +275,21 @@ def __update_spines(fig):
 
     
 def __fig_show_spines(fig, *args, **kwargs):
-    """ Call __update_spines() on the figure before showing it.
+    """ Call `__update_spines()` on the figure before showing it.
     """
     fig.update_spines()
     fig.__show_orig_spines(*args, **kwargs)
 
     
 def __fig_savefig_spines(fig, *args, **kwargs):
-    """ Call __update_spines() on the figure before saving it.
+    """ Call `__update_spines()` on the figure before saving it.
     """
     fig.update_spines()
     fig.__savefig_orig_spines(*args, **kwargs)
 
 
 def __plt_show_spines(*args, **kwargs):
-    """ Call __update_spines() on all figures before showing them.
+    """ Call `__update_spines()` on all figures before showing them.
     """
     for fig in map(plt.figure, plt.get_fignums()):
         fig.update_spines()
@@ -297,7 +297,7 @@ def __plt_show_spines(*args, **kwargs):
 
 
 def __plt_savefig_spines(*args, **kwargs):
-    """ Call __update_spines() on the current figure before saving it.
+    """ Call `__update_spines()` on the current figure before saving it.
     """
     plt.gcf().update_spines()
     plt.__savefig_orig_spines(*args, **kwargs)
@@ -306,21 +306,21 @@ def __plt_savefig_spines(*args, **kwargs):
 def install_spines():
     """ Install code for controlling spines.
 
-    This makes show_spines(), set_spines_outward() and
-    set_spines_bounds() available as member functions for matplib axes
-    and figures. In addition, the matplotlib functions show() and
-    savefig() are patched for fixing spine bounds before finishing the
+    This makes `show_spines()`, `set_spines_outward()` and
+    `set_spines_bounds()` available as member functions for matplib axes
+    and figures. In addition, the matplotlib functions `show()` and
+    `savefig()` are patched for fixing spine bounds before finishing the
     figure.
 
-    Call this function before creating any figure to make show_spines(),
-    set_spines_outwards() and set_spines_bounds() available and working.
+    Call this function before creating any figure to make `show_spines()`,
+    `set_spines_outwards()` and `set_spines_bounds()` available and working.
 
-    This function is also called by install_default_spines() or spines_params(),
+    This function is also called by `install_default_spines()` or `spines_params()`,
     so usually you do not need to explicitly call this function.
 
     See also
     --------
-    uninstall_spines()
+    `uninstall_spines()`
     """
     # make functions available as members:
     mpl.axes.Axes.show_spines = show_spines
@@ -348,7 +348,7 @@ def install_spines():
 def uninstall_spines():
     """ Uninstall code for controlling spines.
 
-    Call this code to disable anything that was installed by install_spines().
+    Call this code to disable anything that was installed by `install_spines()`.
     """
     uninstall_default_spines()
     # remove installed members:
@@ -384,7 +384,7 @@ def uninstall_spines():
 def __axes_init_spines__(ax, *args, **kwargs):
     """ Apply default spine settings to a new Axes instance.
 
-    Installed by install_default_spines().
+    Installed by `install_default_spines()`.
     """
     ax.__init__orig_spines(*args, **kwargs)
     ax.show_spines(mpl.ptParams['axes.spines.show'])
@@ -454,7 +454,7 @@ def __inset_spines(ax, *args, **kwargs):
 
 
 def install_default_spines():
-    """ Install code and mpl.ptParams for formatting spines.
+    """ Install code and `mpl.ptParams` for formatting spines.
 
     Adds mpl.ptParams:
     ```
@@ -468,15 +468,15 @@ def install_default_spines():
     axes.spines.inset.bounds : {'lrtb': 'full'}
     ```
 
-    Patches the matplotlib axes constructor, the twinx(), twiny(),
-    and the plottools.inset() functions.    
+    Patches the matplotlib axes constructor, the `twinx()`, `twiny()`,
+    and the `plottools.insets` functions.    
 
-    This function is also called by spines_params(), so usually you
+    This function is also called by `spines_params()`, so usually you
     do not need to explicitly call this function.
 
     See also
     --------
-    uninstall_default_spines()
+    `uninstall_default_spines()`
     """
     install_spines()
     # add spine parameter to rc configuration:
@@ -509,7 +509,7 @@ def install_default_spines():
 def uninstall_default_spines():
     """ Uninstall code for default spine settings.
     
-    Call this code to disable anything that was installed by install_default_spines().
+    Call this code to disable anything that was installed by `install_default_spines()`.
     """
     # remove spine parameter from mpl.ptParams:
     if hasattr(mpl, 'ptParams') and 'axes.spines.show' in mpl.ptParams:
@@ -547,24 +547,24 @@ def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
     Parameters
     ----------
     spines: string
-        Spines to be shown. See spines.show_spines() for details.
+        Spines to be shown. See `spines.show_spines()` for details.
     spines_offsets: dict
-        Offsets for moving spines outward. See spines.set_spines_outward() for details.
+        Offsets for moving spines outward. See `spines.set_spines_outward()` for details.
     spines_bounds: dict
-        Bounds for the spines. See spines.set_spines_bounds() for details.
+        Bounds for the spines. See `spines.set_spines_bounds()` for details.
     twinx_spines: string
-        Spines to be shown for twinx() axes. See spines.show_spines() for details.
+        Spines to be shown for `twinx()` axes. See `spines.show_spines()` for details.
         Twinned axes get the same default offsets and bounds as the defaults for normal axes.
     twiny_spines: string
-        Spines to be shown for twiny() axes. See spines.show_spines() for details.
+        Spines to be shown for `twiny()` axes. See `spines.show_spines()` for details.
         Twinned axes get the same default offsets and bounds as the defaults for normal axes.
     inset_spines: string
-        Spines to be shown for an inset. See spines.show_spines() for details.
+        Spines to be shown for an inset. See `spines.show_spines()` for details.
     inset_spines_offsets: dict
         Offsets for moving spines outward for an inset.
-        See spines.set_spines_outward() for details.
+        See `spines.set_spines_outward()` for details.
     inset_spines_bounds: dict
-        Bounds for the spines of an inset. See spines.set_spines_bounds() for details.
+        Bounds for the spines of an inset. See `spines.set_spines_bounds()` for details.
     """
     install_default_spines()
     if spines is not None:

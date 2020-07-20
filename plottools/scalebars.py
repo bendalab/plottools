@@ -1,13 +1,11 @@
 """
-# Scalebars
-
 Labeled scale bars.
 
 The following functions are added to mpl.axes.Axes:
+
 - `xscalebar()`: horizontal scale bar with label.
 - `yscalebar()`: vertical scale bar with label.
 - `scalebars()`: horizontal and vertical scale bars with labels.
-
 - `scalebar_params()`: set rc settings for scalebars.
 """
 
@@ -53,8 +51,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         Line width of the cap lines.
         If None take value from rc setting 'scalebar.caplinewidth'.
     kwargs: key-word arguments
-        Passed on to ax.text() used to print the scale bar label.
-        Defaults to scalebar.font rc settings.
+        Passed on to `ax.text()` used to print the scale bar label.
+        Defaults to scalebar.font ptParams settings.
     """
     ax.autoscale(False)
     # ax dimensions:
@@ -171,8 +169,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
         Line width of the cap lines.
         If None take value from rc setting 'scalebar.caplinewidth'.
     kwargs: key-word arguments
-        Passed on to ax.text() used to print the scale bar label.
-        Defaults to scalebar.font rc settings.
+        Passed on to `ax.text()` used to print the scale bar label.
+        Defaults to scalebar.font ptParams settings.
     """
     ax.autoscale(False)
     # ax dimensions:
@@ -293,8 +291,8 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     color: matplotlib color
         Color of the scalebar.
     kwargs: key-word arguments
-        Passed on to ax.text() used to print the scale bar labels.
-        Defaults to scalebar.font rc settings.
+        Passed on to `ax.text()` used to print the scale bar labels.
+        Defaults to scalebar.font ptParams settings.
     """
     # line width:
     if lw is None:

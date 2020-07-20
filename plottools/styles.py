@@ -1,6 +1,4 @@
 """
-# Styles
-
 Layout settings and plot styles.
 
 - `screen_style()`: layout and plot styles optimized for display on a screen.
@@ -8,6 +6,7 @@ Layout settings and plot styles.
 - `sketch_style()`: layout and plot styles with xkcd style activated.
 
 Generate plotting styles:
+
 - `make_linestyles()`: generate dictionaries for line styles.
 - `make_pointstyles()`: generate dictionaries for point styles.
 - `make_linepointstyles()`: generate line styles, point styles, and line point styles.
@@ -15,10 +14,12 @@ Generate plotting styles:
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
 
 Set rc settings:
+
 - `color_cycler()`: set colors for the matplotlib color cycler.
 - `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 
 Display line, point, linepoint and fill styles:
+
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
 - `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
@@ -73,7 +74,7 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
                     namespace=None, **kwargs):
     """ Generate dictionaries for line styles.
 
-    The generated dictionaries can be passed as key-word arguments to ax.plot() commands.
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style and line width a dictionary is generated
     holding these attributes. The generated dictionaries are named `prefix = name + suffix`,
     and are additionally added to the `prefix + suffix` dictionary in the given namespace.
@@ -86,7 +87,7 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
     generates a dictionary named `lsMale` defining a blue solid line,
     adds `Male` to the `style_names` list,
     and adds the `lsMale` dictionary to `ls` under the key `Male`.
-    Simply throw the dictionary into a plot() command:
+    Simply throw the dictionary into a `plot()` command:
     ```
     plt.plot(x, y, **lsMale)
     ```
@@ -167,7 +168,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
                      markeredgewidths=1.0, namespace=None, **kwargs):
     """ Generate dictionaries for point styles.
 
-    The generated dictionaries can be passed as key-word arguments to ax.plot() commands.
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style, line width, marker, marker size,
     marker edge color and marker edge width a dictionary is generated holding these attributes.
     The generated dictionaries are named `prefix = name + suffix`,
@@ -181,7 +182,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
     generates a dictionary named `psFemale` defining transparent red filled markers
     with a lighter edge, adds `Female` to `style_names`,
     and adds the dictionary to `ps` under the key `Female`.
-    Simply throw the dictionary into a plot() command:
+    Simply throw the dictionary into a `plot()` command:
     ```
     plt.plot(x, y, **psFemale)
     ```
@@ -221,7 +222,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         of the corresponding marker.
     medgecolors: float or list of floats
         Defines the edge color for each point style.
-        It is passed as the lightness argument to lighter()
+        It is passed as the lightness argument to `lighter()`
         using the face color form `colors`. That is, 0 results in a white edge color,
         1 in an edge with the same color as the face color, and 2 in a black edge color.
     markersizes: float, list of floats
@@ -276,7 +277,7 @@ def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
                          markeredgewidths=1.0, namespace=None, **kwargs):
     """ Generate line styles, point styles, and line point styles.
 
-    Passes the arguments on to make_linestyles() and twice to make_pointstyles(),
+    Passes the arguments on to `make_linestyles()` and twice to `make_pointstyles()`,
     once with `dashes='none'` for non-connected markers, and once
     with dashes and line widths for connecting lines.
     See those functions for a detailed description.
@@ -284,15 +285,15 @@ def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
     Parameters
     ----------
     prefixes: list of strings
-        If the first string is not None, generate line styles using make_linestyles().
-        If the second string is not None, generate point styles using make_pointstyles().
-        If the third string is not None, generate linepoint styles using make_pointstyles()
+        If the first string is not None, generate line styles using `make_linestyles()`.
+        If the second string is not None, generate point styles using `make_pointstyles()`.
+        If the third string is not None, generate linepoint styles using `make_pointstyles()`
         with `pointdict` and `linedict` merged.
     namespace: dict or None
         Namespace to which the generated styles are added.
         If None add line styles to the __main__ module.
     *args:
-        All remaining arguments are explained in the make_linestyles() and make_pointstyles()
+        All remaining arguments are explained in the `make_linestyles()` and `make_pointstyles()`
         functions.
     """
     if namespace is None:
@@ -315,7 +316,7 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
     """ Generate dictionaries for fill styles.
 
     The generated dictionaries can be passed as key-word arguments
-    to ax.fill_between() commands.
+    to `ax.fill_between()` commands.
     For each corresponding name, color, edge color, edge width and alpha
     a dictionary is generated holding these attributes.
     The generated dictionaries are named `prefix = name + suffix`,
@@ -332,7 +333,7 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
     The third, `fsPSDa` is without edge and has alpha set to 0.4.
     Further, `PSD` is added to `style_names`, and the three dictionaries are added
     to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
-    Simply throw the dictionaries into a fill_between() command:
+    Simply throw the dictionaries into a `fill_between()` command:
     ```
     plt.fill_between(x, y0, y1, **fsPSD)
     ```
@@ -358,7 +359,7 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
         Fill colors.
     edgecolors: float or list of floats
         Defines edge colors for the first fill style.
-        It is passed as the lightness argument to lighter()
+        It is passed as the lightness argument to `lighter()`
         using the face color form `colors`. That is, 0 results in a white edge color,
         1 in an edge with the same color as the face color, and 2 in a black edge color.
     edgewidth: float or list of floats
@@ -465,7 +466,7 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
         Marker size for minor point styles.
     mec: float
         Edge color for markers and fill styles. A factor between 0 and 2 passed together
-        with the facecolor to lighter(). I.e. 0 results in a white edge,
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
         1 in an edge of the color of the face color, and 2 in a black edge.
     mew: float
         Line width for marker edges and fill styles.
@@ -600,7 +601,7 @@ def screen_style(namespace=None):
       ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
       ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
       ```
-      See plot_styles() for details. 
+      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
 
     Parameters
@@ -687,7 +688,7 @@ def paper_style(namespace=None):
       ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
       ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
       ```
-      See plot_styles() for details. 
+      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
 
     Parameters
@@ -772,7 +773,7 @@ def sketch_style(namespace=None):
       ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
       ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
       ```
-      See plot_styles() for details. 
+      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
 
     Parameters

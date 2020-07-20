@@ -1,9 +1,8 @@
 """
-# Colors
-
 Color palettes and tools for manipulating colors.
 
 Dictionaries with colors:
+
 - `colors`: the default colors, set to one of the following:
 - `colors_plain`: plain rgb colors.
 - `colors_vivid`: vivid colors.
@@ -13,14 +12,17 @@ Dictionaries with colors:
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
 
 Manipulating colors:
+
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 - `gradient()`: interpolate between two colors.
 
 Exporting colors:
+
 - `latex_colors()`: print a \\definecolor command for LaTeX.
 
 Displaying colors:
+
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.

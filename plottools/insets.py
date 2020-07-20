@@ -1,15 +1,15 @@
 """
-# Insets
-
 Insets made easy.
 
 The following functions are available as members of mpl.axes.Axes:
+
 - `inset()`: add an inset in relative axes coordinates.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 
 When loading the module, the above functions are automatically installed
 as member functions of matplotlib axes. So you usually do not need to
 call the following functions:
+
 - `install_insets()`: install inset functions on matplotlib axes.
 - `uninstall_insets()`: uninstall inset functions from matplotlib axes.
 """
@@ -120,14 +120,14 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
 def install_insets():
     """ Install inset functions on matplotlib axes.
 
-    This makes inset() and zoomed_inset() available as member functions
+    This `makes inset()` and `zoomed_inset()` available as member functions
     for matplib axes.
 
     This function is also called automatically upon importing the module.
 
     See also
     --------
-    uninstall_insets()
+    `uninstall_insets()`
     """
     if not hasattr(mpl.axes.Axes, 'inset'):
         mpl.axes.Axes.inset = inset
@@ -138,7 +138,7 @@ def install_insets():
 def uninstall_insets():
     """ Uninstall inset functions from matplotlib axes.
 
-    Call this code to disable anything that was installed by install_insets().
+    Call this code to disable anything that was installed by `install_insets()`.
     """
     if hasattr(mpl.axes.Axes, 'inset'):
         delattr(mpl.axes.Axes, 'inset')
