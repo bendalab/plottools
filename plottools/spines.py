@@ -53,10 +53,12 @@ def show_spines(ax, spines):
     # collect axes:
     if isinstance(ax, (list, tuple, np.ndarray)):
         axs = ax
-    else:
+    elif hasattr(ax, 'get_axes'):
         axs = ax.get_axes()
-        if not isinstance(axs, (list, tuple)):
-            axs = [axs]
+    else:
+        axs = [ax]
+    if not isinstance(axs, (list, tuple)):
+        axs = [axs]
     for ax in axs:
         # hide spines:
         ax.spines['top'].set_visible('top' in xspines)
@@ -140,8 +142,10 @@ def set_spines_outward(ax, spines, offset=0):
         # collect axes:
         if isinstance(ax, (list, tuple, np.ndarray)):
             axs = ax
-        else:
+        elif hasattr(ax, 'get_axes'):
             axs = ax.get_axes()
+        else:
+            axs = [ax]
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
         # collect spine visibility:
@@ -199,8 +203,10 @@ def set_spines_bounds(ax, spines, bounds='full'):
         # collect axes:
         if isinstance(ax, (list, tuple, np.ndarray)):
             axs = ax
-        else:
+        elif hasattr(ax, 'get_axes'):
             axs = ax.get_axes()
+        else:
+            axs = [ax]
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
         if isinstance(bounds, (tuple, list)):

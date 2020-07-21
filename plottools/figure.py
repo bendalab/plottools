@@ -357,8 +357,8 @@ def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
         strip it from embedded fonts. This might then look ugly as a standalone figure,
         but results in nice plots within a latex documents at a fraction of the file size.
     """
+    mpl.ptParams.update({'pdf.stripfonts': stripfonts})
     mpl.rcParams['savefig.format'] = format
-    mpl.rcParams.update({'pdf.stripfonts': stripfonts})
     # these all have only minor effects on file size:
     mpl.rcParams['pdf.compression'] = compression
     mpl.rcParams['pdf.fonttype'] = fonttype
