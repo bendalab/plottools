@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-exec(open('audioio/version.py').read())
+exec(open('plottools/version.py').read())
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
