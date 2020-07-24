@@ -241,8 +241,8 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
         else:
             stripfonts = False
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-       subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-       os.rename('tmp-'+fname, fname)
+        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+        os.rename('tmp-'+fname, fname)
 
 
 def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
@@ -262,8 +262,8 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
         else:
             stripfonts = False
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-       subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-       os.rename('tmp-'+fname, fname)
+        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+        os.rename('tmp-'+fname, fname)
 
 
 def install_figure():
