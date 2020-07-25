@@ -192,7 +192,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
     ```
     This
     ```
-    make_pointstyles('ps', 'Reds%1', 'c', ['red', 'orange', 'yellow'], 'none', 0, ('o', 1.0), 8, 1, 0)
+    make_pointstyles('ps', 'Reds%d', 'c', ['red', 'orange', 'yellow'], 'none', 0, ('o', 1.0), 8, 1, 0)
     ```
     generates 'psReds1',  'psReds2',  'psReds3' for plotting
     filled circels with colors red, orange, and yellow, respectively.
@@ -213,10 +213,10 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         Dash styles of the connecting lines. If points are not to be connected, set to 'none'.
     lws: float or list of floats
         Widths of the connecting lines.
-    markers: list of tuples
+    markers: 2-tuple or list of 2-tuples
         For each point style a marker. The first element of the inner tuple is
         the marker symbol, the second one is a factor that is used to scale
-        the marker's edge width.
+        the marker's size.
     markersizes: float or list of floats
         For each point style a marker size. The marker size is multiplied with a factor
         of the corresponding marker.
@@ -241,12 +241,18 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
     ln = prefix + suffix 
     if not hasattr(namespace, ln):
         setattr(namespace, ln, {})
+    # number of markers:
+    n_markers = 1
+    if len(markers) >= 2 and isinstance(markers[1], (tuple, list)):
+        n_markers = len(markers)
     # number of line styles to be generated:
     n = 1
-    for x in (names, colors, dashes, lws, markers, markersizes,
+    for x in (names, colors, dashes, lws, markersizes,
               markeredgecolors, markeredgewidths):
         if isinstance(x, (tuple, list)) and len(x) > n:
             n = len(x)
+    if n < n_markers:
+        n = n_markers
     # generate styles:
     for k in range(n):
         if isinstance(names, (tuple, list)) :
@@ -262,7 +268,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         c = colors[k] if isinstance(colors, (tuple, list)) else colors
         ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
         lw = lws[k] if isinstance(lws, (tuple, list)) else lws
-        mk = markers[k] if len(markers) > 1 else markers[0]
+        mk = markers[k] if n_markers > 1 else markers
         ms = markersizes[k] if isinstance(markersizes, (tuple, list)) else markersizes
         mc = markeredgecolors[k] if isinstance(markeredgecolors, (tuple, list)) else markeredgecolors
         mw = markeredgewidths[k] if isinstance(markeredgewidths, (tuple, list)) else markeredgewidths
@@ -484,10 +490,10 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
                          markers, markerlarge, mec, mew, namespace)
     # circular point and linepoint styles:
     make_linepointstyles(['', 'ps', 'lps'], names, 'c', colors, dashes, lwthick,
-                         (('o', 1.0),), markerlarge, mec, mew, namespace)
+                         ('o', 1.0), markerlarge, mec, mew, namespace)
     # minor line, point and linepoint styles:
     make_linepointstyles(['ls', 'ps', 'lps'], names, 'm', colors, dashes, lwthin,
-                         (('o', 1.0),), markersmall, mec, mew, namespace)
+                         ('o', 1.0), markersmall, mec, mew, namespace)
     # fill styles:
     make_fillstyles('fs', names, ['', 's', 'a'], colors, mec, mew, fillalpha, namespace)
 
