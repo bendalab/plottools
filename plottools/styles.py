@@ -731,9 +731,9 @@ def paper_style(namespace=None):
     make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
     make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
     make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
+    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
                 color=palette['black'], head_length=5, head_width=5, namespace=namespace)
-    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
+    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
@@ -818,9 +818,9 @@ def sketch_style(namespace=None):
     make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
     make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
     make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    arrow_style(namespace, 'Line', dist=3.0, style='>', shrink=0, lw=0.8,
+    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
                 color=palette['black'], head_length=5, head_width=5, namespace=namespace)
-    arrow_style(namespace, 'Filled', dist=3.0, style='>>', shrink=0, lw=1,
+    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
