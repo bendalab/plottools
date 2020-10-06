@@ -8,23 +8,23 @@ install_figure()
 to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
 `figure.add_gridspec()`, `gridspec.update()`, `fig.savefig()`, `plt.savefig()`).
 
-Then `figsize` is in centimeters:
+Then you can specify the figure size in centimeters:
 ```
-fig = plt.figure(figsize=(20.0, 16.0))         # in cm!
-fig, ax = plt.subplots(figsize=(16.0, 10.0))   # in cm!
+fig = plt.figure(cmsize=(20.0, 16.0))         # in cm!
+fig, ax = plt.subplots(cmsize=(16.0, 10.0))   # in cm!
 ```
 and subplot positions can be adjusted by margins given in multiples of the current font size:
 ```
-fig.subplots_adjust(left=5.0, bottom=2.0, right=2.0, top=1.0)  # in fontsize margins!
-gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
-gs.update(wspace=0.3, hspace=0.3, left=5.0, bottom=2.0, right=2.0, top=2.5)
+fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
+gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs.update(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
 ```
-That is, `left` specifies the distance of the leftmost axes from the left margin of the figure,
-`bottom` specifies the distance of the bottom axes from the bottom margin of the figure,
-`right` specifies the distance of the rightmost axes from the right margin of the figure, and
-`top` specifies the distance of the top axes from the top margin of the figure,
+That is, `leftm` specifies the distance of the leftmost axes from the left margin of the figure,
+`bottomm` specifies the distance of the bottom axes from the bottom margin of the figure,
+`rightm` specifies the distance of the rightmost axes from the right margin of the figure, and
+`topm` specifies the distance of the top axes from the top margin of the figure,
 all as multiples of the font size.
-This way, margins do not need to be adjusted when changing the `figsize`!
+This way, margins do not need to be adjusted when changing the size of a figure!
 
 `plt.subplots()` can be called with `width_ratios` and `height_ratios`.
 
@@ -92,26 +92,26 @@ def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
     fig: matplotlib.figure or None
         The figure from which the figure size is taken. If None use the current figure.
     left: float
-        the usual position of the left side of the axes as a fraction of the full figure.
+        The usual position of the left side of the axes as a fraction of the full figure.
     bottom: float
-        the usual position of the bottom side of the axes as a fraction of the full figure.
+        The usual position of the bottom side of the axes as a fraction of the full figure.
     right: float
-        the usual position of the right side of the axes as a fraction of the full figure.
+        The usual position of the right side of the axes as a fraction of the full figure.
     top: float
-        the usual position of the top side of the axes as a fraction of the full figure.
+        The usual position of the top side of the axes as a fraction of the full figure.
     leftm: float
-        the left margin of the plots given in multiples of the width of a character
+        The left margin of the plots given in multiples of the width of a character
         (simply 60% of the current font size).
     bottomm: float
-        the bottom margin of the plots given in multiples of the height of a character
+        The bottom margin of the plots given in multiples of the height of a character
         (the current font size).
     rightm: float
-        the right margin of the plots given in multiples of the width of a character
+        The right margin of the plots given in multiples of the width of a character
         (in fact, simply 60% of the current font size).
         *Note:* in contrast to the matplotlib `right` parameters, this specifies the
         width of the right margin, not its position relative to the origin.
     topm: float
-        the right margin of the plots given in multiples of the height of a character
+        The right margin of the plots given in multiples of the height of a character
         (the current font size).
         *Note:* in contrast to the matplotlib `top` parameters, this specifies the
         width of the top margin, not its position relative to the origin.
@@ -127,7 +127,7 @@ def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
     -------
     ```
     fig, axs = plt.subplots(2, 2, figsize=(10, 5))
-    fig.subplots_adjust(**adjust_fs(fig, left=4.5))   # no matter what the figsize is!
+    fig.subplots_adjust(**adjust_fs(fig, leftm=4.5))   # no matter what the figsize is!
     ```
     """
     if fig is None:
@@ -148,12 +148,12 @@ def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
     return margins
 
     
-def __figure_figure(num=None, figsize=None, **kwargs):
-    """ plt.figure() with figsize in centimeters.
+def __figure_figure(num=None, cmsize=None, **kwargs):
+    """ plt.figure() with `cmsize` argument to specify figure size in centimeters.
     """
-    if figsize:
-        figsize = cm_size(*figsize)
-    fig = plt.__figure_orig_figure(num, figsize, **kwargs)
+    if cmsize:
+        kwargs.update(figsize=cm_size(*cmsize))
+    fig = plt.__figure_orig_figure(num, **kwargs)
     fig.canvas.mpl_connect('resize_event', __resize)
     return fig
 
@@ -231,7 +231,8 @@ def __plt_subplots_figure(nrows=1, ncols=1, *args, **kwargs):
             gskwargs[k] = kwargs.pop(k)
     if len(gskwargs) > 0:
         figkwargs = {}
-        for k in ['num', 'figsize', 'dpi', 'facecolor', 'edgecolor', 'frameon', 'clear']:
+        for k in ['num', 'cmsize', 'figsize', 'dpi', 'facecolor', 'edgecolor',
+                  'frameon', 'clear']:
             if k in kwargs:
                 figkwargs[k] = kwargs.pop(k)
         upkwargs = {}
@@ -268,6 +269,7 @@ def __resize(event):
     
 def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
     """ Set default file name to the one of the main script.
+    
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if len(fname) == 0:
@@ -288,7 +290,8 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
 
 
 def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
-    """ Set default file name to the one of the main script. 
+    """ Set default file name to the one of the main script.
+    
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if len(fname) == 0:
@@ -309,7 +312,7 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
 
 
 def install_figure():
-    """ Install code for figsize in centimeters, margins in multiples of fontsize, and default filename for savefig().
+    """ Install code for figure size in centimeters, margins in multiples of fontsize, and default filename for savefig().
 
     In addition, each new figure gets an resize event handler installed, that applies
     the supplied margins whenever a figure is resized.
@@ -414,17 +417,16 @@ def demo():
     """
     install_figure()
     
-    #fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0))  # figsize in cm!
-    fig, axs = plt.subplots(2, 1, figsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
+    fig, axs = plt.subplots(2, 1, cmsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
-    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(figsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
+    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(cmsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
     axs[0].text(0.1, 1.4, 'fig.subplots_adjust(leftm=5.0, bottomm=2.0, topm=1.0, rightm=2.0)  # in fontsize margins!')
     x = np.linspace(0.0, 2.0, 200)
     axs[0].plot(x, np.sin(2.0*np.pi*x))
     axs[0].set_ylim(-1.0, 2.0)
     fig.savefig('.pdf', stripfonts=False)
 
-    fig = plt.figure(figsize=(20.0, 16.0))   # in cm!
+    fig = plt.figure(cmsize=(20.0, 16.0))   # in cm!
     # in fontsize margins and even with old matplotlib versions:
     gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
     fig.suptitle('gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)')
