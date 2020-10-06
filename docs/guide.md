@@ -21,6 +21,7 @@ There are a number of good reasons for these rules.
 As long as you work on a manuscript you will always, or your
 supervisor wants you to, or journal regulations require you to modify
 your figure. Modifying a figure is a hassle if
+
 - it takes some effort to find the spot where to edit the script,
 - running the script takes a lot of time because data are computed,
 - manual postprocessing is required.
@@ -57,7 +58,7 @@ Many journals nowadays require you to upload the data that were used
 to generate the figures. Not the raw data, but the ones displayed in
 the figure. So you need to store this data in files using formats that
 can be read by others on whatever platform (4.). Storing the processed
-data into files for direct plotting has the additional advantage, that
+data into files for direct plotting has the additional advantage that
 it reduces the dependencies of the code on external packages needed
 for the computations. This also makes your figure code more easily to
 use later on.
