@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 
-def show_spines(ax, spines):
+def show_spines(ax, spines='lrtb'):
     """ Show and hide spines.
 
     Parameters
