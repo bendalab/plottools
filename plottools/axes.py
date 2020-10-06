@@ -1,13 +1,17 @@
 """
 Mark axes with a label and simplify common axis labels.
 
-The following functions are added as a member to mpl.figure.Figure:
+The following functions are available as members of mpl.axes.Axes:
 
 - `label_axes()`: put a label on each axes.
+
+The following functions are added as a member to mpl.figure.Figure:
+
 - `common_xlabels()`: simplify common xlabels.
 - `common_ylabels()`: simplify common ylabels.
 - `common_xtick_labels()`: simplify common xtick labels.
 - `common_ytick_labels()`: simplify common ytick labels.
+- `aspect_ratio()`: aspect ratio of axes.
 - `labelaxes_params()`: set mpl.ptParams for labelaxes.
 
 mpl.ptParams defined by the axes module:
@@ -26,6 +30,24 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.gridspec as gridspec
+
+
+def aspect_ratio(ax):
+    """Aspect ratio of axes.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes of which aspect ratio is computed.
+
+    Returns
+    -------
+    aspect: float
+        Aspect ratio (height in inches relative to width).
+    """
+    figw, figh = ax.get_figure().get_size_inches()
+    _, _, w, h = ax.get_position().bounds
+    return (figh * h) / (figw * w)
 
 
 def common_xlabels(fig, axes=None):
@@ -271,6 +293,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None, labels=None, **kwarg
 
 
 # make the functions available as member variables:
+mpl.axes.Axes.aspect_ratio = aspect_ratio
 mpl.figure.Figure.common_xlabels = common_xlabels
 mpl.figure.Figure.common_ylabels = common_ylabels
 mpl.figure.Figure.common_xtick_labels = common_xtick_labels
