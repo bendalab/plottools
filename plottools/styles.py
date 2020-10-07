@@ -656,7 +656,7 @@ def screen_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
                 fig_color=palette['gray'], axes_color=palette['white'],
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
+    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
@@ -741,7 +741,7 @@ def paper_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
                 fig_color='none', axes_color='none',
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
+    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
@@ -829,7 +829,7 @@ def sketch_style(namespace=None):
                 label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', labels='A',
+    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                      font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)

@@ -527,7 +527,6 @@ def uninstall_default_spines():
         mpl.ptParams.pop('axes.spines.inset.show', None)
         mpl.ptParams.pop('axes.spines.inset.offsets', None)
         mpl.ptParams.pop('axes.spines.inset.bounds', None)
-        mpl.ptParams = {}
     # reinstall original Axes constructors:
     if hasattr(mpl.axes.Axes, '__init__orig_spines'):
         mpl.axes.Axes.__init__ = mpl.axes.Axes.__init__orig_spines
