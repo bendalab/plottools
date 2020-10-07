@@ -1,6 +1,7 @@
 """
 Enhance textual annotations.
 
+- `translate_latex_text()`: translate text to fit both normal and LaTeX mode.
 - `install_text()`: patch the mpl.axes.Axes.text() function.
 - `uninstall_text()`: uninstall code for text.
 """
@@ -11,28 +12,33 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def text(ax, x, y, s, *args, slope=None, **kwargs):
-    """ Enhanced text function.
-
-    Adds an optional slope parameter that rotates the text to a specified slope.
-
+def translate_latex_text(s, **kwargs):
+    """ Translate text to fit both normal and LaTeX mode.
+    
     In LaTeX mode (`text.usetex = True`) translate `fontstyle` and
     `fontweight` arguments to corresponding LaTeX commands. Escape
     special characters '%', '#', '&'.
 
-    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to upright micro character.
+    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to
+    upright micro character.
 
     Parameters
     ----------
-    Same as `mpl.axes.Axes.text()`.
-
-    slope: float or None
-        Slope to which the text should be rotated. If not otherwise specified set
-        `rotation_mode` to 'anchor'.
+    s: string
+        The text.
+    kwargs: dict
+        Key-word arguments for the text.
     fontstyle: string
         In LaTeX mode, if set to `italic` put text into '\\textit{}' command.
     fontweight: string
         In LaTeX mode, if set to `bold` put text into '\\textbf{}' command.
+
+    Returns
+    -------
+    s: string
+        Translated text.
+    kwargs: dict
+        Updated and adapted key-word arguments.
     """
     # italics and bold LaTeX font:
     if mpl.rcParams['text.usetex']:
@@ -47,7 +53,27 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
             s = r'\textbf{' + s + r'}'
     else:
         s = s.replace(r'\,', u'\u2009')
+        s = s.replace(r'\micro{}', u'\u00B5')
+        s = s.replace(r'\micro ', u'\u00B5')
         s = s.replace(r'\micro', u'\u00B5')
+    return s, kwargs
+
+
+def text(ax, x, y, s, *args, slope=None, **kwargs):
+    """ Enhanced text function.
+
+    Adds an optional slope parameter that rotates the text to a specified slope.
+    Uses `translate_latex_text ()` to improve LaTeX mode.
+
+    Parameters
+    ----------
+    Same as `mpl.axes.Axes.text()`.
+
+    slope: float or None
+        Slope to which the text should be rotated. If not otherwise specified set
+        `rotation_mode` to 'anchor'.
+    """
+    s, kwargs = translate_latex_text(s, **kwargs)
     # set text:
     txt = ax.__text_orig_text(x, y, s, *args, **kwargs)
     # align text on slope:
@@ -72,8 +98,25 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     return txt
 
 
+def legend(ax, *args, **kwargs):
+    """ Enhanced legend function.
+    
+    Uses `translate_latex_text ()` to improve LaTeX mode of legend
+    labels.
+
+    Parameters
+    ----------
+    Same as `mpl.axes.Axes.legend()`.
+    """
+    handles, labels = ax.get_legend_handles_labels()
+    for k in range(len(labels)):
+        labels[k], newkwargs = translate_latex_text(labels[k], **kwargs)
+    lgd = ax.__legend_orig_text(handles, labels, *args, **newkwargs)
+    return lgd
+
+
 def install_text():
-    """ Patch the `mpl.axes.Axes.text()` function.
+    """ Patch the `mpl.axes.Axes.text()` and `mpl.axes.Axes.legend()` functions.
 
     See also
     --------
@@ -82,6 +125,9 @@ def install_text():
     if not hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.__text_orig_text = mpl.axes.Axes.text
         mpl.axes.Axes.text = text
+    if not hasattr(mpl.axes.Axes, '__legend_orig_text'):
+        mpl.axes.Axes.__legend_orig_text = mpl.axes.Axes.legend
+        mpl.axes.Axes.legend = legend
 
 
 def uninstall_text():
@@ -92,23 +138,33 @@ def uninstall_text():
     if hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.text = mpl.axes.Axes.__text_orig_text
         delattr(mpl.axes.Axes, '__text_orig_text')
+    if hasattr(mpl.axes.Axes, '__legend_orig_text'):
+        mpl.axes.Axes.legend = mpl.axes.Axes.__legend_orig_text
+        delattr(mpl.axes.Axes, '__legend_orig_text')
         
     
-def demo():
+def demo(usetex=False):
     """ Run a demonstration of the text module.
+
+    Parameters
+    ----------
+    usetex: bool
+        If `True` use LaTeX mode.
     """
-    mpl.rcParams['text.usetex'] = True
     install_text()
+    mpl.rcParams['text.usetex'] = usetex
+    mpl.rcParams['text.latex.preamble'] = [r'\usepackage{SIunits}']
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2
     x = np.linspace(0, 2, 10)
-    ax.plot(x, slope1*x-0.2)
-    ax.plot(x, slope2*x+0.1)
+    ax.plot(x, slope1*x-0.2, label='0.2\,\micro m')
+    ax.plot(x, slope2*x+0.1, label='whatever')
     ax.text(1.5, 0.57, 'Steep', slope=slope1)
     ax.text(1.5, 0.4, 'Shallow', slope=slope2)
-    ax.text(0.05, 0.9, "ax.text(1, 0.3, 'Steep', slope=0.5)", transform=ax.transAxes)
-    ax.text(0.05, 0.8, "ax.text(1, 0.2, 'Shallow', slope=0.2)", transform=ax.transAxes)
+    ax.legend(loc='upper left')
+    ax.text(0.05, 0.7, "ax.text(1, 0.3, 'Steep', slope=0.5)", transform=ax.transAxes)
+    ax.text(0.05, 0.6, "ax.text(1, 0.2, 'Shallow', slope=0.2)", transform=ax.transAxes)
     ax.text(0.5, 0.0, 'Italic', fontstyle='italic')
     ax.text(0.5, -0.1, 'Bold', fontweight='bold')
     ax.text(0.8, 0.0, "ax.text(0.7, 0.0, 'Italic', fontstyle='italic')")
