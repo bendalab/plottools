@@ -311,7 +311,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
     for ax, l in zip(axes_list, label_list):
         if isinstance(ax, int):
             ax = fig.get_axes()[ax]
-        x0, y0, width, height = ax.get_position().bounds
+        x0, y0, width, height = ax.get_position(original=True).bounds
         if x0 <= -xo:
             xo = -x0
         if 1.0-y0-height < yo:
@@ -345,7 +345,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
     for ax, l in zip(axes_list, label_list):
         if isinstance(ax, int):
             ax = fig.get_axes()[ax]
-        x0, y0, width, height = ax.get_position().bounds
+        x0, y0, width, height = ax.get_position(original=True).bounds
         x = x0+xoffs
         if x <= 0.0:
             x = 0.0
