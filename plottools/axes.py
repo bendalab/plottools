@@ -302,9 +302,8 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
         else:
             axes_list.append(axs)
     # font settings:
-    for k in mpl.ptParams['figure.labelaxes.font']:
-        if not k in kwargs:
-            kwargs[k] = mpl.ptParams['figure.labelaxes.font'][k]
+    fkwargs = dict(**mpl.ptParams['figure.labelaxes.font'])
+    fkwargs.update(**kwargs)
     # get axes offsets:
     xo = -1.0
     yo = 1.0
@@ -352,7 +351,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
         y = y0+height+yoffs
         if y >= 1.0:
             y = 1.0
-        ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **kwargs)
+        ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **fkwargs)
 
 
 # make the functions available as member variables:
