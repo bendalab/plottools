@@ -32,7 +32,7 @@ The following modules are provided by the plottools package:
 - `labels`: annotate axis with label and unit and align axes labels.
 - `text`: enhance textual annotations.
 - `arrows`: arrows.
-- `axes`: mark axes with a label and simplify common axis labels.
+- `axes`: tag axes with a label and simplify common axis labels.
 - `insets`: insets made easy. [More...](docs/insets.md)
 - `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
 - `significance`: indicating statsitical significance.

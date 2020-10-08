@@ -65,7 +65,7 @@ from .labels import set_label_format, install_align_labels, uninstall_align_labe
 from .text import install_text, uninstall_text
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
-from .axes import label_axes, labelaxes_params
+from .axes import axes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
 
@@ -656,8 +656,8 @@ def screen_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
                 fig_color=palette['gray'], axes_color=palette['white'],
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                     font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='png', compression=6, fonttype=3, stripfonts=False)
@@ -741,8 +741,8 @@ def paper_style(namespace=None):
                 label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
                 fig_color='none', axes_color='none',
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                     font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
@@ -829,8 +829,8 @@ def sketch_style(namespace=None):
                 label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
-    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                     font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)

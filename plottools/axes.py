@@ -1,20 +1,28 @@
 """
-Mark axes with a label and simplify common axis labels.
+Tag axes with a label and simplify common axis labels.
 
-The following functions are available as members of mpl.axes.Axes:
 
-- `label_axes()`: put a label on each axes.
+## mpl.axes.Axes member functions
 
-The following functions are added as a member to mpl.figure.Figure:
+- `aspect_ratio()`: aspect ratio of axes.
 
+
+## mpl.figure.Figure member functions:
+
+- `tag()`: tag each axes with a label.
 - `common_xlabels()`: simplify common xlabels.
 - `common_ylabels()`: simplify common ylabels.
 - `common_xtick_labels()`: simplify common xtick labels.
 - `common_ytick_labels()`: simplify common ytick labels.
-- `aspect_ratio()`: aspect ratio of axes.
-- `labelaxes_params()`: set `mpl.ptParams` for labelaxes.
 
-`mpl.ptParams` defined by the axes module:
+
+## Global functions
+
+- `axes_params()`: set `mpl.ptParams` for axes module.
+
+
+## `mpl.ptParams` defined by the axes module
+
 ```
 figure.labelaxes.xoffs : 'auto',
 figure.labelaxes.yoffs : 'auto',
@@ -186,10 +194,10 @@ def common_ytick_labels(fig, axes=None):
             done = True
 
 
-def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
-               labels=None, minor_label=None, major_index=None,
-               minor_index=None, **kwargs):
-    """ Put on each axes a label.
+def tag(fig=None, axes=None, xoffs=None, yoffs=None,
+        labels=None, minor_label=None, major_index=None,
+        minor_index=None, **kwargs):
+    """Tag each axes with a label.
 
     Labels are left/top aligned.
 
@@ -200,13 +208,15 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
     axes: None or matplotlib axes or int or list of matplotlib axes or int
         If None label all axes of the figure.
         Integers in the list are indices to the axes of the figure.
+        For axes in the out list, `labels` is used for tagging,
+        for axes in (optional) inner lists, `minor_label` is used.
     xoffs: float, 'auto', or None
         X-coordinate of label relative to origin of axis in multiples of the width
         of a character (simply 60% of the current font size).
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the right-most axis to the left figure border,
         otherwise use the value computed by the first call.
-        If None take value from `mpl.ptParams['figure.labelaxes.xoffs'].
+        If None take value from `mpl.ptParams['figure.labelaxes.xoffs']`.
     yoffs: float, 'auto', or None
         Y-coordinate of label relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
@@ -216,7 +226,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
         If None take value from `mpl.ptParams['figure.labelaxes.yoffs']`.
     labels: string or list of strings
         If string, then replace formatting substrings 
-        '%A', '%a', '%1', '%i', and '%I' to generate labels for each axes.
+        '%A', '%a', '%1', '%i', and '%I' to generate labels for each axes in the outer list.
         
         - '%A': A B C ...
         - '%a': a b c ...
@@ -224,7 +234,7 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
         - '%i': i ii iii iv ...
         - '%I': I II III IV ...
         
-        Subsequent calls to label_axes() keep incrementing the label.
+        Subsequent calls to `tag()` keep incrementing the label.
         With a list arbitary labels can be specified.
         If None, set to `mpl.ptParams['figure.labelaxes.label']`.
     minor_label: string
@@ -237,13 +247,13 @@ def label_axes(fig=None, axes=None, xoffs=None, yoffs=None,
         If None, set to `mpl.ptParams['figure.labelaxes.minorlabel']`.
     major_index: int or None
         Start labeling major axes with this index (0 = 'A').
-        If None, use last index from previous call to label_axes().
+        If None, use last index from previous call to `tag()`.
     minor_index: int or None
         Start labeling minor axes with this index (0 = 'A').
-        If None, use start with 0.
-    kwargs: keyword arguments
-        Passed on to ax.text().
-        Defaults to `mpl.ptParams['figure.labelaxes.font']`.
+        If None, start with 0.
+    kwargs: dict
+        Key-word arguments are passed on to ax.text() for formatting the tag label.
+        Overrides settings in `mpl.ptParams['figure.labelaxes.font']`.
     """
     if fig is None:
         fig = axes[0].get_figure()
@@ -360,7 +370,7 @@ mpl.figure.Figure.common_xlabels = common_xlabels
 mpl.figure.Figure.common_ylabels = common_ylabels
 mpl.figure.Figure.common_xtick_labels = common_xtick_labels
 mpl.figure.Figure.common_ytick_labels = common_ytick_labels
-mpl.figure.Figure.label_axes = label_axes
+mpl.figure.Figure.tag = tag
 
 
 """ Add labelaxes parameter to rc configuration.
@@ -371,12 +381,10 @@ mpl.ptParams.update({'figure.labelaxes.xoffs': 'auto',
                      'figure.labelaxes.yoffs': 'auto',
                      'figure.labelaxes.label': '%A',
                      'figure.labelaxes.minorlabel': '%A%mi',
-                     'figure.labelaxes.font': dict(fontsize='x-large',
-                                                   fontstyle='sans-serif',
-                                                   fontweight='normal')})
+                     'figure.labelaxes.font': dict(fontsize='x-large')})
 
 
-def labelaxes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
+def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
     """ Set rc settings for labelaxes.
 
     Only update those parameters that are not None.
@@ -394,23 +402,23 @@ def labelaxes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=
         If 'auto', set it to the distance of the top-most axis to the top figure border,
         or to a previously computed value from that figure.
     label: string
-        Label used to tag axes. See `label_axes()` for details.
+        Label used to tag axes. See `tag()` for details.
     minor_label: string
-        Label used to tag minor axes. See `label_axes()` for details.
+        Label used to tag minor axes. See `tag()` for details.
     font: dict
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
     if xoffs is not None:
-        mpl.ptParams.update({'figure.labelaxes.xoffs': xoffs})
+        mpl.ptParams['figure.labelaxes.xoffs'] = xoffs
     if yoffs is not None:
-        mpl.ptParams.update({'figure.labelaxes.yoffs': yoffs})
+        mpl.ptParams['figure.labelaxes.yoffs'] = yoffs
     if label is not None:
-        mpl.ptParams.update({'figure.labelaxes.label': label})
+        mpl.ptParams['figure.labelaxes.label'] = label
     if minor_label is not None:
-        mpl.ptParams.update({'figure.labelaxes.minorlabel': minor_label})
+        mpl.ptParams['figure.labelaxes.minorlabel'] = minor_label
     if font is not None:
-        mpl.ptParams.update({'figure.labelaxes.font': font})
+        mpl.ptParams['figure.labelaxes.font'].update(**font)
 
 
 def demo():
@@ -430,29 +438,29 @@ def demo():
             ax.set_ylabel('ylabel')
         return fig, (ax1, ax2, ax3, ax4)
 
-    labelaxes_params(xoffs='auto', yoffs='auto', label='%A', font=dict(fontweight='bold'))
+    axes_params(xoffs='auto', yoffs='auto', label='%A', font=dict(fontweight='bold'))
     
     fig, axs = afigure()
-    axs[0].text(0.5, 0.5, 'fig.label_axes()', transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.5, 0.5, 'fig.tag()', transform=axs[0].transAxes, ha='center')
     axs[0].text(0.0, 0.0, 'X', transform=fig.transFigure, ha='left', va='bottom')
-    fig.label_axes(xoffs=-5, yoffs=3)
+    fig.tag(xoffs=-5, yoffs=3)
 
     fig, axs = afigure()
-    axs[0].text(0.5, 0.7, 'fig,label_axes([ax1])',
+    axs[0].text(0.5, 0.7, 'fig,tag([ax1])',
                 transform=axs[0].transAxes, ha='center')
-    axs[0].text(0.5, 0.5, 'fig,label_axes([ax2, ax4], \'auto\', 1, \'%a:\', major_index=0)',
-                transform=axs[0].transAxes, ha='center')
+    axs[0].text(0.5, 0.5, "fig,tag([ax2, ax4], 'auto', 2, '%a:', major_index=0,\n fontweight='normal', fontstyle='italic')", transform=axs[0].transAxes, ha='center')
     axs[0].text(0.5, 0.3, 'fig.common_xlabels()',
                 transform=axs[0].transAxes, ha='center')
     axs[0].text(0.5, 0.1, 'fig.common_ylabels(axs[1:])',
                 transform=axs[0].transAxes, ha='center')
     fig.common_xlabels() 
     fig.common_ylabels(axs[1:])
-    fig.label_axes([axs[0]], xoffs=-5, yoffs=3)
-    fig.label_axes([axs[1], axs[3]], 'auto', 1, '%a:', major_index=0)
+    fig.tag([axs[0]], xoffs=-5, yoffs=3)
+    fig.tag([axs[1], axs[3]], 'auto', 2, '%a:', major_index=0,
+            fontweight='normal', fontstyle='italic')
 
     fig, axs = afigure()
-    axs[0].text(0.05, 0.7, "fig.label_axes([0, [1, 2, 3]],\n labels='%A)',\n minor_label='%A.%mi)',\n fontweight='normal',\n fontstyle='italic')",
+    axs[0].text(0.05, 0.7, "fig.tag([0, [1, 2, 3]],\n labels='Panel %A)',\n minor_label='%A.%mi)')",
                 transform=axs[0].transAxes)
     axs[0].text(0.5, 0.5, 'fig.common_xtick_labels()',
                 transform=axs[0].transAxes, ha='center')
@@ -460,8 +468,7 @@ def demo():
                 transform=axs[0].transAxes, ha='center')
     fig.common_xtick_labels() 
     fig.common_ytick_labels(axs[1:])
-    fig.label_axes([0, [1, 2, 3]], xoffs=0, yoffs=3, labels='Panel %A)', minor_label='%A.%mi)',
-                   fontweight='normal', fontstyle='italic')
+    fig.tag([0, [1, 2, 3]], xoffs=0, yoffs=3, labels='Panel %A)', minor_label='%A.%mi)')
     plt.show()
         
 
