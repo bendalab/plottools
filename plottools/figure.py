@@ -158,7 +158,7 @@ def __figure_figure(num=None, cmsize=None, **kwargs):
     return fig
 
 
-def __fig_subplots_adjust_figure(fig, **kwargs):
+def __fig_subplots_adjust_figure(fig, *args, **kwargs):
     """ figure.subplots_adjust() with margins in multiples of the current font size.
     """
     if hasattr(fig, '__gridspecs'):
@@ -174,7 +174,7 @@ def __fig_subplots_adjust_figure(fig, **kwargs):
             fig.__subplots_margins['rightm'] = kwargs['rightm']
         if 'topm' in kwargs:
             fig.__subplots_margins['topm'] = kwargs['topm']
-        fig.__subplots_adjust_orig_figure(**adjust_fs(fig, **kwargs))
+        fig.__subplots_adjust_orig_figure(**adjust_fs(fig, *args, **kwargs))
 
     
 def __gridspec_update_figure(gridspec, **kwargs):
