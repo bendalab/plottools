@@ -328,7 +328,7 @@ def latex_colors(colors, name=''):
             latex_colors(colors[cn], cn)
     else:
         r, g, b = cc.to_rgb(colors)
-        print('\\definecolor{%s}{RGB}{%.3f,%.3f,%.3f}' % (name, r, g, b))
+        print('\\definecolor{%s}{rgb}{%.3f,%.3f,%.3f}' % (name, r, g, b))
         
 
 def plot_colors(ax, colors, n=1):
