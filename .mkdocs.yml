@@ -16,6 +16,7 @@ nav:
     - 'Plotting guidelines': 'guide.md'
     - 'User Guide':
         - 'Colors': 'colors.md'
+        - 'Figure': 'figure.md'
         - 'Spines': 'spines.md'
         - 'Insets': 'insets.md'
         - 'Ticks': 'ticks.md'
