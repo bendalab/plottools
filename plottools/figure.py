@@ -6,7 +6,8 @@ Simply call
 install_figure()
 ```
 to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
-`figure.add_gridspec()`, `gridspec.update()`, `fig.savefig()`, `plt.savefig()`).
+`figure.add_gridspec()`, `gridspec.update()`, `fig.savefig()`, `plt.savefig()`)
+and to add a `fig.set_size_cm()` function.
 
 Then you can specify the figure size in centimeters:
 ```
@@ -75,6 +76,28 @@ def cm_size(*args):
         return args[0]/cm_per_inch
     else:
         return [v/cm_per_inch for v in args]
+
+
+def set_size_cm(fig, w, h=None, forward=True):
+    """ Set the figure size in centimeters.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure of which to set the size.
+    w: float or (float, float)
+        If `h` is not specified, width and height of the figure in centimeters,
+        otherwise the width of the figure.
+    h: float or None
+        Height of the figure in centimeters.
+    forward : bool
+        If ``True``, the canvas size is automatically updated, e.g.,
+        you can resize the figure window from the shell.
+    """
+    if h is None:
+        w, h = w
+    winch, hinch = cm_size(w, h)
+    fig.set_size_inches(winch, hinch, forward=forward)
 
 
 def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
@@ -321,6 +344,7 @@ def install_figure():
     --------
     uninstall_figure()
     """
+    mpl.figure.Figure.set_size_cm = set_size_cm
     if not hasattr(plt, '__figure_orig_figure'):
         plt.__figure_orig_figure = plt.figure
         plt.figure = __figure_figure
@@ -350,6 +374,8 @@ def install_figure():
 def uninstall_figure():
     """ Uninstall all code that has been installed by install_figure().
     """
+    if hasattr(mpl.figure.Figure, 'set_size_cm'):
+        delattr(mpl.figure.Figure, 'set_size_cm')
     if hasattr(plt, '__figure_orig_figure'):
         plt.figure = plt.__figure_orig_figure
         delattr(plt, '__figure_orig_figure')
@@ -427,6 +453,7 @@ def demo():
     fig.savefig('.pdf', stripfonts=False)
 
     fig = plt.figure(cmsize=(20.0, 16.0))   # in cm!
+    fig.set_size_cm(30.0, 16.0)
     # in fontsize margins and even with old matplotlib versions:
     gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
     fig.suptitle('gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)')
