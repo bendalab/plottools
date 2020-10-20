@@ -580,10 +580,11 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     # mpl.rcParams['image.cmap'] = ''  set from some cmap style
     mpl.rcParams['text.usetex'] = latex
     if latex:
-        mpl.rcParams['text.latex.unicode'] = True
+        if 'text.latex.unicode' in mpl.rcParams:
+            mpl.rcParams['text.latex.unicode'] = True
     if latex and preamble is not None:
-        mpl.rcParams['text.latex.preamble'] = [r'\usepackage{%s}' % line[2:] \
-                                if line[:2] == 'p:' else line for line in preamble]
+        mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
+                                if line[:2] == 'p:' else line for line in preamble])
 
 
 def screen_style(namespace=None):

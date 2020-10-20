@@ -111,7 +111,10 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
                 solid_capstyle='butt', clip_on=False)
     # label:
     if wunit:
-        ls += u'\u2009%s' % wunit
+        if mpl.rcParams['text.usetex']:
+            ls += '\\,%s' % wunit
+        else:
+            ls += u'\u2009%s' % wunit
     for k in mpl.ptParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.ptParams['scalebar.font'][k]
@@ -229,7 +232,10 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
                 clip_on=False)
     # label:
     if hunit:
-        ls += u'\u2009%s' % hunit
+        if mpl.rcParams['text.usetex']:
+            ls += '\\,%s' % hunit
+        else:
+            ls += u'\u2009%s' % hunit
     for k in mpl.ptParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.ptParams['scalebar.font'][k]
