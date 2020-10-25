@@ -3,12 +3,12 @@
 Control spine visibility, bounds (extend of spine), and position
 (moving it outward or inward).
 
-To be able to use the show_spines(), set_spines_bounds() and
-set_spines_outward() functions they need to be installed first by
-means of the install_spines() function. For setting default spine
+To be able to use the `show_spines()`, `set_spines_bounds()` and
+`set_spines_outward()` functions they need to be installed first by
+means of the `install_spines()` function. For setting default spine
 appearance import and call spines_params(). This function implicitely
-installs all necessary functions, so no further call to installing
-functions is needed.
+also installs all necessary functions, so no further call to
+`install_spines()` is needed.
 
 ```
 import matplotlib.pyplot as plt
@@ -35,7 +35,7 @@ ax2.show_spines('tr')
 
 The length of the spine can span
 - the full length of the axis as set by the axis's limits ('full'),
-- the extend of the data or the closest tick locations ('data'),
+- the extend of the data ('data'),
 - the range between the minimum and maximum tick location ('ticks').
 
 ![bounds](figures/spines-bounds.png)

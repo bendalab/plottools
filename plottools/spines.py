@@ -184,11 +184,12 @@ def set_spines_bounds(ax, spines, bounds='full'):
           Dictionary keys are strings specifying the spines as described above.
           The corresponding values specify the bound settings
           (see `bounds` below for possible values and their effects).
-    bounds: 'full', 'data', 'ticks' or tuple
+    bounds: 'full', 'data', 'ticks' or float or tuple thereof
         - 'full': draw the spine in its full length (default)
         - 'data': do not draw the spine beyond the data range, uses matplotlib's smart_bounds
         - 'ticks': draw the spine only within the first and last major tick mark.
-        - tuple: two values of 'full', 'data', or 'ticks' specifying the lower
+        - float: any value on the corresponding axis.
+        - tuple: two values of 'full', 'data', 'ticks' or float specifying the lower
           and upper bound separately.
 
     Raises
@@ -212,19 +213,17 @@ def set_spines_bounds(ax, spines, bounds='full'):
         if isinstance(bounds, (tuple, list)):
             if len(bounds) != 2:
                 raise ValueError('Invalid number of elements for bounds. Should be one or two.')
-            if bounds[0] not in ['full', 'data', 'ticks']:
+            if not np.isscalar(bounds[0]) and bounds[0] not in ['full', 'data', 'ticks']:
                 raise ValueError('Invalid value for lower bound: %s. Should be one of "full", "data", "ticks")' % bounds[0])
-            if bounds[1] not in ['full', 'data', 'ticks']:
+            if not np.isscalar(bounds[1]) and bounds[1] not in ['full', 'data', 'ticks']:
                 raise ValueError('Invalid value for upper bound: %s. Should be one of "full", "data", "ticks")' % bounds[1])
             lower_bound = bounds[0]
             upper_bound = bounds[1]
         else:
-            if bounds not in ['full', 'data', 'ticks']:
+            if not np.isscalar(bounds) and bounds not in ['full', 'data', 'ticks']:
                 raise ValueError('Invalid value for bounds: %s. Should be one of "full", "data", "ticks")' % bounds)
             lower_bound = bounds
             upper_bound = bounds
-        if lower_bound == 'data' and lower_bound != upper_bound:
-            raise ValueError('Invalid value for smart bounds: both upper and lower bound need to be set to "data".' )
         # collect spine ids:
         spines_list = []
         if 't' in spines:
@@ -253,31 +252,71 @@ def __update_spines(fig):
     fig: matplotlib figure
     """
     for ax in fig.get_axes():
-        for sp in ['left', 'right', 'top', 'bottom']:
-            if hasattr(ax.spines[sp], 'bounds_style'):
-                if ax.spines[sp].bounds_style[0] == 'data':
-                    ax.spines[sp].set_smart_bounds(True)
+        for spn in ['left', 'right', 'top', 'bottom']:
+            sp = ax.spines[spn]
+            if hasattr(sp, 'bounds_style'):
+                # get view range, data range and ticks:
+                axis = ax.xaxis if spn in ['top', 'bottom'] else ax.yaxis
+                view = np.sort(axis.get_view_interval())
+                data = np.sort(axis.get_data_interval())
+                locs = np.sort(np.hstack((axis.get_majorticklocs(),
+                                          axis.get_minorticklocs())))
+                # limit data to view:
+                if data[0] < view[0]:
+                    data[0] = view[0]
+                if data[1] > view[1]:
+                    data[1] = view[1]
+                # limit ticks to view:
+                eps = 0.001*np.diff(view)[0]
+                locs = locs[(locs>=np.min(view)-eps)&(locs<=np.max(view)+eps)]
+                # spines bounds:
+                lower = view[0]
+                upper = view[1]
+                if sp.bounds_style[0] == 'ticks':
+                    lower = locs[0] if len(locs) else view[0]
+                elif sp.bounds_style[0] == 'data':
+                    lower = data[0]
+                elif sp.bounds_style[0] != 'full':
+                    lower = sp.bounds_style[0]
+                if sp.bounds_style[1] == 'ticks':
+                    upper = locs[-1] if len(locs) else view[1]
+                elif sp.bounds_style[1] == 'data':
+                    upper = data[1]
+                elif sp.bounds_style[1] != 'full':
+                    upper = sp.bounds_style[1]
+                #print(sp.bounds_style, lower, upper)
+                sp.set_bounds(lower, upper)
+                locs = locs[(locs >= lower-eps) & (locs <= upper+eps)]
+                axis.set_major_locator(ticker.FixedLocator(locs))
+                #axis.major.locator.tick_values(lower, upper)
+                #ticks = [tick for tick in axis.majorTicks
+                #         if tick.get_loc() >= lower and tick.get_loc() <= upper]
+                #axis.majorTicks = ticks
+                """
+                # limit data to view:
+                if data[0] < view[0]:
+                    data[0] = view[0]
+                if data[1] > view[1]:
+                    data[1] = view[1]
+                # limit ticks to view:
+                ticks = ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
+                if len(ticks) < 2:
+                    ticks = view
                 else:
-                    ax.spines[sp].set_smart_bounds(False)
-                    if sp in ['top', 'bottom']:
-                        view = sorted(ax.xaxis.get_view_interval())
-                        ticks = np.asarray(ax.xaxis.get_majorticklocs())
-                    else:
-                        view = sorted(ax.yaxis.get_view_interval())
-                        ticks = np.asarray(ax.yaxis.get_majorticklocs())
-                    # limit ticks to view:
-                    ticks = ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                    if len(ticks) < 2:
-                        ticks = view
-                    else:
-                        ticks = (np.min(ticks), np.max(ticks))
-                    lower = view[0]
-                    upper = view[1]
-                    if ax.spines[sp].bounds_style[0] == 'ticks':
-                        lower = ticks[0]
-                    if ax.spines[sp].bounds_style[1] == 'ticks':
-                        upper = ticks[1]
-                    ax.spines[sp].set_bounds(lower, upper)
+                    ticks = (np.min(ticks), np.max(ticks))
+                # full range:
+                lower = view[0]
+                upper = view[1]
+                if ax.spines[sp].bounds_style[0] == 'ticks':
+                    lower = ticks[0]
+                elif ax.spines[sp].bounds_style[0] == 'data':
+                    lower = data[0]
+                if ax.spines[sp].bounds_style[1] == 'ticks':
+                    upper = ticks[1]
+                elif ax.spines[sp].bounds_style[1] == 'data':
+                    upper = data[1]
+                ax.spines[sp].set_bounds(lower, upper)
+                """
 
     
 def __fig_show_spines(fig, *args, **kwargs):
@@ -370,9 +409,9 @@ def uninstall_spines():
         delattr(mpl.figure.Figure, 'set_spines_outward')
     if hasattr(mpl.figure.Figure, 'set_spines_bounds'):
         delattr(mpl.figure.Figure, 'set_spines_bounds')
+    # uninstall __update_spines():
     if hasattr(mpl.figure.Figure, 'update_spines'):
         delattr(mpl.figure.Figure, 'update_spines')
-    # uninstall __update_spines():
     if hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_spines
         delattr(mpl.figure.Figure, '__savefig_orig_spines')
@@ -619,8 +658,8 @@ def demo_basic():
     axs[1, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'ticks')")
     axs[2, 0].set_spines_bounds('lr', ('full', 'ticks'))
     axs[2, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('full', 'ticks'))")
-    axs[2, 1].set_spines_bounds('lr', ('ticks', 'full'))
-    axs[2, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('ticks', 'full'))")
+    axs[2, 1].set_spines_bounds('lr', ('data', 'full'))
+    axs[2, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('data', 'full'))")
     # plot and annotate:
     x = np.linspace(0.0, 1.0, 100)
     y = 0.5*np.sin(2.0*np.pi*x) + 0.5
