@@ -6,6 +6,7 @@ The following functions are added as a members to mpl.axes.Axes and mpl.figure.F
 - `show_spines()`: show and hide spines and corresponding tick marks.
 - `set_spines_outward()`: set the specified spines outward.
 - `set_spines_bounds()`: set bounds for the specified spines.
+- `arrow_spines()`: spines with arrows.
 
 The following functions enable and disable spine control:
 
@@ -20,6 +21,8 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import matplotlib.lines as lines
+import matplotlib.transforms as transforms
 
 
 def show_spines(ax, spines='lrtb'):
@@ -148,7 +151,7 @@ def set_spines_outward(ax, spines, offset=0):
             axs = [ax]
         if not isinstance(axs, (list, tuple)):
             axs = [axs]
-        # collect spine visibility:
+        # collect spine ids:
         spines_list = []
         if 't' in spines:
             spines_list.append('top')
@@ -160,10 +163,17 @@ def set_spines_outward(ax, spines, offset=0):
             spines_list.append('right')
         for ax in axs:
             for sp in spines_list:
-                if ax.spines[sp].get_visible():
+                visible = ax.spines[sp].get_visible()
+                if sp in ['left', 'right']:
                     loc = ax.yaxis.get_major_locator()
-                    ax.spines[sp].set_position(('outward', offset))
+                else:
+                    loc = ax.xaxis.get_major_locator()
+                ax.spines[sp].set_position(('outward', offset))
+                if sp in ['left', 'right']:
                     ax.yaxis.set_major_locator(loc)
+                else:
+                    ax.xaxis.set_major_locator(loc)
+                ax.spines[sp].set_visible(visible)
 
 
 def set_spines_bounds(ax, spines, bounds='full'):
@@ -239,13 +249,73 @@ def set_spines_bounds(ax, spines, bounds='full'):
                 ax.spines[sp].bounds_style = (lower_bound, upper_bound)
 
 
-def __update_spines(fig):
-    """ Update bounds of spines.
+def arrow_spines(ax, spines, flush=None, extend=None, height=None, ratio=None,
+                 lw=None, color=None):
+    """ Spines with arrows.
 
-    This is needed for applying the 'ticks' setting of `set_spines_bounds()`.
-    The spines module patches the `plt.show()`, `fig.show()`, and `fig.savefig()`
-    functions to first call `__update_spines()`. This way this function is
-    called automatically right before the figure is drawn.
+    Parameters
+    ----------
+    ax: matplotlib figure, matplotlib axis, or list of matplotlib axes
+        Axis on which spine and ticks visibility is manipulated.
+        If figure, then apply manipulations on all axes of the figure.
+        If list of axes, apply manipulations on each of the given axes.
+    spines: string
+        Specify which spines should be shown as arrows.
+        'l' is the left spine, 'r' the right spine, 't' the top one and 'b' the bottom one.
+    flush: float or None
+        Extend the tail of the arrow by this factor times the outward set distance
+        of the spine of the other axis.
+        If `None` set to `ptParams[axes.spines.arrows.flushx]` for horizontal spines
+        or `ptParams[axes.spines.arrows.flushy]` for vertical spines.
+    extend: float or None
+        Extend the length of the spine by this factor times the height of the arrow.
+        If `None` set to `ptParams[axes.spines.arrows.extendx]` for horizontal spines
+        or `ptParams[axes.spines.arrows.extendy]` for vertical spines.
+    height: float
+        Height (length) of the arrow in points.
+        If `None` set to `ptParams[axes.spines.arrows.height]`.
+    ratio: float
+        Width of arrow is `height` times `ratio`.
+        If `None` set to `ptParams[axes.spines.arrows.ratio]`.
+    lw: float or None
+        Line width of spine. If `None` set to `rcParams[axes.linewidth]`.
+    color: matplotlib color specificaion or None
+        Color of spine. If `None` set to `rcParams[axes.edgecolor]`.
+    """
+    # collect spine visibility:
+    spns = []
+    if 't' in spines:
+        spns.append('top')
+    if 'b' in spines:
+        spns.append('bottom')
+    if 'l' in spines:
+        spns.append('left')
+    if 'r' in spines:
+        spns.append('right')
+    # collect axes:
+    if isinstance(ax, (list, tuple, np.ndarray)):
+        axs = ax
+    elif hasattr(ax, 'get_axes'):
+        axs = ax.get_axes()
+    else:
+        axs = [ax]
+    if not isinstance(axs, (list, tuple)):
+        axs = [axs]
+    # mark spines for arrow plotting:
+    for ax in axs:
+        for sp in spns:
+            ax.spines[sp].arrow = dict(flush=flush, extend=extend,
+                                       height=height, ratio=ratio, lw=lw, color=color)
+
+
+def __update_spines(fig):
+    """ Update bounds and arrows of spines.
+
+    This is needed for applying the 'ticks' setting of
+    `set_spines_bounds()` and to draw aspines with arrows.  The spines
+    module patches the `plt.show()`, `fig.show()`, and `fig.savefig()`
+    functions to first call `__update_spines()`. This way this function
+    is called automatically right before the figure is drawn.
 
     Parameters
     ----------
@@ -284,39 +354,119 @@ def __update_spines(fig):
                     upper = data[1]
                 elif sp.bounds_style[1] != 'full':
                     upper = sp.bounds_style[1]
-                #print(sp.bounds_style, lower, upper)
                 sp.set_bounds(lower, upper)
-                locs = locs[(locs >= lower-eps) & (locs <= upper+eps)]
-                axis.set_major_locator(ticker.FixedLocator(locs))
-                #axis.major.locator.tick_values(lower, upper)
-                #ticks = [tick for tick in axis.majorTicks
-                #         if tick.get_loc() >= lower and tick.get_loc() <= upper]
-                #axis.majorTicks = ticks
-                """
-                # limit data to view:
-                if data[0] < view[0]:
-                    data[0] = view[0]
-                if data[1] > view[1]:
-                    data[1] = view[1]
-                # limit ticks to view:
-                ticks = ticks[(ticks>=np.min(view))&(ticks<=np.max(view))]
-                if len(ticks) < 2:
-                    ticks = view
-                else:
-                    ticks = (np.min(ticks), np.max(ticks))
-                # full range:
-                lower = view[0]
-                upper = view[1]
-                if ax.spines[sp].bounds_style[0] == 'ticks':
-                    lower = ticks[0]
-                elif ax.spines[sp].bounds_style[0] == 'data':
-                    lower = data[0]
-                if ax.spines[sp].bounds_style[1] == 'ticks':
-                    upper = ticks[1]
-                elif ax.spines[sp].bounds_style[1] == 'data':
-                    upper = data[1]
-                ax.spines[sp].set_bounds(lower, upper)
-                """
+                if len(locs) > 0 and (locs[0] < lower-eps or locs[-1] > upper+eps):
+                    locs = locs[(locs >= lower-eps) & (locs <= upper+eps)]
+                    axis.set_major_locator(ticker.FixedLocator(locs))
+            if hasattr(sp, 'arrow'):
+                major = int(mpl.__version__.split('.')[0])
+                fac = 1.38 if major > 2 else 1.1
+                figw, figh = ax.get_figure().get_size_inches()*fig.dpi
+                _, _, w, h = ax.get_position().bounds
+                xpfac = fac/(w*figw)
+                ypfac = fac/(h*figh)
+                flush = sp.arrow['flush']
+                extend = sp.arrow['extend']
+                height = sp.arrow['height']
+                if height is None:
+                    if hasattr(mpl, 'ptParams'):
+                        height = mpl.ptParams.get('axes.spines.arrows.height', 5.0)
+                    else:
+                        height = 5.0
+                ratio = sp.arrow['ratio']
+                if ratio is None:
+                    if hasattr(mpl, 'ptParams'):
+                        ratio = mpl.ptParams.get('axes.spines.arrows.ratio', 0.7)
+                    else:
+                        ratio = 0.7                        
+                width = 0.5*ratio*height
+                lw = sp.arrow['lw']
+                if lw is None:
+                    lw = mpl.rcParams['axes.linewidth']
+                color = sp.arrow['color']
+                if color is None:
+                    color = mpl.rcParams['axes.edgecolor']
+                linestyle = dict(lw=lw, color=color)
+                if spn in ['left', 'right']:
+                    sp.set_visible(False)
+                    x = 0.0 if spn == 'left' else 1.0
+                    start = [x, 0.0]
+                    stop = [x, 1.0]
+                    ofac = -1.0 if spn == 'left' else 1.0
+                    bounds = sp.get_bounds()
+                    if bounds is not None:
+                        y0, y1 = ax.get_ylim()
+                        start = [x, (bounds[0]-y0)/(y1-y0)]
+                        stop = [x, (bounds[1]-y0)/(y1-y0)]
+                    pos = sp.get_position()
+                    if pos and pos[0] == 'outward':
+                        start[0] += xpfac*ofac*pos[1]
+                        stop[0] += xpfac*ofac*pos[1]
+                    flushy = flush
+                    if flushy is None:
+                        if hasattr(mpl, 'ptParams'):
+                            flushy = mpl.ptParams.get('axes.spines.arrows.flushy', 0.0)
+                        else:
+                            flushy = 0.0
+                    if flushy:
+                        pos = ax.spines['bottom'].get_position()
+                        if pos and pos[0] == 'outward':
+                            start[1] -= ypfac*flushy*(pos[1]+0.5*lw)
+                    extendy = extend
+                    if extendy is None:
+                        if hasattr(mpl, 'ptParams'):
+                            extendy = mpl.ptParams.get('axes.spines.arrows.extendy', 1.0)
+                        else:
+                            extendy = 1.0
+                    if extendy:
+                        stop[1] += ypfac*extendy*height
+                    ax.add_line(lines.Line2D([start[0], stop[0]], [start[1], stop[1]],
+                                             transform=ax.transAxes, clip_on=False,
+                                             solid_capstyle='butt', **linestyle))
+                    ax.add_line(lines.Line2D([stop[0]-xpfac*width, stop[0], stop[0]+xpfac*width],
+                                             [stop[1]-ypfac*height, stop[1], stop[1]-ypfac*height],
+                                             transform=ax.transAxes, clip_on=False,
+                                             solid_joinstyle='miter', **linestyle))
+                if spn in ['bottom', 'top']:
+                    sp.set_visible(False)
+                    y = 0.0 if spn == 'bottom' else 1.0
+                    start = [0.0, y]
+                    stop = [1.0, y]
+                    ofac = -1.0 if spn == 'bottom' else 1.0
+                    bounds = sp.get_bounds()
+                    if bounds is not None:
+                        x0, x1 = ax.get_xlim()
+                        start = [(bounds[0]-x0)/(x1-x0), y]
+                        stop = [(bounds[1]-x0)/(x1-x0), y]
+                    pos = sp.get_position()
+                    if pos and pos[0] == 'outward':
+                        start[1] += ypfac*ofac*pos[1]
+                        stop[1] += ypfac*ofac*pos[1]
+                    flushx = flush
+                    if flushx is None:
+                        if hasattr(mpl, 'ptParams'):
+                            flushx = mpl.ptParams.get('axes.spines.arrows.flushx', 0.0)
+                        else:
+                            flushx = 0.0
+                    if flushx:
+                        pos = ax.spines['left'].get_position()
+                        if pos and pos[0] == 'outward':
+                            start[0] -= xpfac*flushx*(pos[1]+0.5*lw)
+                    extendx = extend
+                    if extendx is None:
+                        if hasattr(mpl, 'ptParams'):
+                            extendx = mpl.ptParams.get('axes.spines.arrows.extendx', 1.0)
+                        else:
+                            extendx = 1.0
+                    if extendx:
+                        stop[0] += xpfac*extendx*height
+                    ax.add_line(lines.Line2D([start[0], stop[0]], [start[1], stop[1]],
+                                             transform=ax.transAxes, clip_on=False,
+                                             solid_capstyle='butt', **linestyle))
+                    ax.add_line(lines.Line2D([stop[0]-xpfac*height, stop[0], stop[0]-xpfac*height],
+                                             [stop[1]-ypfac*width, stop[1], stop[1]+ypfac*width],
+                                             transform=ax.transAxes, clip_on=False,
+                                             solid_joinstyle='miter', **linestyle))
 
     
 def __fig_show_spines(fig, *args, **kwargs):
@@ -371,9 +521,11 @@ def install_spines():
     mpl.axes.Axes.show_spines = show_spines
     mpl.axes.Axes.set_spines_outward = set_spines_outward
     mpl.axes.Axes.set_spines_bounds = set_spines_bounds
+    mpl.axes.Axes.arrow_spines = arrow_spines
     mpl.figure.Figure.show_spines = show_spines
     mpl.figure.Figure.set_spines_outward = set_spines_outward
     mpl.figure.Figure.set_spines_bounds = set_spines_bounds
+    mpl.figure.Figure.arrow_spines = arrow_spines
     mpl.figure.Figure.update_spines = __update_spines
     # install __update_spines():
     if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
@@ -403,12 +555,16 @@ def uninstall_spines():
         delattr(mpl.axes.Axes, 'set_spines_outward')
     if hasattr(mpl.axes.Axes, 'set_spines_bounds'):
         delattr(mpl.axes.Axes, 'set_spines_bounds')
+    if hasattr(mpl.axes.Axes, 'arrow_spines'):
+        delattr(mpl.axes.Axes, 'arrow_spines')
     if hasattr(mpl.figure.Figure, 'show_spines'):
         delattr(mpl.figure.Figure, 'show_spines')
     if hasattr(mpl.figure.Figure, 'set_spines_outward'):
         delattr(mpl.figure.Figure, 'set_spines_outward')
     if hasattr(mpl.figure.Figure, 'set_spines_bounds'):
         delattr(mpl.figure.Figure, 'set_spines_bounds')
+    if hasattr(mpl.figure.Figure, 'arrow_spines'):
+        delattr(mpl.figure.Figure, 'arrow_spines')
     # uninstall __update_spines():
     if hasattr(mpl.figure.Figure, 'update_spines'):
         delattr(mpl.figure.Figure, 'update_spines')
@@ -435,6 +591,7 @@ def __axes_init_spines__(ax, *args, **kwargs):
     ax.show_spines(mpl.ptParams['axes.spines.show'])
     ax.set_spines_outward(mpl.ptParams['axes.spines.offsets'])
     ax.set_spines_bounds(mpl.ptParams['axes.spines.bounds'])
+    ax.arrow_spines(mpl.ptParams['axes.spines.arrows'])
 
 
 def __twinx_spines(ax, *args, **kwargs):
@@ -506,6 +663,13 @@ def install_default_spines():
     axes.spines.show   : 'lrtb'
     axes.spines.offsets: {'lrtb': 0}
     axes.spines.bounds : {'lrtb': 'full'}
+    axes.spines.arrows: '',
+    axes.spines.arrows.flushx: 0.0
+    axes.spines.arrows.flushy: 0.0
+    axes.spines.arrows.extendx: 1.0
+    axes.spines.arrows.extendy: 1.0
+    axes.spines.arrows.height: 5.0
+    axes.spines.arrows.ratio: 0.7
     axes.spines.twinx: 'r'
     axes.spines.twiny: 'l'
     axes.spines.inset.show   : 'lrtb'
@@ -531,6 +695,13 @@ def install_default_spines():
         mpl.ptParams.update({'axes.spines.show': 'lrtb',
                              'axes.spines.offsets': {'lrtb': 0},
                              'axes.spines.bounds': {'lrtb': 'full'},
+                             'axes.spines.arrows': '',
+                             'axes.spines.arrows.flushx': 0.0,
+                             'axes.spines.arrows.flushy': 0.0,
+                             'axes.spines.arrows.extendx': 1.0,
+                             'axes.spines.arrows.extendy': 1.0,
+                             'axes.spines.arrows.height': 5.0,
+                             'axes.spines.arrows.ratio': 0.7,
                              'axes.spines.twinx': 'r',
                              'axes.spines.twiny': 'l',
                              'axes.spines.inset.show': 'lrtb',
@@ -561,6 +732,13 @@ def uninstall_default_spines():
         mpl.ptParams.pop('axes.spines.show', None)
         mpl.ptParams.pop('axes.spines.offsets', None)
         mpl.ptParams.pop('axes.spines.bounds', None)
+        mpl.ptParams.pop('axes.spines.arrows', None)
+        mpl.ptParams.pop('axes.spines.arrows.flushx', None)
+        mpl.ptParams.pop('axes.spines.arrows.flushy', None)
+        mpl.ptParams.pop('axes.spines.arrows.extendx', None)
+        mpl.ptParams.pop('axes.spines.arrows.extendy', None)
+        mpl.ptParams.pop('axes.spines.arrows.height', None)
+        mpl.ptParams.pop('axes.spines.arrows.ratio', None)
         mpl.ptParams.pop('axes.spines.twinx', None)
         mpl.ptParams.pop('axes.spines.twiny', None)
         mpl.ptParams.pop('axes.spines.inset.show', None)
@@ -582,7 +760,8 @@ def uninstall_default_spines():
 
 
 def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
-                  twinx_spines=None, twiny_spines=None,
+                  arrows=None, flushx=None, extendx=None, flushy=None, extendy=None,
+                  height=None, ratio=None, twinx_spines=None, twiny_spines=None,
                   inset_spines=None, inset_spines_offsets=None, inset_spines_bounds=None):
     """ Set default spine appearance.
 
@@ -596,6 +775,26 @@ def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
         Offsets for moving spines outward. See `spines.set_spines_outward()` for details.
     spines_bounds: dict
         Bounds for the spines. See `spines.set_spines_bounds()` for details.
+    arrows: string
+        Spines as arrows. See `spines.arrow_spines()` for details.
+    flushx: float
+        Extend tail of arrowed top or bottom spine by this factor times offset of other axis.
+        See `spines.arrow_spines()` for details.
+    extendx: float
+        Extend head of arrowed top or bottom spine by this factor times height of arrow.
+        See `spines.arrow_spines()` for details.
+    flushy: float
+        Extend tail of arrowed left or right spine by this factor times offset of other axis.
+        See `spines.arrow_spines()` for details.
+    extendy: float
+        Extend head of arrowed left or right spine by this factor times height of arrow.
+        See `spines.arrow_spines()` for details.
+    height: float
+        Height of arrow head of arrowed spine in points.
+        See `spines.arrow_spines()` for details.
+    ratio: float
+        Width relative to height of arrow head of arrowed spine in points.
+        See `spines.arrow_spines()` for details.
     twinx_spines: string
         Spines to be shown for `twinx()` axes. See `spines.show_spines()` for details.
         Twinned axes get the same default offsets and bounds as the defaults for normal axes.
@@ -617,6 +816,20 @@ def spines_params(spines=None, spines_offsets=None, spines_bounds=None,
         mpl.ptParams.update({'axes.spines.offsets': spines_offsets})
     if spines_bounds is not None:
         mpl.ptParams.update({'axes.spines.bounds': spines_bounds})
+    if arrows is not None:
+        mpl.ptParams.update({'axes.spines.arrows': arrows})
+    if flushx is not None:
+        mpl.ptParams.update({'axes.spines.arrows.flushx': flushx})
+    if extendx is not None:
+        mpl.ptParams.update({'axes.spines.arrows.extendx': extendx})
+    if flushy is not None:
+        mpl.ptParams.update({'axes.spines.arrows.flushy': flushy})
+    if extendy is not None:
+        mpl.ptParams.update({'axes.spines.arrows.extendy': extendy})
+    if height is not None:
+        mpl.ptParams.update({'axes.spines.arrows.height': height})
+    if ratio is not None:
+        mpl.ptParams.update({'axes.spines.arrows.ratio': ratio})
     if twinx_spines is not None:
         mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
     if twiny_spines is not None:
@@ -634,6 +847,8 @@ def demo_basic():
     """
     install_spines()
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
+    # set spines outward:
+    fig.set_spines_outward('lrtb', 10)
     # spine visibility:
     axs[0, 0].show_spines('lt')
     axs[0, 0].text(0.05, 1.7, "ax.show_spines('lt')")
@@ -644,22 +859,22 @@ def demo_basic():
     axs[1, 1].show_spines('r')
     axs[1, 1 ].text(0.05, 1.7, "ax.show_spines('r')")
     axs[2, 0].show_spines('lb')
+    axs[2, 0].arrow_spines('lb', flush=1.0, extend=2.0)
     axs[2, 0].text(0.05, 1.7, "ax.show_spines('lb')")
     axs[2, 1].show_spines('rb')
     axs[2, 1 ].text(0.05, 1.7, "ax.show_spines('rb')")
-    # set spines outward:
-    fig.set_spines_outward('lrtb', 10)
     # set spine bounds:
     axs[0, 1].set_spines_bounds('lr', 'full')
-    axs[0, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'full')")
+    axs[0, 1].text(0.05, 1.4, "ax.set_spines_bounds('lr', 'full')")
     axs[1, 0].set_spines_bounds('lr', 'data')
-    axs[1, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'data')")
+    axs[1, 0].text(0.05, 1.4, "ax.set_spines_bounds('lr', 'data')")
     axs[1, 1].set_spines_bounds('lr', 'ticks')
-    axs[1, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', 'ticks')")
+    axs[1, 1].text(0.05, 1.4, "ax.set_spines_bounds('lr', 'ticks')")
     axs[2, 0].set_spines_bounds('lr', ('full', 'ticks'))
-    axs[2, 0].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('full', 'ticks'))")
+    axs[2, 0].text(0.05, 1.4, "ax.set_spines_bounds('lr', ('full', 'ticks'))")
+    axs[2, 0].text(0.05, 1.1, "ax.arrow_spines('lb', flush=1.0, extend=2.0)")
     axs[2, 1].set_spines_bounds('lr', ('data', 'full'))
-    axs[2, 1].text(0.05, 1.1, "ax.set_spines_bounds('lr', ('data', 'full'))")
+    axs[2, 1].text(0.05, 1.4, "ax.set_spines_bounds('lr', ('data', 'full'))")
     # plot and annotate:
     x = np.linspace(0.0, 1.0, 100)
     y = 0.5*np.sin(2.0*np.pi*x) + 0.5
@@ -668,8 +883,7 @@ def demo_basic():
             ax.plot(x, y)
             ax.set_ylim(-1.0, 2.0)
             ax.set_yticks([-0.5, 0, 0.5, 1])
-            ax.text(0.05, 1.4, "fig.set_spines_outward('lrtb', 10)")
-    #fig.savefig('spinesbasic.pdf')
+    fig.savefig('spinesbasic.pdf')
     plt.show()
     uninstall_spines()
 
@@ -703,7 +917,7 @@ def demo_twin_inset():
 
 def demo():
     demo_basic()
-    demo_twin_inset()
+    #demo_twin_inset()
 
 
 if __name__ == "__main__":
