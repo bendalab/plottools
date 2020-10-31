@@ -68,6 +68,7 @@ from .insets import inset, zoomed_inset
 from .axes import axes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
+from .neurons import neuron
 
 
 def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,

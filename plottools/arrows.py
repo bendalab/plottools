@@ -1,5 +1,5 @@
 """
-Arrows
+Drawing arrows.
 
 The following functions are provided as mpl.axes.Axes member functions:
 

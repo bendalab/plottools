@@ -36,6 +36,7 @@ The following modules are provided by the plottools package:
 - `insets`: insets made easy. [More...](docs/insets.md)
 - `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
 - `significance`: indicating statsitical significance.
+- `neurons`: draw sketches of neurons.
 
 See documentation in the modules for more infos.
 
