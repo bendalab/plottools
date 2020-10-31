@@ -22,7 +22,7 @@ from matplotlib.patches import ArrowStyle
 
 def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
            style='>', shrink=0, lw=1, color='k',
-           head_width=15, head_length=15, **kwargs):
+           head_width=15, head_length=15, transform=None, **kwargs):
     """ Draw a horizontal arrow with annotation on the arrow.
            
     Parameters
@@ -59,9 +59,18 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         Width of arrow head in points.
     head_length: float
         Length of arrow head in points.
+    transform: matplotlib.Transform
+        Defines coordinate system for `x`, `y`, and `dx`. Defaults to data coordinates.
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
     """
+    if transform is None:
+        transform = ax.transData
+    transcoord = 'data'
+    if transform is ax.transAxes:
+        transcoord = 'axes fraction'
+    if transform is ax.get_figure().transFigure:
+        transcoord = 'figure fraction'
     heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
                'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
     heads = heads_d[heads+'x']
@@ -72,12 +81,14 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
                                       head_width=0.07*head_width, tail_width=0.01)
         if heads in ['right', 'both']:
             ax.annotate('', (x+dx, y), (x, y),
+                        xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
                                         clip_on=False), annotation_clip=False)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x+dx, y),
+                        xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
@@ -102,6 +113,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
             ec = 'none'
             lww = 0
         ax.annotate('', (x+dx, y), (x, y),
+                    xycoords=transcoord, textcoords=transcoord,
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
                                     mutation_scale=scale, clip_on=False), annotation_clip=False)
@@ -116,7 +128,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
             ddxl = -ddxl
             ddxr = -ddxr
         ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color,
-                solid_capstyle='butt', clip_on=False)
+                transform=transform, solid_capstyle='butt', clip_on=False)
     if text:
         if '%' in text and text[-1] != '%':
             text = text % dx
@@ -128,15 +140,15 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         dy = 0.5*lw + dist
         if va == 'top':
             ax.text(x+0.5*dx, y+dy*dyu, text, ha='center', va='bottom',
-                    clip_on=False, **kwargs)
+                    transform=transform, clip_on=False, **kwargs)
         else:
             ax.text(x+0.5*dx, y-dy*dyu, text, ha='center', va='top',
-                    clip_on=False, **kwargs)
+                    transform=transform, clip_on=False, **kwargs)
 
 
 def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
            style='>', shrink=0, lw=1, color='k',
-           head_width=15, head_length=15, **kwargs):
+           head_width=15, head_length=15, transform=None, **kwargs):
     """ Draw a vertical arrow with annotation on the arrow.
            
     Parameters
@@ -173,9 +185,18 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         Width of arrow head in points.
     head_length: float
         Length of arrow head in points.
+    transform: matplotlib.Transform
+        Defines coordinate system for `x`, `y`, and `dx`. Defaults to data coordinates.
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
     """
+    if transform is None:
+        transform = ax.transData
+    transcoord = 'data'
+    if transform is ax.transAxes:
+        transcoord = 'axes fraction'
+    if transform is ax.get_figure().transFigure:
+        transcoord = 'figure fraction'
     heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
                'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
     heads = heads_d[heads+'x']
@@ -186,12 +207,14 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                                       head_width=0.07*head_width, tail_width=0.01)
         if heads in ['right', 'both']:
             ax.annotate('', (x, y+dy), (x, y),
+                        xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
                                         clip_on=False), annotation_clip=False)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x, y+dy),
+                        xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
@@ -216,6 +239,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             ec = 'none'
             lww = 0
         ax.annotate('', (x, y+dy), (x, y),
+                    xycoords=transcoord, textcoords=transcoord,
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
                                     mutation_scale=scale, clip_on=False), annotation_clip=False)
@@ -230,7 +254,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             ddyl = -ddyl
             ddyr = -ddyr
         ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color,
-                solid_capstyle='butt', clip_on=False)
+                transform=transform, solid_capstyle='butt', clip_on=False)
     if text:
         if '%' in text and text[-1] != '%':
             text = text % dy
@@ -242,10 +266,10 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         dx = 0.5*lw + dist
         if ha == 'right':
             ax.text(x+dx*dxu, y+0.5*dy, text, ha='left', va='center',
-                    clip_on=False, **kwargs)
+                    transform=transform, clip_on=False, **kwargs)
         else:
             ax.text(x-dx*dxu, y+0.5*dy, text, ha='right', va='center',
-                    clip_on=False, **kwargs)
+                    transform=transform, clip_on=False, **kwargs)
 
 
 def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
