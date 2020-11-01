@@ -219,6 +219,7 @@ For displaying colors and color maps, four functions are provided:
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
   ![plotcomparison](figures/colors-plotcomparison.png)
 - `plot_colormap()`: plot a color map and its luminance.
+  ![plotcolormap](figures/colors-plotcolormap.png)
 
 These functions are helpfull when creating new palettes. See their
 documentation for details on how to use them.

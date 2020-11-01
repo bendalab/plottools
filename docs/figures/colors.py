@@ -86,7 +86,7 @@ def gradient_figure():
 def colormap_figure():
     """ Generate a figure demonstrating the colormap() function.
     """
-    fig, ax = plt.subplots(cmsize=(20.0, 5.0))
+    fig, ax = plt.subplots(cmsize=(20.0, 4.0))
     fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=0, bottomm=1.5)
     cmcolors = [colors['red'], lighter(colors['orange'], 0.85),
                 lighter(colors['yellow'], 0.2), lighter(colors['lightblue'], 0.8),
@@ -110,7 +110,7 @@ def plotcolors_figure():
 def plotcomplementary_figure():
     """ Generate a figure demonstrating the plot_complementary_colors() function.
     """
-    fig, ax = plt.subplots(cmsize=(25.0, 12.0))
+    fig, ax = plt.subplots(cmsize=(25.0, 6.0))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
     ax.show_spines('')
     plot_complementary_colors(ax, colors)
@@ -120,7 +120,7 @@ def plotcomplementary_figure():
 def plotcomparison_figure():
     """ Generate a figure demonstrating the plot_color_comparison() function.
     """
-    fig, ax = plt.subplots(cmsize=(35.0, 10.0))
+    fig, ax = plt.subplots(cmsize=(35.0, 8.0))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
     ax.show_spines('')
     plot_color_comparison(ax, (color_palettes['muted'], 'muted'),
