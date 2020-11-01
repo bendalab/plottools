@@ -184,6 +184,9 @@ These functions are helpfull when creating new palettes. See their
 documentation for details on how to use them.
 
 
+## Others
 
+- [matplotlib color maps](https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html)
+- [Palettable](https://jiffyclub.github.io/palettable): many beautiful color palettes
 
 

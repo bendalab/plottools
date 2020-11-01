@@ -16,6 +16,7 @@ Manipulating colors:
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 - `gradient()`: interpolate between two colors.
+- `colormap()`: generate and register a color map.
 
 Exporting colors:
 
@@ -32,6 +33,8 @@ from collections import OrderedDict
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.cm import register_cmap
 try:
     from matplotlib.colors import colorConverter as cc
 except ImportError:
@@ -311,7 +314,38 @@ def gradient(color0, color1, r):
     else:
         return cs
 
-    
+
+def colormap(name, colors, values=None):
+    """ Generate and register a color map.
+
+    This is a simple shortcut to the cumbersome names and imports needed for
+    `matplotlib.colors.LinearSegmentedColormap` and `matplotlib.cm import register_cmap`.
+
+    Parameters
+    ----------
+    name: string
+        Name of the color map. You can use this name to set the colormap, e.g.
+        ```
+        ax.contourf(x, y, z, cmap=name)
+        ```
+    colors: sequence of matplotlib color specifications
+        The colors from which to generate the color map.
+    values: sequence of floats or None
+        If None, `colors` are equidistantly mapped on the range 0 to 1.
+        Otherwise for each color the position in the colors map range.
+
+    Returns
+    -------
+    cmap: matplotlib colormap
+        The color map generated from `colors`.
+    """
+    if values is not None:
+        colors = list(zip(values, colors))
+    cmap = LinearSegmentedColormap.from_list(name, colors)
+    register_cmap(cmap=cmap)
+    return cmap
+
+
 def latex_colors(colors, name=''):
     """ Print a \\definecolor command for LaTeX.
 
