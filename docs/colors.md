@@ -1,5 +1,12 @@
 # Colors module
 
+Make sure you know about
+
+- [matplotlib color maps](https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html)
+- [Palettable](https://jiffyclub.github.io/palettable): many beautiful color palettes
+
+
+Load the color module:
 ```
 import plottools.colors as c
 ```
@@ -115,7 +122,7 @@ lightblue = c.lighter(color, 0.4)
 
 Make colors darker.
 
-![lighter](figures/colors-darker.png)
+![darker](figures/colors-darker.png)
 
 For 40% darker blue do
 ```
@@ -128,7 +135,7 @@ darkblue = c.darker(color, 0.4)
 
 Mix two colors.
 
-![lighter](figures/colors-gradient.png)
+![gradient](figures/colors-gradient.png)
 
 For 30% transition between blue and orange do
 ```
@@ -149,7 +156,7 @@ c.latex_colors(c.colors['red'], 'red')
 ```
 writes to the console
 ```
-\definecolor{red}{RGB}{0.753,0.153,0.090}
+\definecolor{red}{rgb}{0.753,0.153,0.090}
 ```
 or for a whole palette:
 ```
@@ -157,36 +164,63 @@ c.latex_colors(c.colors_vivid)
 ```
 writes to the console
 ```
-\definecolor{red}{RGB}{0.843,0.063,0.000}
-\definecolor{orange}{RGB}{1.000,0.565,0.000}
-\definecolor{yellow}{RGB}{1.000,0.969,0.000}
+\definecolor{red}{rgb}{0.843,0.063,0.000}
+\definecolor{orange}{rgb}{1.000,0.565,0.000}
+\definecolor{yellow}{rgb}{1.000,0.969,0.000}
 ...
 ```
-You then can copy the color definitions into you LaTeX preamble. Do not forget to
+Then copy the color definitions into you LaTeX preamble. Do not forget to
 load the `color` or `xcolor` packages before:
 ```
 \usepackage{color}
 ```
-Then you can use the colors with the usual commands, like for example:
+You then can use the newly defined  colors with the usual commands, like for example:
 ```
-\textcolor{red}{Some text in red.}
+\textcolor{red}{Some text in my special red.}
+```
+
+
+## Color maps
+
+Generate and register a color map from colors like this:
+```
+cmcolors = [c.colors['red'], c.lighter(c.colors['orange'], 0.85),
+            c.lighter(c.colors['yellow'], 0.2), c.lighter(c.colors['lightblue'], 0.8),
+            c.colors['blue']]
+cmvalues = [0.0, 0.25, 0.5, 0.8, 1.0]
+c.colormap('RYB', cmcolors, cmvalues)
+```
+This is just a simple wrapper for
+`matplotlib.colors.LinearSegmentedColormap` and `matplotlib.cm import
+register_cmap`.
+
+The new colormap can then be used directly by its name for the `cmap`
+arguments of `imshow()`, `pcolormesh()`, `contourf()`, etc.:
+```
+ax.imshow(image, cmap='RYB')
+```
+
+![colormap](figures/colors-colormap.png)
+
+Retrieve a single color from a color map:
+```
+jet_red = c.cmap_color('jet', 0.0)
 ```
 
 
 ## Display colors
 
-For displaying colors, three functions are provided:
+For displaying colors and color maps, four functions are provided:
+
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
+  ![plotcolors](figures/colors-plotcolors.png)
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
+  ![plotcomplementary](figures/colors-plotcomplementary.png)
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
+  ![plotcomparison](figures/colors-plotcomparison.png)
+- `plot_colormap()`: plot a color map and its luminance.
 
 These functions are helpfull when creating new palettes. See their
 documentation for details on how to use them.
-
-
-## Others
-
-- [matplotlib color maps](https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html)
-- [Palettable](https://jiffyclub.github.io/palettable): many beautiful color palettes
 
 

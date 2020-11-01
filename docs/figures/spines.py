@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
 from plottools.figure import install_figure
-import plottools.spines
+from plottools.spines import install_spines
 import plottools.ticks
 
     
@@ -13,11 +13,11 @@ def spines_figures():
     def new_figure(fac=0.8, maxx=1, miny=-1, maxy=1, margin='all'):
         plt.rcParams['xtick.direction'] = 'out'
         plt.rcParams['ytick.direction'] = 'out'
-        fig, axs = plt.subplots(1, 3, figsize=(28, 10))
+        fig, axs = plt.subplots(1, 3, cmsize=(28, 10))
         if margin == 'lb':
-            fig.subplots_adjust(left=7.5, right=1.5, top=0.5, bottom=3.5, wspace=0.4)
+            fig.subplots_adjust(leftm=7.5, rightm=1.5, topm=0.5, bottomm=3.5, wspace=0.4)
         else:
-            fig.subplots_adjust(left=7.5, right=7.5, top=3.5, bottom=3.5, wspace=0.4)
+            fig.subplots_adjust(leftm=7.5, rightm=7.5, topm=3.5, bottomm=3.5, wspace=0.4)
         for ax in axs:
             x = np.linspace(0, 1.5, 200)
             y = fac*np.sin(2*np.pi*5*x)
@@ -35,6 +35,7 @@ def spines_figures():
         plt.close()
         
     install_figure()
+    install_spines()
 
     fig, axs = new_figure()
     axs[0].show_spines('lb')

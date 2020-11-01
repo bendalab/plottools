@@ -11,23 +11,29 @@ Dictionaries with colors:
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
 
+- `color_palettes`: a dictionary with all the defined color dictionaries.
+
 Manipulating colors:
 
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 - `gradient()`: interpolate between two colors.
-- `colormap()`: generate and register a color map.
 
 Exporting colors:
 
 - `latex_colors()`: print a \\definecolor command for LaTeX.
+
+Color maps:
+
+- `colormap()`: generate and register a color map.
+- `cmap_color()`: retrieve color from a color map.
 
 Displaying colors:
 
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
-- `plot_colormap()`: plot a color map.
+- `plot_colormap()`: plot a color map and its luminance.
 """
 
 from collections import OrderedDict
@@ -316,6 +322,25 @@ def gradient(color0, color1, r):
         return cs
 
 
+def latex_colors(colors, name=''):
+    """ Print a \\definecolor command for LaTeX.
+
+    Parameters
+    ----------
+    colors: matplotlib color or dict of matplotlib colors
+        A dictionary with names and rgb hex-strings of colors
+        or a single matplotlib color.
+    name: string
+        If colors is a single color, then name is the name of the color.
+    """
+    if isinstance(colors, dict):
+        for cn in colors:
+            latex_colors(colors[cn], cn)
+    else:
+        r, g, b = cc.to_rgb(colors)
+        print('\\definecolor{%s}{rgb}{%.3f,%.3f,%.3f}' % (name, r, g, b))
+        
+
 def colormap(name, colors, values=None):
     """ Generate and register a color map.
 
@@ -369,25 +394,6 @@ def cmap_color(cmap, x, alpha=None):
         cmap = get_cmap(cmap)
     return cmap(x, alpha)
 
-
-def latex_colors(colors, name=''):
-    """ Print a \\definecolor command for LaTeX.
-
-    Parameters
-    ----------
-    colors: matplotlib color or dict of matplotlib colors
-        A dictionary with names and rgb hex-strings of colors
-        or a single matplotlib color.
-    name: string
-        If colors is a single color, then name is the name of the color.
-    """
-    if isinstance(colors, dict):
-        for cn in colors:
-            latex_colors(colors[cn], cn)
-    else:
-        r, g, b = cc.to_rgb(colors)
-        print('\\definecolor{%s}{rgb}{%.3f,%.3f,%.3f}' % (name, r, g, b))
-        
 
 def plot_colors(ax, colors, n=1):
     """ Plot all colors of a palette and optionally some lighter and darker variants.
@@ -516,7 +522,7 @@ def plot_color_comparison(ax, colorsa, *args):
 
 
 def plot_colormap(ax, cmap, luminance=True):
-    """ Plot a color map.
+    """ Plot a color map and its luminance.
 
     Parameters
     ----------
@@ -548,7 +554,8 @@ def plot_colormap(ax, cmap, luminance=True):
                       extent=(0.0, 1.0, 0.0, 1.0))
             ax.set_ylim(0.0, 2.1)
         except:
-            pass
+            print('failed to plot luminance gradient')
+            raise
     ax.set_yticks([])
 
     

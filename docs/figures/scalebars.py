@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
 from plottools.figure import install_figure
-import plottools.spines
+from plottools.spines import install_spines
 from plottools.scalebars import scalebar_params
 
     
@@ -11,8 +11,8 @@ def scalebars_figures():
     """
 
     def draw_sine():
-        fig, ax = plt.subplots(figsize=(10, 6))
-        fig.subplots_adjust(left=0.1, right=3.5, top=0.1, bottom=1.5)
+        fig, ax = plt.subplots(cmsize=(10, 6))
+        fig.subplots_adjust(leftm=0.1, rightm=3.5, topm=0.1, bottomm=1.5)
         ax.show_spines('')
         f = 0.5
         x = np.linspace(0.0, 10.0, 200)
@@ -22,8 +22,8 @@ def scalebars_figures():
         return fig, ax
 
     def new_figure(w ,h):
-        fig, ax = plt.subplots(figsize=(w, h))
-        fig.subplots_adjust(left=1, right=1, top=1, bottom=1)
+        fig, ax = plt.subplots(cmsize=(w, h))
+        fig.subplots_adjust(leftm=1, rightm=1, topm=1, bottomm=1)
         ax.show_spines('')
         ax.set_xlim(0.0, 10.0)
         ax.set_ylim(0.0, 5.0)
@@ -37,6 +37,7 @@ def scalebars_figures():
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes, clip_on=False)
     
     install_figure()
+    install_spines()
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
     
     fig, ax = draw_sine()

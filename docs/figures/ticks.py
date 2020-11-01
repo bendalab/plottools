@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
 from plottools.figure import install_figure
-import plottools.spines
+from plottools.spines import install_spines
 import plottools.ticks
 
     
@@ -12,8 +12,8 @@ def ticks_figures():
 
     def new_figure():
         plt.rcParams['xtick.direction'] = 'out'
-        fig, ax = plt.subplots(figsize=(10, 1.2))
-        fig.subplots_adjust(left=2, right=2, top=0, bottom=2.5)
+        fig, ax = plt.subplots(cmsize=(10, 1.2))
+        fig.subplots_adjust(leftm=2, rightm=2, topm=0, bottomm=2.5)
         ax.set_ylim(0, 1)
         ax.show_spines('b')
         return fig, ax
@@ -23,6 +23,7 @@ def ticks_figures():
         plt.close()
         
     install_figure()
+    install_spines()
     
     fig, ax = new_figure()
     ax.set_xticks_delta(0.5)
