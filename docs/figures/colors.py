@@ -132,7 +132,7 @@ def plotcomparison_figure():
 def plotcolormap_figure():
     """ Generate a figure demonstrating the plot_colormap() function.
     """
-    fig, ax = plt.subplots(cmsize=(20.0, 10.0))
+    fig, ax = plt.subplots(cmsize=(20.0, 8.0))
     fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=2, bottomm=1.5)
     plot_colormap(ax, 'jet', True)
     fig.savefig('colors-plotcolormap.png')
