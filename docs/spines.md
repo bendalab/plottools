@@ -34,9 +34,11 @@ ax2.show_spines('tr')
 ## Spine bounds
 
 The length of the spine can span
+
 - the full length of the axis as set by the axis's limits ('full'),
 - the extend of the data ('data'),
 - the range between the minimum and maximum tick location ('ticks').
+- or any other range on the corresponding axis.
 
 ![bounds](figures/spines-bounds.png)
 
@@ -58,6 +60,20 @@ ax0.set_spines_outward('lb', 0)
 ax1.set_spines_outward('lb', 10)
 ax2.set_spines_outward('lb', -10)
 ```
+
+## Arrowed spines
+
+Spines can get an arrow head.
+
+![arrow](figures/spines-arrow.png)
+
+```
+spines_params(spines='', height=10)
+ax0.arrow_spines('lb')
+ax1.arrow_spines('lb', flush=1.0)
+ax2.arrow_spines('lb', flush=2.0)
+```
+
 
 ## Default spine appearance
 
