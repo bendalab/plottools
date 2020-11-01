@@ -27,6 +27,7 @@ Displaying colors:
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
 - `plot_color_comparison()`: plot matching colors of severals palettes on top of each other.
+- `plot_colormap()`: plot a color map.
 """
 
 from collections import OrderedDict
@@ -513,6 +514,43 @@ def plot_color_comparison(ax, colorsa, *args):
     ax.set_xlim(-0.5, len(colorsa)*1.5)
     ax.set_ylim(-0.2, 1.1 + len(args))
 
+
+def plot_colormap(ax, cmap, luminance=True):
+    """ Plot a color map.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes for plotting gradient of the color map.
+    cmap: string or matplotlib color map
+        Color map to be plotted.
+    luminance: bool
+        If True, also plot a gradient of the luminance of the color map.
+        Requires the `colorspacious` package.
+    """
+    cmap = get_cmap(cmap)
+    # color map:
+    gradient = np.linspace(0.0, 1.0, 256)
+    gradient = np.vstack((gradient, gradient))
+    ax.set_title(cmap.name)
+    ax.imshow(gradient, cmap=cmap, aspect='auto', extent=(0.0, 1.0, 1.1, 2.1))
+    ax.set_ylim(1.1, 2.1)
+    # luminance:
+    if luminance:
+        try:
+            from colorspacious import cspace_converter
+            x = np.linspace(0.0, 1.0, 100)
+            rgb = cmap(x)[np.newaxis, :, :3]
+            lab = cspace_converter("sRGB1", "CAM02-UCS")(rgb)
+            L = lab[0, :, 0]
+            L = np.float32(np.vstack((L, L, L)))
+            ax.imshow(L, aspect='auto', cmap='binary_r', vmin=0.0, vmax=100.0,
+                      extent=(0.0, 1.0, 0.0, 1.0))
+            ax.set_ylim(0.0, 2.1)
+        except:
+            pass
+    ax.set_yticks([])
+
     
 def demo(mode='default', n=1):
     """ Run a demonstration of the colors module.
@@ -544,9 +582,12 @@ def demo(mode='default', n=1):
         plot_colors(ax, color_palettes[mode], n)
         ax.set_title('colors_' + mode)
     else:
-        print('unknown option %s!' % mode)
-        print('possible options are: an integer number, compa(rison), compl(ementary), or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
-        return
+        try:
+            plot_colormap(ax, mode)
+        except:
+            print('unknown option %s!' % mode)
+            print('possible options are: an integer number, compa(rison), compl(ementary), a name of a color map, or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
+            return
     plt.show()
 
 
