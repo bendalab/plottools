@@ -34,7 +34,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.cm import register_cmap
+from matplotlib.cm import register_cmap, get_cmap
 try:
     from matplotlib.colors import colorConverter as cc
 except ImportError:
@@ -344,6 +344,29 @@ def colormap(name, colors, values=None):
     cmap = LinearSegmentedColormap.from_list(name, colors)
     register_cmap(cmap=cmap)
     return cmap
+
+
+def cmap_color(cmap, x, alpha=None):
+    """ Retrieve color from a color map.
+
+    Parameters
+    ----------
+    cmap: string or matplotib colormap
+        Name or instance of a matplotlib color map.
+    x: float or sequence of floats
+        The fraction along the color map to be converted in to a color
+        (between 0 and 1).
+    alpha: float or None
+        If specified, alpha value of the returned color.
+
+    Returns
+    -------
+    color: tuple of floats, or sequence thereof.
+        RGBA value of selected color.
+    """
+    if not isinstance(cmap, mpl.colors.Colormap):
+        cmap = get_cmap(cmap)
+    return cmap(x, alpha)
 
 
 def latex_colors(colors, name=''):
