@@ -659,7 +659,7 @@ def screen_style(namespace=None):
                 fig_color=palette['gray'], axes_color=palette['white'],
                 namespace=namespace)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='png', compression=6, fonttype=3, stripfonts=False)
@@ -744,7 +744,7 @@ def paper_style(namespace=None):
                 fig_color='none', axes_color='none',
                 namespace=namespace)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
@@ -832,7 +832,7 @@ def sketch_style(namespace=None):
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweigth='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
