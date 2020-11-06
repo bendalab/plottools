@@ -883,11 +883,39 @@ def demo_basic():
             ax.plot(x, y)
             ax.set_ylim(-1.0, 2.0)
             ax.set_yticks([-0.5, 0, 0.5, 1])
-    fig.savefig('spinesbasic.pdf')
+    #fig.savefig('spinesbasics.pdf')
     plt.show()
     uninstall_spines()
 
-            
+
+def demo_arrows():
+    """ Run a demonstration of the spine module showing arrowed spines.
+    """
+    install_spines()
+    fig, axs = plt.subplots(3, 2, figsize=(10, 8))
+    fig.show_spines('')
+    # spine arrows:
+    axs[0, 0].arrow_spines('lb')
+    axs[0, 0].text(0.05, 1.7, "ax.arrow_spines('lb')")
+    axs[1, 0].set_spines_outward('lrtb', 10)
+    axs[1, 0].arrow_spines('lb', extend=0.0)
+    axs[1, 0].text(0.05, 1.7, "ax.set_spines_outward('lrtb', 10)")
+    axs[1, 0].text(0.05, 1.3, "ax.arrow_spines('lb', extend=0.0)")
+    axs[2, 0].set_spines_outward('lrtb', 10)
+    axs[2, 0].arrow_spines('lb', flush=1.0)
+    axs[2, 0].text(0.05, 1.7, "ax.arrow_spines('lb', flush=1.0)")
+    # plot and annotate:
+    x = np.linspace(0.0, 1.0, 100)
+    y = 0.5*np.sin(2.0*np.pi*x) + 0.5
+    for axx in axs:
+        for ax in axx:
+            ax.plot(x, y)
+            ax.set_ylim(-1.0, 2.0)
+            #ax.set_yticks([-0.5, 0, 0.5, 1])
+    plt.show()
+    uninstall_spines()
+
+                
 def demo_twin_inset():
     """ Run a demonstration of the spine module showing twin behavior.
     """
@@ -916,7 +944,8 @@ def demo_twin_inset():
 
 
 def demo():
-    demo_basic()
+    #demo_basic()
+    demo_arrows()
     #demo_twin_inset()
 
 
