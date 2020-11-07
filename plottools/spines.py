@@ -23,6 +23,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.lines as lines
+import matplotlib.patches as patches
 import matplotlib.transforms as transforms
 
 
@@ -327,7 +328,7 @@ def set_spines_bounds(ax, spines, bounds='full'):
 
 
 def arrow_spines(ax, spines, flush=None, extend=None, height=None, ratio=None,
-                 lw=None, color=None):
+                 overhang=1.0, lw=None, color=None):
     """ Spines with arrows.
 
     Parameters
@@ -357,6 +358,10 @@ def arrow_spines(ax, spines, flush=None, extend=None, height=None, ratio=None,
     ratio: float
         Width of arrow is `height` times `ratio`.
         If `None` set to `ptParams[axes.spines.arrows.ratio]`.
+    overhang: float
+        Fraction that the arrow is swept back: 0 is triangular arrow,
+        1 is pure line arrow, negative values extend the arrow backwards.
+        If `None` set to `ptParams[axes.spines.arrows.overhang]`.
     lw: float or None
         Line width of spine. If `None` set to `rcParams[axes.linewidth]`.
     color: matplotlib color specificaion or None
@@ -385,7 +390,8 @@ def arrow_spines(ax, spines, flush=None, extend=None, height=None, ratio=None,
     for ax in axs:
         for sp in spns:
             ax.spines[sp].arrow = dict(flush=flush, extend=extend,
-                                       height=height, ratio=ratio, lw=lw, color=color)
+                                       height=height, ratio=ratio, overhang=overhang,
+                                       lw=lw, color=color)
 
 
 def __update_spines(fig):
@@ -452,9 +458,9 @@ def __update_spines(fig):
                 height = sp.arrow['height']
                 if height is None:
                     if hasattr(mpl, 'ptParams'):
-                        height = mpl.ptParams.get('axes.spines.arrows.height', 5.0)
+                        height = mpl.ptParams.get('axes.spines.arrows.height', 10.0)
                     else:
-                        height = 5.0
+                        height = 10.0
                 ratio = sp.arrow['ratio']
                 if ratio is None:
                     if hasattr(mpl, 'ptParams'):
@@ -462,6 +468,12 @@ def __update_spines(fig):
                     else:
                         ratio = 0.7                        
                 width = 0.5*ratio*height
+                overhang = sp.arrow['overhang']
+                if overhang is None:
+                    if hasattr(mpl, 'ptParams'):
+                        overhang = mpl.ptParams.get('axes.spines.arrows.overhang', 1.0)
+                    else:
+                        overhang = 1.0
                 lw = sp.arrow['lw']
                 if lw is None:
                     lw = mpl.rcParams['axes.linewidth']
@@ -472,14 +484,14 @@ def __update_spines(fig):
                 if spn in ['left', 'right']:
                     sp.set_visible(False)
                     x = 0.0 if spn == 'left' else 1.0
-                    start = [x, 0.0]
-                    stop = [x, 1.0]
+                    start = np.array([x, 0.0])
+                    stop = np.array([x, 1.0])
                     ofac = -1.0 if spn == 'left' else 1.0
                     bounds = sp.get_bounds()
                     if bounds is not None:
                         y0, y1 = ax.get_ylim()
-                        start = [x, (bounds[0]-y0)/(y1-y0)]
-                        stop = [x, (bounds[1]-y0)/(y1-y0)]
+                        start = np.array([x, (bounds[0]-y0)/(y1-y0)])
+                        stop = np.array([x, (bounds[1]-y0)/(y1-y0)])
                     pos = sp.get_position()
                     if pos and pos[0] == 'outward':
                         start[0] += xpfac*ofac*pos[1]
@@ -507,24 +519,38 @@ def __update_spines(fig):
                             extendy = 1.0
                     if extendy:
                         stop[1] += ypfac*extendy*height
-                    ax.add_line(lines.Line2D([start[0], stop[0]], [start[1], stop[1]],
+                    arrow_len = (1.0-overhang)*ypfac*height
+                    ax.add_line(lines.Line2D([start[0], stop[0]],
+                                             [start[1], stop[1]-0.5*arrow_len],
                                              transform=ax.transAxes, clip_on=False,
                                              solid_capstyle='butt', **linestyle))
-                    ax.add_line(lines.Line2D([stop[0]-xpfac*width, stop[0], stop[0]+xpfac*width],
-                                             [stop[1]-ypfac*height, stop[1], stop[1]-ypfac*height],
-                                             transform=ax.transAxes, clip_on=False,
-                                             solid_joinstyle='miter', **linestyle))
+                    if overhang > 0.95:
+                        ax.add_line(lines.Line2D([stop[0]-xpfac*width, stop[0],
+                                                  stop[0]+xpfac*width],
+                                                  [stop[1]-ypfac*height, stop[1],
+                                                   stop[1]-ypfac*height],
+                                                   transform=ax.transAxes, clip_on=False,
+                                                   solid_joinstyle='miter', **linestyle))
+                    else:
+                        ax.add_patch(patches.FancyArrow(start[0], stop[1]-arrow_len,
+                                                        0.0, arrow_len,
+                                                        head_width=2.0*xpfac*width,
+                                                        head_length=ypfac*height,
+                                                        overhang=overhang, width=0.0,
+                                                        ec=color, fc=color, lw=0.0,
+                                                        length_includes_head=True,
+                                                        transform=ax.transAxes, clip_on=False))
                 if spn in ['bottom', 'top']:
                     sp.set_visible(False)
                     y = 0.0 if spn == 'bottom' else 1.0
-                    start = [0.0, y]
-                    stop = [1.0, y]
+                    start = np.array([0.0, y])
+                    stop = np.array([1.0, y])
                     ofac = -1.0 if spn == 'bottom' else 1.0
                     bounds = sp.get_bounds()
                     if bounds is not None:
                         x0, x1 = ax.get_xlim()
-                        start = [(bounds[0]-x0)/(x1-x0), y]
-                        stop = [(bounds[1]-x0)/(x1-x0), y]
+                        start = np.array([(bounds[0]-x0)/(x1-x0), y])
+                        stop = np.array([(bounds[1]-x0)/(x1-x0), y])
                     pos = sp.get_position()
                     if pos and pos[0] == 'outward':
                         start[1] += ypfac*ofac*pos[1]
@@ -552,14 +578,28 @@ def __update_spines(fig):
                             extendx = 1.0
                     if extendx:
                         stop[0] += xpfac*extendx*height
-                    ax.add_line(lines.Line2D([start[0], stop[0]], [start[1], stop[1]],
+                    arrow_len = (1.0-overhang)*xpfac*height
+                    ax.add_line(lines.Line2D([start[0], stop[0]],
+                                             [start[1]-0.5*arrow_len, stop[1]],
                                              transform=ax.transAxes, clip_on=False,
                                              solid_capstyle='butt', **linestyle))
-                    ax.add_line(lines.Line2D([stop[0]-xpfac*height, stop[0], stop[0]-xpfac*height],
-                                             [stop[1]-ypfac*width, stop[1], stop[1]+ypfac*width],
-                                             transform=ax.transAxes, clip_on=False,
-                                             solid_joinstyle='miter', **linestyle))
-
+                    if overhang > 0.95:
+                        ax.add_line(lines.Line2D([stop[0]-xpfac*height, stop[0],
+                                                  stop[0]-xpfac*height],
+                                                 [stop[1]-ypfac*width, stop[1],
+                                                  stop[1]+ypfac*width],
+                                                 transform=ax.transAxes, clip_on=False,
+                                                 solid_joinstyle='miter', **linestyle))
+                    else:
+                        ax.add_patch(patches.FancyArrow(stop[0]-arrow_len, start[1],
+                                                        arrow_len, 0.0,
+                                                        head_width=2.0*ypfac*width,
+                                                        head_length=xpfac*height,
+                                                        overhang=overhang, width=0.0,
+                                                        ec=color, fc=color, lw=0.0,
+                                                        length_includes_head=True,
+                                                        transform=ax.transAxes, clip_on=False))
+    
     
 def __fig_show_spines(fig, *args, **kwargs):
     """ Call `__update_spines()` on the figure before showing it.
@@ -775,6 +815,7 @@ def install_default_spines():
     axes.spines.arrows.extendy: 1.0
     axes.spines.arrows.height: 5.0
     axes.spines.arrows.ratio: 0.7
+    axes.spines.arrows.overhang: 1.0
     axes.spines.twinx: 'r'
     axes.spines.twiny: 'l'
     axes.spines.inset.show   : 'lrtb'
@@ -809,6 +850,7 @@ def install_default_spines():
                              'axes.spines.arrows.extendy': 1.0,
                              'axes.spines.arrows.height': 5.0,
                              'axes.spines.arrows.ratio': 0.7,
+                             'axes.spines.arrows.overhang': 1.0,
                              'axes.spines.twinx': 'r',
                              'axes.spines.twiny': 'l',
                              'axes.spines.inset.show': 'lrtb',
@@ -848,6 +890,7 @@ def uninstall_default_spines():
         mpl.ptParams.pop('axes.spines.arrows.extendy', None)
         mpl.ptParams.pop('axes.spines.arrows.height', None)
         mpl.ptParams.pop('axes.spines.arrows.ratio', None)
+        mpl.ptParams.pop('axes.spines.arrows.overhang', None)
         mpl.ptParams.pop('axes.spines.twinx', None)
         mpl.ptParams.pop('axes.spines.twiny', None)
         mpl.ptParams.pop('axes.spines.inset.show', None)
@@ -871,7 +914,8 @@ def uninstall_default_spines():
 
 def spines_params(spines=None, spines_offsets=None, spines_positions=None, spines_bounds=None,
                   arrows=None, flushx=None, extendx=None, flushy=None, extendy=None,
-                  height=None, ratio=None, twinx_spines=None, twiny_spines=None,
+                  height=None, ratio=None, overhang=None,
+                  twinx_spines=None, twiny_spines=None,
                   inset_spines=None, inset_spines_offsets=None,
                   inset_spines_positions=None, inset_spines_bounds=None):
     """ Set default spine appearance.
@@ -911,6 +955,10 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
         See `spines.arrow_spines()` for details.
     ratio: float
         Width relative to height of arrow head of arrowed spine in points.
+        See `spines.arrow_spines()` for details.
+    overhang: float
+        Fraction that the arrow is swept back: 0 is triangular arrow,
+        1 is pure line arrow, negative values extend the arrow backwards.
         See `spines.arrow_spines()` for details.
     twinx_spines: string
         Spines to be shown for `twinx()` axes. See `spines.show_spines()` for details.
@@ -954,6 +1002,8 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
         mpl.ptParams.update({'axes.spines.arrows.height': height})
     if ratio is not None:
         mpl.ptParams.update({'axes.spines.arrows.ratio': ratio})
+    if overhang is not None:
+        mpl.ptParams.update({'axes.spines.arrows.overhang': overhang})
     if twinx_spines is not None:
         mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
     if twiny_spines is not None:
@@ -1022,16 +1072,16 @@ def demo_arrows():
     axs[0, 0].arrow_spines('lb')
     axs[0, 0].text(-0.95, 2.0, "ax.arrow_spines('lb')")
     axs[1, 0].set_spines_outward('lrtb', 10)
-    axs[1, 0].arrow_spines('lb', extend=0.0)
+    axs[1, 0].arrow_spines('lb', extend=0.0, overhang=0.5)
     axs[1, 0].text(-0.95, 2.0, "ax.set_spines_outward('lrtb', 10)")
-    axs[1, 0].text(-0.95, 1.5, "ax.arrow_spines('lb', extend=0.0)")
+    axs[1, 0].text(-0.95, 1.5, "ax.arrow_spines('lb', extend=0.0, overhang=0.5)")
     axs[2, 0].set_spines_outward('lrtb', 10)
-    axs[2, 0].arrow_spines('lb', flush=1.0)
-    axs[2, 0].text(-0.95, 2.0, "ax.arrow_spines('lb', flush=1.0)")
+    axs[2, 0].arrow_spines('lb', flush=1.0, overhang=0.0)
+    axs[2, 0].text(-0.95, 2.0, "ax.arrow_spines('lb', flush=1.0, overhang=0.0)")
     axs[0, 1].set_spines_zero('lb')
-    axs[0, 1].arrow_spines('lb')
+    axs[0, 1].arrow_spines('lb', overhang=-0.3)
     axs[0, 1].text(-0.95, 2.0, "ax.set_spines_zero('lb')")
-    axs[0, 1].text(-0.95, 1.5, "ax.arrow_spines('lb')")
+    axs[0, 1].text(-0.95, 1.5, "ax.arrow_spines('lb', overhang=-0.3)")
     axs[1, 1].set_spines_zero('lb', -1.0)
     axs[1, 1].arrow_spines('lb', flush=2.0)
     axs[1, 1].text(-0.95, 2.0, "ax.set_spines_zero('lb', -1.0)")
@@ -1048,6 +1098,7 @@ def demo_arrows():
             ax.plot(x, y)
             ax.set_ylim(-1.5, 2.5)
             #ax.set_yticks([-0.5, 0, 0.5, 1])
+    #fig.savefig('spinesarrows.pdf')
     plt.show()
     uninstall_spines()
 
