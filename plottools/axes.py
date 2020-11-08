@@ -5,6 +5,7 @@ Tag axes with a label and simplify common axis labels.
 ## mpl.axes.Axes member functions
 
 - `aspect_ratio()`: aspect ratio of axes.
+- `set_ylim_equal()`: ensure equal aspect ratio by appropriately setting y limits.
 
 
 ## mpl.figure.Figure member functions:
@@ -57,6 +58,37 @@ def aspect_ratio(ax):
     figw, figh = ax.get_figure().get_size_inches()
     _, _, w, h = ax.get_position().bounds
     return (figh * h) / (figw * w)
+
+
+def set_ylim_equal(ax, ymin_frac=0.0, ymax_frac=1.0):
+    """ Ensure equal aspect ratio by appropriately setting y limits.
+
+    If you need both axis equally scaled, such that on the plot a unit
+    on the x-axis covers the same distance as a unit on the y-axis, one
+    usually calls `ax.set_aspect('equal')`. This mechanism scales the
+    physical dimensions of the plot to make the units on both axis
+    equal.  Problem is, that then the physical dimensions of the plot
+    differ from other plots in the grid.
+
+    The `set_ylim_equal()` function uses a different approach. Instead
+    of scaling the physical dimensions of the plot, the limits of the
+    y-axis are adapted to the aspect-ratio of the full plot. This way
+    the dimensions of the plot are not scaled.
+
+    Call this function *after* setting the limits of the x-axis.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes of which aspect ratio is computed.
+    ymin_frac: float
+        Fraction of the total range of the y-axis for the minimum value of the y-axis.
+    ymax_frac: float
+        Fraction of the total range of the y-axis for the maximum value of the y-axis.
+    """
+    xrange = np.diff(ax.get_xlim())[0]
+    yrange = ax.aspect_ratio()*xrange/(ymax_frac-ymin_frac)
+    ax.set_ylim(ymin_frac*yrange, ymax_frac*yrange)
 
 
 def common_xlabels(fig, axes=None):
@@ -366,6 +398,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
 
 # make the functions available as member variables:
 mpl.axes.Axes.aspect_ratio = aspect_ratio
+mpl.axes.Axes.set_ylim_equal = set_ylim_equal
 mpl.figure.Figure.common_xlabels = common_xlabels
 mpl.figure.Figure.common_ylabels = common_ylabels
 mpl.figure.Figure.common_xtick_labels = common_xtick_labels
