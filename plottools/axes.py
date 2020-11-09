@@ -377,7 +377,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if hasattr(fig, 'tags_yoffs'):
             yoffs = fig.tags_yoffs
         else:
-            yoffs = yo
+            yoffs = yo - 1.0/h
     else:
         yoffs *= fs/h
     fig.tags_xoffs = xoffs
