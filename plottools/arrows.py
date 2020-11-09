@@ -63,6 +63,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         Defines coordinate system for `x`, `y`, and `dx`. Defaults to data coordinates.
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
+        A `zorder` argument is also applied to the arrow.
     """
     if transform is None:
         transform = ax.transData
@@ -71,6 +72,9 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         transcoord = 'axes fraction'
     if transform is ax.get_figure().transFigure:
         transcoord = 'figure fraction'
+    zkwargs = {}
+    if 'zorder' in kwargs:
+        zkwargs.update(dict(zorder=kwargs['zorder']))
     heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
                'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
     heads = heads_d[heads+'x']
@@ -85,14 +89,14 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False)
+                                        clip_on=False), annotation_clip=False, **zkwargs)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x+dx, y),
                         xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=lw, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False)
+                                        clip_on=False), annotation_clip=False, **zkwargs)
     else:
         scale = head_width*2.0
         if style == '|':
@@ -116,7 +120,8 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
                     xycoords=transcoord, textcoords=transcoord,
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
-                                    mutation_scale=scale, clip_on=False), annotation_clip=False)
+                                    mutation_scale=scale, clip_on=False),
+                    annotation_clip=False, **zkwargs)
     if style in ['|>', '>>']:
         pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
         xmin, xmax = ax.get_xlim()
@@ -128,7 +133,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
             ddxl = -ddxl
             ddxr = -ddxr
         ax.plot([x+ddxl, x+dx-ddxr], [y, y], '-', lw=lw, color=color,
-                transform=transform, solid_capstyle='butt', clip_on=False)
+                transform=transform, solid_capstyle='butt', clip_on=False, **zkwargs)
     if text:
         if '%' in text and text[-1] != '%':
             text = text % dx
@@ -189,6 +194,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         Defines coordinate system for `x`, `y`, and `dx`. Defaults to data coordinates.
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
+        A `zorder` argument is also applied to the arrow.
     """
     if transform is None:
         transform = ax.transData
@@ -197,6 +203,9 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         transcoord = 'axes fraction'
     if transform is ax.get_figure().transFigure:
         transcoord = 'figure fraction'
+    zkwargs = {}
+    if 'zorder' in kwargs:
+        zkwargs.update(dict(zorder=kwargs['zorder']))
     heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
                'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
     heads = heads_d[heads+'x']
@@ -211,14 +220,14 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False)
+                                        clip_on=False), annotation_clip=False, **zkwargs)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x, y+dy),
                         xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
                                         linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False)
+                                        clip_on=False), annotation_clip=False, **zkwargs)
     else:
         scale = head_width*2.0
         if style == '|':
@@ -242,7 +251,8 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                     xycoords=transcoord, textcoords=transcoord,
                     arrowprops=dict(arrowstyle=arrowstyle, edgecolor=ec, facecolor=color,
                                     linewidth=lww, shrinkA=shrink, shrinkB=shrink,
-                                    mutation_scale=scale, clip_on=False), annotation_clip=False)
+                                    mutation_scale=scale, clip_on=False),
+                                    annotation_clip=False, **zkwargs)
     if style in ['|>', '>>']:
         pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
         ymin, ymax = ax.get_ylim()
@@ -254,7 +264,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             ddyl = -ddyl
             ddyr = -ddyr
         ax.plot([x, x], [y+ddyl, y+dy-ddyr], '-', lw=lw, color=color,
-                transform=transform, solid_capstyle='butt', clip_on=False)
+                transform=transform, solid_capstyle='butt', clip_on=False, **zkwargs)
     if text:
         if '%' in text and text[-1] != '%':
             text = text % dy
