@@ -295,21 +295,24 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
     
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
-    if len(fname) == 0:
-        fname = '.' + mpl.rcParams['savefig.format']
-    if fname[0] == '.':
-        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
-    if len(os.path.splitext(fname)[1]) <= 1:
-        fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
-    fig.__savefig_orig_figure(fname, *args, **kwargs)
-    if stripfonts is None:
-        if 'pdf.stripfonts' in mpl.ptParams:
-            stripfonts = mpl.ptParams['pdf.stripfonts']
-        else:
-            stripfonts = False
-    if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-        os.rename('tmp-'+fname, fname)
+    if hasattr(fname, 'len'):
+        if len(fname) == 0:
+            fname = '.' + mpl.rcParams['savefig.format']
+        if fname[0] == '.':
+            fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+        if len(os.path.splitext(fname)[1]) <= 1:
+            fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
+        fig.__savefig_orig_figure(fname, *args, **kwargs)
+        if stripfonts is None:
+            if 'pdf.stripfonts' in mpl.ptParams:
+                stripfonts = mpl.ptParams['pdf.stripfonts']
+            else:
+                stripfonts = False
+        if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
+            subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+            os.rename('tmp-'+fname, fname)
+    else:
+        fig.__savefig_orig_figure(fname, *args, **kwargs)
 
 
 def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
@@ -317,21 +320,24 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
     
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
-    if len(fname) == 0:
-        fname = '.' + mpl.rcParams['savefig.format']
-    if fname[0] == '.':
-        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
-    if len(os.path.splitext(fname)[1]) <= 1:
-        fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
-    plt.__savefig_orig_figure(fname, *args, **kwargs)
-    if stripfonts is None:
-        if 'pdf.stripfonts' in mpl.ptParams:
-            stripfonts = mpl.ptParams['pdf.stripfonts']
-        else:
-            stripfonts = False
-    if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-        os.rename('tmp-'+fname, fname)
+    if hasattr(fname, 'len'):
+        if len(fname) == 0:
+            fname = '.' + mpl.rcParams['savefig.format']
+        if fname[0] == '.':
+            fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+        if len(os.path.splitext(fname)[1]) <= 1:
+            fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
+        plt.__savefig_orig_figure(fname, *args, **kwargs)
+        if stripfonts is None:
+            if 'pdf.stripfonts' in mpl.ptParams:
+                stripfonts = mpl.ptParams['pdf.stripfonts']
+            else:
+                stripfonts = False
+        if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
+            subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+            os.rename('tmp-'+fname, fname)
+    else:
+        fig.__savefig_orig_figure(fname, *args, **kwargs)
 
 
 def install_figure():
