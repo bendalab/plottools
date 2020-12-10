@@ -295,7 +295,7 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
     
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
-    if hasattr(fname, 'len'):
+    if hasattr(fname, '__len__'):
         if len(fname) == 0:
             fname = '.' + mpl.rcParams['savefig.format']
         if fname[0] == '.':
@@ -320,7 +320,7 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
     
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
-    if hasattr(fname, 'len'):
+    if hasattr(fname, '__len__'):
         if len(fname) == 0:
             fname = '.' + mpl.rcParams['savefig.format']
         if fname[0] == '.':
