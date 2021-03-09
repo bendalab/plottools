@@ -17,8 +17,8 @@ fig, ax = plt.subplots(cmsize=(16.0, 10.0))   # in cm!
 and subplot positions can be adjusted by margins given in multiples of the current font size:
 ```
 fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
-gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
-gs.update(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs.update(leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
 ```
 That is, `leftm` specifies the distance of the leftmost axes from the left margin of the figure,
 `bottomm` specifies the distance of the bottom axes from the bottom margin of the figure,
@@ -42,6 +42,11 @@ Available functions:
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
 - `figure_params()`: set savefig options via matplotlib's rc settings.
+
+Functions added to mpl.figure.Figure:
+
+- `set_size_cm()`: set the figure size in centimeters.
+- `merge()`: combine several axes into a single one.
 """
 
 import __main__
@@ -288,6 +293,46 @@ def __resize(event):
         for gs in fig.__gridspecs:
             if hasattr(gs, '__subplots_margins'):
                 gs.update(**gs.__subplots_margins)
+    for ax in fig.get_axes():
+        if hasattr(ax, '__merged_axis'):
+            ax.__set_merged_position(ax.__merged_axis)
+
+
+def __set_merged_position(self, axs):
+    axs = axs.ravel()
+    bboxes = np.array([ax.get_position().get_points().ravel() for ax in axs])
+    x0 = np.min(bboxes[:,0])
+    y0 = np.min(bboxes[:,1])
+    x1 = np.max(bboxes[:,2])
+    y1 = np.max(bboxes[:,3])
+    pos = [x0, y0, x1-x0, y1-y0]
+    self.set_position(pos)
+
+
+def merge(fig, axs):
+    """ Combine several axes into a single one.
+
+    Add a new axis to the figure at the position and size of the common
+    bounding box of all axis in `axs`. All axis in `axs` are then made
+    invisible.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure
+        The figure that contains the axes.
+    axs: array of axis objects
+        The axis that should be combined.
+
+    Returns:
+    ax: axis object
+        A single axis covering the area of all the axis objects in `axs`.
+    """
+    for ax in axs.ravel():
+        ax.set_visible(False)
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.__set_merged_position(axs)
+    ax.__merged_axis = axs
+    return ax
 
     
 def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
@@ -351,6 +396,8 @@ def install_figure():
     uninstall_figure()
     """
     mpl.figure.Figure.set_size_cm = set_size_cm
+    mpl.figure.Figure.merge = merge
+    mpl.axes.Axes.__set_merged_position = __set_merged_position
     if not hasattr(plt, '__figure_orig_figure'):
         plt.__figure_orig_figure = plt.figure
         plt.figure = __figure_figure
@@ -382,6 +429,10 @@ def uninstall_figure():
     """
     if hasattr(mpl.figure.Figure, 'set_size_cm'):
         delattr(mpl.figure.Figure, 'set_size_cm')
+    if hasattr(mpl.figure.Figure, 'merge'):
+        delattr(mpl.figure.Figure, 'merge')
+    if hasattr(mpl.axes.Axes, '__set_merged_position'):
+        delattr(mpl.axes.Axes, '__set_merged_position')
     if hasattr(plt, '__figure_orig_figure'):
         plt.figure = plt.__figure_orig_figure
         delattr(plt, '__figure_orig_figure')
@@ -458,15 +509,20 @@ def demo():
     axs[0].set_ylim(-1.0, 2.0)
     fig.savefig('.pdf', stripfonts=False)
 
-    fig = plt.figure(cmsize=(20.0, 16.0))   # in cm!
+    fig, axs = plt.subplots(3, 3)
     fig.set_size_cm(30.0, 16.0)
     # in fontsize margins and even with old matplotlib versions:
-    gs = fig.add_gridspec(3, 3, wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
-    fig.suptitle('gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)')
+    fig.subplots_adjust(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=4)
+    fig.suptitle('axs = plt.subplots(3, 3)\nfig.subplots_adjust(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=4)')
+    ax = fig.merge(axs[1:3,0:2])
+    ax.plot(x, np.sin(2.0*np.pi*x))
+    ax.text(0.05, 0.1, 'ax = fig.merge(axs[1:3,0:2])', transform=ax.transAxes)
     for k in range(3):
-        for j in range(3):
-            ax = fig.add_subplot(gs[k,j])
-            ax.plot(x, np.sin(2.0*np.pi*x+k*j))
+        axs[0,k].plot(x, np.sin(2.0*np.pi*x+k))
+        axs[0,k].text(0.1, 0.8, '0,%d' % k, transform=axs[0,k].transAxes)
+    for k in range(1, 3):
+        axs[k,-1].plot(x, np.sin(2.0*np.pi*x-k))
+        axs[k,-1].text(0.1, 0.8, '%d,-1' % k, transform=axs[k,-1].transAxes)
     
     plt.show()
     uninstall_figure()
