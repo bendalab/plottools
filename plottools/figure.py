@@ -25,7 +25,14 @@ That is, `leftm` specifies the distance of the leftmost axes from the left margi
 `rightm` specifies the distance of the rightmost axes from the right margin of the figure, and
 `topm` specifies the distance of the top axes from the top margin of the figure,
 all as multiples of the font size.
+
 This way, margins do not need to be adjusted when changing the size of a figure!
+
+For figures without any margins you can use the `nomargins` keyword:
+```
+fig.subplots_adjust(nomargins=True)
+```
+This sets all margins to zero.
 
 `plt.subplots()` can be called with `width_ratios` and `height_ratios`.
 
@@ -106,7 +113,8 @@ def set_size_cm(fig, w, h=None, forward=True):
 
 
 def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
-              leftm=6.0, bottomm=3.0, rightm=1.5, topm=0.5, **kwargs):
+              leftm=6.0, bottomm=3.0, rightm=1.5, topm=0.5,
+              nomargins=False, **kwargs):
     """ Compute plot margins from multiples of the current font size.
 
     Subplots margins can be either specified by the usual parameters
@@ -143,6 +151,8 @@ def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
         (the current font size).
         *Note:* in contrast to the matplotlib `top` parameters, this specifies the
         width of the top margin, not its position relative to the origin.
+    nomargins: bool
+        If `True` set all margins to zero.
     kwargs: dict
         Any further key-word arguments that are simply passed on.
 
@@ -163,6 +173,11 @@ def adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
     w, h = fig.get_window_extent().bounds[2:]
     ppi = 72.0 # points per inch:
     fs = plt.rcParams['font.size']*fig.dpi/ppi
+    if nomargins:
+        left = 0.0
+        bottom = 0.0
+        right = 1.0
+        top = 1.0
     margins = {}
     if left is not None or leftm is not None:
         margins['left'] = left if left is not None else leftm*0.6*fs/w
@@ -194,14 +209,20 @@ def __fig_subplots_adjust_figure(fig, *args, **kwargs):
             gs.update(**kwargs)
     else:
         fig.__subplots_margins = {}
-        if 'leftm' in kwargs:
-            fig.__subplots_margins['leftm'] = kwargs['leftm']
-        if 'bottomm' in kwargs:
-            fig.__subplots_margins['bottomm'] = kwargs['bottomm']
-        if 'rightm' in kwargs:
-            fig.__subplots_margins['rightm'] = kwargs['rightm']
-        if 'topm' in kwargs:
-            fig.__subplots_margins['topm'] = kwargs['topm']
+        if kwargs.get('nomargins', False):
+            fig.__subplots_margins['leftm'] = 0.0
+            fig.__subplots_margins['rightm'] = 0.0
+            fig.__subplots_margins['topm'] = 0.0
+            fig.__subplots_margins['bottomm'] = 0.0
+        else:
+            if 'leftm' in kwargs:
+                fig.__subplots_margins['leftm'] = kwargs['leftm']
+            if 'bottomm' in kwargs:
+                fig.__subplots_margins['bottomm'] = kwargs['bottomm']
+            if 'rightm' in kwargs:
+                fig.__subplots_margins['rightm'] = kwargs['rightm']
+            if 'topm' in kwargs:
+                fig.__subplots_margins['topm'] = kwargs['topm']
         fig.__subplots_adjust_orig_figure(**adjust_fs(fig, *args, **kwargs))
 
     
@@ -212,14 +233,20 @@ def __gridspec_update_figure(gridspec, **kwargs):
     if hasattr(gridspec, 'figure'):
         figure = gridspec.figure
         gridspec.__subplots_margins = {}
-        if 'leftm' in kwargs:
-            gridspec.__subplots_margins['leftm'] = kwargs['leftm']
-        if 'bottomm' in kwargs:
-            gridspec.__subplots_margins['bottomm'] = kwargs['bottomm']
-        if 'rightm' in kwargs:
-            gridspec.__subplots_margins['rightm'] = kwargs['rightm']
-        if 'topm' in kwargs:
-            gridspec.__subplots_margins['topm'] = kwargs['topm']
+        if kwargs.get('nomargins', False):
+            gridspec.__subplots_margins['leftm'] = 0.0
+            gridspec.__subplots_margins['rightm'] = 0.0
+            gridspec.__subplots_margins['topm'] = 0.0
+            gridspec.__subplots_margins['bottomm'] = 0.0
+        else:
+            if 'leftm' in kwargs:
+                gridspec.__subplots_margins['leftm'] = kwargs['leftm']
+            if 'bottomm' in kwargs:
+                gridspec.__subplots_margins['bottomm'] = kwargs['bottomm']
+            if 'rightm' in kwargs:
+                gridspec.__subplots_margins['rightm'] = kwargs['rightm']
+            if 'topm' in kwargs:
+                gridspec.__subplots_margins['topm'] = kwargs['topm']
     gridspec.__update_orig_figure(**adjust_fs(figure, **kwargs))
 
 
@@ -236,14 +263,20 @@ def __fig_add_gridspec_figure(fig, nrows=1, ncols=1, **kwargs):
         fig.__gridspecs = []
     fig.__gridspecs.append(gs)    
     gs.__subplots_margins = {}
-    if 'leftm' in kwargs:
-        gs.__subplots_margins['leftm'] = kwargs['leftm']
-    if 'bottomm' in kwargs:
-        gs.__subplots_margins['bottomm'] = kwargs['bottomm']
-    if 'rightm' in kwargs:
-        gs.__subplots_margins['rightm'] = kwargs['rightm']
-    if 'topm' in kwargs:
-        gs.__subplots_margins['topm'] = kwargs['topm']
+    if kwargs.get('nomargins', False):
+        gs.__subplots_margins['leftm'] = 0.0
+        gs.__subplots_margins['rightm'] = 0.0
+        gs.__subplots_margins['topm'] = 0.0
+        gs.__subplots_margins['bottomm'] = 0.0
+    else:
+        if 'leftm' in kwargs:
+            gs.__subplots_margins['leftm'] = kwargs['leftm']
+        if 'bottomm' in kwargs:
+            gs.__subplots_margins['bottomm'] = kwargs['bottomm']
+        if 'rightm' in kwargs:
+            gs.__subplots_margins['rightm'] = kwargs['rightm']
+        if 'topm' in kwargs:
+            gs.__subplots_margins['topm'] = kwargs['topm']
     gs.figure = fig
     return gs
 
@@ -264,7 +297,7 @@ def __plt_subplots_figure(nrows=1, ncols=1, *args, **kwargs):
             if k in kwargs:
                 figkwargs[k] = kwargs.pop(k)
         upkwargs = {}
-        for k in ['leftm', 'rightm', 'topm', 'bottomm',
+        for k in ['leftm', 'rightm', 'topm', 'bottomm', 'nomargins',
                   'left', 'right', 'top', 'bottom', 'hspace', 'wspace']:
             if k in kwargs:
                 upkwargs[k] = kwargs.pop(k)
