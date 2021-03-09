@@ -581,7 +581,7 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     # mpl.rcParams['image.cmap'] = ''  set from some cmap style
     mpl.rcParams['text.usetex'] = latex
     if latex:
-        if 'text.latex.unicode' in mpl.rcParams:
+        if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
             mpl.rcParams['text.latex.unicode'] = True
     if latex and preamble is not None:
         mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \

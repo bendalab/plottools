@@ -84,8 +84,8 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
 
         def __text_get_rotation(self):
             angle = np.rad2deg(np.arctan2(self.slope, 1.0))
-            trans_angle = self.get_axes().transData.transform_angles(np.array((angle,)),
-                                        np.array(self.get_position()).reshape((1, 2)))[0]
+            trans_angle = ax.transData.transform_angles(np.array((angle,)),
+                            np.array(self.get_position()).reshape((1, 2)))[0]
             return trans_angle
         
         if 'rotation' in kwargs:
@@ -93,6 +93,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
         if 'rotation_mode' not in kwargs:
             kwargs.update({'rotation_mode': 'anchor'})
         txt.slope = slope
+        txt.ax = ax
         txt.set_rotation = types.MethodType(__text_set_rotation, txt)
         txt.get_rotation = types.MethodType(__text_get_rotation, txt)
     return txt
