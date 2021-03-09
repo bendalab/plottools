@@ -46,7 +46,7 @@ Available functions:
 Functions added to mpl.figure.Figure:
 
 - `set_size_cm()`: set the figure size in centimeters.
-- `merge()`: combine several axes into a single one.
+- `merge()`: add axis that covers bounding box of some axis.
 """
 
 import __main__
@@ -299,6 +299,15 @@ def __resize(event):
 
 
 def __set_merged_position(self, axs):
+    """ Set position of axis to bounding box of other axis.
+
+    Parameters
+    ----------
+    self: axis object
+        Axis whose position is set.
+    axs: array of axis objects
+        The axis from which the bounding box is taken.
+    """
     axs = axs.ravel()
     bboxes = np.array([ax.get_position().get_points().ravel() for ax in axs])
     x0 = np.min(bboxes[:,0])
@@ -310,11 +319,11 @@ def __set_merged_position(self, axs):
 
 
 def merge(fig, axs):
-    """ Combine several axes into a single one.
+    """ Add axis that covers bounding box of some axis.
 
     Add a new axis to the figure at the position and size of the common
     bounding box of all axis in `axs`. All axis in `axs` are then made
-    invisible.
+    invisible. This way you do not need to use `gridspec` explicitly.
 
     Parameters
     ----------
@@ -323,9 +332,32 @@ def merge(fig, axs):
     axs: array of axis objects
         The axis that should be combined.
 
-    Returns:
+    Returns
+    -------
     ax: axis object
         A single axis covering the area of all the axis objects in `axs`.
+
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    ax1 = fig.add_subplot(gs[1:,:2])  # merge 2x2 bottom left subplots
+    ax2 = fig.add_subplot(gs[0,0])    # first in top row
+    ax3 = fig.add_subplot(gs[0,1])    # second in top row
+    ax4 = fig.add_subplot(gs[0,2])    # third in top row
+    ax5 = fig.add_subplot(gs[1,2])    # last in second row
+    ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
+    ``
+    with merge() this simplifies to
+    ```
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axis objects
+    ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
+    ax2 = axs[0,0]                    # first in top row
+    ax3 = axs[0,1]                    # second in top row
+    # ...
+    ```
     """
     for ax in axs.ravel():
         ax.set_visible(False)
