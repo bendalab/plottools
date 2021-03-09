@@ -68,6 +68,11 @@ def set_xticks_fixed(ax, locs, labels='%g'):
     labels: string or list of strings
         Either a format string (e.g. '%.1f') or a list of labels
         for each tick position in `locs`.
+
+    Notes
+    -----
+    On logarithmic axis you may want to turn off minor ticks, e.g. via
+    `ax.set_minor_xticks_off()`.
     """
     ax.xaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
@@ -88,6 +93,11 @@ def set_yticks_fixed(ax, locs, labels='%g'):
     labels: string or list of strings
         Either a format string (e.g. '%.1f') or a list of labels
         for each tick position in `locs`.
+
+    Notes
+    -----
+    On logarithmic axis you may want to turn off minor ticks, e.g. via
+    `ax.set_minor_yticks_off()`.
     """
     ax.yaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
