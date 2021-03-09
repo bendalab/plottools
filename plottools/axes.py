@@ -425,12 +425,12 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None)
     Parameters
     ----------
     xoffs: float or 'auto'
-        X-coordinate of label relative to origin of axis in multiples of the width
+        X-coordinate of tag relative to origin of axis in multiples of the width
         of a character (simply 60% of the current font size).
         If 'auto', set it to the distance of the right-most axis to the left figure border,
         or to a previously computed value from that figure.
     yoffs: float or 'auto'
-        Y-coordinate of label relative to top end of left yaxis in multiples
+        Y-coordinate of tag relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
         If 'auto', set it to the distance of the top-most axis to the top figure border,
         or to a previously computed value from that figure.

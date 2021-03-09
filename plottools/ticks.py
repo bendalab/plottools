@@ -3,8 +3,10 @@ Setting tick locations and formats.
 
 The following functions are available as members of mpl.axes.Axes:
 
-- `set_xticks_delta()`: set interval between xticks.
-- `set_yticks_delta()`: set interval between yticks.
+- `set_xticks_delta()`: set interval between major xticks.
+- `set_yticks_delta()`: set interval between major yticks.
+- `set_xticks_log()`: set major ticks on a logarithmic x-axis.
+- `set_yticks_log()`: set major ticks on a logarithmic y-axis.
 - `set_xticks_fixed()`: set custom xticks at fixed positions.
 - `set_yticks_fixed()`: set custom yticks at fixed positions.
 - `set_xticks_prefix()`: format xticks with SI prefixes.
@@ -31,7 +33,7 @@ import matplotlib.ticker as ticker
 
 
 def set_xticks_delta(ax, delta):
-    """ Set interval between xticks.
+    """ Set interval between major xticks.
 
     Parameters
     ----------
@@ -44,7 +46,7 @@ def set_xticks_delta(ax, delta):
 
 
 def set_yticks_delta(ax, delta):
-    """ Set interval between yticks.
+    """ Set interval between major yticks.
 
     Parameters
     ----------
@@ -54,6 +56,42 @@ def set_yticks_delta(ax, delta):
         Interval between yticks.
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
+
+
+def set_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+    """ Set major ticks on a logarithmic x-axis.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the xticks are set.
+    subs: None, 'auto', 'all', or sequence of floats
+        Multiples of integer powers of ten, where to place major ticks.
+    numdecs: int
+        ???
+    numticks: int
+        Maximum number of ticks placed on the axis.
+    """
+    ax.set_xscale('log')
+    ax.xaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+
+
+def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+    """ Set major ticks on a logarithmic y-axis.
+
+    Parameters
+    ----------
+    ax: matplotlib axis
+        Axis on which the yticks are set.
+    subs: None, 'auto', 'all', or sequence of floats
+        Multiples of integer powers of ten, where to place major ticks.
+    numdecs: int
+        ???
+    numticks: int
+        Maximum number of ticks placed on the axis.
+    """
+    ax.set_yscale('log')
+    ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
 
 
 def set_xticks_fixed(ax, locs, labels='%g'):
@@ -383,6 +421,8 @@ def set_minor_yticks_off(ax):
 # make functions available as member variables:
 mpl.axes.Axes.set_xticks_delta = set_xticks_delta
 mpl.axes.Axes.set_yticks_delta = set_yticks_delta
+mpl.axes.Axes.set_xticks_log = set_xticks_log
+mpl.axes.Axes.set_yticks_log = set_yticks_log
 mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
 mpl.axes.Axes.set_yticks_fixed = set_yticks_fixed
 mpl.axes.Axes.set_xticks_prefix = set_xticks_prefix
