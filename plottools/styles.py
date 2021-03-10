@@ -570,21 +570,27 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     mpl.rcParams['xtick.minor.size'] = 0.6*tick_size
     mpl.rcParams['ytick.minor.size'] = 0.6*tick_size
     mpl.rcParams['legend.fontsize'] = legend_size
+    # axes, label, ticks and text color:
+    mpl.rcParams['axes.facecolor'] = axes_color
+    if hasattr(namespace, 'lsSpine'):
+        mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
+        mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
+        mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
+        mpl.rcParams['xtick.color'] = mpl.rcParams['axes.edgecolor']
+        mpl.rcParams['ytick.color'] = mpl.rcParams['axes.edgecolor']
+        mpl.rcParams['text.color'] = mpl.rcParams['axes.edgecolor']
+    # grid style:
     if hasattr(namespace, 'lsGrid'):
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
         mpl.rcParams['grid.linestyle'] = getattr(namespace, 'lsGrid')['linestyle']
         mpl.rcParams['grid.linewidth'] = getattr(namespace, 'lsGrid')['linewidth']
-    mpl.rcParams['axes.facecolor'] = axes_color
-    if hasattr(namespace, 'lsSpine'):
-        mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
-        mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
-    # mpl.rcParams['image.cmap'] = ''  set from some cmap style
+    # LaTeX:
     mpl.rcParams['text.usetex'] = latex
     if latex:
         if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
             mpl.rcParams['text.latex.unicode'] = True
-    if latex and preamble is not None:
-        mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
+        if preamble is not None:
+            mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
                                 if line[:2] == 'p:' else line for line in preamble])
 
 
