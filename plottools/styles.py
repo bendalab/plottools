@@ -590,6 +590,12 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     # LaTeX:
     mpl.rcParams['text.usetex'] = latex
     if latex:
+        """
+        mpl.rcParams['font.serif'] = ['Times', 'Palatino', 'New Century Schoolbook', 'Bookman', 'Computer Modern Roman']
+        mpl.rcParams['font.sans-serif'] = ['Helvetica', 'Avant Garde', 'Computer Modern Sans serif']
+        mpl.rcParams['font.cursive'] = ['Zapf Chancery']
+        mpl.rcParams['font.monospace'] = ['Courier', 'Computer Modern Typewriter']
+        """
         if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
             mpl.rcParams['text.latex.unicode'] = True
         if preamble is not None:
