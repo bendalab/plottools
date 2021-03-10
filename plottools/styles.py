@@ -584,6 +584,9 @@ def plot_params(font_size=10.0, font_family='sans-serif',
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
         mpl.rcParams['grid.linestyle'] = getattr(namespace, 'lsGrid')['linestyle']
         mpl.rcParams['grid.linewidth'] = getattr(namespace, 'lsGrid')['linewidth']
+    # no margins:
+    mpl.rcParams['axes.xmargin'] = 0.0
+    mpl.rcParams['axes.ymargin'] = 0.0
     # LaTeX:
     mpl.rcParams['text.usetex'] = latex
     if latex:
