@@ -338,10 +338,9 @@ def __set_merged_position(self, axs):
     ----------
     self: axis object
         Axis whose position is set.
-    axs: array of axis objects
+    axs: flat array of axis objects
         The axis from which the bounding box is taken.
     """
-    axs = axs.ravel()
     bboxes = np.array([ax.get_position().get_points().ravel() for ax in axs])
     x0 = np.min(bboxes[:,0])
     y0 = np.min(bboxes[:,1])
@@ -392,9 +391,15 @@ def merge(fig, axs):
     # ...
     ```
     """
-    for ax in axs.ravel():
+    axs = np.asarray(axs).ravel()
+    for ax in axs:
         ax.set_visible(False)
-    ax = fig.add_axes([0, 0, 1, 1])
+    count = 0
+    if hasattr(fig, '__merged_axis_counter'):
+        count = fig.__merged_axis_counter
+    count += 1
+    fig.__merged_axis_counter = count
+    ax = fig.add_axes([0, 0, 1, 1], label='merged%d' % count)
     ax.__set_merged_position(axs)
     ax.__merged_axis = axs
     return ax
