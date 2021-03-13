@@ -1,0 +1,31 @@
+\subsection{siunitx in normal text}
+
+I do not drive faster than \SI{100}{\kilo\meter\per\hour} and small
+things are measured in multiples of 12\,\micro\meter{} usually. Water
+conductivity has a weired unit. In the tropics we measured
+\SI{7.5}{\micro\siemens\per\centi\meter}, but sometimes up to
+\SI{253}{\micro\siemens\per\centi\meter}. Important for electronics is the
+resistance. You may measure \SI{10}{\kilo\ohm}. Or the resistivity as
+a material constant, for example silicon has a resistivity of
+\SI{2.3}{\kilo\ohm\meter}. Another common quantity with an intersting
+unit is of course the temperature. In my room I currently have
+\SI{21}{\degreeCelsius}.
+
+\si{\ohm} --- $\si{\ohm}$ : $\Omega$ --- $\mathrm{\Omega}$ --- $\mathsf{\Omega}$ ---
+\ifcsname textohm\endcsname\textohm\fi  --- \ifcsname textOmega\endcsname\textOmega\fi ---
+\ifcsname upOmega\endcsname$\upOmega$\fi 
+
+\si{\micro} --- $\si{\micro}$ : $\mu$ --- $\mathrm{\mu}$ --- $\mathsf{\mu}$ ---
+\ifcsname textmu\endcsname\textmu\fi --- \ifcsname textmicro\endcsname\textmicro\fi
+
+\subsection{siunitx in math mode}
+
+Some inline pythagoras equation $a^2 + b^2 = c^2$ and units
+$\SI{12.34}{\micro\siemens\per\centi\meter}$ about water
+conductivities.
+
+\[ U = 20 \times \SI{20}{\mega\ohm}\cdot\SI{50}{mA} \]
+
+\[ v = 123.45 \frac{\SI{30}{\micro\meter}}{\SI{10}{ms}} \]
+
+\[ {\cal F}[X](\omega) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} \sum_{k=1}^m \alpha_k\beta\gamma\delta\sin(2\pi f t)\,dt\,. \]
