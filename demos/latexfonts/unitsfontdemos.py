@@ -8,25 +8,24 @@ units['siunits'] = ['SIunits', '\\usepackage[mediumspace,mediumqspace,Gray,amssy
 fonts = OrderedDict()
 fonts['default'] = ['', '', '']
 fonts['pslatex'] = ['\\usepackage{pslatex}', '', '']
-fonts['iwona'] = ['\\usepackage[math]{iwona}\n\\usepackage[T1]{fontenc}', '', '']
 fonts['lmodern'] = ['\\usepackage{lmodern}', '', '']
-fonts['libertine'] = ['\\usepackage{libertine}\n\\usepackage[T1]{fontenc}\n\\usepackage[libertine]{newtxmath}', '', '']
-fonts['mathpazo'] = ['\\usepackage{mathpazo}', '', '']
-fonts['pxtext'] = ['\\usepackage{newpxtext}\n\\usepackage{newpxmath}', '', '']
+fonts['libertine'] = ['\\usepackage{libertine}\n\\usepackage[libertine]{newtxmath}', '', '']
 fonts['kpfonts'] = ['\\usepackage{kpfonts}', '', '']
-fonts['mathptmx'] = ['\\usepackage{mathptmx}', '', '']
+fonts['mathpazo'] = ['\\usepackage{mathpazo}', '', '']  # Palatino
+fonts['mathptmx'] = ['\\usepackage{mathptmx}', '', '']  # Tinmes
+fonts['newpx'] = ['\\usepackage{newpxtext}\n\\usepackage{newpxmath}', '', '']
 fonts['newtx'] = ['\\usepackage{newtxtext}\n\\usepackage{newtxmath}', '', '']
 fonts['default-sf'] = ['\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
 fonts['pslatex-sf'] = ['\\usepackage{pslatex}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
 #fonts['helvet'] = ['\\usepackage[scaled]{helvet}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
-fonts['helvet-sansmath'] = ['\\usepackage{sansmathfonts}\n\\usepackage[scaled]{helvet}\n\\renewcommand{\\familydefault}{\\sfdefault}', '', '']
+fonts['helvet-sansmath'] = ['\\usepackage{sansmathfonts}\n\\usepackage[scaled=.92]{helvet}\n\\renewcommand{\\familydefault}{\\sfdefault}', '', '']  # Helvetica
+fonts['iwona'] = ['\\usepackage[math]{iwona}', '', '']
 fonts['tgheros-sf'] = ['\\usepackage{tgheros}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '\\sisetup{text-ohm=\\text{\\ensuremath{\\mathsf{\\Omega}}}, math-ohm=\\mathsf{\\Omega}}', '']
 fonts['arev'] = ['\\usepackage{arev}', '\\sisetup{text-micro=\\text{\\ensuremath{\mu}}, math-micro=\\mu, text-ohm=\\text{\\ensuremath{\\Omega}}, math-ohm=\\mathsf{\\Omega}}', '']
 fonts['avant'] = ['\\usepackage{avant}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
 fonts['cmbright'] = ['\\usepackage{cmbright}\n\\SetSymbolFont{largesymbols}{normal}{OMX}{iwona}{m}{n}', '\\sisetup{math-ohm=\\mathsf{\\Omega}}', '']
 #fonts['cabin'] = ['\\usepackage[sfdefault]{cabin}\n\\usepackage{sfmath}', '\\sisetup{text-ohm=\\text{\\ensuremath{\\mathsf{\\Omega}}}, math-ohm=\\mathsf{\\Omega}}', '']
 fonts['lmodern-sf'] = ['\\usepackage{lmodern}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
-fonts['mathpazo-sf'] = ['\\usepackage{mathpazo}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{sfmath}', '', '']
 fonts['kpfonts-sf'] = ['\\usepackage[sfmath]{kpfonts}\n\\renewcommand{\\familydefault}{\\sfdefault}', '', '']
 fonts['newtx-sf'] = ['\\usepackage{newtxtext}\n\\renewcommand{\\familydefault}{\\sfdefault}\n\\usepackage{newtxmath}\n\\usepackage{sfmath}', '\\sisetup{text-ohm=\\text{\\ensuremath{\\mathsf{\\Omega}}}, math-ohm=\\mathsf{\\Omega}}', '']
 
