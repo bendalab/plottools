@@ -11,11 +11,14 @@ a material constant, for example silicon has a resistivity of
 unit is of course the temperature. In my room I currently have
 \SI{21}{\degreeCelsius}.
 
-\si{\ohm} --- $\si{\ohm}$ : $\Omega$ --- $\mathrm{\Omega}$ --- $\mathsf{\Omega}$ ---
+\bigskip
+\noindent
+1234567890 \qquad \{[()]\} \qquad \"a\"o\"u  \"A\"O\"U {\ss} \\
+abcdefghijklmnopqrstuvwxyz \qquad ABCDEFGHIJKLMNOPQRSTUVWXYZ \\
+\ohm{} --- $\ohm$ : $\Omega$ --- $\mathrm{\Omega}$ --- $\mathsf{\Omega}$ ---
 \ifcsname textohm\endcsname\textohm\fi  --- \ifcsname textOmega\endcsname\textOmega\fi ---
-\ifcsname upOmega\endcsname$\upOmega$\fi 
-
-\si{\micro} --- $\si{\micro}$ : $\mu$ --- $\mathrm{\mu}$ --- $\mathsf{\mu}$ ---
+\ifcsname upOmega\endcsname$\upOmega$\fi \\
+\micro{} --- $\micro$ : $\mu$ --- $\mathrm{\mu}$ --- $\mathsf{\mu}$ ---
 \ifcsname textmu\endcsname\textmu\fi --- \ifcsname textmicro\endcsname\textmicro\fi
 
 \subsection{siunitx in math mode}
@@ -24,8 +27,11 @@ Some inline pythagoras equation $a^2 + b^2 = c^2$ and units
 $\SI{12.34}{\micro\siemens\per\centi\meter}$ about water
 conductivities.
 
-\[ U = 20 \times \SI{20}{\mega\ohm}\cdot\SI{50}{mA} \]
-
-\[ v = 123.45 \frac{\SI{30}{\micro\meter}}{\SI{10}{ms}} \]
+\[ U = 20 \times \SI{20}{\mega\ohm}\cdot\SI{50}{mA} \qquad
+   v = 123.45 \frac{\SI{30}{\micro\meter}}{\SI{10}{ms}} \]
 
 \[ {\cal F}[X](\omega) = \frac{1}{2\pi}\int_{-\infty}^{+\infty} \sum_{k=1}^m \alpha_k\beta\gamma\delta\sin(2\pi f t)\,dt\,. \]
+
+\noindent
+\includegraphics{IMAGEFILE}
+\centerline{Time [\si{\micro\second}]}
