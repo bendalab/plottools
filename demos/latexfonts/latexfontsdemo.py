@@ -105,8 +105,8 @@ if __name__ == "__main__":
         pdf_file = make_latex(fonts_key)
         if pdf_file is not None:
             pdf_files.append(pdf_file + '.pdf')
-    os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexfontsdemos.pdf')
+    os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexfontsdemo.pdf')
     # pdfjam does not work properly!
-    #os.system('pdfjam --a4paper -o latexfontsdemos.pdf ' + ' '.join(pdf_files))
+    #os.system('pdfjam --a4paper -o latexfontsdemo.pdf ' + ' '.join(pdf_files))
     for pf in pdf_files:
         os.remove(pf)

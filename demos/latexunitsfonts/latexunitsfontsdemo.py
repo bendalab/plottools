@@ -158,8 +158,8 @@ if __name__ == "__main__":
             unit_font = fonts[fonts_key][k+1] if k < 1 else ''
             pdf_file = make_latex(units_key, fonts_key, unit_font)
             pdf_files.append(pdf_file + '.pdf')
-    os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexunitsfontsdemos.pdf')
+    os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexunitsfontsdemo.pdf')
     # pdfjam does not work properly!
-    #os.system('pdfjam --a4paper -o latexunitsfontsdemos.pdf ' + ' '.join(pdf_files))
+    #os.system('pdfjam --a4paper -o latexunitsfontsdemo.pdf ' + ' '.join(pdf_files))
     for pf in pdf_files:
         os.remove(pf)
