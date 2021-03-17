@@ -1,6 +1,8 @@
 import os
 from collections import OrderedDict
 
+# see https://tex.stackexchange.com/questions/209302/possible-side-effect-of-siunitx-tgheroes-familydefault-combination
+
 units = OrderedDict()
 units['siunitx'] = ['siunitx', '\\usepackage[free-standing-units]{siunitx}']  # detect-all results in enlarged micros
 #units['siunits'] = ['SIunits', '\\usepackage[mediumspace,mediumqspace,Gray,amssymb]{SIunits}']
