@@ -38,20 +38,21 @@ fonts = [
 ]
 
 
-def make_latex(secnum, fontpackage):
-    base_name = font_package
+def make_latex(secnum, font_package, text_fragment, remove=True):
+    print()
+    print('LATEX %s.tex' % font_package)
     with open(font_package + '.tex', 'w') as df:
         df.write('\\documentclass[a4paper,11pt]{article}\n')
         df.write('\\usepackage[left=30mm, right=30mm, top=20mm]{geometry}\n')
-        df.write('\\pagestyle{empty}\n')
         df.write('\\usepackage{graphicx}\n')
+        df.write('\\pagestyle{empty}\n')
         df.write('\n')
         df.write('\\usepackage{%s}\n' % font_package)
         df.write('\n')
         df.write('\\begin{document}\n')
         df.write('\n')
         df.write('\\setcounter{section}{%d}\n' % secnum)
-        df.write('\\section{%s}\n' % font_package.replace('fonts', ''))
+        df.write('\\section{%s}\n' % font_package[5:])
         df.write('\n')
         df.write('\\begin{verbatim}\n')
         with open('%s.sty' % font_package) as sf:
@@ -60,14 +61,15 @@ def make_latex(secnum, fontpackage):
                     df.write(line)
         df.write('\\end{verbatim}\n')
         df.write('\n')
-        with open('latexfonts-text.tex') as sf:
+        with open(text_fragment) as sf:
             for line in sf:
-                df.write(line)
+                df.write(line.replace('IMAGEFILE', '%s-plot' % font_package))
         df.write('\n')
         df.write('\\end{document}\n')
         
     os.system('pdflatex %s' % font_package)
-    os.remove(font_package + '.tex')
+    if remove:
+        os.remove(font_package + '.tex')
     os.remove(font_package + '.aux')
     os.remove(font_package + '.log')
 
@@ -76,7 +78,7 @@ if __name__ == "__main__":
     pdf_files = []
     for k, font_package in enumerate(fonts):
     #for k, font_package in enumerate(['fontscomfortaa']):
-        make_latex(k, font_package)
+        make_latex(k, font_package, 'latexfonts-text.tex', True)
         pdf_files.append(font_package + '.pdf')
     os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexfontsdemo.pdf')
     for pf in pdf_files:
