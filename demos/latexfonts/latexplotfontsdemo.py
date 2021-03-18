@@ -1,5 +1,6 @@
 import os
-from latexfontsdemo import fonts_serif, fonts_sans, make_latex
+import sys
+from latexfontsdemo import fonts, fonts_serif, fonts_sans, make_latex
 
 
 def make_plot(font_package, family, remove=True):
@@ -41,34 +42,43 @@ def make_plot(font_package, family, remove=True):
 
 
 if __name__ == "__main__":
+    # set up font list:
+    font_list = fonts
+    save_failed = True
+    merge_pdfs = True
+    if len(sys.argv) > 1:
+        font_list = sys.argv[1:]
+        save_failed = False
+        merge_pdfs = False
+    # make demo pages:
     pdf_files = []
     failed_fonts = []
-    n = 0
-    for k, font_package in enumerate(fonts_serif):
-        if make_plot(font_package, 'serif', True):
-            make_latex(n+k, font_package, 'latexplotfonts-text.tex', True)
-            os.remove(font_package + '-plot.pdf')
-            pdf_files.append(font_package + '.pdf')
-        else:
-            failed_fonts.append(font_package)
-    n = len(fonts_serif)
-    for k, font_package in enumerate(fonts_sans):
+    for k, font_package in enumerate(font_list):
     #for k, font_package in enumerate(['fontscomfortaa']):
     #for k, font_package in enumerate(['fontskpfonts']):
-        if make_plot(font_package, 'sans-serif', True):
-            make_latex(n+k, font_package, 'latexplotfonts-text.tex', True)
+        family = 'sans_serif' if font_package in fonts_sans else 'serif'
+        if make_plot(font_package, family, merge_pdfs):
+            make_latex(k, font_package, 'latexplotfonts-text.tex', True)
             os.remove(font_package + '-plot.pdf')
             pdf_files.append(font_package + '.pdf')
         else:
             failed_fonts.append(font_package)
+    # combine pages:
     print()
-    print('GENERATE latexplotfontsdemo.pdf')
-    os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexplotfontsdemo.pdf')
-    for pf in pdf_files:
-        os.remove(pf)
+    if merge_pdfs:
+        print('GENERATE latexplotfontsdemo.pdf')
+        os.system('pdftk ' + ' '.join(pdf_files) + ' cat output latexplotfontsdemo.pdf')
+        for pf in pdf_files:
+            os.remove(pf)
+    # report and save failed fonts:
     if len(failed_fonts) > 0:
         print()
         print('Failed to generate plots for')
         for font in failed_fonts:
             print('  ' + font)
+        print('see failedfonts.txt for the list of failed font packages.')
+        if save_failed:
+            with open('failedfonts.txt', 'w') as df:
+                for font in failed_fonts:
+                    df.write(font + '\n')
     print()
