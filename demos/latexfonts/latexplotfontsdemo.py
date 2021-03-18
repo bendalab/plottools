@@ -47,15 +47,13 @@ if __name__ == "__main__":
     save_failed = True
     merge_pdfs = True
     if len(sys.argv) > 1:
-        font_list = sys.argv[1:]
+        font_list = [font.replace('.sty', '') for font in sys.argv[1:]]
         save_failed = False
         merge_pdfs = False
     # make demo pages:
     pdf_files = []
     failed_fonts = []
     for k, font_package in enumerate(font_list):
-    #for k, font_package in enumerate(['fontscomfortaa']):
-    #for k, font_package in enumerate(['fontskpfonts']):
         family = 'sans_serif' if font_package in fonts_sans else 'serif'
         if make_plot(font_package, family, merge_pdfs):
             make_latex(k, font_package, 'latexplotfonts-text.tex', True)
