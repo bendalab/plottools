@@ -16,3 +16,7 @@ directly for typesetting all text elements in a plot.
 
 With the demos provided in this directory we explore LaTeX fonts for
 their usage within matplotlib plots.
+
+## Math fonts
+
+See http://milde.users.sourceforge.net/Matheschriften/matheschriften.html
