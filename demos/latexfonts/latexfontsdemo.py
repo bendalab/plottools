@@ -5,7 +5,7 @@ from collections import OrderedDict
 # https://mirror.informatik.hs-fulda.de/tex-archive/macros/latex/required/psnfss/psnfss2e.pdf
 # https://tex.stackexchange.com/questions/59702/suggest-a-nice-font-family-for-my-basic-latex-template-text-and-math/59706
 
-fonts = [
+fonts_serif = [
     'fontsdefault',
     'fontspslatex',
     'fontslmodern',
@@ -17,6 +17,9 @@ fonts = [
     'fontsmathptmx',
     'fontsnewpx',
     'fontsnewtx',
+    ]
+
+fonts_sans = [
     'fontsdefaultsf',
     'fontsdefaultsansmath',
     'fontspslatexsf',
@@ -36,6 +39,8 @@ fonts = [
     'fontskpfontssf',
     'fontsnewtxsf',
 ]
+
+fonts = fonts_serif + fonts_sans
 
 
 def make_latex(secnum, font_package, text_fragment, remove=True):
