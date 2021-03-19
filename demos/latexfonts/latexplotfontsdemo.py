@@ -47,7 +47,14 @@ if __name__ == "__main__":
     save_failed = True
     merge_pdfs = True
     if len(sys.argv) > 1:
-        font_list = [font.replace('.sty', '') for font in sys.argv[1:]]
+        font_args = [font.replace('.sty', '') for font in sys.argv[1:]]
+        font_list = []
+        for font in font_args:
+            if font not in fonts:
+                font = 'fonts' + font
+                if font not in fonts:
+                    continue
+            font_list.append(font)
         save_failed = False
         merge_pdfs = False
     # make demo pages:

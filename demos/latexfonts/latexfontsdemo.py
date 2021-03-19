@@ -33,8 +33,8 @@ fonts_sans = [
     'fontscomfortaa',
     'fontsiwona',
     'fontskurier',
-    'fontstgheros',
     'fontsgfsneohellenic',
+    'fontstgheros',
     'fontstgadventorsf',
     'fontsarev',
     'fontsavant',
@@ -64,6 +64,11 @@ def make_latex(secnum, font_package, text_fragment, remove=True):
         df.write('\\pagestyle{empty}\n')
         df.write('\n')
         df.write('\\usepackage{%s}\n' % font_package)
+        df.write('\n')
+        df.write('\\newcommand{\\abc}{abcdefghijklmnopqrstuvwxyz}\n')
+        df.write('\\newcommand{\\ABC}{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\n')
+        df.write('\\newcommand{\\textdemo}{The quick brown fox jumps over the sleazy dog}\n')
+        df.write('\\newcommand{\\mathdemo}{\\sqrt{2\\pi} \\int ba \\alpha_k \\sin(2\\pi f_k t) \, dt + \\nu v}\n')
         df.write('\n')
         df.write('\\begin{document}\n')
         df.write('\n')
@@ -96,7 +101,14 @@ if __name__ == "__main__":
     font_list = fonts
     merge_pdfs = True
     if len(sys.argv) > 1:
-        font_list = [font.replace('.sty', '') for font in sys.argv[1:]]
+        font_args = [font.replace('.sty', '') for font in sys.argv[1:]]
+        font_list = []
+        for font in font_args:
+            if font not in fonts:
+                font = 'fonts' + font
+                if font not in fonts:
+                    continue
+            font_list.append(font)
         merge_pdfs = False
     # make demo pages:
     pdf_files = []
