@@ -4,13 +4,14 @@ In science we need various fonts for
 
 - journal papers: spacious serif font
 - project proposal: a potentially narrower serif font
-- presentations: a nice looking and simple sans serif font
+- presentations: a nicely flowing sans serif font
 - poster: sans serif font
 
-The default computern modern LaTeX fonts look nice but have several
-drawbacks that have been overcome in recent years. You definitely want
-to load a different font in your LaTeX preamble. Choosing a different
-font, however, requires to find matching fonts for
+The default computern modern LaTeX fonts look pretty nice but have
+several drawbacks that have been overcome in recent years. You
+definitely want to load a different font in your LaTeX
+preamble. Choosing a different font, however, requires to find
+matching fonts for
 
 - main text, inclusively italics and bold text for emphasis and section titles
 - math typesetting (greek symbols, brackets, integrals)
@@ -25,7 +26,7 @@ range of fonts covering the different use cases.
 For each font setting, a little style file is provided (`fonts*.sty`)
 that contains all the necessary commands to put into the preamble of a
 LaTeX document. Alternatively, just copy the style file into the
-directory of you document and include it into your preample like this:
+directory of your document and include it into your preample like this:
 ```
 \documentclass{article}
 \usepackage{fontslibertine}
@@ -146,3 +147,15 @@ in many cases more difficult.
 ### Poster
 
 Similar fonts as for presentations.
+
+
+## Resources
+
+- [TUG font catalogue](https://tug.org/FontCatalogue)
+- [LaTeX2e font selection](https://www.latex-project.org/help/documentation/fntguide.pdf)
+- [A Survey of Free Math Fonts for TeX and LaTeX](https://ctan.net/info/Free_Math_Font_Survey/survey.html)
+- [Freie Mathematikschriften für LaTeX](http://milde.users.sourceforge.net/Matheschriften/matheschriften.html)
+- [Filenames for TeX fonts](http://tug.org/fontname/fontname.html)
+- [Fonts and TeX](http://tug.org/fonts/)
+- [TeX user group](http://tug.org/)
+- [The LaTeX project](https://www.latex-project.org/)

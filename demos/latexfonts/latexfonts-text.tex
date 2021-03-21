@@ -1,13 +1,15 @@
-\subsection{Normal text}
-
-I do not drive faster than 100\,km/h and small things are measured in
-multiples of 12\,nm usually. Water conductivity has a weired unit. In
+I do not drive faster than 123.4\,km/h and small things are measured in
+multiples of 5.6\,nm usually. Water conductivity has a weired unit. In
 the tropics we measured 0.01\,mS/cm, but sometimes up to
 0.25\,mS/cm. A common quantity with an intersting unit is of course
 the temperature. In my room I currently have 21\,$^{\circ}$.
 
-\bigskip
-\noindent
+Some inline pythagoras equation $a^2 + b^2 = c^2$ and this $e^{-x^2/2}$ is a Gaussian.
+\[ {\cal F}[X](\omega) = \sqrt{\frac{1}{2\pi}}\int_{-\infty}^{+\infty} \sum_{k=1}^m \alpha_k\sin(2\pi f t)\,dt \left( \frac{\nu}{\omega} + \frac{\sigma}{\rho} \right)^\beta_i \,. \]
+
+
+\subsection{Normal text}
+
 \begin{tabular}{@{}p{16ex}l}
   \texttt{\textbackslash normalfont} & \textdemo \\
   \texttt{\textbackslash bfseries} & \textbf{\textdemo} \\
@@ -22,7 +24,22 @@ the temperature. In my room I currently have 21\,$^{\circ}$.
 \'a\`a\^a \'o\`o\^o\~n \qquad ff fi fl ffi ffl \\
 \abc \qquad \ABC
 
+
 \subsection{Math mode}
+
+\begin{tabular}{@{}llllll}
+\texttt{\$$\cdot$\$} & $\mathdemo$ & $\alpha a$ & $\nu v$ & $abcXYZ$ & abcXYZ \\
+%\texttt{\$\textbackslash mathnormal\{$\cdot$\}\$} & $\mathnormal{\mathdemo}$ & $\mathnormal{\alpha a}$ & $\mathnormal{\nu v}$ & $\mathnormal{abcXYZ}$ & abcXYZ \\
+\texttt{\$\textbackslash mathit\{$\cdot$\}\$} & $\mathit{\mathdemo}$ & $\mathit{\alpha a}$ & $\mathit{\nu v}$ & $\mathit{abcXYZ}$ & abcXYZ \\
+\texttt{\$\textbackslash mathrm\{$\cdot$\}\$} & $\mathrm{\mathdemo}$ & $\mathrm{\alpha a}$ & $\mathrm{\nu v}$ & $\mathrm{abcXYZ}$ & abcXYZ \\
+\texttt{\$\textbackslash mathbf\{$\cdot$\}\$} & $\mathbf{\mathdemo}$ & $\mathbf{\alpha a}$ & $\mathbf{\nu v}$ & $\mathbf{abcXYZ}$ & \textbf{abcXYZ} \\
+\texttt{\$\textbackslash bm\{$\cdot$\}\$} & $\bm{\mathdemo}$ & $\bm{\alpha a}$ & $\bm{\nu v}$ & $\bm{abcXYZ}$ & \textbf{abcXYZ} \\
+\texttt{\$\textbackslash boldsymbol\{$\cdot$\}\$} & $\try{\boldsymbol}{\mathdemo}$ & $\try{\boldsymbol}{\alpha a}$ & $\try{\boldsymbol}{\nu v}$ & $\try{\boldsymbol}{abcXYZ}$ & \textbf{abcXYZ} \\
+\texttt{\$\textbackslash mathsf\{$\cdot$\}\$} & $\mathsf{\mathdemo}$ & $\mathsf{\alpha a}$ & $\mathsf{\nu v}$ & $\mathsf{abcXYZ}$ & abcXYZ \\
+%\texttt{\$\textbackslash mathtt\{$\cdot$\}\$} & $\mathtt{\mathdemo}$ & $\mathtt{\alpha a}$ & $\mathtt{\nu v}$ & $\mathtt{abcXYZ}$ & abcXYZ \\
+\texttt{\$\textbackslash mathbb\{$\cdot$\}\$} & \multicolumn{5}{l}{$\try{\mathbb}{NZQRC}$} \\
+\texttt{\$\textbackslash mathcal\{$\cdot$\}\$} & \multicolumn{5}{l}{$\mathcal{\ABC}$} \\
+\end{tabular}
 
 $\abc$ \qquad $\ABC$\\
 $\alpha\beta\gamma\delta\epsilon\zeta\eta\theta\iota\kappa\lambda\mu\nu\xi\pi\rho\sigma\tau\upsilon\phi\chi\psi\omega$ \qquad
@@ -30,26 +47,7 @@ $\partial\varepsilon\vartheta\varpi\varphi\varrho\varsigma$ \qquad
 $\Gamma\Delta\Lambda\Phi\Psi\Pi\Sigma\Theta\Xi$\\
 $1234567890$ \qquad
 1$1$\,2$2$\,3$3$\,4$4$\,5$5$\,6$6$\,7$7$\,8$8$\,9$9$\,0$0$ \qquad
-$QJf \alpha \beta \gamma \Gamma \beta_a b_a B_a \partial_a \omega_a \nu vwyg$ \\
+$\beta_a b_a B_a \partial_a \omega_a$ \\
 $+ - <=> \ne \le \ge \ll \gg \cdot \times$ \qquad
 $\{[()]\}$ \qquad
 $\leftarrow \rightarrow \Leftarrow \Rightarrow \Longleftarrow \Longrightarrow$
-
-\bigskip
-\noindent
-\begin{tabular}{@{}p{16ex}l}
-\texttt{\$$\cdot$\$} & $\mathdemo$ \\
-%\texttt{\$\textbackslash mathnormal\{$\cdot$\}\$} & $\mathnormal{\mathdemo}$ \\
-\texttt{\$\textbackslash mathit\{$\cdot$\}\$} & $\mathit{\mathdemo}$ \\
-\texttt{\$\textbackslash mathrm\{$\cdot$\}\$} & $\mathrm{\mathdemo}$ \\
-\texttt{\$\textbackslash mathbf\{$\cdot$\}\$} & $\mathbf{\mathdemo}$ \\
-\texttt{\$\textbackslash mathsf\{$\cdot$\}\$} & $\mathsf{\mathdemo}$ \\
-\texttt{\$\textbackslash mathtt\{$\cdot$\}\$} & $\mathtt{\mathdemo}$ \\
-\texttt{\$\textbackslash mathcal\{$\cdot$\}\$} & $\mathcal{\ABC}$ \\
-\end{tabular}
-
-\bigskip
-\noindent
-Some inline pythagoras equation $a^2 + b^2 = c^2$ and this $e^{-x^2/2}$ is a Gaussian.
-
-\[ {\cal F}[X](\omega) = \sqrt{\frac{1}{2\pi}}\int_{-\infty}^{+\infty} \sum_{k=1}^m \alpha_k\sin(2\pi f t)\,dt\,. \]
