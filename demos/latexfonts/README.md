@@ -68,6 +68,10 @@ A nice survey of free math fonts is provided at
 http://milde.users.sourceforge.net/Matheschriften/matheschriften.html
 (in german).
 
+Bold math via `\mathbf` only affects normal numbers and letters. For
+setting everything in bold usually requires the `\bm` command from
+`bm` package. And that does also not work with every font.
+
 Again, run
 ```
 python3 latexfontsdemo.py
