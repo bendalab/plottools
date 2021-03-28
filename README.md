@@ -52,8 +52,8 @@ python -m plottools.spines
 
 ## Howtos
 
-- A quick introduction to matplotlib: [Getting started with matplotlib](docs/starter.md)
-- A general guidline for preparing figures for your next manuscript or presentation: [How to prepare figures](docs/guide.md)
+- A quick introduction to matplotlib: [Getting started with matplotlib](docs/starter.md).
+- A general guidline for preparing figures for your next manuscript or presentation: [How to prepare figures](docs/guide.md).
 
 
 ## Documentation

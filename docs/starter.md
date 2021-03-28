@@ -41,7 +41,7 @@ Generate a figure and an axes using the `plt.subplots()` function:
 fig, ax = plt.subplots()
 ```
 
-`ax` is then a single matplotlib axes. This is a plot, a coordinate
+Then `ax` is a single matplotlib axes. This is a plot, a coordinate
 system in which you can draw and annotate your data:
 ```
 ax.plot(t, x)
@@ -49,15 +49,16 @@ ax.set_xlim(0, 0.2)
 ax.set_xlabel('Time [s]')
 ax.set_ylabel('Voltage [mV]')
 ```
+
+
+### Plot commands
+
 See the [matplotlib.axes
 API](https://matplotlib.org/stable/api/axes_api.html) for a (long)
 list of member functions, including various types of plots and
 annotations.
 
-
-### Plot commands
-
-A selection of often used plots commands:
+Here is a selection of often used plots commands:
 
 - [`plot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot): plot y versus x with markers and connected by lines. 
 - [`errorbar()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.errorbar.html#matplotlib.axes.Axes.errorbar): plot errorbars (both vertical and horizontal ones)
@@ -92,6 +93,7 @@ Markers:
 
 Other:
 
+- `label`: a label for the legend (see below).
 - `clip_on`: set to `False` if you do not want, for example, marker symbols to be clipped.
 - `zorder`: some number specifying the order in which elements are drawn into the plot. Higher numbers are drawn on top of lower numbers.
 
@@ -105,8 +107,8 @@ ax.set_xscale('log')
 ```
 Likewise for the y-axis.
 
-Make sure (`ax.set_xlim()`) that the data range starts at positive
-(non-zero) values.
+Make sure that the data range starts at positive (non-zero) values
+using `ax.set_xlim()`.
 
 
 ### Legend
