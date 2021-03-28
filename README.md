@@ -50,9 +50,10 @@ run, for example,
 python -m plottools.spines
 ```
 
-## How to prepare figures
+## Howtos
 
-Read our [guidline](docs/guide.md) for preparing figures for your next paper manuscript or thesis.
+- A quick introduction to matplotlib: [Getting started with matplotlib](docs/starter.md)
+- A general guidline for preparing figures for your next manuscript or presentation: [How to prepare figures](docs/guide.md)
 
 
 ## Documentation
