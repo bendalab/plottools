@@ -12,7 +12,7 @@ def colors_figures():
     """ Generate figures displaying the color palettes.
     """
     for key, colors in color_palettes.items():
-        fig, ax = plt.subplots(cmsize=(1+2.2*len(colors), 3))
+        fig, ax = plt.subplots(cmsize=(1+2.2*len(colors), 3.3))
         fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
         ax.show_spines('')
         rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
@@ -20,8 +20,9 @@ def colors_figures():
         for k, c in enumerate(colors):
             ax.fill(rectx + 1.2*k, recty, color=colors[c])
             ax.text(0.5 + 1.2*k, -0.3, c, ha='center')
+            ax.text(0.5 + 1.2*k, -0.6, colors[c], ha='center')
         ax.set_xlim(-0.1, len(colors)*1.2 - 0.1)
-        ax.set_ylim(-0.4, 1.02)
+        ax.set_ylim(-0.7, 1.02)
         fig.savefig('colors-' + key + '.png')
 
     
