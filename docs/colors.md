@@ -111,6 +111,14 @@ c.colors_solarized
 ![solarized](figures/colors-solarized.png)
 
 
+### Google's material color palette (from LaTeX xcolor-material package)
+
+```
+c.colors_material
+```
+
+![material](figures/colors-material.png)
+
 
 ## Color manipulation
 

@@ -11,6 +11,7 @@ Dictionaries with colors:
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
 - `colors_solarized`: Ethan Schoonover's color palette, solarized.
+- `colors_material`: Google's material color palette.
 
 - `color_palettes`: a dictionary with all the defined color dictionaries.
 
@@ -164,6 +165,30 @@ colors_solarized['base1'] = '#93A1A1'
 colors_solarized['base2'] = '#EEE8D5'
 colors_solarized['white'] = '#FDF6E3'
 
+""" Google's material color palette. Taken from the LaTeX xcolor-material package. """
+colors_material = OrderedDict()
+colors_material['red'] = '#F44336'
+colors_material['deeporange'] = '#FF5722'
+colors_material['orange'] = '#FF9800'
+colors_material['amber'] = '#FFC107'
+colors_material['yellow'] = '#FFEB3B'
+colors_material['lime'] = '#CDDC39'
+colors_material['lightgreen'] = '#8BC34A'
+colors_material['green'] = '#4CAF50'
+colors_material['teal'] = '#009688'
+colors_material['cyan'] = '#00BCD4'
+colors_material['lightblue'] = '#03A9F4'
+colors_material['blue'] = '#2196F3'
+colors_material['indigo'] = '#3F51B5'
+colors_material['deeppurple'] = '#673AB7'
+colors_material['purple'] = '#9C27B0'
+colors_material['pink'] = '#E91E63'
+colors_material['white'] = '#FFFFFF'
+colors_material['gray'] = '#9E9E9E'
+colors_material['bluegray'] = '#607D8B'
+colors_material['black'] = '#000000'
+colors_material['brown'] = '#795548'
+
 """ All color palettes. """
 color_palettes = OrderedDict()
 color_palettes['plain'] = colors_plain
@@ -173,6 +198,7 @@ color_palettes['henninger'] = colors_henninger
 color_palettes['scicomp'] = colors_scicomp
 color_palettes['unituebingen'] = colors_unituebingen
 color_palettes['solarized'] = colors_solarized
+color_palettes['material'] = colors_material
     
 """ Default color palette. """
 colors = colors_muted
