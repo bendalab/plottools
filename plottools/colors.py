@@ -10,6 +10,7 @@ Dictionaries with colors:
 - `colors_henninger`: colors by Joerg Henninger upond which the muted colors are build.
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
+- `colors_solarized`: Ethan Schoonover's color palette, solarized.
 
 - `color_palettes`: a dictionary with all the defined color dictionaries.
 
@@ -144,6 +145,25 @@ colors_unituebingen['lightorange'] = '#D7B469'
 colors_unituebingen['orange'] = '#D29600'
 colors_unituebingen['brown'] = '#916946'
 
+""" Ethan Schoonover's color palette, solarized. Taken from the LaTeX xcolor-solarized package. """
+colors_solarized = OrderedDict()
+colors_solarized['yellow'] = '#B58900'
+colors_solarized['orange'] = '#CB4B16'
+colors_solarized['red'] = '#DC322F'
+colors_solarized['magenta'] = '#D33682'
+colors_solarized['violet'] = '#6C71C4'
+colors_solarized['blue'] = '#268BD2'
+colors_solarized['cyan'] = '#2AA198'
+colors_solarized['green'] = '#859900'
+colors_solarized['black'] = '#002B36'
+colors_solarized['base02'] = '#073642'
+colors_solarized['base01'] = '#586E75'
+colors_solarized['gray'] = '#657B83'
+colors_solarized['base0'] = '#839496'
+colors_solarized['base1'] = '#93A1A1'
+colors_solarized['base2'] = '#EEE8D5'
+colors_solarized['white'] = '#FDF6E3'
+
 """ All color palettes. """
 color_palettes = OrderedDict()
 color_palettes['plain'] = colors_plain
@@ -152,6 +172,7 @@ color_palettes['muted'] = colors_muted
 color_palettes['henninger'] = colors_henninger
 color_palettes['scicomp'] = colors_scicomp
 color_palettes['unituebingen'] = colors_unituebingen
+color_palettes['solarized'] = colors_solarized
     
 """ Default color palette. """
 colors = colors_muted

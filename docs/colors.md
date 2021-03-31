@@ -102,6 +102,15 @@ c.colors_unituebingen
 ![unituebingen](figures/colors-unituebingen.png)
 
 
+### Solarized colors by Ethan Schoonover (from LaTeX xcolor-solarized package)
+
+```
+c.colors_solarized
+```
+
+![solarized](figures/colors-solarized.png)
+
+
 
 ## Color manipulation
 
