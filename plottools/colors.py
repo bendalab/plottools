@@ -369,7 +369,7 @@ def gradient(color0, color1, r):
         return cs
 
 
-def latex_colors(colors, name=''):
+def latex_colors(colors, name='', model='rgb'):
     """ Print a \\definecolor command for LaTeX.
 
     Parameters
@@ -379,13 +379,26 @@ def latex_colors(colors, name=''):
         or a single matplotlib color.
     name: string
         If colors is a single color, then name is the name of the color.
+    model: 'rgb', 'RGB' or 'HTML'
+        Color model.
     """
     if isinstance(colors, dict):
         for cn in colors:
             latex_colors(colors[cn], cn)
     else:
         r, g, b = cc.to_rgb(colors)
-        print('\\definecolor{%s}{rgb}{%.3f,%.3f,%.3f}' % (name, r, g, b))
+        if model == 'rgb':
+            print('\\definecolor{%s}{rgb}{%.3f,%.3f,%.3f}' % (name, r, g, b))
+        else:
+            r *= 255
+            g *= 255
+            b *= 255
+            if model == 'RGB':
+                print('\\definecolor{%s}{RGB}{%.0f,%.0f,%.0f}' % (name, r, g, b))
+            elif model == 'HTML':
+                print('\\definecolor{%s}{HTML}{%02X%02X%02X}' % (name, r, g, b))
+            else:
+                raise ValueError('color model "%s" not supported' % model)
         
 
 def colormap(name, colors, values=None):
