@@ -102,6 +102,15 @@ c.colors_unituebingen
 ![unituebingen](figures/colors-unituebingen.png)
 
 
+### Farbkreis by Johannes Itten, 1961
+
+```
+c.colors_itten
+```
+
+![itten](figures/colors-itten.png)
+
+
 ### Solarized colors by Ethan Schoonover (from LaTeX xcolor-solarized package)
 
 ```

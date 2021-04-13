@@ -10,6 +10,7 @@ Dictionaries with colors:
 - `colors_henninger`: colors by Joerg Henninger upond which the muted colors are build.
 - `colors_scicomp`: colors from the scientific computing script.
 - `colors_unituebingen`: colors of the corporate design of the University of Tuebingen.
+- `colors_itten`: Farbkreis by Johannes Itten, 1961.
 - `colors_solarized`: Ethan Schoonover's color palette, solarized.
 - `colors_material`: Google's material color palette.
 
@@ -146,6 +147,24 @@ colors_unituebingen['lightorange'] = '#D7B469'
 colors_unituebingen['orange'] = '#D29600'
 colors_unituebingen['brown'] = '#916946'
 
+""" Farbkreis by Johannes Itten, 1961.
+Colors taken from:
+Originally by MalteAhrens at de.wikipedia. Vectorization by User:SidShakal - Raster version from Wikimedia Commons., Gemeinfrei, https://commons.wikimedia.org/w/index.php?curid=3574696
+"""
+colors_itten = OrderedDict()
+colors_itten['red'] = '#E32322'
+colors_itten['redorange'] = '#EA621F'
+colors_itten['orange'] = '#F18E1C'
+colors_itten['yelloworange'] = '#FDC60B'
+colors_itten['yellow'] = '#F4E500'
+colors_itten['lightgreen'] = '#8CBB26'
+colors_itten['green'] = '#008e5b'
+colors_itten['lightblue'] = '#0696BB'
+colors_itten['blue'] = '#2A71B0'
+colors_itten['purple'] = '#444E99'
+colors_itten['magenta'] = '#6D398B'
+colors_itten['pink'] = '#c4037d'
+
 """ Ethan Schoonover's color palette, solarized. Taken from the LaTeX xcolor-solarized package. """
 colors_solarized = OrderedDict()
 colors_solarized['red'] = '#DC322F'
@@ -197,6 +216,7 @@ color_palettes['muted'] = colors_muted
 color_palettes['henninger'] = colors_henninger
 color_palettes['scicomp'] = colors_scicomp
 color_palettes['unituebingen'] = colors_unituebingen
+color_palettes['itten'] = colors_itten
 color_palettes['solarized'] = colors_solarized
 color_palettes['material'] = colors_material
     

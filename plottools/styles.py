@@ -367,7 +367,7 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
     edgecolors: float or list of floats
         Defines edge colors for the first fill style.
         It is passed as the lightness argument to `lighter()`
-        using the face color form `colors`. That is, 0 results in a white edge color,
+        using the face color from `colors`. That is, 0 results in a white edge color,
         1 in an edge with the same color as the face color, and 2 in a black edge color.
     edgewidth: float or list of floats
         Widths for the edge color of the first fill style.
