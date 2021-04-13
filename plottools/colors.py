@@ -99,9 +99,9 @@ colors_muted['orange'] = '#F78017'
 colors_muted['yellow'] = '#F0D730'
 colors_muted['lightgreen'] = '#AAB71B'
 colors_muted['green'] = '#478010'
-colors_muted['darkgreen'] = '#007027'
-colors_muted['cyan'] = '#008767'
-colors_muted['lightblue'] = '#108790'
+colors_muted['darkgreen'] = '#007030'
+colors_muted['cyan'] = '#40A787'
+colors_muted['lightblue'] = '#008797'
 colors_muted['blue'] = '#2060A7'
 colors_muted['purple'] = '#53379B'
 colors_muted['magenta'] = '#873770'
@@ -153,9 +153,9 @@ Originally by MalteAhrens at de.wikipedia. Vectorization by User:SidShakal - Ras
 """
 colors_itten = OrderedDict()
 colors_itten['red'] = '#E32322'
-colors_itten['redorange'] = '#EA621F'
+colors_itten['deeporange'] = '#EA621F'
 colors_itten['orange'] = '#F18E1C'
-colors_itten['yelloworange'] = '#FDC60B'
+colors_itten['amber'] = '#FDC60B'
 colors_itten['yellow'] = '#F4E500'
 colors_itten['lightgreen'] = '#8CBB26'
 colors_itten['green'] = '#008e5b'
@@ -575,7 +575,7 @@ def plot_color_comparison(ax, colorsa, *args):
     colorsa: dict or tuple (dict, string)
         A dictionary with names and rgb hex-strings of colors.
         This is the reference palette which is plotted completely at the bottom.
-        The optional second name is used as a string to annotated the colors.
+        The optional second name is used as a string to annotate the colors.
     args: list of dicts or tuples (dict, string)
         Further dictionaries with names and rgb hex-strings of colors.
         Colors with names matching the ones from `colorsa` are plotted on top.
