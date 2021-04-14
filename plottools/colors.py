@@ -158,7 +158,7 @@ colors_itten['orange'] = '#F18E1C'
 colors_itten['amber'] = '#FDC60B'
 colors_itten['yellow'] = '#F4E500'
 colors_itten['lightgreen'] = '#8CBB26'
-colors_itten['green'] = '#008e5b'
+colors_itten['darkgreen'] = '#008e5b'   # green
 colors_itten['lightblue'] = '#0696BB'
 colors_itten['blue'] = '#2A71B0'
 colors_itten['purple'] = '#444E99'
@@ -200,7 +200,7 @@ colors_material['lightblue'] = '#03A9F4'
 colors_material['blue'] = '#2196F3'
 colors_material['indigo'] = '#3F51B5'
 colors_material['purple'] = '#673AB7'      # deeppurple
-colors_material['magenta'] = '#9C27B0'     # puple
+colors_material['magenta'] = '#9C27B0'     # purple
 colors_material['pink'] = '#E91E63'
 colors_material['white'] = '#FFFFFF'
 colors_material['gray'] = '#9E9E9E'
@@ -639,55 +639,84 @@ def plot_colormap(ax, cmap, luminance=True):
     ax.set_yticks([])
 
     
-def demo(mode='default', n=1):
-    """ Run a demonstration of the colors module.
+def demo(n=1, complementary=False, *args):
+    """ Plot one or more color palettes or color maps.
+
+    If only one color palette is specified in `args`, then plot this color palette
+    in the following ways:
+
+    - complementary colors plotted on top of each other if `complementary` is
+      set `True` (using `plot_complementary_colors()`).
+    - complementary colors with `n` intermediate colors, for `n>1` and `complementary`
+      set `True` (using `plot_complementary_colors()`).
+    - just the plain color palette, if `n==1` (using `plot_colors()`).
+    - the color palette with darker and lighter colors for `n>1` using `plot_colors()`.
+    - if a color map is specified, plot the map and its luminance using `plot_colormap()`.
+
+    If more than one color palette is specified, the color palettes are
+    plotted on top of each other using `plot_color_comparison()`. Only
+    the colors named by the first palette are drawn. If `args` contains
+    the single element `all`, then all available color palettes are
+    compared.
 
     Parameters
     ----------
-    mode: string
-        - 'default': plot the default color palette
-        - 'complementary': plot complementary colors of the default color palette
-        - 'comparison': plot the default color palette in comparison to all other palettes
-        - name of a color palette: plot the specified color palette (see `color_palettes`)
     n: int
         - 1: plot the selected color palette
         - n>1: plot the selected color palette with n-1 lighter and darker colors or
           n gradient values for 'complementary'
+    complementary: bool
+        If \c True, plot complementary colors of the selected palette
+    *args: list of strings
+        names of color palettes or color maps, or 'default' for the default color palette.
     """
     fig, ax = plt.subplots()
-    if 'default' in mode:
-        plot_colors(ax, colors, n)
-    elif 'compl' in mode:
-        plot_complementary_colors(ax, colors, n-1)
-    elif 'compa' in mode:
-        palettes = [(color_palettes[c], c) for c in color_palettes]
-        plot_color_comparison(ax, *palettes)
-    elif 'blabhenn' in mode:
-        plot_color_comparison(ax, (colors_muted, 'muted'),
-                              (colors_henninger, 'henninger'))
-    elif mode in color_palettes:
-        plot_colors(ax, color_palettes[mode], n)
-        ax.set_title('colors_' + mode)
-    else:
-        try:
-            plot_colormap(ax, mode)
-        except:
-            print('unknown option %s!' % mode)
-            print('possible options are: an integer number, compa(rison), compl(ementary), a name of a color map, or one of the color palettes ' + ', '.join(color_palettes.keys()) + '.')
+    if len(args) == 1 and args[0] != 'all':
+        if 'default' in args[0]:
+            palette = colors
+        elif args[0] in color_palettes:
+            palette = color_palettes[args[0]]
+        else:
+            try:
+                plot_colormap(ax, args[0])
+                plt.show()
+            except:
+                print('unknown color palette %s!' % args[0])
+                print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
             return
+        if compl:
+            plot_complementary_colors(ax, palette, n-1)
+        else:
+            plot_colors(ax, palette, n)
+    else:
+        if args[0] == 'all':
+            palettes = [(color_palettes[c], c) for c in color_palettes]
+        else:
+            palettes = []
+            for c in args:
+                if not c in color_palettes:
+                    print('unknown color palette %s!' % c)
+                    print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
+                else:
+                    palettes.append((color_palettes[c], c))
+        plot_color_comparison(ax, *palettes)
     plt.show()
 
 
 if __name__ == "__main__":
     import sys
-    mode = 'default'
     n = 1
-    if len(sys.argv) > 2:
-        mode = sys.argv[1]
-        n = int(sys.argv[2])
-    elif len(sys.argv) > 1:
-        if sys.argv[1].isdigit():
-            n = int(sys.argv[1])
-        else:
-            mode = sys.argv[1]
-    demo(mode, n)
+    compl = False
+    names = sys.argv[1:]
+    if len(names) > 0:
+        try:
+            n = int(names[-1])
+            names.pop()
+        except ValueError:
+            pass
+    if len(names) > 0 and names[-1] in 'complementary':
+        names.pop()
+        compl = True
+    if len(names) == 0:
+        names = ['default']
+    demo(n, compl, *names)
