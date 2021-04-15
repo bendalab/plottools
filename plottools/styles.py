@@ -1,9 +1,15 @@
 """
-Layout settings and plot styles.
+Layout settings and plot styles:
 
 - `screen_style()`: layout and plot styles optimized for display on a screen.
 - `paper_style()`: layout and plot styles optimized for inclusion into a paper.
 - `sketch_style()`: layout and plot styles with xkcd style activated.
+
+Duplicate and modify plotting styles:
+
+- `lighter_styles()`: duplicate style with a range of lighter colors.
+- `darker_styles()`: duplicate style with a range of darker colors.
+- `lighter_darker_styles()`: duplicate style with a range of lighter and darker colors.
 
 Generate plotting styles:
 
@@ -69,6 +75,142 @@ from .axes import axes_params
 from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
 from .significance import significance_bar
 from .neurons import neuron
+
+
+def lighter_styles(style, n):
+    """ Duplicate style with a range of lighter colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of lighter colors to be generated (`n>1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly lighter `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```
+    lsBlue = dict(color=colors['blue'], lw=2)
+    ```
+    Now you need 5 variants of this plot style with increasingly lighter colors.
+    Just call
+    ```
+    lsBlues = lighter_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    """
+    for ck in ['color', 'facecolor']:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd['color'] = lighter(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n
+
+
+def darker_styles(style, n):
+    """ Duplicate style with a range of darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of darker colors to be generated (`n>1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly darker `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for green lines in a plot like
+    ```
+    lsGreen = dict(color=colors['lightgreen'], lw=2)
+    ```
+    Now you need 4 variants of this plot style with increasingly darker colors.
+    Just call
+    ```
+    lsGreens = darker_styles(lsGreen, 4)
+    ```
+    and you can do something like
+    ```
+    for k, ls in enumerate(lsGreens):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    """
+    for ck in ['color', 'facecolor']:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd['color'] = darker(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n
+
+
+def lighter_darker_styles(style, n):
+    """ Duplicate style with a range of lighter and darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of modified colors to be generated (`n>1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with `color` or `facecolor` starting from a lighter color,
+        traversing over the original color to darker colors.
+        The central style has the original color if `n` is odd.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```
+    lsBlue = dict(color=colors['blue'], lw=2)
+    ```
+    Now you need 5 variants of this plot style with lighter and darker colors.
+    Just call
+    ```
+    lsBlues = lighter_darker_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    """
+    for ck in ['color', 'facecolor']:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd['color'] = lighter(c, 1+(k-(n-1)/2)/((n+1)//2))
+                styles.append(sd)
+            return styles
+    return [style]*n
 
 
 def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
