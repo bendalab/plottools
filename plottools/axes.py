@@ -377,7 +377,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if hasattr(fig, 'tags_yoffs'):
             yoffs = fig.tags_yoffs
         else:
-            yoffs = yo - 1.0/h
+            yoffs = yo - 1.0/h   # minus one pixel
     else:
         yoffs *= fs/h
     fig.tags_xoffs = xoffs
@@ -387,10 +387,10 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if isinstance(ax, int):
             ax = fig.get_axes()[ax]
         x0, y0, width, height = ax.get_position(original=True).bounds
-        x = x0+xoffs
+        x = x0 + xoffs
         if x <= 0.0:
             x = 0.0
-        y = y0+height+yoffs
+        y = y0 + height + yoffs
         if y >= 1.0:
             y = 1.0
         ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **fkwargs)

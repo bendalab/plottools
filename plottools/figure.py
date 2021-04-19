@@ -47,6 +47,7 @@ Available functions:
 
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
+- `latex_include_figures()`: print LaTeX `\includegraphics{}` commands for all saved files.
 - `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
 - `figure_params()`: set savefig options via matplotlib's rc settings.
 
@@ -404,6 +405,9 @@ def merge(fig, axs):
     ax.__merged_axis = axs
     return ax
 
+
+plot_saved_files = []
+
     
 def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
     """ Set default file name to the one of the main script.
@@ -418,6 +422,11 @@ def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
         if len(os.path.splitext(fname)[1]) <= 1:
             fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
         fig.__savefig_orig_figure(fname, *args, **kwargs)
+        if not hasattr(fig, '__saved_files_counter'):
+            fig.__saved_files_counter = 0
+        fig.__saved_files_counter += 1
+        global plot_saved_files
+        plot_saved_files.append([fname, fig.__saved_files_counter])
         if stripfonts is None:
             if 'pdf.stripfonts' in mpl.ptParams:
                 stripfonts = mpl.ptParams['pdf.stripfonts']
@@ -443,6 +452,8 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
         if len(os.path.splitext(fname)[1]) <= 1:
             fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
         plt.__savefig_orig_figure(fname, *args, **kwargs)
+        global plot_saved_files
+        plot_saved_files.append([fname, 1])
         if stripfonts is None:
             if 'pdf.stripfonts' in mpl.ptParams:
                 stripfonts = mpl.ptParams['pdf.stripfonts']
@@ -454,6 +465,42 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
     else:
         fig.__savefig_orig_figure(fname, *args, **kwargs)
 
+
+def latex_include_figures():
+    """ Print LaTeX `\includegraphics{}` commands for all saved files.
+
+    This can then be copied directly into you LaTeX document to include
+    the generated figures.  For multiple files from the same figure,
+    beamer overlay specification are printed as well.
+
+    Examples
+    --------
+    ```py
+    fig1.savefig('introA')
+    fig1.savefig('introB')
+    fig2.savefig('data')
+    latex_include_figures()
+    ```
+    writes to console
+    ```txt
+    \includegraphics<1>{introA}
+    \includegraphics<2>{introB}
+    \includegraphics{data}
+    ```
+    """
+    global plot_saved_files
+    for k in range(len(plot_saved_files)):
+        if plot_saved_files[k][1] <= 1 and \
+           (k+1 >= len(plot_saved_files) or plot_saved_files[k+1][1] <= 1):
+            plot_saved_files[k][1] = None
+    for fname, counter in plot_saved_files:
+        fname = os.path.splitext(fname)[0]
+        if counter is not None:
+            print(r'\includegraphics<%d>{%s}' % (counter, fname))
+        else:
+            print(r'\includegraphics{%s}' % fname)
+    plot_saved_files = []
+    
 
 def install_figure():
     """ Install code for figure size in centimeters, margins in multiples of fontsize, and default filename for savefig().
@@ -593,7 +640,9 @@ def demo():
     for k in range(1, 3):
         axs[k,-1].plot(x, np.sin(2.0*np.pi*x-k))
         axs[k,-1].text(0.1, 0.8, '%d,-1' % k, transform=axs[k,-1].transAxes)
-    
+
+    latex_include_figures()
+            
     plt.show()
     uninstall_figure()
 

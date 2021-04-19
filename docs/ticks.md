@@ -60,7 +60,7 @@ ax.set_xticks_pifracs(2)
 ![pifracs](figures/ticks-pifracs.png)
 
 
-## Pi in the denominator
+## Pi in the nominator
 
 ```
 ax.set_xlim(0, 4*np.pi/3)

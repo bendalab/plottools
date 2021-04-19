@@ -24,7 +24,7 @@ Manipulating colors:
 
 Exporting colors:
 
-- `latex_colors()`: print a \\definecolor command for LaTeX.
+- `latex_colors()`: print `\definecolor` commands for LaTeX.
 
 Color maps:
 
@@ -390,7 +390,7 @@ def gradient(color0, color1, r):
 
 
 def latex_colors(colors, name='', model='rgb'):
-    """ Print a \\definecolor command for LaTeX.
+    """ Print `\definecolor` commands for LaTeX.
 
     Parameters
     ----------
