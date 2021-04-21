@@ -7,6 +7,12 @@ The following functions are added to mpl.axes.Axes:
 - `yscalebar()`: vertical scale bar with label.
 - `scalebars()`: horizontal and vertical scale bars with labels.
 - `scalebar_params()`: set rc settings for scalebars.
+
+For alternatives see:
+
+- https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib
+- [AnchoredSizeBar](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar.html#mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar)
+- [matplotlib-scalebar](https://github.com/ppinard/matplotlib-scalebar)
 """
 
 import numpy as np
