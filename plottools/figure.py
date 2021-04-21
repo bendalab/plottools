@@ -1,5 +1,5 @@
 """
-Size, margins and default filename of a figure.
+Size, margins and file names of a figure.
 
 Simply call
 ```
