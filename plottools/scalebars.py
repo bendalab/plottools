@@ -1,14 +1,30 @@
 """
 Labeled scale bars.
 
-The following functions are added to mpl.axes.Axes:
+
+## Axes member functions
 
 - `xscalebar()`: horizontal scale bar with label.
 - `yscalebar()`: vertical scale bar with label.
 - `scalebars()`: horizontal and vertical scale bars with labels.
 - `scalebar_params()`: set rc settings for scalebars.
 
-For alternatives see:
+
+## Settings
+
+- `scalebar_params()`: set rc settings for scalebars.
+
+
+## Install/uninstall scalebars functions
+
+You usually do not need to call these functions. Upon loading the scalebars
+module, `install_scalebars()` is called automatically.
+
+- `install_scalebars()`: install functions of the scalebars module in matplotlib.
+- `uninstall_scalebars()`: uninstall all code of the scalebars module from matplotlib.
+
+
+## Alternatives
 
 - https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib
 - [AnchoredSizeBar](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar.html#mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar)
@@ -334,27 +350,6 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
                     solid_joinstyle='miter', clip_on=False)
 
 
-# make the functions available as member variables:
-mpl.axes.Axes.xscalebar = xscalebar
-mpl.axes.Axes.yscalebar = yscalebar
-mpl.axes.Axes.scalebars = scalebars
-
-
-""" Add scalebar parameter to rc configuration.
-"""
-if not hasattr(mpl, 'ptParams'):
-    mpl.ptParams = {}
-mpl.ptParams.update({'scalebar.format.large': '%.0f',
-                     'scalebar.format.small': '%.1f',
-                     'scalebar.linewidth': 2,
-                     'scalebar.color': 'k',
-                     'scalebar.capsize': 0,
-                     'scalebar.caplinewidth': 0.5,
-                     'scalebar.font': dict(fontsize='medium',
-                                           fontstyle='normal',
-                                           fontweight='normal')})
-
-
 def scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color='k', capsize=0, clw=0.5, font=None):
     """ Set rc settings for scalebars.
@@ -392,6 +387,63 @@ def scalebar_params(format_large='%.0f', format_small='%.1f',
     if font is not None:
         mpl.ptParams.update({'scalebar.font': font})
 
+
+def install_scalebars():
+    """ Install scalebars functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    `uninstall_scalebars()`
+    """
+    if not hasattr(mpl.axes.Axes, 'xscalebar'):
+        mpl.axes.Axes.xscalebar = xscalebar
+    if not hasattr(mpl.axes.Axes, 'yscalebar'):
+        mpl.axes.Axes.yscalebar = yscalebar
+    if not hasattr(mpl.axes.Axes, 'scalebars'):
+        mpl.axes.Axes.scalebars = scalebars
+    # add scalebar parameter to rc configuration:
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    mpl.ptParams.update({'scalebar.format.large': '%.0f',
+                        'scalebar.format.small': '%.1f',
+                        'scalebar.linewidth': 2,
+                        'scalebar.color': 'k',
+                        'scalebar.capsize': 0,
+                        'scalebar.caplinewidth': 0.5,
+                        'scalebar.font': dict(fontsize='medium',
+                                            fontstyle='normal',
+                                            fontweight='normal')})
+
+        
+def uninstall_scalebars():
+    """ Uninstall scalebars functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_scalebars()`.
+
+    See also
+    --------
+    `install_scalebars()`
+    """
+    if hasattr(mpl.axes.Axes, 'xscalebar'):
+        delattr(mpl.axes.Axes, 'xscalebar')
+    if hasattr(mpl.axes.Axes, 'yscalebar'):
+        delattr(mpl.axes.Axes, 'yscalebar')
+    if hasattr(mpl.axes.Axes, 'scalebars'):
+        delattr(mpl.axes.Axes, 'scalebars')
+    if hasattr(mpl, 'ptParams'):
+        del mpl.ptParams['scalebar.format.large']
+        del mpl.ptParams['scalebar.format.small']
+        del mpl.ptParams['scalebar.linewidth']
+        del mpl.ptParams['scalebar.color']
+        del mpl.ptParams['scalebar.capsize']
+        del mpl.ptParams['scalebar.caplinewidth']
+        del mpl.ptParams['scalebar.font']
+
+
+install_scalebars()
+            
     
 def demo():
     """ Run a demonstration of the scalebars module.
@@ -400,6 +452,7 @@ def demo():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
 
+    install_scalebars()
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5,
                     font=dict(fontweight='bold'))
     
@@ -433,6 +486,7 @@ def demo():
     ax.scalebars(0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top', lw=4)
         
     plt.show()
+    uninstall_scalebars()
 
 
 if __name__ == "__main__":
