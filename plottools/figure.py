@@ -1,20 +1,22 @@
 """
 Size, margins and file names of a figure.
 
-Simply call
-```
-install_figure()
-```
-to patch a few matplotlib functions (`plt.figure()`, `plt.subplots()`,
-`figure.add_gridspec()`, `gridspec.update()`, `fig.savefig()`, `plt.savefig()`)
-and to add a `fig.set_size_cm()` function.
 
-Then you can specify the figure size in centimeters:
+Patches matplotlib to provide the following features:
+
+
+## Figure size in centimeters
+
+You can specify the figure size in centimeters:
 ```
 fig = plt.figure(cmsize=(20.0, 16.0))         # in cm!
 fig, ax = plt.subplots(cmsize=(16.0, 10.0))   # in cm!
 ```
-and subplot positions can be adjusted by margins given in multiples of the current font size:
+
+
+## Figure margins
+
+Subplot positions can be adjusted by margins given in multiples of the current font size:
 ```
 fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
 gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
@@ -34,27 +36,46 @@ fig.subplots_adjust(nomargins=True)
 ```
 This sets all margins to zero.
 
+
+## Grid specs
+
 `plt.subplots()` can be called with `width_ratios` and `height_ratios`.
 
 Further, `figure.add_gridspec()` is made available for older
 matplotlib versions that do not have this function yet.
 
+
+## Default file name for figures
+
 If no file name or only a file extension is specified in fig.savefig(),
 then the file name of the main script is used.
-If no file extension is specified, '.pdf' is appended.
 
-Available functions:
+
+## Functions
 
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
 - `latex_include_figures()`: print LaTeX `\includegraphics{}` commands for all saved files.
-- `install_figure()`: install code for figsize in centimeters and margins in multiples of fontsize.
-- `figure_params()`: set savefig options via matplotlib's rc settings.
 
-Functions added to mpl.figure.Figure:
+
+## New figure member functions
 
 - `set_size_cm()`: set the figure size in centimeters.
 - `merge()`: add axis that covers bounding box of some axis.
+
+
+## Settings
+
+- `figure_params()`: set savefig options via matplotlib's rc settings.
+
+
+## Install/uninstall figure functions
+
+You usually do not need to call these functions. Upon loading the figure
+module, `install_figure()` is called automatically.
+
+- `install_figure()`: install functions of the figure module in matplotlib.
+- `uninstall_figure()`: uninstall all code of the figure module from matplotlib.
 """
 
 import __main__
@@ -502,87 +523,6 @@ def latex_include_figures():
     plot_saved_files = []
     
 
-def install_figure():
-    """ Install code for figure size in centimeters, margins in multiples of fontsize, and default filename for savefig().
-
-    In addition, each new figure gets an resize event handler installed, that applies
-    the supplied margins whenever a figure is resized.
-
-    See also
-    --------
-    uninstall_figure()
-    """
-    mpl.figure.Figure.set_size_cm = set_size_cm
-    mpl.figure.Figure.merge = merge
-    mpl.axes.Axes.__set_merged_position = __set_merged_position
-    if not hasattr(plt, '__figure_orig_figure'):
-        plt.__figure_orig_figure = plt.figure
-        plt.figure = __figure_figure
-    if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
-        mpl.figure.Figure.__subplots_adjust_orig_figure = mpl.figure.Figure.subplots_adjust
-        mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust_figure
-    if not hasattr(mpl.figure.Figure, 'add_gridspec'):
-        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
-        mpl.figure.Figure.__add_gridspec_orig_figure = None
-    if not hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
-        mpl.figure.Figure.__add_gridspec_orig_figure = mpl.figure.Figure.add_gridspec
-        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
-    if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
-        mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
-        mpl.gridspec.GridSpec.update = __gridspec_update_figure
-    if not hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
-        mpl.figure.Figure.__savefig_orig_figure = mpl.figure.Figure.savefig
-        mpl.figure.Figure.savefig = __fig_savefig_figure
-    if not hasattr(plt, '__subplots_orig_figure'):
-        plt.__subplots_orig_figure = plt.subplots
-        plt.subplots = __plt_subplots_figure
-    if not hasattr(plt, '__savefig_orig_figure'):
-        plt.__savefig_orig_figure = plt.savefig
-        plt.savefig = __plt_savefig_figure
-
-
-def uninstall_figure():
-    """ Uninstall all code that has been installed by install_figure().
-    """
-    if hasattr(mpl.figure.Figure, 'set_size_cm'):
-        delattr(mpl.figure.Figure, 'set_size_cm')
-    if hasattr(mpl.figure.Figure, 'merge'):
-        delattr(mpl.figure.Figure, 'merge')
-    if hasattr(mpl.axes.Axes, '__set_merged_position'):
-        delattr(mpl.axes.Axes, '__set_merged_position')
-    if hasattr(plt, '__figure_orig_figure'):
-        plt.figure = plt.__figure_orig_figure
-        delattr(plt, '__figure_orig_figure')
-    if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
-        mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_figure
-        delattr(mpl.figure.Figure, '__subplots_adjust_orig_figure')
-    if hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
-        if mpl.figure.Figure.__add_gridspec_orig_figure is None:
-            delattr(mpl.figure.Figure, 'add_gridspec')
-        else:
-            mpl.figure.Figure.add_gridspec = mpl.figure.Figure.__add_gridspec_orig_figure
-            delattr(mpl.figure.Figure, '__add_gridspec_orig_figure')
-    if hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
-        mpl.gridspec.GridSpec.update = mpl.gridspec.GridSpec.__update_orig_figure
-        delattr(mpl.gridspec.GridSpec, '__update_orig_figure')
-    if hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
-        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_figure
-        delattr(mpl.figure.Figure, '__savefig_orig_figure')
-    if hasattr(plt, '__subplots_orig_figure'):
-        plt.subplots = plt.__subplots_orig_figure
-        delattr(plt, '__subplots_orig_figure')
-    if hasattr(plt, '__savefig_orig_figure'):
-        plt.savefig = plt.__savefig_orig_figure
-        delattr(plt, '__savefig_orig_figure')
-
-
-""" Add figure parameter to rc configuration.
-"""
-if not hasattr(mpl, 'ptParams'):
-    mpl.ptParams = {}
-mpl.ptParams.update({'pdf.stripfonts': False})
-
-
 def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
     """ Set savefig options via matplotlib's rc settings.
 
@@ -611,12 +551,103 @@ def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
     mpl.rcParams['pdf.inheritcolor'] = False
     mpl.rcParams['ps.fonttype'] = fonttype
 
+
+def install_figure():
+    """ Install functions of the figure module in matplotlib.
+
+    Patches a few matplotlib functions (`plt.figure()`,
+    `plt.subplots()`, `figure.add_gridspec()`, `gridspec.update()`,
+    `fig.savefig()`, `plt.savefig()`).
+    
+    Each figure gets an resize event handler installed, that applies the
+    supplied margins whenever a figure is resized.
+    
+    See also
+    --------
+    uninstall_figure()
+    """
+    if not hasattr(mpl.figure.Figure, 'set_size_cm'):
+        mpl.figure.Figure.set_size_cm = set_size_cm
+    if not hasattr(mpl.figure.Figure, 'merge'):
+        mpl.figure.Figure.merge = merge
+        mpl.axes.Axes.__set_merged_position = __set_merged_position
+    if not hasattr(plt, '__figure_orig_figure'):
+        plt.__figure_orig_figure = plt.figure
+        plt.figure = __figure_figure
+    if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
+        mpl.figure.Figure.__subplots_adjust_orig_figure = mpl.figure.Figure.subplots_adjust
+        mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust_figure
+    if not hasattr(mpl.figure.Figure, 'add_gridspec'):
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
+        mpl.figure.Figure.__add_gridspec_orig_figure = None
+    if not hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
+        mpl.figure.Figure.__add_gridspec_orig_figure = mpl.figure.Figure.add_gridspec
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec_figure
+    if not hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
+        mpl.gridspec.GridSpec.__update_orig_figure = mpl.gridspec.GridSpec.update
+        mpl.gridspec.GridSpec.update = __gridspec_update_figure
+    if not hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
+        mpl.figure.Figure.__savefig_orig_figure = mpl.figure.Figure.savefig
+        mpl.figure.Figure.savefig = __fig_savefig_figure
+    if not hasattr(plt, '__subplots_orig_figure'):
+        plt.__subplots_orig_figure = plt.subplots
+        plt.subplots = __plt_subplots_figure
+    if not hasattr(plt, '__savefig_orig_figure'):
+        plt.__savefig_orig_figure = plt.savefig
+        plt.savefig = __plt_savefig_figure
+    # add figure parameter to rc configuration:
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    mpl.ptParams.update({'pdf.stripfonts': False})
+
+
+def uninstall_figure():
+    """ Uninstall all code of the figure module from matplotlib.
+
+    See also
+    --------
+    install_figure()
+    """
+    if hasattr(mpl.figure.Figure, 'set_size_cm'):
+        delattr(mpl.figure.Figure, 'set_size_cm')
+    if hasattr(mpl.figure.Figure, 'merge'):
+        delattr(mpl.figure.Figure, 'merge')
+        delattr(mpl.axes.Axes, '__set_merged_position')
+    if hasattr(plt, '__figure_orig_figure'):
+        plt.figure = plt.__figure_orig_figure
+        delattr(plt, '__figure_orig_figure')
+    if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_figure'):
+        mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_figure
+        delattr(mpl.figure.Figure, '__subplots_adjust_orig_figure')
+    if hasattr(mpl.figure.Figure, '__add_gridspec_orig_figure'):
+        if mpl.figure.Figure.__add_gridspec_orig_figure is None:
+            delattr(mpl.figure.Figure, 'add_gridspec')
+        else:
+            mpl.figure.Figure.add_gridspec = mpl.figure.Figure.__add_gridspec_orig_figure
+            delattr(mpl.figure.Figure, '__add_gridspec_orig_figure')
+    if hasattr(mpl.gridspec.GridSpec, '__update_orig_figure'):
+        mpl.gridspec.GridSpec.update = mpl.gridspec.GridSpec.__update_orig_figure
+        delattr(mpl.gridspec.GridSpec, '__update_orig_figure')
+    if hasattr(mpl.figure.Figure, '__savefig_orig_figure'):
+        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_figure
+        delattr(mpl.figure.Figure, '__savefig_orig_figure')
+    if hasattr(plt, '__subplots_orig_figure'):
+        plt.subplots = plt.__subplots_orig_figure
+        delattr(plt, '__subplots_orig_figure')
+    if hasattr(plt, '__savefig_orig_figure'):
+        plt.savefig = plt.__savefig_orig_figure
+        delattr(plt, '__savefig_orig_figure')
+    if hasattr(mpl, 'ptParams'):
+        del mpl.ptParams['pdf.stripfonts']
+
+
+install_figure()
+
         
 def demo():
     """ Run a demonstration of the figure module.
     """
     install_figure()
-    
     fig, axs = plt.subplots(2, 1, cmsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
     axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(cmsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
