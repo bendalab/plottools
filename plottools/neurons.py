@@ -1,10 +1,19 @@
 """
 Draw sketches of neurons.
 
-The following functions are provided as mpl.axes.Axes member functions:
+
+## Axes member functions
 
 - `neuron()`: draw a sketch of neuron.
 
+
+## Install/uninstall neurons functions
+
+You usually do not need to call these functions. Upon loading the neurons
+module, `install_neurons()` is called automatically.
+
+- `install_neurons()`: install functions of the neurons module in matplotlib.
+- `uninstall_neurons()`: uninstall all code of the neurons module from matplotlib.
 """
 
 import numpy as np
@@ -153,14 +162,40 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
         ax.text(xy[0]-0.03*cf, xy[1]-0.08*cf, label, ha='center', va='center',
                 clip_on=False, **kwargs)
 
-            
-# make functions available as member variables:
-mpl.axes.Axes.neuron = neuron
 
+def install_neurons():
+    """ Install neurons functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    `uninstall_neurons()`
+    """
+    if not hasattr(mpl.axes.Axes, 'neuron'):
+        mpl.axes.Axes.neuron = neuron
+
+        
+def uninstall_neurons():
+    """ Uninstall neurons functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_neurons()`.
+
+    See also
+    --------
+    `install_neurons()`
+    """
+    if hasattr(mpl.axes.Axes, 'neuron'):
+        delattr(mpl.axes.Axes, 'neuron')
+
+
+install_neurons()
+            
     
 def demo():
     """ Run a demonstration of the neurons module.
     """
+    install_neurons()
     fig, ax = plt.subplots()
     ax.set_aspect('equal')
     ax.set_xlim(0, 10)
@@ -188,6 +223,7 @@ def demo():
     ax.neuron(ns, r, '$+$', (x+dd+d, 0), 'exc', adapt=0, **neuronS)
     ax.neuron(nr, r, '$-$', (x+dd+d, -yt), 'exc', adapt=1, **neuronR)
     plt.show()
+    uninstall_neurons()
 
 
 if __name__ == "__main__":

@@ -8,13 +8,13 @@ Insets made easy.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
 
 
-## Install/uninstall inset functions
+## Install/uninstall insets functions
 
-You usually do not need to call these functions. Upon loading the inset
-module, `install_inset()` is called automatically.
+You usually do not need to call these functions. Upon loading the insets
+module, `install_insets()` is called automatically.
 
-- `install_inset()`: install functions of the inset module in matplotlib.
-- `uninstall_inset()`: uninstall all code of the inset module from matplotlib.
+- `install_insets()`: install functions of the insets module in matplotlib.
+- `uninstall_insets()`: uninstall all code of the insets module from matplotlib.
 """
 
 import numpy as np
@@ -121,12 +121,12 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
 
 
 def install_insets():
-    """ Install inset functions on matplotlib axes.
+    """ Install insets functions on matplotlib axes.
 
-    This `makes inset()` and `zoomed_inset()` available as member functions
+    This makes `inset()` and `zoomed_inset()` available as member functions
     for matplib axes.
 
-    This function is also called automatically upon importing the module.
+    This function is called automatically upon importing the module.
 
     See also
     --------
@@ -139,7 +139,7 @@ def install_insets():
 
 
 def uninstall_insets():
-    """ Uninstall inset functions from matplotlib axes.
+    """ Uninstall insets functions from matplotlib axes.
 
     Call this code to disable anything that was installed by `install_insets()`.
 
