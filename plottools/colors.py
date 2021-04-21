@@ -1,7 +1,7 @@
 """
 Color palettes and tools for manipulating colors.
 
-Dictionaries with colors:
+## Dictionaries with colors
 
 - `colors`: the default colors, set to one of the following:
 - `colors_plain`: plain rgb colors.
@@ -16,22 +16,26 @@ Dictionaries with colors:
 
 - `color_palettes`: a dictionary with all the defined color dictionaries.
 
-Manipulating colors:
+
+## Manipulating colors
 
 - `lighter()`: make a color lighter.
 - `darker()`: make a color darker.
 - `gradient()`: interpolate between two colors.
 
-Exporting colors:
+
+## Exporting colors
 
 - `latex_colors()`: print `\definecolor` commands for LaTeX.
 
-Color maps:
+
+## Color maps
 
 - `colormap()`: generate and register a color map.
 - `cmap_color()`: retrieve color from a color map.
 
-Displaying colors:
+
+## Displaying colors
 
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.

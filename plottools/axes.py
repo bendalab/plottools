@@ -2,13 +2,13 @@
 Tag axes with a label and simplify common axis labels.
 
 
-## mpl.axes.Axes member functions
+## New axes member functions
 
 - `aspect_ratio()`: aspect ratio of axes.
 - `set_ylim_equal()`: ensure equal aspect ratio by appropriately setting y limits.
 
 
-## mpl.figure.Figure member functions:
+## New figure member functions
 
 - `tag()`: tag each axes with a label.
 - `common_xlabels()`: simplify common xlabels.
@@ -17,22 +17,27 @@ Tag axes with a label and simplify common axis labels.
 - `common_ytick_labels()`: simplify common ytick labels and ylabels.
 
 
-## Global functions
+## Settings
 
 - `axes_params()`: set `mpl.ptParams` for axes module.
+- `mpl.ptParams` defined by the axes module:
+  ```py
+  figure.tags.xoffs : 'auto',
+  figure.tags.yoffs : 'auto',
+  figure.tags.label : '%A',
+  figure.tags.minorlabel : '%A%mi',
+  figure.tags.font  : dict(fontsize='x-large',
+                           fontstyle='sans-serif',
+                           tweight='normal')
+  ```
 
+## Install/uninstall axes functions
 
-## `mpl.ptParams` defined by the axes module
+You usually do not need to call these functions. Upon loading the axes
+module, `install_axes()` is called automatically.
 
-```
-figure.tags.xoffs : 'auto',
-figure.tags.yoffs : 'auto',
-figure.tags.label : '%A',
-figure.tags.minorlabel : '%A%mi',
-figure.tags.font  : dict(fontsize='x-large',
-                              fontstyle='sans-serif',
-                              fontweight='normal')
-```
+- `install_axes()`: install functions of the axes module in matplotlib.
+- `uninstall_axes()`: uninstall all code of the axes module from matplotlib.
 """
 
 import numpy as np
@@ -396,27 +401,6 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **fkwargs)
 
 
-# make the functions available as member variables:
-mpl.axes.Axes.aspect_ratio = aspect_ratio
-mpl.axes.Axes.set_ylim_equal = set_ylim_equal
-mpl.figure.Figure.common_xlabels = common_xlabels
-mpl.figure.Figure.common_ylabels = common_ylabels
-mpl.figure.Figure.common_xtick_labels = common_xtick_labels
-mpl.figure.Figure.common_ytick_labels = common_ytick_labels
-mpl.figure.Figure.tag = tag
-
-
-""" Add tag parameter to rc configuration.
-"""
-if not hasattr(mpl, 'ptParams'):
-    mpl.ptParams = {}
-mpl.ptParams.update({'figure.tags.xoffs': 'auto',
-                     'figure.tags.yoffs': 'auto',
-                     'figure.tags.label': '%A',
-                     'figure.tags.minorlabel': '%A%mi',
-                     'figure.tags.font': dict(fontsize='x-large')})
-
-
 def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
     """ Set rc settings for tags.
 
@@ -442,16 +426,80 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None)
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
-    if xoffs is not None:
-        mpl.ptParams['figure.tags.xoffs'] = xoffs
-    if yoffs is not None:
-        mpl.ptParams['figure.tags.yoffs'] = yoffs
-    if label is not None:
-        mpl.ptParams['figure.tags.label'] = label
-    if minor_label is not None:
-        mpl.ptParams['figure.tags.minorlabel'] = minor_label
-    if font is not None:
-        mpl.ptParams['figure.tags.font'].update(**font)
+    if hasattr(mpl, 'ptParams'):
+        if xoffs is not None:
+            mpl.ptParams['figure.tags.xoffs'] = xoffs
+        if yoffs is not None:
+            mpl.ptParams['figure.tags.yoffs'] = yoffs
+        if label is not None:
+            mpl.ptParams['figure.tags.label'] = label
+        if minor_label is not None:
+            mpl.ptParams['figure.tags.minorlabel'] = minor_label
+        if font is not None:
+            mpl.ptParams['figure.tags.font'].update(**font)
+
+
+def install_axes():
+    """ Install functions of the axes module in matplotlib.
+
+    See also
+    --------
+    uninstall_axes()
+    """
+    if not hasattr(mpl.axes.Axes, 'aspect_ratio'):
+        mpl.axes.Axes.aspect_ratio = aspect_ratio
+    if not hasattr(mpl.axes.Axes, 'set_ylim_equal'):
+        mpl.axes.Axes.set_ylim_equal = set_ylim_equal
+    if not hasattr(mpl.figure.Figure, 'common_xlabels'):
+        mpl.figure.Figure.common_xlabels = common_xlabels
+    if not hasattr(mpl.figure.Figure, 'common_ylabels'):
+        mpl.figure.Figure.common_ylabels = common_ylabels
+    if not hasattr(mpl.figure.Figure, 'common_xtick_labels'):
+        mpl.figure.Figure.common_xtick_labels = common_xtick_labels
+    if not hasattr(mpl.figure.Figure, 'common_ytick_labels'):
+        mpl.figure.Figure.common_ytick_labels = common_ytick_labels
+    if not hasattr(mpl.figure.Figure, 'tag'):
+        mpl.figure.Figure.tag = tag
+    # add tag parameter to rc configuration:
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    mpl.ptParams.update({'figure.tags.xoffs': 'auto',
+                         'figure.tags.yoffs': 'auto',
+                         'figure.tags.label': '%A',
+                         'figure.tags.minorlabel': '%A%mi',
+                         'figure.tags.font': dict(fontsize='x-large')})
+
+
+def uninstall_axes():
+    """ Uninstall all code of the axes module from matplotlib.
+
+    See also
+    --------
+    install_axes()
+    """
+    if hasattr(mpl.axes.Axes, 'aspect_ratio'):
+        delattr(mpl.axes.Axes, 'aspect_ratio')
+    if hasattr(mpl.axes.Axes, 'set_ylim_equal'):
+        delattr(mpl.axes.Axes, 'set_ylim_equal')
+    if hasattr(mpl.figure.Figure, 'common_xlabels'):
+        delattr(mpl.figure.Figure, 'common_xlabels')
+    if hasattr(mpl.figure.Figure, 'common_ylabels'):
+        delattr(mpl.figure.Figure, 'common_ylabels')
+    if hasattr(mpl.figure.Figure, 'common_xtick_labels'):
+        delattr(mpl.figure.Figure, 'common_xtick_labels')
+    if hasattr(mpl.figure.Figure, 'common_ytick_labels'):
+        delattr(mpl.figure.Figure, 'common_ytick_labels')
+    if hasattr(mpl.figure.Figure, 'tag'):
+        delattr(mpl.figure.Figure, 'tag')
+    if hasattr(mpl, 'ptParams'):
+        del mpl.ptParams['figure.tags.xoffs']
+        del mpl.ptParams['figure.tags.yoffs']
+        del mpl.ptParams['figure.tags.label']
+        del mpl.ptParams['figure.tags.minorlabel']
+        del mpl.ptParams['figure.tags.font']
+
+
+install_axes()
 
 
 def demo():

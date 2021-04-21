@@ -1,16 +1,19 @@
 """
 Drawing arrows.
 
+
 ## New axes member functions
 
 - `harrow()`: draw a horizontal arrow with annotation on the arrow. 
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
 - `point_to()`: text with arrow pointing to a point.
 
+
 ## Setting and plotting arrow styles
 
 - `arrow_style()`: generate an arrow style.
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
+
 
 ## Install/uninstall arrows functions
 
@@ -407,15 +410,22 @@ def install_arrows():
 
     See also
     --------
-    uninstall_figure()
+    uninstall_arrows()
     """
-    mpl.axes.Axes.harrow = harrow
-    mpl.axes.Axes.varrow = varrow
-    mpl.axes.Axes.point_to = point_to
+    if not hasattr(mpl.axes.Axes, 'harrow'):
+        mpl.axes.Axes.harrow = harrow
+    if not hasattr(mpl.axes.Axes, 'varrow'):
+        mpl.axes.Axes.varrow = varrow
+    if not hasattr(mpl.axes.Axes, 'point_to'):
+        mpl.axes.Axes.point_to = point_to
 
 
 def uninstall_arrows():
     """ Uninstall all code of the arrows module from matplotlib.
+
+    See also
+    --------
+    install_arrows()
     """
     if hasattr(mpl.axes.Axes, 'harrow'):
         delattr(mpl.axes.Axes, 'harrow')
