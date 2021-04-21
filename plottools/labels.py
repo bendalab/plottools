@@ -1,19 +1,33 @@
 """
 Annotate axis with label and unit and align axes labels.
 
-- `set_label_format()`: set the string for formatting the axes labels.
-- `install_align_labels()`: install code for aligning axes labels into show() and savefig() functions.
-- `uninstall_align_labels()`: uninstall code for aligning axes labels in show() and savefig() functions.
 
-The following functions are avilable as members of mpl.axes.Axes:
+## Axes member functions
 
 - `set_xlabel()`: format the xlabel from a label and an unit.
 - `set_ylabel()`: format the ylabel from a label and an unit.
 - `set_zlabel()`: format the zlabel from a label and an unit.
 
-The following functions are available as members of mpl.figure.Figure:
+
+## Figure member functions
 
 - `align_labels()`: align x- and ylabels of a figure.
+
+
+## Settings
+
+- `set_label_format()`: set the string for formatting the axes labels.
+
+
+## Install/uninstall label functions
+
+You usually do not need to call these functions. Upon loading the label
+module, `install_label()` and `install_align_label()` are called automatically.
+
+- `install_label()`: install functions of the label module in matplotlib.
+- `uninstall_label()`: uninstall all code of the label module from matplotlib.
+- `install_align_labels()`: install code for aligning axes labels into `show()` and `savefig()` functions.
+- `uninstall_align_labels()`: uninstall code for aligning axes labels in `show()` and `savefig()` functions.
 """
 
 import numpy as np
@@ -77,7 +91,7 @@ def set_xlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_xlabel()` function.
     """
-    ax.set_xlabel_labels(__axis_label(label, unit), **kwargs)
+    ax.__set_xlabel_labels(__axis_label(label, unit), **kwargs)
 
         
 def set_ylabel(ax, label, unit=None, **kwargs):
@@ -94,7 +108,7 @@ def set_ylabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_ylabel()` function.
     """
-    ax.set_ylabel_labels(__axis_label(label, unit), **kwargs)
+    ax.__set_ylabel_labels(__axis_label(label, unit), **kwargs)
 
         
 def set_zlabel(ax, label, unit=None, **kwargs):
@@ -111,7 +125,7 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_zlabel()` function.
     """
-    ax.set_zlabel_labels(__axis_label(label, unit), **kwargs)
+    ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
 def align_labels(fig, xdist=5, ydist=10):
@@ -211,8 +225,56 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
+def install_labels():
+    """ Install labels functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    - `install_align_labels()`
+    - `uninstall_labels()`
+    """
+    if not hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
+        mpl.axes.Axes.__set_xlabel_labels = mpl.axes.Axes.set_xlabel
+        mpl.axes.Axes.set_xlabel = set_xlabel
+    if not hasattr(mpl.axes.Axes, '__set_ylabel_labels'):
+        mpl.axes.Axes.__set_ylabel_labels = mpl.axes.Axes.set_ylabel
+        mpl.axes.Axes.set_ylabel = set_ylabel
+    if not hasattr(Axes3D, '__set_zlabel_labels'):
+        Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
+        Axes3D.set_zlabel = set_zlabel
+    if not hasattr(mpl.figure.Figure, 'align_labels'):
+        mpl.figure.Figure.align_labels = align_labels
+
+
+def uninstall_labels():
+    """ Uninstall labels functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_labels()`.
+
+    See also
+    --------
+    - `install_labels()`
+    - `uninstall_align_labels()`
+    """
+    if hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
+        mpl.axes.Axes.set_xlabel = mpl.axes.Axes.__set_xlabel_labels
+        delattr(mpl.axes.Axes, '__set_xlabel_labels')
+    if hasattr(mpl.axes.Axes, '__set_ylabel_labels'):
+        mpl.axes.Axes.set_ylabel = mpl.axes.Axes.__set_ylabel_labels
+        delattr(mpl.axes.Axes, '__set_ylabel_labels')
+    if hasattr(Axes3D, '__set_zlabel_labels'):
+        Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
+        delattr(Axes3D, '__set_zlabel_labels')
+    if hasattr(mpl.figure.Figure, 'align_labels'):
+        delattr(mpl.figure.Figure, 'align_labels')
+
+
 def install_align_labels(xdist=5, ydist=10):
     """ Install code for aligning axes labels into `show()` and `savefig()` functions.
+
+    This function is also called automatically upon importing the module.
 
     Parameter
     ---------
@@ -220,6 +282,11 @@ def install_align_labels(xdist=5, ydist=10):
         Minimum vertical distance between xtick labels and label of x-axis.
     ydist: float
         Minimum horizontal distance between ytick labels and label of y-axis.
+
+    See also
+    --------
+    - `uninstall_align_labels()`
+    - `install_labels()`
     """
     global __default_xdist
     __default_xdist = xdist
@@ -242,6 +309,11 @@ def install_align_labels(xdist=5, ydist=10):
 
 def uninstall_align_labels():
     """ Uninstall code for aligning axes labels in `show()` and `savefig()` functions.
+
+    See also
+    --------
+    - `install_align_labels()`
+    - `uninstall_labels()`
     """
     if hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_labels
@@ -257,19 +329,14 @@ def uninstall_align_labels():
         delattr(plt, '__show_orig_labels')
 
 
-# make functions available as member variables:
-mpl.axes.Axes.set_xlabel_labels = mpl.axes.Axes.set_xlabel
-mpl.axes.Axes.set_xlabel = set_xlabel
-mpl.axes.Axes.set_ylabel_labels = mpl.axes.Axes.set_ylabel
-mpl.axes.Axes.set_ylabel = set_ylabel
-Axes3D.set_zlabel_labels = Axes3D.set_zlabel
-Axes3D.set_zlabel = set_zlabel
-mpl.figure.Figure.align_labels = align_labels
+install_labels()
+install_align_labels()
 
 
 def demo():
     """ Run a demonstration of the labels module.
     """
+    install_labels()
     install_align_labels()
     
     fig, axs = plt.subplots(3, 2, figsize=(11, 8))
@@ -310,6 +377,8 @@ def demo():
     axs[2, 1].set_ylabel('Amplitude', 'Pa')
     
     plt.show()
+    uninstall_align_labels()
+    uninstall_labels()
 
 
 if __name__ == "__main__":

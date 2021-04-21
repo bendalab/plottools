@@ -58,7 +58,7 @@ then the file name of the main script is used.
 - `latex_include_figures()`: print LaTeX `\includegraphics{}` commands for all saved files.
 
 
-## New figure member functions
+## Figure member functions
 
 - `set_size_cm()`: set the figure size in centimeters.
 - `merge()`: add axis that covers bounding box of some axis.

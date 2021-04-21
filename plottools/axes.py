@@ -2,13 +2,13 @@
 Tag axes with a label and simplify common axis labels.
 
 
-## New axes member functions
+## Axes member functions
 
 - `aspect_ratio()`: aspect ratio of axes.
 - `set_ylim_equal()`: ensure equal aspect ratio by appropriately setting y limits.
 
 
-## New figure member functions
+## Figure member functions
 
 - `tag()`: tag each axes with a label.
 - `common_xlabels()`: simplify common xlabels.

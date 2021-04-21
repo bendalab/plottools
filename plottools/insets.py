@@ -2,7 +2,7 @@
 Insets made easy.
 
 
-## New axes member functions
+## Axes member functions
 
 - `inset()`: add an inset in relative axes coordinates.
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.

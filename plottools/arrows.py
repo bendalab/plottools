@@ -2,7 +2,7 @@
 Drawing arrows.
 
 
-## New axes member functions
+## Axes member functions
 
 - `harrow()`: draw a horizontal arrow with annotation on the arrow. 
 - `varrow()`: draw a vertical arrow with annotation on the arrow. 
