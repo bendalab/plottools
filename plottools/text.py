@@ -1,9 +1,25 @@
 """
 Enhance textual annotations.
 
+
+## Enhanced axes member functions
+
+- `text()`: text function with slope parameter and LaTeX support.
+- `legend()`: legend function with LaTeX support.
+
+
+## Functions
+
 - `translate_latex_text()`: translate text to fit both normal and LaTeX mode.
-- `install_text()`: patch the mpl.axes.Axes.text() function.
-- `uninstall_text()`: uninstall code for text.
+
+
+## Install/uninstall text functions
+
+You usually do not need to call these functions. Upon loading the text
+module, `install_text()` is called automatically.
+
+- `install_text()`: install functions of the text module in matplotlib.
+- `uninstall_text()`: uninstall all code of the text module from matplotlib.
 """
 
 import types
@@ -60,7 +76,7 @@ def translate_latex_text(s, **kwargs):
 
 
 def text(ax, x, y, s, *args, slope=None, **kwargs):
-    """ Enhanced text function.
+    """ Text function with slope parameter and LaTeX support.
 
     Adds an optional slope parameter that rotates the text to a specified slope.
     Uses `translate_latex_text ()` to improve LaTeX mode.
@@ -100,7 +116,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
 
 
 def legend(ax, *args, **kwargs):
-    """ Enhanced legend function.
+    """ Legend function with LaTeX support.
     
     Uses `translate_latex_text ()` to improve LaTeX mode of legend
     labels.
@@ -135,6 +151,10 @@ def uninstall_text():
     """ Uninstall code for text.
 
     Call this code to disable anything that was installed by `install_text()`.
+
+    See also
+    --------
+    `install_text()`
     """
     if hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.text = mpl.axes.Axes.__text_orig_text
