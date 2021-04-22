@@ -195,7 +195,6 @@ install_neurons()
 def demo():
     """ Run a demonstration of the neurons module.
     """
-    install_neurons()
     fig, ax = plt.subplots()
     ax.set_aspect('equal')
     ax.set_xlim(0, 10)
@@ -223,7 +222,6 @@ def demo():
     ax.neuron(ns, r, '$+$', (x+dd+d, 0), 'exc', adapt=0, **neuronS)
     ax.neuron(nr, r, '$-$', (x+dd+d, -yt), 'exc', adapt=1, **neuronR)
     plt.show()
-    uninstall_neurons()
 
 
 if __name__ == "__main__":

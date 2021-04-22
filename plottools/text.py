@@ -175,7 +175,6 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    install_text()
     mpl.rcParams['text.usetex'] = usetex
     mpl.rcParams['text.latex.preamble'] = [r'\usepackage{SIunits}']
     fig, ax = plt.subplots()
@@ -194,7 +193,6 @@ def demo(usetex=False):
     ax.text(0.8, 0.0, "ax.text(0.7, 0.0, 'Italic', fontstyle='italic')")
     ax.text(0.8, -0.1, "ax.text(0.7, -0.1, 'Bold', fontweight='bold')")
     plt.show()
-    uninstall_text()
     
 
 if __name__ == "__main__":

@@ -647,7 +647,6 @@ install_figure()
 def demo():
     """ Run a demonstration of the figure module.
     """
-    install_figure()
     fig, axs = plt.subplots(2, 1, cmsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
     axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(cmsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
@@ -675,7 +674,6 @@ def demo():
     latex_include_figures()
             
     plt.show()
-    uninstall_figure()
 
 
 if __name__ == "__main__":

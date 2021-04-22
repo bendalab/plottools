@@ -22,7 +22,9 @@ Annotate axis with label and unit and align axes labels.
 ## Install/uninstall labels functions
 
 You usually do not need to call these functions. Upon loading the labels
-module, `install_labels()` and `install_align_labels()` are called automatically.
+module, `install_labels()` are called automatically.
+
+Currently, `install_align_labels()` is *not* automatically loaded.
 
 - `install_labels()`: install functions of the labels module in matplotlib.
 - `uninstall_labels()`: uninstall all code of the labels module from matplotlib.
@@ -128,7 +130,13 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
-def align_labels(fig, xdist=5, ydist=10):
+__default_xdist = 5
+""" Minimum vertical distance between xtick labels and label of x-axis. """
+__default_ydist = 10
+""" Minimum horizontal distance between ytick labels and label of y-axis. """
+
+
+def align_labels(fig, axs=None):
     """ Align x- and ylabels of a figure.
 
     Labels with the same orientation and on axes with the same coordinate
@@ -138,11 +146,13 @@ def align_labels(fig, xdist=5, ydist=10):
     ---------
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
-    xdist: float
-        Minimum vertical distance between xtick labels and label of x-axis.
-    ydist: float
-        Minimum horizontal distance between ytick labels and label of y-axis.
+    axs: list of matplotlib axes
+        Axes of which labels should be aligned. If None align labels of all axes.
     """
+    xdist = __default_xdist
+    ydist = __default_ydist
+    if axs is None:
+        axs = fig.get_axes()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     yap = np.zeros((len(fig.get_axes()), 2))
@@ -153,7 +163,7 @@ def align_labels(fig, xdist=5, ydist=10):
     xpw = np.zeros(len(fig.get_axes()))
     xlw = np.zeros(len(fig.get_axes()))
     xly = np.zeros(len(fig.get_axes()))
-    for k, ax in enumerate(fig.get_axes()):
+    for k, ax in enumerate(axs):
         xax = ax.xaxis
         if xax.get_label_text():
             ax_bbox = ax.get_window_extent().get_points()
@@ -190,23 +200,18 @@ def align_labels(fig, xdist=5, ydist=10):
         if xap[k, 0] > 0:
             ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
 
-
-""" Default distances between axis labels and tick labels. """
-__default_xdist = 5
-__default_ydist = 10
-
     
 def __fig_show_labels(fig, *args, **kwargs):
     """ Call `align_labels()` on the figure before showing it.
     """
-    fig.align_labels(__default_xdist, __default_ydist)
+    fig.align_labels()
     fig.__show_orig_labels(*args, **kwargs)
 
     
 def __fig_savefig_labels(fig, *args, **kwargs):
     """ Call `align_labels()` on the figure before saving it.
     """
-    fig.align_labels(__default_xdist, __default_ydist)
+    fig.align_labels()
     fig.__savefig_orig_labels(*args, **kwargs)
 
 
@@ -214,14 +219,14 @@ def __plt_show_labels(*args, **kwargs):
     """ Call `align_labels()` on all figures before showing them.
     """
     for fig in map(plt.figure, plt.get_fignums()):
-        fig.align_labels(__default_xdist, __default_ydist)
+        fig.align_labels()
     plt.__show_orig_labels(*args, **kwargs)
 
 
 def __plt_savefig_labels(*args, **kwargs):
     """ Call `align_labels()` on the current figure before saving it.
     """
-    plt.gcf().align_labels(__default_xdist, __default_ydist)
+    plt.gcf().align_labels()
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
@@ -244,8 +249,6 @@ def install_labels():
     if not hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
         Axes3D.set_zlabel = set_zlabel
-    if not hasattr(mpl.figure.Figure, 'align_labels'):
-        mpl.figure.Figure.align_labels = align_labels
 
 
 def uninstall_labels():
@@ -267,8 +270,6 @@ def uninstall_labels():
     if hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
         delattr(Axes3D, '__set_zlabel_labels')
-    if hasattr(mpl.figure.Figure, 'align_labels'):
-        delattr(mpl.figure.Figure, 'align_labels')
 
 
 def install_align_labels(xdist=5, ydist=10):
@@ -293,6 +294,9 @@ def install_align_labels(xdist=5, ydist=10):
     global __default_ydist
     __default_ydist = ydist
     
+    if not hasattr(mpl.figure.Figure, 'align_labels'):
+        mpl.figure.Figure.align_labels = align_labels
+        mpl.figure.Figure.__installed_align_labels = True
     if not hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
         mpl.figure.Figure.__savefig_orig_labels = mpl.figure.Figure.savefig
         mpl.figure.Figure.savefig = __fig_savefig_labels
@@ -315,6 +319,9 @@ def uninstall_align_labels():
     - `install_align_labels()`
     - `uninstall_labels()`
     """
+    if hasattr(mpl.figure.Figure, '__installed_align_labels'):
+        delattr(mpl.figure.Figure, 'align_labels')
+        delattr(mpl.figure.Figure, '__installed_align_labels')
     if hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_labels
         delattr(mpl.figure.Figure, '__savefig_orig_labels')
@@ -330,15 +337,13 @@ def uninstall_align_labels():
 
 
 install_labels()
-install_align_labels()
+#install_align_labels()
 
 
 def demo():
     """ Run a demonstration of the labels module.
     """
-    install_labels()
     install_align_labels()
-    
     fig, axs = plt.subplots(3, 2, figsize=(11, 8))
     fig.subplots_adjust(wspace=0.5)
 
@@ -378,8 +383,6 @@ def demo():
     
     plt.show()
     uninstall_align_labels()
-    uninstall_labels()
-
 
 if __name__ == "__main__":
     demo()

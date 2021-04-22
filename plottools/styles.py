@@ -1,17 +1,19 @@
 """
-Layout settings and plot styles:
+## Layout settings and plot styles
 
 - `screen_style()`: layout and plot styles optimized for display on a screen.
 - `paper_style()`: layout and plot styles optimized for inclusion into a paper.
 - `sketch_style()`: layout and plot styles with xkcd style activated.
 
-Duplicate and modify plotting styles:
+
+## Duplicate and modify plotting styles:
 
 - `lighter_styles()`: duplicate style with a range of lighter colors.
 - `darker_styles()`: duplicate style with a range of darker colors.
 - `lighter_darker_styles()`: duplicate style with a range of lighter and darker colors.
 
-Generate plotting styles:
+
+## Generate plotting styles:
 
 - `make_linestyles()`: generate dictionaries for line styles.
 - `make_pointstyles()`: generate dictionaries for point styles.
@@ -19,12 +21,14 @@ Generate plotting styles:
 - `make_fillstyles()`: generate dictionaries for fill styles.
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
 
-Set rc settings:
+
+## Set rc settings:
 
 - `color_cycler()`: set colors for the matplotlib color cycler.
 - `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 
-Display line, point, linepoint and fill styles:
+
+## Display line, point, linepoint and fill styles:
 
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
@@ -63,7 +67,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from .colors import colors_vivid, colors_muted, lighter, darker, gradient, colormap
-from .figure import install_figure, figure_params
+from .figure import figure_params
 from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
@@ -827,9 +831,6 @@ def screen_style(namespace=None):
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
-    # figsize in centimeter:
-    install_figure()
-    install_text()
 
     
 def paper_style(namespace=None):
@@ -912,9 +913,6 @@ def paper_style(namespace=None):
     # define the appearance of axis labels:
     set_label_format('{label} [{unit}]')
     install_align_labels(xdist=5, ydist=10)
-    # figsize in centimeter:
-    install_figure()
-    install_text()
 
    
 def sketch_style(namespace=None):
@@ -1000,9 +998,6 @@ def sketch_style(namespace=None):
     # define the appearance of axis labels:
     set_label_format('{label} ({unit})')
     install_align_labels(xdist=5, ydist=10)
-    # figsize in centimeter:
-    install_figure()
-    install_text()
     
 
 def plot_linestyles(ax):

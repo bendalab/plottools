@@ -536,7 +536,6 @@ install_ticks()
 def demo():
     """ Run a demonstration of the ticks module.
     """
-    install_ticks()
     fig, axs = plt.subplots(4, 2)
 
     fig.suptitle('plottools.ticks')
@@ -590,7 +589,6 @@ def demo():
     axs[3,1].set_yticks_pifracs(3, True)
     
     plt.show()
-    uninstall_ticks()
 
 
 if __name__ == "__main__":

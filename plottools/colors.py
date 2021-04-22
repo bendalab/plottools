@@ -676,6 +676,8 @@ def demo(n=1, complementary=False, *args):
         names of color palettes or color maps, or 'default' for the default color palette.
     """
     fig, ax = plt.subplots()
+    if len(args) == 0:
+        args = ('default',)
     if len(args) == 1 and args[0] != 'all':
         if 'default' in args[0]:
             palette = colors
@@ -689,7 +691,7 @@ def demo(n=1, complementary=False, *args):
                 print('unknown color palette %s!' % args[0])
                 print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
             return
-        if compl:
+        if complementary:
             plot_complementary_colors(ax, palette, n-1)
         else:
             plot_colors(ax, palette, n)

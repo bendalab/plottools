@@ -452,7 +452,6 @@ def demo():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
 
-    install_scalebars()
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5,
                     font=dict(fontweight='bold'))
     
@@ -486,7 +485,6 @@ def demo():
     ax.scalebars(0.95, 0.9, 1.0, 0.5, 's', '', ha='right', va='top', lw=4)
         
     plt.show()
-    uninstall_scalebars()
 
 
 if __name__ == "__main__":

@@ -613,14 +613,14 @@ def __update_spines(fig):
 def __fig_show_spines(fig, *args, **kwargs):
     """ Call `__update_spines()` on the figure before showing it.
     """
-    fig.update_spines()
+    fig.__update_spines()
     fig.__show_orig_spines(*args, **kwargs)
 
     
 def __fig_savefig_spines(fig, *args, **kwargs):
     """ Call `__update_spines()` on the figure before saving it.
     """
-    fig.update_spines()
+    fig.__update_spines()
     fig.__savefig_orig_spines(*args, **kwargs)
 
 
@@ -628,14 +628,14 @@ def __plt_show_spines(*args, **kwargs):
     """ Call `__update_spines()` on all figures before showing them.
     """
     for fig in map(plt.figure, plt.get_fignums()):
-        fig.update_spines()
+        fig.__update_spines()
     plt.__show_orig_spines(*args, **kwargs)
 
 
 def __plt_savefig_spines(*args, **kwargs):
     """ Call `__update_spines()` on the current figure before saving it.
     """
-    plt.gcf().update_spines()
+    plt.gcf().__update_spines()
     plt.__savefig_orig_spines(*args, **kwargs)
 
 
@@ -898,8 +898,8 @@ def install_spines():
         mpl.figure.Figure.set_spines_bounds = set_spines_bounds
     if not hasattr(mpl.figure.Figure, 'arrow_spines'):
         mpl.figure.Figure.arrow_spines = arrow_spines
-    if not hasattr(mpl.figure.Figure, 'update_spines'):
-        mpl.figure.Figure.update_spines = __update_spines
+    if not hasattr(mpl.figure.Figure, '__update_spines'):
+        mpl.figure.Figure.__update_spines = __update_spines
     # install __update_spines():
     if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
         mpl.figure.Figure.__savefig_orig_spines = mpl.figure.Figure.savefig
@@ -979,8 +979,8 @@ def uninstall_spines():
     if hasattr(mpl.figure.Figure, 'arrow_spines'):
         delattr(mpl.figure.Figure, 'arrow_spines')
     # uninstall __update_spines():
-    if hasattr(mpl.figure.Figure, 'update_spines'):
-        delattr(mpl.figure.Figure, 'update_spines')
+    if hasattr(mpl.figure.Figure, '__update_spines'):
+        delattr(mpl.figure.Figure, '__update_spines')
     if hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_spines
         delattr(mpl.figure.Figure, '__savefig_orig_spines')
@@ -1034,7 +1034,6 @@ install_spines()
 def demo_basic():
     """ Run a basic demonstration of the spine module.
     """
-    install_spines()
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
     # set spines outward:
     fig.set_spines_outward('lrtb', 10)
@@ -1072,13 +1071,11 @@ def demo_basic():
             ax.set_yticks([-0.5, 0, 0.5, 1])
     #fig.savefig('spinesbasics.pdf')
     plt.show()
-    uninstall_spines()
 
 
 def demo_arrows():
     """ Run a demonstration of the spine module showing arrowed spines.
     """
-    install_spines()
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
     fig.show_spines('')
     # spine arrows:
@@ -1113,7 +1110,6 @@ def demo_arrows():
             #ax.set_yticks([-0.5, 0, 0.5, 1])
     #fig.savefig('spinesarrows.pdf')
     plt.show()
-    uninstall_spines()
 
                 
 def demo_twin_inset():
@@ -1143,7 +1139,6 @@ def demo_twin_inset():
         ax.set_ylim(0.0, 2.0)
     #fig.savefig('spinestwin.pdf')
     plt.show()
-    uninstall_spines()
 
 
 def demo():

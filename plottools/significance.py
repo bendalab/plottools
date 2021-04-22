@@ -107,7 +107,6 @@ install_significance()
 def demo():
     """ Run a demonstration of the significance module.
     """
-    install_significance()
     fig, ax = plt.subplots()
     x1 = 1.0+0.3*np.random.randn(50)
     x2 = 4.0+0.5*np.random.randn(50)
@@ -116,7 +115,6 @@ def demo():
     ax.set_ylim(0.0, 8)
     ax.significance_bar(0.002, 1, 2, 6)
     plt.show()
-    uninstall_significance()
     
 
 if __name__ == "__main__":
