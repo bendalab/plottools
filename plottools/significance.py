@@ -1,10 +1,18 @@
 """
 Indicating statsitical significance.
 
-The following function is also added as a member to mpl.axes.Axes:
+## Axes member functions
 
 - `significance_bar()`: horizontal bar with asterisks indicating significance level.
 
+
+## Install/uninstall significance functions
+
+You usually do not need to call these functions. Upon loading the significance
+module, `install_significance()` is called automatically.
+
+- `install_significance()`: install functions of the significance module in matplotlib.
+- `uninstall_significance()`: uninstall all code of the significance module from matplotlib.
 """
 
 import numpy as np
@@ -67,9 +75,39 @@ def significance_bar(ax, p, x0, x1, y, **kwargs):
     th.set_position((0.5*(x0+x1), y+dty*dyu))
 
 
+def install_significance():
+    """ Install significance functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    - `uninstall_significance()`
+    """
+    if not hasattr(mpl.axes.Axes, 'significance_bar'):
+        mpl.axes.Axes.significance_bar = significance_bar
+
+        
+def uninstall_significance():
+    """ Uninstall significance functions from matplotlib axes.
+
+    Call this function to disable anything that was installed by `install_significance()`.
+
+    See also
+    --------
+    - `install_significance()`
+    """
+    if hasattr(mpl.axes.Axes, 'significance_bar'):
+        delattr(mpl.axes.Axes, 'significance_bar')
+
+        
+install_significance()
+
+
 def demo():
     """ Run a demonstration of the significance module.
     """
+    install_significance()
     fig, ax = plt.subplots()
     x1 = 1.0+0.3*np.random.randn(50)
     x2 = 4.0+0.5*np.random.randn(50)
@@ -78,11 +116,8 @@ def demo():
     ax.set_ylim(0.0, 8)
     ax.significance_bar(0.002, 1, 2, 6)
     plt.show()
-
-
-# make the functions available as member variables:
-mpl.axes.Axes.significance_bar = significance_bar
-
+    uninstall_significance()
+    
 
 if __name__ == "__main__":
     demo()
