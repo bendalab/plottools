@@ -19,13 +19,13 @@ Annotate axis with label and unit and align axes labels.
 - `set_label_format()`: set the string for formatting the axes labels.
 
 
-## Install/uninstall label functions
+## Install/uninstall labels functions
 
-You usually do not need to call these functions. Upon loading the label
-module, `install_label()` and `install_align_label()` are called automatically.
+You usually do not need to call these functions. Upon loading the labels
+module, `install_labels()` and `install_align_labels()` are called automatically.
 
-- `install_label()`: install functions of the label module in matplotlib.
-- `uninstall_label()`: uninstall all code of the label module from matplotlib.
+- `install_labels()`: install functions of the labels module in matplotlib.
+- `uninstall_labels()`: uninstall all code of the labels module from matplotlib.
 - `install_align_labels()`: install code for aligning axes labels into `show()` and `savefig()` functions.
 - `uninstall_align_labels()`: uninstall code for aligning axes labels in `show()` and `savefig()` functions.
 """

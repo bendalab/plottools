@@ -1,7 +1,8 @@
 """
 Setting tick locations and formats.
 
-The following functions are available as members of mpl.axes.Axes:
+
+## Axes member functions
 
 - `set_xticks_delta()`: set interval between major xticks.
 - `set_yticks_delta()`: set interval between major yticks.
@@ -23,6 +24,15 @@ The following functions are available as members of mpl.axes.Axes:
 - `set_yticks_off()`: do not draw and label any yticks.
 - `set_minor_xticks_off()`: do not draw any minor xticks.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
+
+
+## Install/uninstall ticks functions
+
+You usually do not need to call these functions. Upon loading the ticks
+module, `install_ticks()` is called automatically.
+
+- `install_ticks()`: install functions of the ticks module in matplotlib.
+- `uninstall_ticks()`: uninstall all code of the ticks module from matplotlib.
 """
 
 import numpy as np
@@ -417,33 +427,116 @@ def set_minor_yticks_off(ax):
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
-            
-# make functions available as member variables:
-mpl.axes.Axes.set_xticks_delta = set_xticks_delta
-mpl.axes.Axes.set_yticks_delta = set_yticks_delta
-mpl.axes.Axes.set_xticks_log = set_xticks_log
-mpl.axes.Axes.set_yticks_log = set_yticks_log
-mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
-mpl.axes.Axes.set_yticks_fixed = set_yticks_fixed
-mpl.axes.Axes.set_xticks_prefix = set_xticks_prefix
-mpl.axes.Axes.set_yticks_prefix = set_yticks_prefix
-mpl.axes.Axes.set_xticks_fracs = set_xticks_fracs
-mpl.axes.Axes.set_yticks_fracs = set_yticks_fracs
-mpl.axes.Axes.set_xticks_pifracs = set_xticks_pifracs
-mpl.axes.Axes.set_yticks_pifracs = set_yticks_pifracs
-mpl.axes.Axes.set_xticks_format = set_xticks_format
-mpl.axes.Axes.set_yticks_format = set_yticks_format
-mpl.axes.Axes.set_xticks_blank = set_xticks_blank
-mpl.axes.Axes.set_yticks_blank = set_yticks_blank
-mpl.axes.Axes.set_xticks_off = set_xticks_off
-mpl.axes.Axes.set_yticks_off = set_yticks_off
-mpl.axes.Axes.set_minor_xticks_off = set_minor_xticks_off
-mpl.axes.Axes.set_minor_yticks_off = set_minor_yticks_off
+
+def install_ticks():
+    """ Install ticks functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    - `uninstall_ticks()`
+    """
+    if not hasattr(mpl.axes.Axes, 'set_xticks_delta'):
+        mpl.axes.Axes.set_xticks_delta = set_xticks_delta
+    if not hasattr(mpl.axes.Axes, 'set_yticks_delta'):
+        mpl.axes.Axes.set_yticks_delta = set_yticks_delta
+    if not hasattr(mpl.axes.Axes, 'set_xticks_log'):
+        mpl.axes.Axes.set_xticks_log = set_xticks_log
+    if not hasattr(mpl.axes.Axes, 'set_yticks_log'):
+        mpl.axes.Axes.set_yticks_log = set_yticks_log
+    if not hasattr(mpl.axes.Axes, 'set_xticks_fixed'):
+        mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
+    if not hasattr(mpl.axes.Axes, 'set_yticks_fixed'):
+        mpl.axes.Axes.set_yticks_fixed = set_yticks_fixed
+    if not hasattr(mpl.axes.Axes, 'set_xticks_prefix'):
+        mpl.axes.Axes.set_xticks_prefix = set_xticks_prefix
+    if not hasattr(mpl.axes.Axes, 'set_yticks_prefix'):
+        mpl.axes.Axes.set_yticks_prefix = set_yticks_prefix
+    if not hasattr(mpl.axes.Axes, 'set_xticks_fracs'):
+        mpl.axes.Axes.set_xticks_fracs = set_xticks_fracs
+    if not hasattr(mpl.axes.Axes, 'set_yticks_fracs'):
+        mpl.axes.Axes.set_yticks_fracs = set_yticks_fracs
+    if not hasattr(mpl.axes.Axes, 'set_xticks_pifracs'):
+        mpl.axes.Axes.set_xticks_pifracs = set_xticks_pifracs
+    if not hasattr(mpl.axes.Axes, 'set_yticks_pifracs'):
+        mpl.axes.Axes.set_yticks_pifracs = set_yticks_pifracs
+    if not hasattr(mpl.axes.Axes, 'set_xticks_format'):
+        mpl.axes.Axes.set_xticks_format = set_xticks_format
+    if not hasattr(mpl.axes.Axes, 'set_yticks_format'):
+        mpl.axes.Axes.set_yticks_format = set_yticks_format
+    if not hasattr(mpl.axes.Axes, 'set_xticks_blank'):
+        mpl.axes.Axes.set_xticks_blank = set_xticks_blank
+    if not hasattr(mpl.axes.Axes, 'set_yticks_blank'):
+        mpl.axes.Axes.set_yticks_blank = set_yticks_blank
+    if not hasattr(mpl.axes.Axes, 'set_xticks_off'):
+        mpl.axes.Axes.set_xticks_off = set_xticks_off
+    if not hasattr(mpl.axes.Axes, 'set_yticks_off'):
+        mpl.axes.Axes.set_yticks_off = set_yticks_off
+    if not hasattr(mpl.axes.Axes, 'set_minor_xticks_off'):
+        mpl.axes.Axes.set_minor_xticks_off = set_minor_xticks_off
+    if not hasattr(mpl.axes.Axes, 'set_minor_yticks_off'):
+        mpl.axes.Axes.set_minor_yticks_off = set_minor_yticks_off
+
+
+def uninstall_ticks():
+    """ Uninstall ticks functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_ticks()`.
+
+    See also
+    --------
+    - `install_ticks()`
+    """
+    if hasattr(mpl.axes.Axes, 'set_xticks_delta'):
+        delattr(mpl.axes.Axes, 'set_xticks_delta')
+    if hasattr(mpl.axes.Axes, 'set_yticks_delta'):
+        delattr(mpl.axes.Axes, 'set_yticks_delta')
+    if hasattr(mpl.axes.Axes, 'set_xticks_log'):
+        delattr(mpl.axes.Axes, 'set_xticks_log')
+    if hasattr(mpl.axes.Axes, 'set_yticks_log'):
+        delattr(mpl.axes.Axes, 'set_yticks_log')
+    if hasattr(mpl.axes.Axes, 'set_xticks_fixed'):
+        delattr(mpl.axes.Axes, 'set_xticks_fixed')
+    if hasattr(mpl.axes.Axes, 'set_yticks_fixed'):
+        delattr(mpl.axes.Axes, 'set_yticks_fixed')
+    if hasattr(mpl.axes.Axes, 'set_xticks_prefix'):
+        delattr(mpl.axes.Axes, 'set_xticks_prefix')
+    if hasattr(mpl.axes.Axes, 'set_yticks_prefix'):
+        delattr(mpl.axes.Axes, 'set_yticks_prefix')
+    if hasattr(mpl.axes.Axes, 'set_xticks_fracs'):
+        delattr(mpl.axes.Axes, 'set_xticks_fracs')
+    if hasattr(mpl.axes.Axes, 'set_yticks_fracs'):
+        delattr(mpl.axes.Axes, 'set_yticks_fracs')
+    if hasattr(mpl.axes.Axes, 'set_xticks_pifracs'):
+        delattr(mpl.axes.Axes, 'set_xticks_pifracs')
+    if hasattr(mpl.axes.Axes, 'set_yticks_pifracs'):
+        delattr(mpl.axes.Axes, 'set_yticks_pifracs')
+    if hasattr(mpl.axes.Axes, 'set_xticks_format'):
+        delattr(mpl.axes.Axes, 'set_xticks_format')
+    if hasattr(mpl.axes.Axes, 'set_yticks_format'):
+        delattr(mpl.axes.Axes, 'set_yticks_format')
+    if hasattr(mpl.axes.Axes, 'set_xticks_blank'):
+        delattr(mpl.axes.Axes, 'set_xticks_blank')
+    if hasattr(mpl.axes.Axes, 'set_yticks_blank'):
+        delattr(mpl.axes.Axes, 'set_yticks_blank')
+    if hasattr(mpl.axes.Axes, 'set_xticks_off'):
+        delattr(mpl.axes.Axes, 'set_xticks_off')
+    if hasattr(mpl.axes.Axes, 'set_yticks_off'):
+        delattr(mpl.axes.Axes, 'set_yticks_off')
+    if hasattr(mpl.axes.Axes, 'set_minor_xticks_off'):
+        delattr(mpl.axes.Axes, 'set_minor_xticks_off')
+    if hasattr(mpl.axes.Axes, 'set_minor_yticks_off'):
+        delattr(mpl.axes.Axes, 'set_minor_yticks_off')
+
+
+install_ticks()
 
     
 def demo():
     """ Run a demonstration of the ticks module.
     """
+    install_ticks()
     fig, axs = plt.subplots(4, 2)
 
     fig.suptitle('plottools.ticks')
@@ -497,6 +590,7 @@ def demo():
     axs[3,1].set_yticks_pifracs(3, True)
     
     plt.show()
+    uninstall_ticks()
 
 
 if __name__ == "__main__":
