@@ -482,7 +482,7 @@ def install_ticks():
 def uninstall_ticks():
     """ Uninstall ticks functions from matplotlib axes.
 
-    Call this code to disable anything that was installed by `install_ticks()`.
+    Call this function to disable anything that was installed by `install_ticks()`.
 
     See also
     --------

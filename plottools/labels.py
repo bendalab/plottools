@@ -251,7 +251,7 @@ def install_labels():
 def uninstall_labels():
     """ Uninstall labels functions from matplotlib axes.
 
-    Call this code to disable anything that was installed by `install_labels()`.
+    Call this function to disable anything that was installed by `install_labels()`.
 
     See also
     --------

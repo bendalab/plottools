@@ -1,7 +1,8 @@
 """
 Modify the appearance of spines.
 
-The following functions are added as a members to mpl.axes.Axes and mpl.figure.Figure:
+
+## Axes member functions
 
 - `show_spines()`: show and hide spines and corresponding tick marks.
 - `set_spines_outward()`: set the specified spines outward.
@@ -9,13 +10,19 @@ The following functions are added as a members to mpl.axes.Axes and mpl.figure.F
 - `set_spines_bounds()`: set bounds for the specified spines.
 - `arrow_spines()`: spines with arrows.
 
-The following functions enable and disable spine control:
+
+## Settings
 
 - `spines_params()`: set default spine appearance.
-- `install_spines()`: install code for controlling spines.
-- `uninstall_spines()`: uninstall code for controlling spines.
-- `install_default_spines()`: install code and rc settings for formatting spines.
-- `uninstall_default_spines()`: uninstall code for default spine settings.
+
+
+## Install/uninstall spines functions
+
+You usually do not need to call these functions. Upon loading the spines
+module, `install_spines()` is called automatically.
+
+- `install_spines()`: install functions of the spines module in matplotlib.
+- `uninstall_spines()`: uninstall all code of the spines module from matplotlib.
 """
 
 import numpy as np
@@ -632,100 +639,8 @@ def __plt_savefig_spines(*args, **kwargs):
     plt.__savefig_orig_spines(*args, **kwargs)
 
 
-def install_spines():
-    """ Install code for controlling spines.
-
-    This makes `show_spines()`, `set_spines_outward()`, `set_spines_zero()`,
-    `set_spines_bounds()` amd `arrow_spines()` available as member functions for matplib axes
-    and figures. In addition, the matplotlib functions `show()` and
-    `savefig()` are patched for fixing spine bounds before finishing the
-    figure.
-
-    Call this function before creating any figure to make the spine functions
-    available and working.
-
-    This function is also called by `install_default_spines()` or `spines_params()`,
-    so usually you do not need to explicitly call this function.
-
-    See also
-    --------
-    `uninstall_spines()`
-    """
-    # make functions available as members:
-    mpl.axes.Axes.show_spines = show_spines
-    mpl.axes.Axes.set_spines_outward = set_spines_outward
-    mpl.axes.Axes.set_spines_zero = set_spines_zero
-    mpl.axes.Axes.set_spines_bounds = set_spines_bounds
-    mpl.axes.Axes.arrow_spines = arrow_spines
-    mpl.figure.Figure.show_spines = show_spines
-    mpl.figure.Figure.set_spines_outward = set_spines_outward
-    mpl.figure.Figure.set_spines_zero = set_spines_zero
-    mpl.figure.Figure.set_spines_bounds = set_spines_bounds
-    mpl.figure.Figure.arrow_spines = arrow_spines
-    mpl.figure.Figure.update_spines = __update_spines
-    # install __update_spines():
-    if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
-        mpl.figure.Figure.__savefig_orig_spines = mpl.figure.Figure.savefig
-        mpl.figure.Figure.savefig = __fig_savefig_spines
-    if not hasattr(mpl.figure.Figure, '__show_orig_spines'):
-        mpl.figure.Figure.__show_orig_spines = mpl.figure.Figure.show
-        mpl.figure.Figure.show = __fig_show_spines
-    if not hasattr(plt, '__savefig_orig_spines'):
-        plt.__savefig_orig_spines = plt.savefig
-        plt.savefig = __plt_savefig_spines
-    if not hasattr(plt, '__show_orig_spines'):
-        plt.__show_orig_spines = plt.show
-        plt.show = __plt_show_spines
-
-
-def uninstall_spines():
-    """ Uninstall code for controlling spines.
-
-    Call this code to disable anything that was installed by `install_spines()`.
-    """
-    uninstall_default_spines()
-    # remove installed members:
-    if hasattr(mpl.axes.Axes, 'show_spines'):
-        delattr(mpl.axes.Axes, 'show_spines')
-    if hasattr(mpl.axes.Axes, 'set_spines_outward'):
-        delattr(mpl.axes.Axes, 'set_spines_outward')
-    if hasattr(mpl.axes.Axes, 'set_spines_zero'):
-        delattr(mpl.axes.Axes, 'set_spines_zero')
-    if hasattr(mpl.axes.Axes, 'set_spines_bounds'):
-        delattr(mpl.axes.Axes, 'set_spines_bounds')
-    if hasattr(mpl.axes.Axes, 'arrow_spines'):
-        delattr(mpl.axes.Axes, 'arrow_spines')
-    if hasattr(mpl.figure.Figure, 'show_spines'):
-        delattr(mpl.figure.Figure, 'show_spines')
-    if hasattr(mpl.figure.Figure, 'set_spines_outward'):
-        delattr(mpl.figure.Figure, 'set_spines_outward')
-    if hasattr(mpl.figure.Figure, 'set_spines_zero'):
-        delattr(mpl.figure.Figure, 'set_spines_zero')
-    if hasattr(mpl.figure.Figure, 'set_spines_bounds'):
-        delattr(mpl.figure.Figure, 'set_spines_bounds')
-    if hasattr(mpl.figure.Figure, 'arrow_spines'):
-        delattr(mpl.figure.Figure, 'arrow_spines')
-    # uninstall __update_spines():
-    if hasattr(mpl.figure.Figure, 'update_spines'):
-        delattr(mpl.figure.Figure, 'update_spines')
-    if hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
-        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_spines
-        delattr(mpl.figure.Figure, '__savefig_orig_spines')
-    if hasattr(mpl.figure.Figure, '__show_orig_spines'):
-        mpl.figure.Figure.show = mpl.figure.Figure.__show_orig_spines
-        delattr(mpl.figure.Figure, '__show_orig_spines')
-    if hasattr(plt, '__savefig_orig_spines'):
-        plt.savefig = plt.__savefig_orig_spines
-        delattr(plt, '__savefig_orig_spines')
-    if hasattr(plt, '__show_orig_spines'):
-        plt.show = plt.__show_orig_spines
-        delattr(plt, '__show_orig_spines')
-        
-
 def __axes_init_spines__(ax, *args, **kwargs):
     """ Apply default spine settings to a new Axes instance.
-
-    Installed by `install_default_spines()`.
     """
     ax.__init__orig_spines(*args, **kwargs)
     ax.show_spines(mpl.ptParams['axes.spines.show'])
@@ -819,119 +734,6 @@ def __inset_spines(ax, *args, **kwargs):
     return axi
 
 
-def install_default_spines():
-    """ Install code and `mpl.ptParams` for formatting spines.
-
-    Adds mpl.ptParams:
-    ```
-    axes.spines.show   : 'lrtb'
-    axes.spines.offsets: {'lrtb': 0}
-    axes.spines.positions: {'lrtb': None}
-    axes.spines.bounds : {'lrtb': 'full'}
-    axes.spines.arrows: '',
-    axes.spines.arrows.flushx: 0.0
-    axes.spines.arrows.flushy: 0.0
-    axes.spines.arrows.extendx: 1.0
-    axes.spines.arrows.extendy: 1.0
-    axes.spines.arrows.height: 10.0
-    axes.spines.arrows.ratio: 0.7
-    axes.spines.arrows.overhang: 1.0
-    axes.spines.twinx: 'r'
-    axes.spines.twiny: 'l'
-    axes.spines.inset.show   : 'lrtb'
-    axes.spines.inset.offsets: {'lrtb': 0}
-    axes.spines.inset.positions: {'lrtb': None}
-    axes.spines.inset.bounds : {'lrtb': 'full'}
-    ```
-
-    Patches the matplotlib axes constructor, the `twinx()`, `twiny()`,
-    and the `plottools.insets` functions.    
-
-    This function is also called by `spines_params()`, so usually you
-    do not need to explicitly call this function.
-
-    See also
-    --------
-    `uninstall_default_spines()`
-    """
-    install_spines()
-    # add spine parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'axes.spines.show' not in mpl.ptParams:
-        mpl.ptParams.update({'axes.spines.show': 'lrtb',
-                             'axes.spines.offsets': {'lrtb': 0},
-                             'axes.spines.positions': {'lrtb': None},
-                             'axes.spines.bounds': {'lrtb': 'full'},
-                             'axes.spines.arrows': '',
-                             'axes.spines.arrows.flushx': 0.0,
-                             'axes.spines.arrows.flushy': 0.0,
-                             'axes.spines.arrows.extendx': 1.0,
-                             'axes.spines.arrows.extendy': 1.0,
-                             'axes.spines.arrows.height': 10.0,
-                             'axes.spines.arrows.ratio': 0.7,
-                             'axes.spines.arrows.overhang': 1.0,
-                             'axes.spines.twinx': 'r',
-                             'axes.spines.twiny': 'l',
-                             'axes.spines.inset.show': 'lrtb',
-                             'axes.spines.inset.offsets': {'lrtb': 0},
-                             'axes.spines.inset.positions': {'lrtb': None},
-                             'axes.spines.inset.bounds': {'lrtb': 'full'}})
-    # extend Axes constructor for modifying spine appearance:
-    if not hasattr(mpl.axes.Axes, '__init__orig_spines'):
-        mpl.axes.Axes.__init__orig_spines = mpl.axes.Axes.__init__
-        mpl.axes.Axes.__init__ = __axes_init_spines__
-    if not hasattr(mpl.axes.Axes, '__twinx_orig_spines'):
-        mpl.axes.Axes.__twinx_orig_spines = mpl.axes.Axes.twinx
-        mpl.axes.Axes.twinx = __twinx_spines
-    if not hasattr(mpl.axes.Axes, '__twiny_orig_spines'):
-        mpl.axes.Axes.__twiny_orig_spines = mpl.axes.Axes.twiny
-        mpl.axes.Axes.twiny = __twiny_spines
-    if not hasattr(mpl.axes.Axes, '__inset_orig_spines') and hasattr(mpl.axes.Axes, 'inset'):
-        mpl.axes.Axes.__inset_orig_spines = mpl.axes.Axes.inset
-        mpl.axes.Axes.inset = __inset_spines
-
-
-def uninstall_default_spines():
-    """ Uninstall code for default spine settings.
-    
-    Call this code to disable anything that was installed by `install_default_spines()`.
-    """
-    # remove spine parameter from mpl.ptParams:
-    if hasattr(mpl, 'ptParams') and 'axes.spines.show' in mpl.ptParams:
-        mpl.ptParams.pop('axes.spines.show', None)
-        mpl.ptParams.pop('axes.spines.offsets', None)
-        mpl.ptParams.pop('axes.spines.positions', None)
-        mpl.ptParams.pop('axes.spines.bounds', None)
-        mpl.ptParams.pop('axes.spines.arrows', None)
-        mpl.ptParams.pop('axes.spines.arrows.flushx', None)
-        mpl.ptParams.pop('axes.spines.arrows.flushy', None)
-        mpl.ptParams.pop('axes.spines.arrows.extendx', None)
-        mpl.ptParams.pop('axes.spines.arrows.extendy', None)
-        mpl.ptParams.pop('axes.spines.arrows.height', None)
-        mpl.ptParams.pop('axes.spines.arrows.ratio', None)
-        mpl.ptParams.pop('axes.spines.arrows.overhang', None)
-        mpl.ptParams.pop('axes.spines.twinx', None)
-        mpl.ptParams.pop('axes.spines.twiny', None)
-        mpl.ptParams.pop('axes.spines.inset.show', None)
-        mpl.ptParams.pop('axes.spines.inset.offsets', None)
-        mpl.ptParams.pop('axes.spines.inset.positions', None)
-        mpl.ptParams.pop('axes.spines.inset.bounds', None)
-    # reinstall original Axes constructors:
-    if hasattr(mpl.axes.Axes, '__init__orig_spines'):
-        mpl.axes.Axes.__init__ = mpl.axes.Axes.__init__orig_spines
-        delattr(mpl.axes.Axes, '__init__orig_spines')
-    if hasattr(mpl.axes.Axes, '__twinx_orig_spines'):
-        mpl.axes.Axes.twinx = mpl.axes.Axes.__twinx_orig_spines
-        delattr(mpl.axes.Axes, '__twinx_orig_spines')
-    if hasattr(mpl.axes.Axes, '__twiny_orig_spines'):
-        mpl.axes.Axes.twiny = mpl.axes.Axes.__twiny_orig_spines
-        delattr(mpl.axes.Axes, '__twiny_orig_spines')
-    if hasattr(mpl.axes.Axes, '__inset_orig_spines'):
-        mpl.axes.Axes.inset = mpl.axes.Axes.__inset_orig_spines
-        delattr(mpl.axes.Axes, '__inset_orig_spines')
-
-
 def spines_params(spines=None, spines_offsets=None, spines_positions=None, spines_bounds=None,
                   arrows=None, flushx=None, extendx=None, flushy=None, extendy=None,
                   height=None, ratio=None, overhang=None,
@@ -999,7 +801,7 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
     inset_spines_bounds: dict
         Bounds for the spines of an inset. See `spines.set_spines_bounds()` for details.
     """
-    install_default_spines()
+    install_spines()
     if spines is not None:
         mpl.ptParams.update({'axes.spines.show': spines})
     if spines_offsets is not None:
@@ -1036,6 +838,197 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
         mpl.ptParams.update({'axes.spines.inset.positions': inset_spines_positions})
     if inset_spines_bounds is not None:
         mpl.ptParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
+
+
+def install_spines():
+    """ Install functions of the spines module in matplotlib.
+
+    Patches the matplotlib functions `show()` and `savefig()` for fixing
+    spine bounds before finishing the figure.
+
+    Also patches the matplotlib axes constructor, the `twinx()`, `twiny()`,
+    and the `plottools.insets` functions.    
+
+    Adds mpl.ptParams:
+    ```
+    axes.spines.show   : 'lrtb'
+    axes.spines.offsets: {'lrtb': 0}
+    axes.spines.positions: {'lrtb': None}
+    axes.spines.bounds : {'lrtb': 'full'}
+    axes.spines.arrows: '',
+    axes.spines.arrows.flushx: 0.0
+    axes.spines.arrows.flushy: 0.0
+    axes.spines.arrows.extendx: 1.0
+    axes.spines.arrows.extendy: 1.0
+    axes.spines.arrows.height: 10.0
+    axes.spines.arrows.ratio: 0.7
+    axes.spines.arrows.overhang: 1.0
+    axes.spines.twinx: 'r'
+    axes.spines.twiny: 'l'
+    axes.spines.inset.show   : 'lrtb'
+    axes.spines.inset.offsets: {'lrtb': 0}
+    axes.spines.inset.positions: {'lrtb': None}
+    axes.spines.inset.bounds : {'lrtb': 'full'}
+    ```
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    `uninstall_spines()`
+    """
+    # make functions available as members:
+    if not hasattr(mpl.axes.Axes, 'show_spines'):
+        mpl.axes.Axes.show_spines = show_spines
+    if not hasattr(mpl.axes.Axes, 'set_spines_outward'):
+        mpl.axes.Axes.set_spines_outward = set_spines_outward
+    if not hasattr(mpl.axes.Axes, 'set_spines_zero'):
+        mpl.axes.Axes.set_spines_zero = set_spines_zero
+    if not hasattr(mpl.axes.Axes, 'set_spines_bounds'):
+        mpl.axes.Axes.set_spines_bounds = set_spines_bounds
+    if not hasattr(mpl.axes.Axes, 'arrow_spines'):
+        mpl.axes.Axes.arrow_spines = arrow_spines
+    if not hasattr(mpl.figure.Figure, 'show_spines'):
+        mpl.figure.Figure.show_spines = show_spines
+    if not hasattr(mpl.figure.Figure, 'set_spines_outward'):
+        mpl.figure.Figure.set_spines_outward = set_spines_outward
+    if not hasattr(mpl.figure.Figure, 'set_spines_zero'):
+        mpl.figure.Figure.set_spines_zero = set_spines_zero
+    if not hasattr(mpl.figure.Figure, 'set_spines_bounds'):
+        mpl.figure.Figure.set_spines_bounds = set_spines_bounds
+    if not hasattr(mpl.figure.Figure, 'arrow_spines'):
+        mpl.figure.Figure.arrow_spines = arrow_spines
+    if not hasattr(mpl.figure.Figure, 'update_spines'):
+        mpl.figure.Figure.update_spines = __update_spines
+    # install __update_spines():
+    if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
+        mpl.figure.Figure.__savefig_orig_spines = mpl.figure.Figure.savefig
+        mpl.figure.Figure.savefig = __fig_savefig_spines
+    if not hasattr(mpl.figure.Figure, '__show_orig_spines'):
+        mpl.figure.Figure.__show_orig_spines = mpl.figure.Figure.show
+        mpl.figure.Figure.show = __fig_show_spines
+    if not hasattr(plt, '__savefig_orig_spines'):
+        plt.__savefig_orig_spines = plt.savefig
+        plt.savefig = __plt_savefig_spines
+    if not hasattr(plt, '__show_orig_spines'):
+        plt.__show_orig_spines = plt.show
+        plt.show = __plt_show_spines
+    # add spine parameter to rc configuration:
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    if 'axes.spines.show' not in mpl.ptParams:
+        mpl.ptParams.update({'axes.spines.show': 'lrtb',
+                             'axes.spines.offsets': {'lrtb': 0},
+                             'axes.spines.positions': {'lrtb': None},
+                             'axes.spines.bounds': {'lrtb': 'full'},
+                             'axes.spines.arrows': '',
+                             'axes.spines.arrows.flushx': 0.0,
+                             'axes.spines.arrows.flushy': 0.0,
+                             'axes.spines.arrows.extendx': 1.0,
+                             'axes.spines.arrows.extendy': 1.0,
+                             'axes.spines.arrows.height': 10.0,
+                             'axes.spines.arrows.ratio': 0.7,
+                             'axes.spines.arrows.overhang': 1.0,
+                             'axes.spines.twinx': 'r',
+                             'axes.spines.twiny': 'l',
+                             'axes.spines.inset.show': 'lrtb',
+                             'axes.spines.inset.offsets': {'lrtb': 0},
+                             'axes.spines.inset.positions': {'lrtb': None},
+                             'axes.spines.inset.bounds': {'lrtb': 'full'}})
+    # extend Axes constructor for modifying spine appearance:
+    if not hasattr(mpl.axes.Axes, '__init__orig_spines'):
+        mpl.axes.Axes.__init__orig_spines = mpl.axes.Axes.__init__
+        mpl.axes.Axes.__init__ = __axes_init_spines__
+    if not hasattr(mpl.axes.Axes, '__twinx_orig_spines'):
+        mpl.axes.Axes.__twinx_orig_spines = mpl.axes.Axes.twinx
+        mpl.axes.Axes.twinx = __twinx_spines
+    if not hasattr(mpl.axes.Axes, '__twiny_orig_spines'):
+        mpl.axes.Axes.__twiny_orig_spines = mpl.axes.Axes.twiny
+        mpl.axes.Axes.twiny = __twiny_spines
+    if not hasattr(mpl.axes.Axes, '__inset_orig_spines') and hasattr(mpl.axes.Axes, 'inset'):
+        mpl.axes.Axes.__inset_orig_spines = mpl.axes.Axes.inset
+        mpl.axes.Axes.inset = __inset_spines
+
+
+def uninstall_spines():
+    """ Uninstall all code of the spines module from matplotlib.
+
+    See also
+    --------
+    `install_spines()`
+    """
+    # remove installed members:
+    if hasattr(mpl.axes.Axes, 'show_spines'):
+        delattr(mpl.axes.Axes, 'show_spines')
+    if hasattr(mpl.axes.Axes, 'set_spines_outward'):
+        delattr(mpl.axes.Axes, 'set_spines_outward')
+    if hasattr(mpl.axes.Axes, 'set_spines_zero'):
+        delattr(mpl.axes.Axes, 'set_spines_zero')
+    if hasattr(mpl.axes.Axes, 'set_spines_bounds'):
+        delattr(mpl.axes.Axes, 'set_spines_bounds')
+    if hasattr(mpl.axes.Axes, 'arrow_spines'):
+        delattr(mpl.axes.Axes, 'arrow_spines')
+    if hasattr(mpl.figure.Figure, 'show_spines'):
+        delattr(mpl.figure.Figure, 'show_spines')
+    if hasattr(mpl.figure.Figure, 'set_spines_outward'):
+        delattr(mpl.figure.Figure, 'set_spines_outward')
+    if hasattr(mpl.figure.Figure, 'set_spines_zero'):
+        delattr(mpl.figure.Figure, 'set_spines_zero')
+    if hasattr(mpl.figure.Figure, 'set_spines_bounds'):
+        delattr(mpl.figure.Figure, 'set_spines_bounds')
+    if hasattr(mpl.figure.Figure, 'arrow_spines'):
+        delattr(mpl.figure.Figure, 'arrow_spines')
+    # uninstall __update_spines():
+    if hasattr(mpl.figure.Figure, 'update_spines'):
+        delattr(mpl.figure.Figure, 'update_spines')
+    if hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
+        mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_spines
+        delattr(mpl.figure.Figure, '__savefig_orig_spines')
+    if hasattr(mpl.figure.Figure, '__show_orig_spines'):
+        mpl.figure.Figure.show = mpl.figure.Figure.__show_orig_spines
+        delattr(mpl.figure.Figure, '__show_orig_spines')
+    if hasattr(plt, '__savefig_orig_spines'):
+        plt.savefig = plt.__savefig_orig_spines
+        delattr(plt, '__savefig_orig_spines')
+    if hasattr(plt, '__show_orig_spines'):
+        plt.show = plt.__show_orig_spines
+        delattr(plt, '__show_orig_spines')
+    # remove spine parameter from mpl.ptParams:
+    if hasattr(mpl, 'ptParams') and 'axes.spines.show' in mpl.ptParams:
+        mpl.ptParams.pop('axes.spines.show', None)
+        mpl.ptParams.pop('axes.spines.offsets', None)
+        mpl.ptParams.pop('axes.spines.positions', None)
+        mpl.ptParams.pop('axes.spines.bounds', None)
+        mpl.ptParams.pop('axes.spines.arrows', None)
+        mpl.ptParams.pop('axes.spines.arrows.flushx', None)
+        mpl.ptParams.pop('axes.spines.arrows.flushy', None)
+        mpl.ptParams.pop('axes.spines.arrows.extendx', None)
+        mpl.ptParams.pop('axes.spines.arrows.extendy', None)
+        mpl.ptParams.pop('axes.spines.arrows.height', None)
+        mpl.ptParams.pop('axes.spines.arrows.ratio', None)
+        mpl.ptParams.pop('axes.spines.arrows.overhang', None)
+        mpl.ptParams.pop('axes.spines.twinx', None)
+        mpl.ptParams.pop('axes.spines.twiny', None)
+        mpl.ptParams.pop('axes.spines.inset.show', None)
+        mpl.ptParams.pop('axes.spines.inset.offsets', None)
+        mpl.ptParams.pop('axes.spines.inset.positions', None)
+        mpl.ptParams.pop('axes.spines.inset.bounds', None)
+    # reinstall original Axes constructors:
+    if hasattr(mpl.axes.Axes, '__init__orig_spines'):
+        mpl.axes.Axes.__init__ = mpl.axes.Axes.__init__orig_spines
+        delattr(mpl.axes.Axes, '__init__orig_spines')
+    if hasattr(mpl.axes.Axes, '__twinx_orig_spines'):
+        mpl.axes.Axes.twinx = mpl.axes.Axes.__twinx_orig_spines
+        delattr(mpl.axes.Axes, '__twinx_orig_spines')
+    if hasattr(mpl.axes.Axes, '__twiny_orig_spines'):
+        mpl.axes.Axes.twiny = mpl.axes.Axes.__twiny_orig_spines
+        delattr(mpl.axes.Axes, '__twiny_orig_spines')
+    if hasattr(mpl.axes.Axes, '__inset_orig_spines'):
+        mpl.axes.Axes.inset = mpl.axes.Axes.__inset_orig_spines
+        delattr(mpl.axes.Axes, '__inset_orig_spines')
+
+                
+install_spines()
 
 
 def demo_basic():
@@ -1126,7 +1119,7 @@ def demo_arrows():
 def demo_twin_inset():
     """ Run a demonstration of the spine module showing twin behavior.
     """
-    from .insets import inset
+    from plottools.insets import inset
     spines_params(spines='lb', spines_offsets={'lrtb': 10}, spines_bounds={'lrtb': 'ticks'},
                   twinx_spines='r', twiny_spines='t',
                   inset_spines='lrb', inset_spines_offsets={'b': 10})

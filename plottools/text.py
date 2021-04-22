@@ -162,8 +162,11 @@ def uninstall_text():
     if hasattr(mpl.axes.Axes, '__legend_orig_text'):
         mpl.axes.Axes.legend = mpl.axes.Axes.__legend_orig_text
         delattr(mpl.axes.Axes, '__legend_orig_text')
-        
-    
+
+                
+install_text()
+
+
 def demo(usetex=False):
     """ Run a demonstration of the text module.
 
