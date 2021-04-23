@@ -685,7 +685,7 @@ def uninstall_figure():
         delattr(mpl.figure.Figure, 'merge')
         delattr(mpl.axes.Axes, '__set_merged_position')
     if hasattr(mpl.figure.Figure, 'get_savefig_count'):
-         delattr(mpl.figure.Figure, 'get_savefig_count'):
+         delattr(mpl.figure.Figure, 'get_savefig_count')
     if hasattr(plt, '__figure_orig_figure'):
         plt.figure = plt.__figure_orig_figure
         delattr(plt, '__figure_orig_figure')

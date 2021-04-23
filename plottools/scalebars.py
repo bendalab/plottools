@@ -7,7 +7,6 @@ Labeled scale bars.
 - `xscalebar()`: horizontal scale bar with label.
 - `yscalebar()`: vertical scale bar with label.
 - `scalebars()`: horizontal and vertical scale bars with labels.
-- `scalebar_params()`: set rc settings for scalebars.
 
 
 ## Settings
@@ -37,7 +36,8 @@ import matplotlib.pyplot as plt
 
 
 def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
-              lw=None, color=None, capsize=None, clw=None, **kwargs):
+              lw=None, color=None, capsize=None, clw=None, return_coords=False,
+              **kwargs):
     """ Horizontal scale bar with label.
 
     Parameter
@@ -72,10 +72,24 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     clw: int, float, None
         Line width of the cap lines.
         If None take value from rc setting 'scalebar.caplinewidth'.
+    return_coords: bool
+        For internal usage only. If `True` return `x0`, `x1`, and `y`
+        coordinates of scale bar in addition to artists.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar label.
         Defaults to scalebar.font ptParams settings.
+
+    Returns
+    -------
+    artists: list of matplotlib artists
+        The Lin2D and Text objects making up the scalebar.
+        Use it to hide the scale bar like this
+        ```
+        sb = ax.xscalebar(1.0, 0.0, 1, 'ms', ha='right')
+        [a.set_visible(False) for a in sb]
+        ```
     """
+    artists = []
     ax.autoscale(False)
     # ax dimensions:
     pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
@@ -118,6 +132,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     # scalebar:
     lh = ax.plot([x0, x1], [y, y], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
+    if not return_coords:
+        artists.extend(lh)
     # get y position of line in figure pixel coordinates:
     ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     # caps:
@@ -127,10 +143,12 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         clw = mpl.ptParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dy = capsize*dyu
-        ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
-                solid_capstyle='butt', clip_on=False)
-        ax.plot([x1, x1], [y-dy, y+dy], '-', color=color, lw=clw,
-                solid_capstyle='butt', clip_on=False)
+        cl = ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
+                     solid_capstyle='butt', clip_on=False)
+        artists.extend(cl)
+        cl = ax.plot([x1, x1], [y-dy, y+dy], '-', color=color, lw=clw,
+                     solid_capstyle='butt', clip_on=False)
+        artists.extend(cl)
     # label:
     if wunit:
         if mpl.rcParams['text.usetex']:
@@ -153,11 +171,16 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,1]
         dty = ly-0.5*lw - 2.0 - ty
     th.set_position((0.5*(x0+x1), y+dyu*dty))
-    return x0, x1, y
-
+    artists.append(th)
+    if return_coords:
+        return artists, x0, x1, y
+    else:
+        return artists
+    
         
 def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom',
-              lw=None, color=None, capsize=None, clw=None, **kwargs):
+              lw=None, color=None, capsize=None, clw=None, return_coords=False,
+              **kwargs):
     """ Vertical scale bar with label.
 
     Parameter
@@ -193,10 +216,24 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     clw: int, float
         Line width of the cap lines.
         If None take value from rc setting 'scalebar.caplinewidth'.
+    return_coords: bool
+        For internal usage only. If `True` return `x`, `y0`, and `y1`
+        coordinates of scale bar in addition to artists.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar label.
         Defaults to scalebar.font ptParams settings.
+
+    Returns
+    -------
+    artists: list of matplotlib artists
+        The Lin2D and Text objects making up the scalebar.
+        Use it to hide the scale bar like this
+        ```
+        sb = ax.yscalebar(1.0, 0.0, 1, 'mV', ha='right')
+        [a.set_visible(False) for a in sb]
+        ```
     """
+    artists = []
     ax.autoscale(False)
     # ax dimensions:
     pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
@@ -239,6 +276,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     # scalebar:
     lh = ax.plot([x, x], [y0, y1], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
+    if not return_coords:
+        artists.extend(lh)
     # get x position of line in figure pixel coordinates:
     lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
     # caps:
@@ -248,10 +287,12 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
         clw = mpl.ptParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dx = capsize*dxu
-        ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw, solid_capstyle='butt',
-                clip_on=False)
-        ax.plot([x-dx, x+dx], [y1, y1], '-', color=color, lw=clw, solid_capstyle='butt',
-                clip_on=False)
+        cl = ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw,
+                     solid_capstyle='butt', clip_on=False)
+        artists.extend(cl)
+        cl = ax.plot([x-dx, x+dx], [y1, y1], '-', color=color, lw=clw,
+                     solid_capstyle='butt', clip_on=False)
+        artists.extend(cl)
     # label:
     if hunit:
         if mpl.rcParams['text.usetex']:
@@ -274,9 +315,13 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
         tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,0]
         dtx = lx-0.5*lw - 1.0 - tx
     th.set_position((x+dxu*dtx, 0.5*(y0+y1)))
-    return x, y0, y1
+    artists.append(th)
+    if return_coords:
+        return artists, x, y0, y1
+    else:
+        return artists
 
-        
+
 def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
               wformat=None, hformat=None, ha='left', va='bottom',
               lw=None, color=None, **kwargs):
@@ -321,33 +366,48 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar labels.
         Defaults to scalebar.font ptParams settings.
+
+    Returns
+    -------
+    artists: list of matplotlib artists
+        The Lin2D and Text objects making up the scalebar.
+        Use it to hide the scale bar like this
+        ```
+        sb = ax.scalebar(1.0, 0.0, 2, 1, 'ms', 'mV')
+        [a.set_visible(False) for a in sb]
+        ```
     """
+    artists = []
     # line width:
     if lw is None:
         lw = mpl.ptParams['scalebar.linewidth']
     # color:
     if color is None:
         color = mpl.ptParams['scalebar.color']
-    x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
-                           lw, color, 0.0, 1, **kwargs)
+    a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
+                              lw, color, 0.0, 1, return_coords=True, **kwargs)
+    artists.extend(a)
     ax.lines.pop()
-    xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va,
-                           lw, color, 0.0, 1, **kwargs)
+    a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va,
+                              lw, color, 0.0, 1, return_coords=True, **kwargs)
+    artists.extend(a)
     ax.lines.pop()
     if x0 == xx:
         if y0 == yy:
-            ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color, lw=lw, solid_capstyle='butt',
-                    solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color, lw=lw,
+                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
         else:
-            ax.plot([x0, x0, x1], [y0, y1, y1], '-', color=color, lw=lw, solid_capstyle='butt',
-                    solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x0, x1], [y0, y1, y1], '-', color=color, lw=lw,
+                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
     else:
         if y0 == yy:
-            ax.plot([x0, x1, x1], [y0, y0, y1], '-', color=color, lw=lw, solid_capstyle='butt',
-                    solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x1, x1], [y0, y0, y1], '-', color=color, lw=lw,
+                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
         else:
-            ax.plot([x0, x1, x1], [y1, y1, y0], '-', color=color, lw=lw, solid_capstyle='butt',
-                    solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x1, x1], [y1, y1, y0], '-', color=color, lw=lw,
+                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
+    artists.extend(la)
+    return artists
 
 
 def scalebar_params(format_large='%.0f', format_small='%.1f',
