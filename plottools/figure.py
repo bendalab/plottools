@@ -93,6 +93,7 @@ and generates the respective pdf files.
 
 - `set_size_cm()`: set the figure size in centimeters.
 - `merge()`: add axis that covers bounding box of some axis.
+- `get_savefig_count()`: number of `savefig()` calls on the figure.
 
 
 ## Settings
@@ -461,6 +462,25 @@ def merge(fig, axs):
 plot_saved_files = []
 
 
+def get_savefig_count(fig):
+    """ Number of `savefig()` calls on the figure.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure
+        The figure.    
+
+    Returns
+    -------
+    counter: int
+        The number of calls to `fig.savefig()` on this figure.
+    """
+    if hasattr(fig, '__saved_files_counter'):
+        return fig.__saved_files_counter
+    else:
+        return 0
+
+
 def __savefig_filename(fig, fname):
     """ Set default file name to name of main python script. """
     # increment figure counter:
@@ -619,6 +639,8 @@ def install_figure():
     if not hasattr(mpl.figure.Figure, 'merge'):
         mpl.figure.Figure.merge = merge
         mpl.axes.Axes.__set_merged_position = __set_merged_position
+    if not hasattr(mpl.figure.Figure, 'get_savefig_count'):
+        mpl.figure.Figure.get_savefig_count = get_savefig_count
     if not hasattr(plt, '__figure_orig_figure'):
         plt.__figure_orig_figure = plt.figure
         plt.figure = __figure_figure
@@ -662,6 +684,8 @@ def uninstall_figure():
     if hasattr(mpl.figure.Figure, 'merge'):
         delattr(mpl.figure.Figure, 'merge')
         delattr(mpl.axes.Axes, '__set_merged_position')
+    if hasattr(mpl.figure.Figure, 'get_savefig_count'):
+         delattr(mpl.figure.Figure, 'get_savefig_count'):
     if hasattr(plt, '__figure_orig_figure'):
         plt.figure = plt.__figure_orig_figure
         delattr(plt, '__figure_orig_figure')
