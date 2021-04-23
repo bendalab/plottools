@@ -67,7 +67,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from .colors import colors_vivid, colors_muted, lighter, darker, gradient, colormap
-from .figure import figure_params
+from .figure import figure_params, latex_include_figures
 from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
