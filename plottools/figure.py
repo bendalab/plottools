@@ -475,7 +475,13 @@ def __savefig_filename(fig, fname):
     elif fname[0] == '+':
         fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname[1:]
     if '@' in fname:
-        fname = fname.replace('@', chr(ord('A')+fig.__saved_files_counter-1))
+        cs = chr(ord('A')+fig.__saved_files_counter-1)
+        if hasattr(mpl, 'ptParams') and 'savefig.counter' in mpl.ptParams:
+            if mpl.ptParams['savefig.counter'] == 'a':
+                cs = chr(ord('a')+fig.__saved_files_counter-1)
+            elif mpl.ptParams['savefig.counter'] == '1':
+                cs = '%d' % fig.__saved_files_counter
+        fname = fname.replace('@', cs)
     if len(os.path.splitext(fname)[1]) <= 1:
         fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
     # store file name and fiure counter:
@@ -531,9 +537,12 @@ def latex_include_figures():
 
     Examples
     --------
+    A python script named 'intro.py'
     ```py
-    fig1.savefig('introA')
-    fig1.savefig('introB')
+    from plottools.figure import latex_include_figures
+    ...
+    fig1.savefig('@')
+    fig1.savefig('@')
     fig2.savefig('data')
     latex_include_figures()
     ```
@@ -558,13 +567,16 @@ def latex_include_figures():
     plot_saved_files = []
     
 
-def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
+def figure_params(format='pdf', counter='A', compression=6, fonttype=3, stripfonts=False):
     """ Set savefig options via matplotlib's rc settings.
 
     Parameters
     ----------
     format: 'png', 'ps', 'pdf', 'svg'
         File format of the saved figure.
+    counter: 'A', 'a', or '1'
+        Specifies how a '@' character in the file name passed to `fig.savefig()`
+        is translated into a string.
     compression: int
         Compression level of pdf file from 0 to 9
     fonttype: 3 or 42
@@ -577,14 +589,15 @@ def figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False):
         strip it from embedded fonts. This might then look ugly as a standalone figure,
         but results in nice plots within a latex documents at a fraction of the file size.
     """
-    mpl.ptParams.update({'pdf.stripfonts': stripfonts})
     mpl.rcParams['savefig.format'] = format
+    mpl.ptParams.update({'savefig.counter': counter})
     # these all have only minor effects on file size:
     mpl.rcParams['pdf.compression'] = compression
     mpl.rcParams['pdf.fonttype'] = fonttype
     mpl.rcParams['pdf.use14corefonts'] = False
     mpl.rcParams['pdf.inheritcolor'] = False
     mpl.rcParams['ps.fonttype'] = fonttype
+    mpl.ptParams.update({'pdf.stripfonts': stripfonts})
 
 
 def install_figure():
@@ -633,6 +646,7 @@ def install_figure():
     # add figure parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
+    mpl.ptParams.update({'savefig.counter': 'A'})
     mpl.ptParams.update({'pdf.stripfonts': False})
 
 
@@ -673,6 +687,7 @@ def uninstall_figure():
         plt.savefig = plt.__savefig_orig_figure
         delattr(plt, '__savefig_orig_figure')
     if hasattr(mpl, 'ptParams'):
+        del mpl.ptParams['savefig.counter']
         del mpl.ptParams['pdf.stripfonts']
 
 
@@ -682,6 +697,7 @@ install_figure()
 def demo():
     """ Run a demonstration of the figure module.
     """
+    figure_params(counter='A')
     fig, axs = plt.subplots(2, 1, cmsize=(16.0, 10.0), height_ratios=[5, 1])  # figsize in cm!
     fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
     axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(cmsize=(16.0, 10.0), height_ratios=[5, 1])  # in cm!')
