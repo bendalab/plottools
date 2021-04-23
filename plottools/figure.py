@@ -45,17 +45,48 @@ Further, `figure.add_gridspec()` is made available for older
 matplotlib versions that do not have this function yet.
 
 
-## Default file name for figures
+## Default file names for figures
 
-If no file name or only a file extension is specified in fig.savefig(),
-then the file name of the main script is used.
+If no file name or only a file extension is specified in `fig.savefig()`,
+then the file name of the main script is used. So you can call
+```py
+fig.savefig()
+```
+and get a 'figure.pdf' file (if the python script was called 'figure.py').
+
+If the the file name specified in `fig.savefig()` starts with a '+',
+then the file name without the plus is added to the name of the main script.
+This is usefull for saving several figures for a (LaTeX beamer) talk.
+For example, a python script named 'example.py'
+```py
+fig1.savefig('+-one')
+fig2.savefig('+-two')
+```
+generates the files 'example-one.pdf' and 'example-two.pdf' (or whatever file type
+was specified in `rcParams['savefig.format']`).
+
+A '@' character in the file name is replaced by 'A', 'B', 'C', ...
+according to how often `fig.savefig()` is called from within the same
+figure. If the '@' is the first character of the file name,
+it is added to the name of the main script. So in our 'example.py' we can write
+```py
+fig.savefig('@')
+fig.savefig('@')
+latex_include_figures()
+```
+This prints to the console
+```
+\includegraphics<1>{exampleA}
+\includegraphics<2>{exampleB}
+```
+and generates the respective pdf files.
 
 
 ## Functions
 
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
-- `latex_include_figures()`: print LaTeX `\includegraphics{}` commands for all saved files.
+- `latex_include_figures()`: print LaTeX `\includegraphics<>{}` commands for all saved files.
 
 
 ## Figure member functions
@@ -429,33 +460,51 @@ def merge(fig, axs):
 
 plot_saved_files = []
 
-    
+
+def __savefig_filename(fig, fname):
+    """ Set default file name to name of main python script. """
+    # increment figure counter:
+    if not hasattr(fig, '__saved_files_counter'):
+        fig.__saved_files_counter = 0
+    fig.__saved_files_counter += 1
+    # set file name:
+    if len(fname) == 0:
+        fname = '.' + mpl.rcParams['savefig.format']
+    if fname[0] in '.@':
+        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+    elif fname[0] == '+':
+        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname[1:]
+    if '@' in fname:
+        fname = fname.replace('@', chr(ord('A')+fig.__saved_files_counter-1))
+    if len(os.path.splitext(fname)[1]) <= 1:
+        fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
+    # store file name and fiure counter:
+    global plot_saved_files
+    plot_saved_files.append([fname, fig.__saved_files_counter])
+    return fname
+
+        
+def __savefig_stripfonts(fname, stripfonts):
+    """ Postprocess pdf files. """
+    if stripfonts is None:
+        if 'pdf.stripfonts' in mpl.ptParams:
+            stripfonts = mpl.ptParams['pdf.stripfonts']
+        else:
+            stripfonts = False
+    if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
+        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
+        os.rename('tmp-'+fname, fname)
+
+            
 def __fig_savefig_figure(fig, fname='', *args, stripfonts=None, **kwargs):
     """ Set default file name to the one of the main script.
     
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if hasattr(fname, '__len__'):
-        if len(fname) == 0:
-            fname = '.' + mpl.rcParams['savefig.format']
-        if fname[0] == '.':
-            fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
-        if len(os.path.splitext(fname)[1]) <= 1:
-            fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
+        fname = __savefig_filename(fig, fname)
         fig.__savefig_orig_figure(fname, *args, **kwargs)
-        if not hasattr(fig, '__saved_files_counter'):
-            fig.__saved_files_counter = 0
-        fig.__saved_files_counter += 1
-        global plot_saved_files
-        plot_saved_files.append([fname, fig.__saved_files_counter])
-        if stripfonts is None:
-            if 'pdf.stripfonts' in mpl.ptParams:
-                stripfonts = mpl.ptParams['pdf.stripfonts']
-            else:
-                stripfonts = False
-        if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-            subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-            os.rename('tmp-'+fname, fname)
+        __savefig_stripfonts(fname, stripfonts)
     else:
         fig.__savefig_orig_figure(fname, *args, **kwargs)
 
@@ -466,29 +515,15 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if hasattr(fname, '__len__'):
-        if len(fname) == 0:
-            fname = '.' + mpl.rcParams['savefig.format']
-        if fname[0] == '.':
-            fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
-        if len(os.path.splitext(fname)[1]) <= 1:
-            fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
+        fname = __savefig_filename(gcf(), fname)
         plt.__savefig_orig_figure(fname, *args, **kwargs)
-        global plot_saved_files
-        plot_saved_files.append([fname, 1])
-        if stripfonts is None:
-            if 'pdf.stripfonts' in mpl.ptParams:
-                stripfonts = mpl.ptParams['pdf.stripfonts']
-            else:
-                stripfonts = False
-        if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-            subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-            os.rename('tmp-'+fname, fname)
+        __savefig_stripfonts(fname, stripfonts)
     else:
         fig.__savefig_orig_figure(fname, *args, **kwargs)
 
 
 def latex_include_figures():
-    """ Print LaTeX `\includegraphics{}` commands for all saved files.
+    """ Print LaTeX `\includegraphics<>{}` commands for all saved files.
 
     This can then be copied directly into you LaTeX document to include
     the generated figures.  For multiple files from the same figure,
@@ -654,7 +689,7 @@ def demo():
     x = np.linspace(0.0, 2.0, 200)
     axs[0].plot(x, np.sin(2.0*np.pi*x))
     axs[0].set_ylim(-1.0, 2.0)
-    fig.savefig('.pdf', stripfonts=False)
+    fig.savefig('+A.pdf', stripfonts=True)
 
     fig, axs = plt.subplots(3, 3)
     fig.set_size_cm(30.0, 16.0)
@@ -670,6 +705,7 @@ def demo():
     for k in range(1, 3):
         axs[k,-1].plot(x, np.sin(2.0*np.pi*x-k))
         axs[k,-1].text(0.1, 0.8, '%d,-1' % k, transform=axs[k,-1].transAxes)
+    fig.savefig('+B.pdf', stripfonts=True)
 
     latex_include_figures()
             
