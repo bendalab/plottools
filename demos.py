@@ -1,5 +1,8 @@
+import sys
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+from plottools.version import __version__
 from plottools.styles import demo as styles_demo
 from plottools.colors import demo as colors_demo
 from plottools.figure import demo as figure_demo
@@ -16,6 +19,12 @@ from plottools.significance import demo as significance_demo
 
 
 if __name__ == "__main__":
+    print('python     version: %d.%d.%d' % (sys.version_info[:3]))
+    print('numpy      version:', np.__version__)
+    print('matplotlib version:', mpl.__version__)
+    print('plottools  version:', __version__)
+    print()
+    
     print('plottools.styles ...')
     styles_demo()
     uninstall_align_labels()
