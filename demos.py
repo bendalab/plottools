@@ -16,6 +16,7 @@ from plottools.axes import demo as axes_demo
 from plottools.insets import demo as insets_demo
 from plottools.scalebars import demo as scalebars_demo
 from plottools.significance import demo as significance_demo
+from plottools.neurons import demo as neurons_demo
 
 
 if __name__ == "__main__":
@@ -28,37 +29,53 @@ if __name__ == "__main__":
     print('plottools.styles ...')
     styles_demo()
     uninstall_align_labels()
+    print()
 
     print('plottools.colors ...')
     colors_demo()
+    print()
 
     print('plottools.figure ...')
     figure_demo()
+    print()
 
     print('plottools.spines ...')
     spines_demo()
+    print()
 
     print('plottools.ticks ...')
     ticks_demo()
+    print()
 
     print('plottools.labels ...')
     labels_demo()
+    print()
 
     print('plottools.arrows ...')
     arrows_demo()
+    print()
 
     print('plottools.text ...')
     text_demo()
+    print()
 
     print('plottools.axes ...')
     axes_demo()
+    print()
     
     print('plottools.insets ...')
     insets_demo()
+    print()
 
     print('plottools.scalebars ...')
     scalebars_demo()
+    print()
 
     print('plottools.significance ...')
     significance_demo()
+    print()
+
+    print('plottools.neurons ...')
+    neurons_demo()
+    print()
 
