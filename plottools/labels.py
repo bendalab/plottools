@@ -294,7 +294,9 @@ def install_align_labels(xdist=5, ydist=10):
     global __default_ydist
     __default_ydist = ydist
     
-    if not hasattr(mpl.figure.Figure, 'align_labels'):
+    if not hasattr(mpl.figure.Figure, '__installed_align_labels'):
+        if hasattr(mpl.figure.Figure, 'align_labels'):
+            mpl.figure.Figure.__align_labels_orig_labels = mpl.figure.Figure.align_labels
         mpl.figure.Figure.align_labels = align_labels
         mpl.figure.Figure.__installed_align_labels = True
     if not hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
@@ -322,6 +324,9 @@ def uninstall_align_labels():
     if hasattr(mpl.figure.Figure, '__installed_align_labels'):
         delattr(mpl.figure.Figure, 'align_labels')
         delattr(mpl.figure.Figure, '__installed_align_labels')
+        if hasattr(mpl.figure.Figure, '__align_labels_orig_labels'):
+            mpl.figure.Figure.align_labels = mpl.figure.Figure.__align_labels_orig_labels
+            delattr(mpl.figure.Figure, '__align_labels_orig_labels')
     if hasattr(mpl.figure.Figure, '__savefig_orig_labels'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_labels
         delattr(mpl.figure.Figure, '__savefig_orig_labels')

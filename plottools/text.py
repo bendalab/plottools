@@ -61,6 +61,8 @@ def translate_latex_text(s, **kwargs):
         s = s.replace('%', r'\%')
         s = s.replace('#', r'\#')
         s = s.replace('&', r'\&')
+        s = s.replace(u'\u2009', r'\,')
+        s = s.replace(u'\u00B5', r'\micro{}')
         if 'fontstyle' in kwargs and kwargs['fontstyle'] == 'italic':
             del kwargs['fontstyle']
             s = r'\textit{' + s + r'}'
