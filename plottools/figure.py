@@ -541,7 +541,7 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
     If no fileextension is given, then rcParams['savefig.format'] is used.
     """
     if hasattr(fname, '__len__'):
-        fname = __savefig_filename(gcf(), fname)
+        fname = __savefig_filename(plt.gcf(), fname)
         plt.__savefig_orig_figure(fname, *args, **kwargs)
         __savefig_stripfonts(fname, stripfonts)
     else:
