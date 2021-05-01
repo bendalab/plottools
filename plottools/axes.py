@@ -119,9 +119,9 @@ def common_xlabels(fig, axes=None):
     done = False
     for ax in axes:
         if ax.get_position().p0[1] > miny + 1e-6:
-            ax.set_xlabel('')
+            ax.xaxis.label.set_visible(False)
         elif done:
-            ax.set_xlabel('')
+            ax.xaxis.label.set_visible(False)
         else:
             x, y = ax.xaxis.get_label().get_position()
             x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
@@ -153,9 +153,9 @@ def common_ylabels(fig, axes=None):
     done = False
     for ax in axes:
         if ax.get_position().p0[0] > minx + 1e-6:
-            ax.set_ylabel('')
+            ax.yaxis.label.set_visible(False)
         elif done:
-            ax.set_ylabel('')
+            ax.yaxis.label.set_visible(False)
         else:
             x, y = ax.yaxis.get_label().get_position()
             y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
@@ -186,10 +186,10 @@ def common_xticks(fig, axes=None):
     done = False
     for ax in axes:
         if ax.get_position().p0[1] > miny + 1e-6:
-            ax.set_xlabel('')
+            ax.xaxis.label.set_visible(False)
             ax.xaxis.set_major_formatter(ticker.NullFormatter())
         elif done:
-            ax.set_xlabel('')
+            ax.xaxis.label.set_visible(False)
         else:
             x, y = ax.xaxis.get_label().get_position()
             x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
@@ -220,10 +220,80 @@ def common_yticks(fig, axes=None):
     done = False
     for ax in axes:
         if ax.get_position().p0[0] > minx + 1e-6:
-            ax.set_ylabel('')
+            ax.yaxis.label.set_visible(False)
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
         elif done:
-            ax.set_ylabel('')
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_xspines(fig, axes=None):
+    """ Simplify common x-spines, xtick labels, and xlabels.
+    
+    Keep spine and xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    miny = np.min(coords[:,1])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    xl = 0.5*(minx+maxx)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[1] > miny + 1e-6:
+            ax.xaxis.label.set_visible(False)
+            ax.xaxis.set_major_locator(ticker.NullLocator())
+            ax.spines['bottom'].set_visible(False)
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_yspines(fig, axes=None):
+    """ Simplify common y-spines, ytick labels, and ylabels.
+    
+    Keep spine and ytick labels only at the lowest axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    """
+    if axes is None:
+        axes = fig.get_axes()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    done = False
+    for ax in axes:
+        if ax.get_position().p0[0] > minx + 1e-6:
+            ax.yaxis.label.set_visible(False)
+            ax.yaxis.set_major_locator(ticker.NullLocator())
+            ax.spines['left'].set_visible(False)
+        elif done:
+            ax.yaxis.label.set_visible(False)
         else:
             x, y = ax.yaxis.get_label().get_position()
             y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
@@ -458,6 +528,10 @@ def install_axes():
         mpl.figure.Figure.common_xticks = common_xticks
     if not hasattr(mpl.figure.Figure, 'common_yticks'):
         mpl.figure.Figure.common_yticks = common_yticks
+    if not hasattr(mpl.figure.Figure, 'common_xspines'):
+        mpl.figure.Figure.common_xspines = common_xspines
+    if not hasattr(mpl.figure.Figure, 'common_yspines'):
+        mpl.figure.Figure.common_yspines = common_yspines
     if not hasattr(mpl.figure.Figure, 'tag'):
         mpl.figure.Figure.tag = tag
     # add tag parameter to rc configuration:
@@ -489,6 +563,10 @@ def uninstall_axes():
         delattr(mpl.figure.Figure, 'common_xticks')
     if hasattr(mpl.figure.Figure, 'common_yticks'):
         delattr(mpl.figure.Figure, 'common_yticks')
+    if hasattr(mpl.figure.Figure, 'common_xspines'):
+        delattr(mpl.figure.Figure, 'common_xspines')
+    if hasattr(mpl.figure.Figure, 'common_yspines'):
+        delattr(mpl.figure.Figure, 'common_yspines')
     if hasattr(mpl.figure.Figure, 'tag'):
         delattr(mpl.figure.Figure, 'tag')
     if hasattr(mpl, 'ptParams'):
