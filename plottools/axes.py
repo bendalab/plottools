@@ -13,8 +13,8 @@ Tag axes with a label and simplify common axis labels.
 - `tag()`: tag each axes with a label.
 - `common_xlabels()`: simplify common xlabels.
 - `common_ylabels()`: simplify common ylabels.
-- `common_xtick_labels()`: simplify common xtick labels and xlabels.
-- `common_ytick_labels()`: simplify common ytick labels and ylabels.
+- `common_xticks()`: simplify common xtick labels and xlabels.
+- `common_yticks()`: simplify common ytick labels and ylabels.
 
 
 ## Settings
@@ -163,7 +163,7 @@ def common_ylabels(fig, axes=None):
             done = True
 
 
-def common_xtick_labels(fig, axes=None):
+def common_xticks(fig, axes=None):
     """ Simplify common xtick labels and xlabels.
     
     Keep xtick labels only at the lowest axes and center the common xlabel.
@@ -197,7 +197,7 @@ def common_xtick_labels(fig, axes=None):
             done = True
 
 
-def common_ytick_labels(fig, axes=None):
+def common_yticks(fig, axes=None):
     """ Simplify common ytick labels and ylabels.
     
     Keep ytick labels only at the leftmost axes and center the common ylabel.
@@ -454,10 +454,10 @@ def install_axes():
         mpl.figure.Figure.common_xlabels = common_xlabels
     if not hasattr(mpl.figure.Figure, 'common_ylabels'):
         mpl.figure.Figure.common_ylabels = common_ylabels
-    if not hasattr(mpl.figure.Figure, 'common_xtick_labels'):
-        mpl.figure.Figure.common_xtick_labels = common_xtick_labels
-    if not hasattr(mpl.figure.Figure, 'common_ytick_labels'):
-        mpl.figure.Figure.common_ytick_labels = common_ytick_labels
+    if not hasattr(mpl.figure.Figure, 'common_xticks'):
+        mpl.figure.Figure.common_xticks = common_xticks
+    if not hasattr(mpl.figure.Figure, 'common_yticks'):
+        mpl.figure.Figure.common_yticks = common_yticks
     if not hasattr(mpl.figure.Figure, 'tag'):
         mpl.figure.Figure.tag = tag
     # add tag parameter to rc configuration:
@@ -485,10 +485,10 @@ def uninstall_axes():
         delattr(mpl.figure.Figure, 'common_xlabels')
     if hasattr(mpl.figure.Figure, 'common_ylabels'):
         delattr(mpl.figure.Figure, 'common_ylabels')
-    if hasattr(mpl.figure.Figure, 'common_xtick_labels'):
-        delattr(mpl.figure.Figure, 'common_xtick_labels')
-    if hasattr(mpl.figure.Figure, 'common_ytick_labels'):
-        delattr(mpl.figure.Figure, 'common_ytick_labels')
+    if hasattr(mpl.figure.Figure, 'common_xticks'):
+        delattr(mpl.figure.Figure, 'common_xticks')
+    if hasattr(mpl.figure.Figure, 'common_yticks'):
+        delattr(mpl.figure.Figure, 'common_yticks')
     if hasattr(mpl.figure.Figure, 'tag'):
         delattr(mpl.figure.Figure, 'tag')
     if hasattr(mpl, 'ptParams'):
@@ -543,12 +543,12 @@ def demo():
     fig, axs = afigure()
     axs[0].text(0.05, 0.7, "fig.tag([0, [1, 2, 3]],\n labels='Panel %A)',\n minor_label='%A.%mi)')",
                 transform=axs[0].transAxes)
-    axs[0].text(0.5, 0.5, 'fig.common_xtick_labels()',
+    axs[0].text(0.5, 0.5, 'fig.common_xticks()',
                 transform=axs[0].transAxes, ha='center')
-    axs[0].text(0.5, 0.3, 'fig.common_ytick_labels(axs[1:])',
+    axs[0].text(0.5, 0.3, 'fig.common_yticks(axs[1:])',
                 transform=axs[0].transAxes, ha='center')
-    fig.common_xtick_labels() 
-    fig.common_ytick_labels(axs[1:])
+    fig.common_xticks() 
+    fig.common_yticks(axs[1:])
     fig.tag([0, [1, 2, 3]], xoffs=0, yoffs=3, labels='Panel %A)', minor_label='%A.%mi)')
     plt.show()
         
