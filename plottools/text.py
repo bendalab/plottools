@@ -86,8 +86,9 @@ def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
         If not None then use LaTeX for setting text and enable unicode support
         when set to `True`.
     preamble: sequence of strings or None
-        Lines for the latex preamble. Strings starting with 'p:xxx' are translated into
-        '\\usepackage{xxx}'.
+        Lines for the latex preamble. For convinience, strings starting with 'p:xxx'
+        are translated into '\\usepackage{xxx}', strings starting with
+        'p:[yyy]xxx' are translated into '\\usepackage[yyy]{xxx}'.
     """
     if font_size is not None:
         mpl.rcParams['font.size'] = font_size
@@ -108,8 +109,17 @@ def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
             if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
                 mpl.rcParams['text.latex.unicode'] = True
     if preamble is not None:
-        mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
-                            if line[:2] == 'p:' else line for line in preamble])
+        header = []
+        for line in preamble:
+            if len(line) > 3:
+                if line[:3] == 'p:[':
+                    i = line.find(']')
+                    if i > 2:
+                        line = r'\usepackage[%s]{%s}' % (line[3:i], line[i+1:])
+                elif line[:2] == 'p:':
+                    line = r'\usepackage{%s}' % line[2:]
+            header.append(line)
+        mpl.rcParams['text.latex.preamble'] = '\n'.join(header)
 
 
 def install_text():
