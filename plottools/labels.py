@@ -148,6 +148,10 @@ def align_labels(fig, axs=None):
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
         Axes of which labels should be aligned. If None align labels of all axes.
+
+    TODO
+    ----
+    The size of the ticks should be included as well in computing the position of the labels.
     """
     xdist = __default_xdist
     ydist = __default_ydist
