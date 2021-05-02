@@ -8,11 +8,6 @@ Enhance textual annotations.
 - `legend()`: legend function with LaTeX support.
 
 
-## Functions
-
-- `translate_latex_text()`: translate text to fit both normal and LaTeX mode.
-
-
 ## Settings
 
 - `text_params()`: set default parameter for the text module.
@@ -31,73 +26,14 @@ import types
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-
-
-def translate_latex_text(s, **kwargs):
-    """ Translate text to fit both normal and LaTeX mode.
-
-    Attempts to modify the string such that inpedent of whether
-    matplotlib is in LaTeX mode (`text.usetex = True`) or not, a useful
-    result is produced. Best results are achieved, if strings are
-    entirely written as LaTeX code.
-    
-    This is, in LaTeX mode (`text.usetex = True`) `fontstyle` and
-    `fontweight` arguments are translated to corresponding LaTeX
-    commands. Some unicode characters like thin space and
-    micro are replaced by appropriate LaTeX commands.
-
-    In non-LaTeX mode, '\\,' is translated to thin space, '\\micro' to
-    upright unicode micro character. Escaped '&', '%', '$', '#', '_',
-    '{', and '}' characters are unescaped.
-
-    Parameters
-    ----------
-    s: string
-        The text.
-    kwargs: dict
-        Key-word arguments for the text.
-    fontstyle: string
-        In LaTeX mode, if set to `italic` put text into '\\textit{}' command.
-    fontweight: string
-        In LaTeX mode, if set to `bold` put text into '\\textbf{}' command.
-
-    Returns
-    -------
-    s: string
-        Translated text.
-    kwargs: dict
-        Updated and adapted key-word arguments.
-    """
-    # italics and bold LaTeX font:
-    if mpl.rcParams['text.usetex']:
-        s = s.replace(u'\u2009', r'\,')
-        s = s.replace(u'\u00B5', r'\micro{}')
-        if 'fontstyle' in kwargs and kwargs['fontstyle'] == 'italic':
-            del kwargs['fontstyle']
-            s = r'\textit{' + s + r'}'
-        if 'fontweight' in kwargs and kwargs['fontweight'] == 'bold':
-            del kwargs['fontweight']
-            s = r'\textbf{' + s + r'}'
-    else:
-        s = s.replace(r'\&', '&')
-        s = s.replace(r'\%', '%')
-        s = s.replace(r'\$', '$')
-        s = s.replace(r'\#', '#')
-        s = s.replace(r'\_', '_')
-        s = s.replace(r'\{', '{')
-        s = s.replace(r'\}', '}')
-        s = s.replace(r'\,', u'\u2009')
-        s = s.replace(r'\micro{}', u'\u00B5')
-        s = s.replace(r'\micro ', u'\u00B5')
-        s = s.replace(r'\micro', u'\u00B5')
-    return s, kwargs
+from .latex import translate_latex_text
 
 
 def text(ax, x, y, s, *args, slope=None, **kwargs):
     """ Text function with slope parameter and LaTeX support.
 
     Adds an optional slope parameter that rotates the text to a specified slope.
-    Uses `translate_latex_text ()` to improve LaTeX mode.
+    Uses `latex.translate_latex_text()` to improve LaTeX mode.
 
     Parameters
     ----------
@@ -136,7 +72,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
 def legend(ax, *args, **kwargs):
     """ Legend function with LaTeX support.
     
-    Uses `translate_latex_text ()` to improve LaTeX mode of legend
+    Uses `latex.translate_latex_text()` to improve LaTeX mode of legend
     labels.
 
     Parameters
