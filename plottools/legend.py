@@ -1,5 +1,5 @@
 """
-Enhanced legend.
+Enhance legend text.
 
 
 ## Enhanced axes member functions
@@ -44,19 +44,45 @@ def legend(ax, *args, **kwargs):
     return lgd
 
 
-def legend_params(legend_size='x-small'):
+def legend_params(fontsize=None, frameon=None, borderpad=None,
+                  handlelength=None, handletextpad=None,
+                  labelspacing=None, columnspacing=None):
     """ Set default parameter for the legend module.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
-    legend_size: float or string or None
+    fontsize: float or string or None
         If not None set font size for legend. Either the font size in points,
         or a string like 'medium', 'small', 'x-small', 'large', 'x-large'.
+    frameon: bool or None:
+        If not None, control whether to show a frame around the legend or not.
+    borderpad: float or None
+        If not None, whitespace between legend and frame in font size units.
+    handlelength: float or None
+        If not None, length of the legend handles in font size units.
+    handletextpad: float or None
+        If not None, white space between legend handles and text in font size units.
+    labelspacing: float or None
+        If not None, vertical space between legend entries in font size units.
+    columnspacing: float or None
+        If not None, space between columns in font size units.
     """
-    if legend_size is not None:
-        mpl.rcParams['legend.fontsize'] = legend_size
+    if fontsize is not None:
+        mpl.rcParams['legend.fontsize'] = fontsize
+    if frameon is not None:
+        mpl.rcParams['legend.frameon'] = frameon
+    if borderpad is not None:
+        mpl.rcParams['legend.borderpad'] = borderpad
+    if handlelength is not None:
+        mpl.rcParams['legend.handlelength'] = handlelength
+    if handletextpad is not None:
+        mpl.rcParams['legend.handletextpad'] = handletextpad
+    if labelspacing is not None:
+        mpl.rcParams['legend.labelspacing'] = labelspacing
+    if columnspacing is not None:
+        mpl.rcParams['legend.columnspacing'] = columnspacing
 
 
 def install_legend():
@@ -96,7 +122,8 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    legend_params(legend_size='x-small')
+    legend_params(fontsize='x-small', frameon=False, borderpad=0,
+                  handlelength=2, handletextpad=4, labelspacing=2)
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2

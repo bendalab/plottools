@@ -31,6 +31,7 @@ The following modules are provided by the plottools package:
 - `ticks`: setting tick locations and formats. [More...](docs/ticks.md)
 - `labels`: annotate axis with label and unit and align axes labels.
 - `text`: enhance textual annotations.
+- `legend`: enhance legend text.
 - `arrows`: arrows.
 - `axes`: tag axes with a label and simplify common axis labels.
 - `insets`: insets made easy. [More...](docs/insets.md)

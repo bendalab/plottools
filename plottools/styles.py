@@ -72,6 +72,7 @@ from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_p
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
+from .legend import legend_params, install_legend, uninstall_legend
 from .text import text_params, install_text, uninstall_text
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
@@ -780,11 +781,11 @@ def screen_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(tick_dir='out', tick_size=4.0,
-                fig_color=palette['gray'], axes_color=palette['white'],
-                namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', legend_size='x-small')
+    plot_params(tick_dir='out', tick_size=4.0, fig_color=palette['gray'],
+                axes_color=palette['white'], namespace=namespace)
+    text_params(font_size=10.0, font_family='sans-serif', label_size='small')
+    legend_params(fontsize='small', frameon=False, borderpad=0,
+                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -863,11 +864,11 @@ def paper_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(tick_dir='out', tick_size=2.5,
-                fig_color='none', axes_color='none',
+    plot_params(tick_dir='out', tick_size=2.5, fig_color='none', axes_color='none',
                 namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', legend_size='x-small')
+    text_params(font_size=10.0, font_family='sans-serif', label_size='small')
+    legend_params(fontsize='small', frameon=False, borderpad=0,
+                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -949,11 +950,11 @@ def sketch_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
-    plot_params(tick_dir='out', tick_size=6,
-                fig_color=palette['white'], axes_color='none',
+    plot_params(tick_dir='out', tick_size=6, fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif',
-                label_size='medium', legend_size='medium')
+    text_params(font_size=10.0, font_family='sans-serif', label_size='medium')
+    legend_params(fontsize='medium', frameon=False, borderpad=0,
+                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
