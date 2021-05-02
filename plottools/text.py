@@ -189,7 +189,7 @@ def demo(usetex=False):
         If `True` use LaTeX mode.
     """
     mpl.rcParams['text.usetex'] = usetex
-    mpl.rcParams['text.latex.preamble'] = [r'\usepackage{SIunits}']
+    mpl.rcParams['text.latex.preamble'] = r'\usepackage{SIunits}'
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2
