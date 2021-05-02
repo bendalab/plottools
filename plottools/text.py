@@ -30,13 +30,20 @@ import matplotlib.pyplot as plt
 
 def translate_latex_text(s, **kwargs):
     """ Translate text to fit both normal and LaTeX mode.
-    
-    In LaTeX mode (`text.usetex = True`) translate `fontstyle` and
-    `fontweight` arguments to corresponding LaTeX commands. Escape
-    special characters '%', '#', '&'.
 
-    In non-LaTeX mode translate '\\,' to thin space, '\\micro' to
-    upright micro character.
+    Attempts to modify the string such that inpedent of whether
+    matplotlib is in LaTeX mode (`text.usetex = True`) or not, a useful
+    result is produced. Best results are achieved, if strings are
+    entirely written as LaTeX code.
+    
+    This is, in LaTeX mode (`text.usetex = True`) `fontstyle` and
+    `fontweight` arguments are translated to corresponding LaTeX
+    commands. Some unicode characters like thin space and
+    micro are replaced by appropriate LaTeX commands.
+
+    In non-LaTeX mode, '\\,' is translated to thin space, '\\micro' to
+    upright unicode micro character. Escaped '&', '%', '$', '#', '_',
+    '{', and '}' characters are unescaped.
 
     Parameters
     ----------
@@ -58,9 +65,6 @@ def translate_latex_text(s, **kwargs):
     """
     # italics and bold LaTeX font:
     if mpl.rcParams['text.usetex']:
-        s = s.replace('%', r'\%')
-        s = s.replace('#', r'\#')
-        s = s.replace('&', r'\&')
         s = s.replace(u'\u2009', r'\,')
         s = s.replace(u'\u00B5', r'\micro{}')
         if 'fontstyle' in kwargs and kwargs['fontstyle'] == 'italic':
@@ -70,6 +74,13 @@ def translate_latex_text(s, **kwargs):
             del kwargs['fontweight']
             s = r'\textbf{' + s + r'}'
     else:
+        s = s.replace(r'\&', '&')
+        s = s.replace(r'\%', '%')
+        s = s.replace(r'\$', '$')
+        s = s.replace(r'\#', '#')
+        s = s.replace(r'\_', '_')
+        s = s.replace(r'\{', '{')
+        s = s.replace(r'\}', '}')
         s = s.replace(r'\,', u'\u2009')
         s = s.replace(r'\micro{}', u'\u00B5')
         s = s.replace(r'\micro ', u'\u00B5')
