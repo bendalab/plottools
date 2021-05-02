@@ -46,6 +46,7 @@ def legend(ax, *args, **kwargs):
 
 def legend_params(fontsize=None, frameon=None, borderpad=None,
                   handlelength=None, handletextpad=None,
+                  numpoints=None, scatterpoints=None,
                   labelspacing=None, columnspacing=None):
     """ Set default parameter for the legend module.
 
@@ -64,6 +65,10 @@ def legend_params(fontsize=None, frameon=None, borderpad=None,
         If not None, length of the legend handles in font size units.
     handletextpad: float or None
         If not None, white space between legend handles and text in font size units.
+    numpoints: int or None
+        If not None, the number of marker points in the legend handle.
+    scatterpoints: int or None,
+        If not None, the number of scatter points in the legend handle.
     labelspacing: float or None
         If not None, vertical space between legend entries in font size units.
     columnspacing: float or None
@@ -79,6 +84,10 @@ def legend_params(fontsize=None, frameon=None, borderpad=None,
         mpl.rcParams['legend.handlelength'] = handlelength
     if handletextpad is not None:
         mpl.rcParams['legend.handletextpad'] = handletextpad
+    if numpoints is not None:
+        mpl.rcParams['legend.numpoints'] = numpoints
+    if scatterpoints is not None:
+        mpl.rcParams['legend.scatterpoints'] = scatterpoints
     if labelspacing is not None:
         mpl.rcParams['legend.labelspacing'] = labelspacing
     if columnspacing is not None:
@@ -123,7 +132,8 @@ def demo(usetex=False):
         If `True` use LaTeX mode.
     """
     legend_params(fontsize='x-small', frameon=False, borderpad=0,
-                  handlelength=2, handletextpad=4, labelspacing=2)
+                  handlelength=2, handletextpad=4,
+                  numpoints=1, scatterpoints=1, labelspacing=2)
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2

@@ -785,7 +785,8 @@ def screen_style(namespace=None):
                 axes_color=palette['white'], namespace=namespace)
     text_params(font_size=10.0, font_family='sans-serif', label_size='small')
     legend_params(fontsize='small', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
+                  handlelength=1.5, handletextpad=0.5,
+                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -868,7 +869,8 @@ def paper_style(namespace=None):
                 namespace=namespace)
     text_params(font_size=10.0, font_family='sans-serif', label_size='small')
     legend_params(fontsize='small', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
+                  handlelength=1.5, handletextpad=0.8,
+                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -954,7 +956,8 @@ def sketch_style(namespace=None):
                 namespace=namespace)
     text_params(font_size=10.0, font_family='sans-serif', label_size='medium')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.2, labelspacing=0.5, columnspacing=0.5)
+                  handlelength=1.5, handletextpad=0.8,
+                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
