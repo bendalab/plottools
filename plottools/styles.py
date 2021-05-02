@@ -72,7 +72,7 @@ from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_p
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
 from .labels import set_label_format, install_align_labels, uninstall_align_labels
-from .text import install_text, uninstall_text
+from .text import text_params, install_text, uninstall_text
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
 from .axes import axes_params
@@ -663,9 +663,7 @@ def color_cycler(palette, colors):
         mpl.rcParams['axes.color_cycle'] = color_cycle
 
 
-def plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', tick_dir='out', tick_size=2.5,
-                legend_size='x-small', latex=False, preamble=None,
+def plot_params(tick_dir='out', tick_size=2.5,
                 fig_color='none', axes_color='none', namespace=None):
     """ Set some default plot parameter via matplotlib's rc settings.
 
@@ -675,23 +673,10 @@ def plot_params(font_size=10.0, font_family='sans-serif',
 
     Parameters
     ----------
-    font_size: float
-        Fontsize for text in points.
-    font_family: string or None
-        Name of font to be used. If None do not set it and keep the default.
-    label_size: float or string
-        Fontsize for axis labels.
     tick_dir: string
         Direction of tick marks ('in', 'out', or 'inout')
     tick_size: float
         Length of tick marks in points.
-    legend_size: float or string
-        Fontsize for legend.
-    latex: boolean
-        If True use LaTeX for setting text and enable unicode support.
-    preamble: sequence of strings or None
-        Lines for the latex preamble. Strings starting with 'p:xxx' are translated into
-        '\\usepackage{xxx}'.
     fig_color: matplotlib color specification or 'none'
         Background color for the whole figure.
     axes_color: matplotlib color specification or 'none'
@@ -704,18 +689,12 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     if namespace is None:
         namespace = __main__
     mpl.rcParams['figure.facecolor'] = fig_color
-    if font_family is not None:
-        mpl.rcParams['font.family'] = font_family
-    mpl.rcParams['font.size'] = font_size
-    mpl.rcParams['xtick.labelsize'] = label_size
-    mpl.rcParams['ytick.labelsize'] = label_size
     mpl.rcParams['xtick.direction'] = tick_dir
     mpl.rcParams['ytick.direction'] = tick_dir
     mpl.rcParams['xtick.major.size'] = tick_size
     mpl.rcParams['ytick.major.size'] = tick_size
     mpl.rcParams['xtick.minor.size'] = 0.6*tick_size
     mpl.rcParams['ytick.minor.size'] = 0.6*tick_size
-    mpl.rcParams['legend.fontsize'] = legend_size
     # axes, label, ticks and text color:
     mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
@@ -733,20 +712,6 @@ def plot_params(font_size=10.0, font_family='sans-serif',
     # no margins:
     mpl.rcParams['axes.xmargin'] = 0.0
     mpl.rcParams['axes.ymargin'] = 0.0
-    # LaTeX:
-    mpl.rcParams['text.usetex'] = latex
-    if latex:
-        """
-        mpl.rcParams['font.serif'] = ['Times', 'Palatino', 'New Century Schoolbook', 'Bookman', 'Computer Modern Roman']
-        mpl.rcParams['font.sans-serif'] = ['Helvetica', 'Avant Garde', 'Computer Modern Sans serif']
-        mpl.rcParams['font.cursive'] = ['Zapf Chancery']
-        mpl.rcParams['font.monospace'] = ['Courier', 'Computer Modern Typewriter']
-        """
-        if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
-            mpl.rcParams['text.latex.unicode'] = True
-        if preamble is not None:
-            mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
-                                if line[:2] == 'p:' else line for line in preamble])
 
 
 def screen_style(namespace=None):
@@ -815,10 +780,11 @@ def screen_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', tick_dir='out', tick_size=4.0, legend_size='x-small',
+    plot_params(tick_dir='out', tick_size=4.0,
                 fig_color=palette['gray'], axes_color=palette['white'],
                 namespace=namespace)
+    text_params(font_size=10.0, font_family='sans-serif',
+                label_size='small', legend_size='x-small')
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -897,10 +863,11 @@ def paper_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', tick_dir='out', tick_size=2.5, legend_size='x-small',
+    plot_params(tick_dir='out', tick_size=2.5,
                 fig_color='none', axes_color='none',
                 namespace=namespace)
+    text_params(font_size=10.0, font_family='sans-serif',
+                label_size='small', legend_size='x-small')
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
@@ -982,10 +949,11 @@ def sketch_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
-    plot_params(font_size=14.0, font_family=None,
-                label_size='medium', tick_dir='out', tick_size=6, legend_size='medium',
+    plot_params(tick_dir='out', tick_size=6,
                 fig_color=palette['white'], axes_color='none',
                 namespace=namespace)
+    text_params(font_size=10.0, font_family='sans-serif',
+                label_size='medium', legend_size='medium')
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                 font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',

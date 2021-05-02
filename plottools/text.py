@@ -13,6 +13,11 @@ Enhance textual annotations.
 - `translate_latex_text()`: translate text to fit both normal and LaTeX mode.
 
 
+## Settings
+
+- `text_params()`: set default parameter for the text module.
+
+
 ## Install/uninstall text functions
 
 You usually do not need to call these functions. Upon loading the text
@@ -145,6 +150,55 @@ def legend(ax, *args, **kwargs):
     return lgd
 
 
+def text_params(font_size=10.0, font_family='sans-serif',
+                label_size='small', legend_size='x-small',
+                latex=False, preamble=None):
+    """ Set default parameter for the text module.
+
+    Call this function *before* you create any matplotlib figure.
+
+    Parameters
+    ----------
+    font_size: float or None
+        If not None set font size for text in points.
+    font_family: string or None
+        If not None set name of font to be used.
+    label_size: float or string or None
+        If not None set font size for x- and y-axis labels.
+    legend_size: float or string or None
+        If not None set font size for legend.
+    latex: boolean or None
+        If not None then use LaTeX for setting text and enable unicode support
+        when set to `True`.
+    preamble: sequence of strings or None
+        Lines for the latex preamble. Strings starting with 'p:xxx' are translated into
+        '\\usepackage{xxx}'.
+    """
+    if font_size is not None:
+        mpl.rcParams['font.size'] = font_size
+    if font_family is not None:
+        mpl.rcParams['font.family'] = font_family
+    if label_size is not None:
+        mpl.rcParams['xtick.labelsize'] = label_size
+        mpl.rcParams['ytick.labelsize'] = label_size
+    if legend_size is not None:
+        mpl.rcParams['legend.fontsize'] = legend_size
+    if latex is not None:
+        mpl.rcParams['text.usetex'] = latex
+        if latex:
+            """
+            mpl.rcParams['font.serif'] = ['Times', 'Palatino', 'New Century Schoolbook', 'Bookman', 'Computer Modern Roman']
+            mpl.rcParams['font.sans-serif'] = ['Helvetica', 'Avant Garde', 'Computer Modern Sans serif']
+            mpl.rcParams['font.cursive'] = ['Zapf Chancery']
+            mpl.rcParams['font.monospace'] = ['Courier', 'Computer Modern Typewriter']
+            """
+            if 'text.latex.unicode' in mpl.rcParams and int(mpl.__version__.split('.')[0]) < 3:
+                mpl.rcParams['text.latex.unicode'] = True
+    if preamble is not None:
+        mpl.rcParams['text.latex.preamble'] = '\n'.join([r'\usepackage{%s}' % line[2:] \
+                            if line[:2] == 'p:' else line for line in preamble])
+
+
 def install_text():
     """ Patch the `mpl.axes.Axes.text()` and `mpl.axes.Axes.legend()` functions.
 
@@ -158,7 +212,7 @@ def install_text():
     if not hasattr(mpl.axes.Axes, '__legend_orig_text'):
         mpl.axes.Axes.__legend_orig_text = mpl.axes.Axes.legend
         mpl.axes.Axes.legend = legend
-
+    
 
 def uninstall_text():
     """ Uninstall code for text.
@@ -188,8 +242,8 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    mpl.rcParams['text.usetex'] = usetex
-    mpl.rcParams['text.latex.preamble'] = r'\usepackage{SIunits}'
+    text_params(font_size=12, label_size='medium', legend_size='medium',
+                latex=usetex, preamble=r'\usepackage{SIunits}')
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2
