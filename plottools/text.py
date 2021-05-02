@@ -5,7 +5,6 @@ Enhance textual annotations.
 ## Enhanced axes member functions
 
 - `text()`: text function with slope parameter and LaTeX support.
-- `legend()`: legend function with LaTeX support.
 
 
 ## Settings
@@ -69,25 +68,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     return txt
 
 
-def legend(ax, *args, **kwargs):
-    """ Legend function with LaTeX support.
-    
-    Uses `latex.translate_latex_text()` to improve LaTeX mode of legend
-    labels.
-
-    Parameters
-    ----------
-    Same as `mpl.axes.Axes.legend()`.
-    """
-    handles, labels = ax.get_legend_handles_labels()
-    for k in range(len(labels)):
-        labels[k], newkwargs = translate_latex_text(labels[k], **kwargs)
-    lgd = ax.__legend_orig_text(handles, labels, *args, **newkwargs)
-    return lgd
-
-
-def text_params(font_size=10.0, font_family='sans-serif',
-                label_size='small', legend_size='x-small',
+def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
                 latex=False, preamble=None):
     """ Set default parameter for the text module.
 
@@ -101,8 +82,6 @@ def text_params(font_size=10.0, font_family='sans-serif',
         If not None set name of font to be used.
     label_size: float or string or None
         If not None set font size for x- and y-axis labels.
-    legend_size: float or string or None
-        If not None set font size for legend.
     latex: boolean or None
         If not None then use LaTeX for setting text and enable unicode support
         when set to `True`.
@@ -117,8 +96,6 @@ def text_params(font_size=10.0, font_family='sans-serif',
     if label_size is not None:
         mpl.rcParams['xtick.labelsize'] = label_size
         mpl.rcParams['ytick.labelsize'] = label_size
-    if legend_size is not None:
-        mpl.rcParams['legend.fontsize'] = legend_size
     if latex is not None:
         mpl.rcParams['text.usetex'] = latex
         if latex:
@@ -136,7 +113,7 @@ def text_params(font_size=10.0, font_family='sans-serif',
 
 
 def install_text():
-    """ Patch the `mpl.axes.Axes.text()` and `mpl.axes.Axes.legend()` functions.
+    """ Patch the `mpl.axes.Axes.text()` function.
 
     See also
     --------
@@ -145,9 +122,6 @@ def install_text():
     if not hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.__text_orig_text = mpl.axes.Axes.text
         mpl.axes.Axes.text = text
-    if not hasattr(mpl.axes.Axes, '__legend_orig_text'):
-        mpl.axes.Axes.__legend_orig_text = mpl.axes.Axes.legend
-        mpl.axes.Axes.legend = legend
     
 
 def uninstall_text():
@@ -162,9 +136,6 @@ def uninstall_text():
     if hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.text = mpl.axes.Axes.__text_orig_text
         delattr(mpl.axes.Axes, '__text_orig_text')
-    if hasattr(mpl.axes.Axes, '__legend_orig_text'):
-        mpl.axes.Axes.legend = mpl.axes.Axes.__legend_orig_text
-        delattr(mpl.axes.Axes, '__legend_orig_text')
 
                 
 install_text()
@@ -178,17 +149,16 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    text_params(font_size=12, label_size='medium', legend_size='medium',
+    text_params(font_size=12, label_size='medium',
                 latex=usetex, preamble=r'\usepackage{SIunits}')
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2
     x = np.linspace(0, 2, 10)
-    ax.plot(x, slope1*x-0.2, label='0.2\,\micro m')
-    ax.plot(x, slope2*x+0.1, label='whatever')
+    ax.plot(x, slope1*x-0.2)
+    ax.plot(x, slope2*x+0.1)
     ax.text(1.5, 0.57, 'Steep', slope=slope1)
     ax.text(1.5, 0.4, 'Shallow', slope=slope2)
-    ax.legend(loc='upper left')
     ax.text(0.05, 0.7, "ax.text(1, 0.3, 'Steep', slope=0.5)", transform=ax.transAxes)
     ax.text(0.05, 0.6, "ax.text(1, 0.2, 'Shallow', slope=0.2)", transform=ax.transAxes)
     ax.text(0.5, 0.0, 'Italic', fontstyle='italic')
