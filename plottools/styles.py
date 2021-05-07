@@ -71,7 +71,7 @@ from .figure import figure_params, latex_include_figures
 from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
 from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
 from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
-from .labels import set_label_format, install_align_labels, uninstall_align_labels
+from .labels import labels_params, install_align_labels, uninstall_align_labels
 from .legend import legend_params, install_legend, uninstall_legend
 from .text import text_params, install_text, uninstall_text
 from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
@@ -796,9 +796,8 @@ def screen_style(namespace=None):
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
-    # define the appearance of axis labels:
-    set_label_format('{label} [{unit}]')
-    install_align_labels(xdist=5, ydist=10)
+    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10)
+    install_align_labels()
 
     
 def paper_style(namespace=None):
@@ -881,8 +880,8 @@ def paper_style(namespace=None):
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
     # define the appearance of axis labels:
-    set_label_format('{label} [{unit}]')
-    install_align_labels(xdist=5, ydist=10)
+    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10)
+    install_align_labels()
 
    
 def sketch_style(namespace=None):
@@ -968,8 +967,8 @@ def sketch_style(namespace=None):
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     color_cycler(palette, cycle_colors)
     # define the appearance of axis labels:
-    set_label_format('{label} ({unit})')
-    install_align_labels(xdist=5, ydist=10)
+    labels_params(lformat='{label} ({unit})', xdist=5, ydist=10)
+    install_align_labels()
     
 
 def plot_linestyles(ax):

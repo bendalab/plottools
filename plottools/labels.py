@@ -16,7 +16,7 @@ Annotate axis with label and unit and align axes labels.
 
 ## Settings
 
-- `set_label_format()`: set the string for formatting the axes labels.
+- `labels_params()`: set parameters for axis labels.
 
 
 ## Install/uninstall labels functions
@@ -38,25 +38,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-""" This string defines how an axis label is formatted from a label and an unit. """
-label_format = '{label} [{unit}]'
-
-
-def set_label_format(labelf):
-    """ Set the string for formatting the axes labels.
-    
-    Parameters
-    ----------
-    labelf: string
-        A string for formatting the axes labels.
-        In this string '{label}' is replaced by the axes' label,
-        and '{unit}' is replaced by the axes' unit.
-        The default format string is '{label} [{unit}]'.
-    """
-    global label_format
-    label_format = labelf
-
-
 def __axis_label(label, unit=None):
     """ Format an axis label from a label and a unit
     
@@ -71,12 +52,12 @@ def __axis_label(label, unit=None):
     -------
     label: string
         An axis label formatted from `label` and `unit` according to
-        the `label_format` string.
+        the `ptParams['axes.label.format']` string.
     """
     if not unit:
         return label
     else:
-        return label_format.format(label=label, unit=unit)
+        return mpl.ptParams['axes.label.format'].format(label=label, unit=unit)
 
 
 def set_xlabel(ax, label, unit=None, **kwargs):
@@ -130,12 +111,6 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
-__default_xdist = 5
-""" Minimum vertical distance between xtick labels and label of x-axis. """
-__default_ydist = 10
-""" Minimum horizontal distance between ytick labels and label of y-axis. """
-
-
 def align_labels(fig, axs=None):
     """ Align x- and ylabels of a figure.
 
@@ -153,8 +128,11 @@ def align_labels(fig, axs=None):
     ----
     The size of the ticks should be included as well in computing the position of the labels.
     """
-    xdist = __default_xdist
-    ydist = __default_ydist
+    xdist = 5
+    ydist = 10
+    if hasattr(mpl, 'ptParams'):
+        xdist = mpl.ptParams.get('axes.label.xdist', 5)
+        ydist = mpl.ptParams.get('axes.label.ydist', 10)
     if axs is None:
         axs = fig.get_axes()
     # get axes positions and ticklabel widths:
@@ -234,13 +212,47 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
+def labels_params(lformat=None, xdist=None, ydist=None):
+    """ Set parameters for axis labels.
+    
+    Parameters
+    ----------
+    lformat: string or None
+        If not None set the string specifying how axes labels are formatted.
+        In this string '{label}' is replaced by the axes' label,
+        and '{unit}' is replaced by the axes' unit.
+        The default format string is '{label} [{unit}]'.
+    xdist: float
+        Minimum vertical distance between xtick labels and label of x-axis.
+        Used by `align_labels()`.
+    ydist: float
+        Minimum horizontal distance between ytick labels and label of y-axis.
+        Used by `align_labels()`.
+    """
+    install_labels()
+    if lformat is not None:
+        mpl.ptParams['axes.label.format'] = lformat
+    if xdist is not None:
+        mpl.ptParams['axes.label.xdist'] = xdist
+    if ydist is not None:
+        mpl.ptParams['axes.label.ydist'] = ydist
+
+
 def install_labels():
     """ Install labels functions on matplotlib axes.
+
+    Adds mpl.ptParams:
+    ```
+    axes.label.format: '{label} [{unit}]'
+    axes.label.xdist: 5
+    axes.label.ydist: 10
+    ```
 
     This function is also called automatically upon importing the module.
 
     See also
     --------
+    - `set_xlabel()`
     - `install_align_labels()`
     - `uninstall_labels()`
     """
@@ -253,7 +265,16 @@ def install_labels():
     if not hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
         Axes3D.set_zlabel = set_zlabel
-
+    # add labels parameter to rc configuration:
+    if not hasattr(mpl, 'ptParams'):
+        mpl.ptParams = {}
+    if 'axes.label.format' not in mpl.ptParams:
+        mpl.ptParams.update({'axes.label.format': '{label} [{unit}]'})
+    if 'axes.label.xdist' not in mpl.ptParams:
+        mpl.ptParams.update({'axes.label.xdist': 5})
+    if 'axes.label.ydist' not in mpl.ptParams:
+        mpl.ptParams.update({'axes.label.ydist': 10})
+        
 
 def uninstall_labels():
     """ Uninstall labels functions from matplotlib axes.
@@ -274,30 +295,26 @@ def uninstall_labels():
     if hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
         delattr(Axes3D, '__set_zlabel_labels')
+    # remove labels parameter from mpl.ptParams:
+    if hasattr(mpl, 'ptParams') and 'axess.label.format' in mpl.ptParams:
+        mpl.ptParams.pop('axes.label.format', None)
+    if hasattr(mpl, 'ptParams') and 'axess.label.xdist' in mpl.ptParams:
+        mpl.ptParams.pop('axes.label.xdist', None)
+    if hasattr(mpl, 'ptParams') and 'axess.label.ydist' in mpl.ptParams:
+        mpl.ptParams.pop('axes.label.ydist', None)
 
 
-def install_align_labels(xdist=5, ydist=10):
+def install_align_labels():
     """ Install code for aligning axes labels into `show()` and `savefig()` functions.
 
     This function is also called automatically upon importing the module.
 
-    Parameter
-    ---------
-    xdist: float
-        Minimum vertical distance between xtick labels and label of x-axis.
-    ydist: float
-        Minimum horizontal distance between ytick labels and label of y-axis.
-
     See also
     --------
+    - `align_labels()`
     - `uninstall_align_labels()`
     - `install_labels()`
     """
-    global __default_xdist
-    __default_xdist = xdist
-    global __default_ydist
-    __default_ydist = ydist
-    
     if not hasattr(mpl.figure.Figure, '__installed_align_labels'):
         if hasattr(mpl.figure.Figure, 'align_labels'):
             mpl.figure.Figure.__align_labels_orig_labels = mpl.figure.Figure.align_labels
@@ -381,10 +398,10 @@ def demo():
     axs[2, 0].set_xlabel('Time', 'ms')
     axs[2, 0].set_ylabel('Amplitude', 'Pa')
     
-    set_label_format('{label} / {unit}')   # usually you would do this before any plotting!
+    labels_params(lformat='{label} / {unit}')   # usually you would do this before any plotting!
     axs[2, 1].plot(x, 1000*y)
     axs[2, 1].set_ylim(-1000, 1700)
-    axs[2, 1].text(1.0, 1500, "set_label_format('{label} / {unit}')")
+    axs[2, 1].text(1.0, 1500, "labels_params('{label} / {unit}')")
     axs[2, 1].text(1.0, 1300, "ax.set_xlabel('Time', 'ms')")
     axs[2, 1].text(1.0, 1100, "ax.set_ylabel('Amplitude', 'Pa')")
     axs[2, 1].set_xlabel('Time', 'ms')

@@ -913,7 +913,7 @@ def install_spines():
     if not hasattr(plt, '__show_orig_spines'):
         plt.__show_orig_spines = plt.show
         plt.show = __plt_show_spines
-    # add spine parameter to rc configuration:
+    # add spines parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
     if 'axes.spines.show' not in mpl.ptParams:
@@ -993,7 +993,7 @@ def uninstall_spines():
     if hasattr(plt, '__show_orig_spines'):
         plt.show = plt.__show_orig_spines
         delattr(plt, '__show_orig_spines')
-    # remove spine parameter from mpl.ptParams:
+    # remove spines parameter from mpl.ptParams:
     if hasattr(mpl, 'ptParams') and 'axes.spines.show' in mpl.ptParams:
         mpl.ptParams.pop('axes.spines.show', None)
         mpl.ptParams.pop('axes.spines.offsets', None)
