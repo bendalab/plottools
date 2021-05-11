@@ -1,3 +1,14 @@
+"""
+## Functions
+
+- `versions()`: print python, numpy, matplotlib and plottools versions.
+"""
+
+import sys
+import numpy as np
+import matplotlib as mpl
+
+
 __pdoc__ = {}
 __pdoc__['__version__'] = True
 __pdoc__['__year__'] = True
@@ -7,3 +18,16 @@ __version__ = '0.7'
 
 __year__ = '2021'
 """ Year of last changes to the plottools package. """
+
+
+def versions():
+    """ Print python, numpy, matplotlib and plottools versions.
+    """
+    print('python     version: %d.%d.%d' % (sys.version_info[:3]))
+    print('numpy      version:', np.__version__)
+    print('matplotlib version:', mpl.__version__)
+    print('plottools  version:', __version__)
+
+
+if __name__ == "__main__":
+    versions()
