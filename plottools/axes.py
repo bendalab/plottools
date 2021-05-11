@@ -516,8 +516,9 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **fkwargs)
 
 
-def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
-    """ Set rc settings for tags.
+def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None,
+                xmargin=None, ymargin=None):
+    """ Set rc settings for tags and axes.
 
     Only parameters that are not `None` are updated.
 
@@ -540,6 +541,12 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None)
     font: dict
         Dictionary with font settings for tags
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+    xmargin: float
+        Padding added to x-axis limits in fractions of the data interval
+        (rc parameter `axes.xmargin`).
+    ymargin: float
+        Padding added to y-axis limits in fractions of the data interval
+        (rc parameter `axes.ymargin`).
     """
     if hasattr(mpl, 'ptParams'):
         if xoffs is not None:
@@ -552,6 +559,10 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None)
             mpl.ptParams['figure.tags.minorlabel'] = minor_label
         if font is not None:
             mpl.ptParams['figure.tags.font'].update(**font)
+    if xmargin is not None:
+        mpl.rcParams['axes.xmargin'] = xmargin
+    if ymargin is not None:
+        mpl.rcParams['axes.ymargin'] = ymargin
 
 
 def install_axes():

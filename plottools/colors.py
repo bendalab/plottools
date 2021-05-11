@@ -15,7 +15,7 @@ Color palettes and tools for manipulating colors.
 - `colors_solarized`: Ethan Schoonover's color palette, solarized.
 - `colors_material`: Google's material color palette.
 
-- `color_palettes`: a dictionary with all the defined color dictionaries.
+- `color_palettes`: a dictionary with all defined color dictionaries.
 
 
 ## Manipulating colors
@@ -36,7 +36,12 @@ Color palettes and tools for manipulating colors.
 - `cmap_color()`: retrieve color from a color map.
 
 
-## Displaying colors
+## Settings
+
+- `colors_params()`: set colors for the matplotlib color cycler.
+
+
+## Plot colors
 
 - `plot_colors()`: plot all colors of a palette and optionally some lighter and darker variants.
 - `plot_complementary_colors()`: plot complementary colors of a palette on top of each other.
@@ -478,6 +483,25 @@ def cmap_color(cmap, x, alpha=None):
     if not isinstance(cmap, mpl.colors.Colormap):
         cmap = get_cmap(cmap)
     return cmap(x, alpha)
+
+
+def colors_params(palette, colors):
+    """ Set colors for the matplotlib color cycler.
+
+    Parameters
+    ----------
+    palette: dict
+        A dictionary with named colors.
+    colors: list of strings
+        Names of the colors from `palette` that should go into the color cycler
+        (rc parameter `axes.prop_cycle` or `axes.color_cycle`).
+    """
+    color_cycle = [palette[c] for c in colors if c in palette]
+    if 'axes.prop_cycle' in mpl.rcParams:
+        from cycler import cycler
+        mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
+    else:
+        mpl.rcParams['axes.color_cycle'] = color_cycle
 
 
 def plot_colors(ax, colors, n=1):

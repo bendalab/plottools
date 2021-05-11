@@ -6,14 +6,14 @@
 - `sketch_style()`: layout and plot styles with xkcd style activated.
 
 
-## Duplicate and modify plotting styles:
+## Duplicate and modify plotting styles
 
 - `lighter_styles()`: duplicate style with a range of lighter colors.
 - `darker_styles()`: duplicate style with a range of darker colors.
 - `lighter_darker_styles()`: duplicate style with a range of lighter and darker colors.
 
 
-## Generate plotting styles:
+## Generate plotting styles
 
 - `make_linestyles()`: generate dictionaries for line styles.
 - `make_pointstyles()`: generate dictionaries for point styles.
@@ -22,13 +22,12 @@
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
 
 
-## Set rc settings:
+## Settings
 
-- `color_cycler()`: set colors for the matplotlib color cycler.
 - `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 
 
-## Display line, point, linepoint and fill styles:
+## Plot styles
 
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
@@ -66,11 +65,10 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from .colors import colors_vivid, colors_muted, lighter, darker, gradient, colormap
+from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
 from .figure import figure_params, latex_include_figures
 from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
-from .ticks import set_xticks_delta, set_yticks_delta, set_xticks_off, set_yticks_off
-from .ticks import set_xticks_format, set_yticks_format, set_xticks_blank, set_yticks_blank
+from .ticks import ticks_params
 from .labels import labels_params, install_align_labels, uninstall_align_labels
 from .legend import legend_params, install_legend, uninstall_legend
 from .text import text_params, install_text, uninstall_text
@@ -101,16 +99,16 @@ def lighter_styles(style, n):
     Example
     -------
     Suppose you have a style for blue lines in a plot like
-    ```
+    ```py
     lsBlue = dict(color=colors['blue'], lw=2)
     ```
     Now you need 5 variants of this plot style with increasingly lighter colors.
     Just call
-    ```
+    ```py
     lsBlues = lighter_styles(lsBlue, 5)
     ```
     and you can do something like
-    ```
+    ```py
     for k, ls in enumerate(lsBlues):
         ax.plot(x, y+0.5*k, **ls)
     ```
@@ -121,7 +119,7 @@ def lighter_styles(style, n):
             styles = []
             for k in range(n):
                 sd = dict(**style)
-                sd['color'] = lighter(c, 1.0-k/n)
+                sd[ck] = lighter(c, 1.0-k/n)
                 styles.append(sd)
             return styles
     return [style]*n
@@ -146,16 +144,16 @@ def darker_styles(style, n):
     Example
     -------
     Suppose you have a style for green lines in a plot like
-    ```
+    ```py
     lsGreen = dict(color=colors['lightgreen'], lw=2)
     ```
     Now you need 4 variants of this plot style with increasingly darker colors.
     Just call
-    ```
+    ```py
     lsGreens = darker_styles(lsGreen, 4)
     ```
     and you can do something like
-    ```
+    ```py
     for k, ls in enumerate(lsGreens):
         ax.plot(x, y+0.5*k, **ls)
     ```
@@ -166,7 +164,7 @@ def darker_styles(style, n):
             styles = []
             for k in range(n):
                 sd = dict(**style)
-                sd['color'] = darker(c, 1.0-k/n)
+                sd[ck] = darker(c, 1.0-k/n)
                 styles.append(sd)
             return styles
     return [style]*n
@@ -192,16 +190,16 @@ def lighter_darker_styles(style, n):
     Example
     -------
     Suppose you have a style for blue lines in a plot like
-    ```
+    ```py
     lsBlue = dict(color=colors['blue'], lw=2)
     ```
     Now you need 5 variants of this plot style with lighter and darker colors.
     Just call
-    ```
+    ```py
     lsBlues = lighter_darker_styles(lsBlue, 5)
     ```
     and you can do something like
-    ```
+    ```py
     for k, ls in enumerate(lsBlues):
         ax.plot(x, y+0.5*k, **ls)
     ```
@@ -212,7 +210,7 @@ def lighter_darker_styles(style, n):
             styles = []
             for k in range(n):
                 sd = dict(**style)
-                sd['color'] = lighter(c, 1+(k-(n-1)/2)/((n+1)//2))
+                sd[ck] = lighter(c, 1+(k-(n-1)/2)/((n+1)//2))
                 styles.append(sd)
             return styles
     return [style]*n
@@ -224,33 +222,33 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
 
     The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style and line width a dictionary is generated
-    holding these attributes. The generated dictionaries are named `prefix = name + suffix`,
+    holding these attributes. The generated dictionaries are named `prefix + name + suffix`,
     and are additionally added to the `prefix + suffix` dictionary in the given namespace.
     `name` is also added to the `style_names` list in the namespace.
     
     For example
-    ```
+    ```py
     make_linestyles('ls', 'Male', '', 'blue', '-', 2)
     ```
     generates a dictionary named `lsMale` defining a blue solid line,
     adds `Male` to the `style_names` list,
     and adds the `lsMale` dictionary to `ls` under the key `Male`.
     Simply throw the dictionary into a `plot()` command:
-    ```
+    ```py
     plt.plot(x, y, **lsMale)
     ```
     or
-    ```
+    ```py
     plt.plot(x, y, **ls['Male'])
     ```
     this is the same as:
-    ```
+    ```py
     plt.plot(x, y, '-', color='#0000FF', lw=2)
     ```
     but is more expressive and can be changed at a single central place.
 
     This
-    ```
+    ```py
     make_linestyles('ls', ['Red', 'Green'], 'm', ['r', 'g'], ['-', '--'], 0.5)
     ```
     adds two line styles 'lsRedm', 'lsGreenm' to the main module
@@ -319,27 +317,27 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
     The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style, line width, marker, marker size,
     marker edge color and marker edge width a dictionary is generated holding these attributes.
-    The generated dictionaries are named `prefix = name + suffix`,
+    The generated dictionaries are named `prefix + name + suffix`,
     and are additionally added to the `prefix + suffix` dictionary in the given namespace.
     `name` is also added to the `style_names` list in the namespace.
     
     For example
-    ```
+    ```py
     make_pointstyles('ps', 'Female', '', 'red', '-', 1, ('o', 1.0), 8, 0.5, 1, alpha=0.5)
     ```
     generates a dictionary named `psFemale` defining transparent red filled markers
     with a lighter edge, adds `Female` to `style_names`,
     and adds the dictionary to `ps` under the key `Female`.
     Simply throw the dictionary into a `plot()` command:
-    ```
+    ```py
     plt.plot(x, y, **psFemale)
     ```
     this is the same as:
-    ```
+    ```py
     plt.plot(x, y, **ps['Female'])
     ```
     This
-    ```
+    ```py
     make_pointstyles('ps', 'Reds%d', 'c', ['red', 'orange', 'yellow'], 'none', 0, ('o', 1.0), 8, 1, 0)
     ```
     generates 'psReds1',  'psReds2',  'psReds3' for plotting
@@ -473,12 +471,12 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
     to `ax.fill_between()` commands.
     For each corresponding name, color, edge color, edge width and alpha
     a dictionary is generated holding these attributes.
-    The generated dictionaries are named `prefix = name + suffix`,
+    The generated dictionaries are named `prefix + name + suffix`,
     and are additionally added to the `prefix + suffix` dictionary in the given namespace.
     `name` is also added to the `style_names` list in the namespace.
     
     For example
-    ```
+    ```py
     make_fillstyles('fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4)
     ```
     generates the dictionaries named `fsPSD`, `fsPSDs`, `fsPSDa` defining a green fill color.
@@ -488,11 +486,11 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
     Further, `PSD` is added to `style_names`, and the three dictionaries are added
     to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
     Simply throw the dictionaries into a `fill_between()` command:
-    ```
+    ```py
     plt.fill_between(x, y0, y1, **fsPSD)
     ```
     or like this (here for a transparent fill style):
-    ```
+    ```py
     plt.plot(x, y, **fsa['PSD'])
     ```
 
@@ -646,40 +644,13 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
     make_fillstyles('fs', names, ['', 's', 'a'], colors, mec, mew, fillalpha, namespace)
 
 
-def color_cycler(palette, colors):
-    """ Set colors for the matplotlib color cycler.
-
-    Parameters
-    ----------
-    palette: dict
-        A dictionary with named colors.
-    colors: list of strings
-        Names of the colors from `palette` that should go into the color cycler.
-    """
-    color_cycle = [palette[c] for c in colors if c in palette]
-    if 'axes.prop_cycle' in mpl.rcParams:
-        from cycler import cycler
-        mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
-    else:
-        mpl.rcParams['axes.color_cycle'] = color_cycle
-
-
-def plot_params(tick_dir='out', tick_size=2.5,
-                fig_color='none', axes_color='none', namespace=None):
+def plot_params(axes_color='none', namespace=None):
     """ Set some default plot parameter via matplotlib's rc settings.
 
     Call this function *before* you create any matplotlib figure.
 
-    You might want to copy this function and adjust it according to your needs.
-
     Parameters
     ----------
-    tick_dir: string
-        Direction of tick marks ('in', 'out', or 'inout')
-    tick_size: float
-        Length of tick marks in points.
-    fig_color: matplotlib color specification or 'none'
-        Background color for the whole figure.
     axes_color: matplotlib color specification or 'none'
         Background color for each subplot.
     namespace: dict
@@ -689,13 +660,6 @@ def plot_params(tick_dir='out', tick_size=2.5,
     """
     if namespace is None:
         namespace = __main__
-    mpl.rcParams['figure.facecolor'] = fig_color
-    mpl.rcParams['xtick.direction'] = tick_dir
-    mpl.rcParams['ytick.direction'] = tick_dir
-    mpl.rcParams['xtick.major.size'] = tick_size
-    mpl.rcParams['ytick.major.size'] = tick_size
-    mpl.rcParams['xtick.minor.size'] = 0.6*tick_size
-    mpl.rcParams['ytick.minor.size'] = 0.6*tick_size
     # axes, label, ticks and text color:
     mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
@@ -710,9 +674,6 @@ def plot_params(tick_dir='out', tick_size=2.5,
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
         mpl.rcParams['grid.linestyle'] = getattr(namespace, 'lsGrid')['linestyle']
         mpl.rcParams['grid.linewidth'] = getattr(namespace, 'lsGrid')['linewidth']
-    # no margins:
-    mpl.rcParams['axes.xmargin'] = 0.0
-    mpl.rcParams['axes.ymargin'] = 0.0
 
 
 def screen_style(namespace=None):
@@ -729,7 +690,7 @@ def screen_style(namespace=None):
     - automatic alignment of x- and ylabels.
     - a range of line, point, linepoint and fill styles defined in `namespace`, called
       A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```
+      ```py
       ax.plot(x, y, **lsA1)   # major line only
       ax.plot(x, y, **lsB2m)  # minor line only
       ax.plot(x, y, **psA2)   # markers (points) only
@@ -745,7 +706,7 @@ def screen_style(namespace=None):
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
-    palette = colors_vivid
+    palette = color_palettes['vivid']
     lwthick=2.5
     lwthin=1.5
     lwspines=1.0    
@@ -781,22 +742,24 @@ def screen_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(tick_dir='out', tick_size=4.0, fig_color=palette['gray'],
-                axes_color=palette['white'], namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif', label_size='small')
+    plot_params(axes_color=palette['white'], namespace=namespace)
+    ticks_params(tick_dir='out', tick_size=4.0)
+    text_params(font_size=10.0, font_family='sans-serif')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
+                xmargin=0, ymargin=0)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(format='png', compression=6, fonttype=3, stripfonts=False)
+    figure_params(color=palette['gray'], format='png',
+                  compression=6, fonttype=3, stripfonts=False)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    color_cycler(palette, cycle_colors)
-    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10)
+    colors_params(palette, cycle_colors)
+    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10, label_size='small')
     install_align_labels()
 
     
@@ -814,7 +777,7 @@ def paper_style(namespace=None):
     - automatic alignment of x- and ylabels.
     - a range of line, point, linepoint and fill styles defined in `namespace`, called
       A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```
+      ```py
       ax.plot(x, y, **lsA1)   # major line only
       ax.plot(x, y, **lsB2m)  # minor line only
       ax.plot(x, y, **psA2)   # markers (points) only
@@ -830,7 +793,7 @@ def paper_style(namespace=None):
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
-    palette = colors_muted
+    palette = color_palettes['muted']
     lwthick=1.7
     lwthin=0.8
     lwspines=0.8    
@@ -864,23 +827,23 @@ def paper_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(tick_dir='out', tick_size=2.5, fig_color='none', axes_color='none',
-                namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif', label_size='small')
+    plot_params(axes_color='none', namespace=namespace)
+    ticks_params(tick_dir='out', tick_size=2.5)
+    text_params(font_size=10.0, font_family='sans-serif')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.8,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
+                xmargin=0, ymargin=0)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
+    figure_params(fig_color='none', format='pdf', compression=6, fonttype=3, stripfonts=False)
     spines_params(spines='lb', spines_offsets={'lrtb': 3}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    color_cycler(palette, cycle_colors)
-    # define the appearance of axis labels:
-    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10)
+    colors_params(palette, cycle_colors)
+    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10, label_size='small')
     install_align_labels()
 
    
@@ -898,7 +861,7 @@ def sketch_style(namespace=None):
     - automatic alignment of x- and ylabels.
     - a range of line, point, linepoint and fill styles defined in `namespace`, called
       A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```
+      ```py
       ax.plot(x, y, **lsA1)   # major line only
       ax.plot(x, y, **lsB2m)  # minor line only
       ax.plot(x, y, **psA2)   # markers (points) only
@@ -916,7 +879,7 @@ def sketch_style(namespace=None):
     """
     #global bar_fac
     #bar_fac = 0.9
-    palette = colors_vivid
+    palette = color_palettes['vivid']
     lwthick=3.0
     lwthin=1.8
     lwspines=1.8    
@@ -951,23 +914,24 @@ def sketch_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
-    plot_params(tick_dir='out', tick_size=6, fig_color=palette['white'], axes_color='none',
-                namespace=namespace)
-    text_params(font_size=10.0, font_family='sans-serif', label_size='medium')
+    plot_params(axes_color='none', namespace=namespace)
+    ticks_params(tick_dir='out', tick_size=6)
+    text_params(font_size=10.0, font_family='sans-serif')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.8,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
+                xmargin=0, ymargin=0)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(format='pdf', compression=6, fonttype=3, stripfonts=False)
+    figure_params(fig_color=palette['white'], format='pdf',
+                  compression=6, fonttype=3, stripfonts=False)
     spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    color_cycler(palette, cycle_colors)
-    # define the appearance of axis labels:
-    labels_params(lformat='{label} ({unit})', xdist=5, ydist=10)
+    colors_params(palette, cycle_colors)
+    labels_params(lformat='{label} ({unit})', xdist=5, ydist=10, label_size='medium')
     install_align_labels()
     
 

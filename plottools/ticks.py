@@ -26,6 +26,11 @@ Setting tick locations and formats.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
 
 
+## Settings
+
+- `ticks_params()`: set default ticks appearance.
+
+
 ## Install/uninstall ticks functions
 
 You usually do not need to call these functions. Upon loading the ticks
@@ -427,6 +432,30 @@ def set_minor_yticks_off(ax):
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
+
+def ticks_params(tick_dir=None, tick_size=None, minor_tick_frac=0.6):
+    """ Set default ticks appearance.
+
+    Call this function *before* you create any matplotlib figure.
+
+    Parameters
+    ----------
+    tick_dir: string
+        Direction of tick marks ('in', 'out', or 'inout')
+    tick_size: float
+        Length of tick marks in points.
+    minor_tick_frac: float
+        Length of minor tick marks relative to tick_size.
+    """
+    if tick_dir is not None:
+        mpl.rcParams['xtick.direction'] = tick_dir
+        mpl.rcParams['ytick.direction'] = tick_dir
+    if tick_size is not None:
+        mpl.rcParams['xtick.major.size'] = tick_size
+        mpl.rcParams['ytick.major.size'] = tick_size
+        mpl.rcParams['xtick.minor.size'] = minor_tick_frac*tick_size
+        mpl.rcParams['ytick.minor.size'] = minor_tick_frac*tick_size
+    
 
 def install_ticks():
     """ Install ticks functions on matplotlib axes.

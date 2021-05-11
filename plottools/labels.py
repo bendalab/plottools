@@ -18,6 +18,12 @@ Annotate axis with label and unit and align axes labels.
 
 - `labels_params()`: set parameters for axis labels.
 
+`mpl.ptParams` defined by the axes module:
+```py
+axes.label.format: '{label} [{unit}]'
+axes.label.xdist: 5
+axes.label.ydist: 10
+```
 
 ## Install/uninstall labels functions
 
@@ -212,7 +218,7 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
-def labels_params(lformat=None, xdist=None, ydist=None):
+def labels_params(lformat=None, xdist=None, ydist=None, label_size='small'):
     """ Set parameters for axis labels.
     
     Parameters
@@ -228,6 +234,9 @@ def labels_params(lformat=None, xdist=None, ydist=None):
     ydist: float
         Minimum horizontal distance between ytick labels and label of y-axis.
         Used by `align_labels()`.
+    label_size: float or string or None
+        If not None set font size for x- and y-axis labels
+        (rc parameters `xtick.labelsize` and `ytick.labelsize`).
     """
     install_labels()
     if lformat is not None:
@@ -236,13 +245,16 @@ def labels_params(lformat=None, xdist=None, ydist=None):
         mpl.ptParams['axes.label.xdist'] = xdist
     if ydist is not None:
         mpl.ptParams['axes.label.ydist'] = ydist
+    if label_size is not None:
+        mpl.rcParams['xtick.labelsize'] = label_size
+        mpl.rcParams['ytick.labelsize'] = label_size
 
 
 def install_labels():
     """ Install labels functions on matplotlib axes.
 
     Adds mpl.ptParams:
-    ```
+    ```py
     axes.label.format: '{label} [{unit}]'
     axes.label.xdist: 5
     axes.label.ydist: 10

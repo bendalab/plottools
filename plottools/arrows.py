@@ -134,7 +134,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
                                     mutation_scale=scale, clip_on=False),
                     annotation_clip=False, **zkwargs)
     if style in ['|>', '>>']:
-        pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
+        pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
         xmin, xmax = ax.get_xlim()
         dxu = np.abs(xmax - xmin)/pixelx
         ddx = 0.5*head_length*dxu
@@ -150,7 +150,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
             text = text % dx
         # ax dimensions:
         ax.autoscale(False)
-        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
+        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
         ymin, ymax = ax.get_ylim()
         dyu = np.abs(ymax - ymin)/pixely
         dy = 0.5*lw + dist
@@ -265,7 +265,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
                                     mutation_scale=scale, clip_on=False),
                                     annotation_clip=False, **zkwargs)
     if style in ['|>', '>>']:
-        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))
+        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
         ymin, ymax = ax.get_ylim()
         dyu = np.abs(ymax - ymin)/pixely
         ddy = 0.5*head_length*dyu
@@ -281,7 +281,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
             text = text % dy
         # ax dimensions:
         ax.autoscale(False)
-        pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))
+        pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
         xmin, xmax = ax.get_xlim()
         dxu = np.abs(xmax - xmin)/pixelx
         dx = 0.5*lw + dist

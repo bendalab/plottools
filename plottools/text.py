@@ -68,7 +68,7 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     return txt
 
 
-def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
+def text_params(font_size=10.0, font_family='sans-serif',
                 latex=False, preamble=None):
     """ Set default parameter for the text module.
 
@@ -77,16 +77,15 @@ def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
     Parameters
     ----------
     font_size: float or None
-        If not None set font size for text in points.
+        If not None set font size for text in points (rc parameter `font.size`).
     font_family: string or None
-        If not None set name of font to be used.
-    label_size: float or string or None
-        If not None set font size for x- and y-axis labels.
+        If not None set name of font to be used (rc parameter `font.family`).
     latex: boolean or None
         If not None then use LaTeX for setting text and enable unicode support
-        when set to `True`.
+        when set to `True` (rc parameter `text.usetex`).
     preamble: sequence of strings or None
-        Lines for the latex preamble. For convinience, strings starting with 'p:xxx'
+        Lines for the latex preamble (rc parameter `text.latex.preamble`).
+        For convinience, strings starting with 'p:xxx'
         are translated into '\\usepackage{xxx}', strings starting with
         'p:[yyy]xxx' are translated into '\\usepackage[yyy]{xxx}'.
     """
@@ -94,9 +93,6 @@ def text_params(font_size=10.0, font_family='sans-serif', label_size='small',
         mpl.rcParams['font.size'] = font_size
     if font_family is not None:
         mpl.rcParams['font.family'] = font_family
-    if label_size is not None:
-        mpl.rcParams['xtick.labelsize'] = label_size
-        mpl.rcParams['ytick.labelsize'] = label_size
     if latex is not None:
         mpl.rcParams['text.usetex'] = latex
         if latex:
@@ -159,8 +155,7 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    text_params(font_size=12, label_size='medium',
-                latex=usetex, preamble=r'\usepackage{SIunits}')
+    text_params(font_size=12, latex=usetex, preamble=r'\usepackage{SIunits}')
     fig, ax = plt.subplots()
     slope1 = 0.5
     slope2 = 0.2
