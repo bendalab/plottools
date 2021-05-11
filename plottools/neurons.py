@@ -4,7 +4,7 @@ Draw sketches of neurons.
 
 ## Axes member functions
 
-- `neuron()`: draw a sketch of neuron.
+- `neuron()`: draw a sketch of a neuron.
 
 
 ## Install/uninstall neurons functions
@@ -23,12 +23,17 @@ import matplotlib.pyplot as plt
 
 def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput=None,
            fc='white', ec='black', lw=2, **kwargs):
-    """ Draw a sketch of neuron.
+    """ Draw a sketch of a neuron.
 
     The coordinate system should have equal distances in both directions
     for the cell bodies being true circles. That is, you should call
     ```
     ax.set_aspect('equal')
+    ```
+    or
+    ```
+    import plottools.axes
+    ax.set_ylim_equal()
     ```
 
     Parameters

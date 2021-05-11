@@ -138,8 +138,8 @@ def demo(usetex=False):
     slope1 = 0.5
     slope2 = 0.2
     x = np.linspace(0, 2, 10)
-    ax.plot(x, slope1*x-0.2, label='0.2\,\micro m')
-    ax.plot(x, slope2*x+0.1, label='whatever')
+    ax.plot(x, slope1*x-0.2, label=r'0.2\,\micro m')
+    ax.plot(x, slope2*x+0.1, label=r'whatever')
     ax.legend(loc='upper left')
     plt.show()
     

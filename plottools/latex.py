@@ -2,7 +2,7 @@
 Translate LaTeX texts.
 
 
-Used by the text module.
+Used by the text and the legend modules.
 
 
 ## Functions

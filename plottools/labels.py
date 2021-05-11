@@ -21,8 +21,8 @@ Annotate axis with label and unit and align axes labels.
 
 ## Install/uninstall labels functions
 
-You usually do not need to call these functions. Upon loading the labels
-module, `install_labels()` are called automatically.
+You usually do not need to call the `install_labels()` function. Upon
+loading the labels module, `install_labels()` is called automatically.
 
 Currently, `install_align_labels()` is *not* automatically loaded.
 

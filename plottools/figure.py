@@ -44,6 +44,8 @@ This sets all margins to zero.
 Further, `figure.add_gridspec()` is made available for older
 matplotlib versions that do not have this function yet.
 
+To merge several subplots into a single axes, call `fig.merge()`.
+
 
 ## Default file names for figures
 
@@ -75,9 +77,9 @@ fig.savefig('@')
 latex_include_figures()
 ```
 This prints to the console
-```
-\includegraphics<1>{exampleA}
-\includegraphics<2>{exampleB}
+```txt
+\\includegraphics<1>{exampleA}
+\\includegraphics<2>{exampleB}
 ```
 and generates the respective pdf files.
 
@@ -86,13 +88,13 @@ and generates the respective pdf files.
 
 - `cm_size()`: convert dimensions from cm to inch.
 - `adjust_fs()`: compute plot margins from multiples of the current font size.
-- `latex_include_figures()`: print LaTeX `\includegraphics<>{}` commands for all saved files.
+- `latex_include_figures()`: print LaTeX `\\includegraphics<>{}` commands for all saved files.
 
 
 ## Figure member functions
 
 - `set_size_cm()`: set the figure size in centimeters.
-- `merge()`: add axis that covers bounding box of some axis.
+- `merge()`: add axis that covers bounding box of several axes.
 - `get_savefig_count()`: number of `savefig()` calls on the figure.
 
 
@@ -405,7 +407,7 @@ def __set_merged_position(self, axs):
 
 
 def merge(fig, axs):
-    """ Add axis that covers bounding box of some axis.
+    """ Add axis that covers bounding box of several axes.
 
     Add a new axis to the figure at the position and size of the common
     bounding box of all axis in `axs`. All axis in `axs` are then made
@@ -549,7 +551,7 @@ def __plt_savefig_figure(fname='', *args, stripfonts=None, **kwargs):
 
 
 def latex_include_figures():
-    """ Print LaTeX `\includegraphics<>{}` commands for all saved files.
+    """ Print LaTeX `\\includegraphics<>{}` commands for all saved files.
 
     This can then be copied directly into you LaTeX document to include
     the generated figures.  For multiple files from the same figure,
@@ -568,9 +570,9 @@ def latex_include_figures():
     ```
     writes to console
     ```txt
-    \includegraphics<1>{introA}
-    \includegraphics<2>{introB}
-    \includegraphics{data}
+    \\includegraphics<1>{introA}
+    \\includegraphics<2>{introB}
+    \\includegraphics{data}
     ```
     """
     global plot_saved_files

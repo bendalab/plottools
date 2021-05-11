@@ -364,7 +364,7 @@ def set_xticks_blank(ax):
 
     See also
     --------
-    `plottools.axes.common_xtick_labels()`
+    `plottools.axes.common_xlabels()`
     """
     ax.xaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -379,7 +379,7 @@ def set_yticks_blank(ax):
 
     See also
     --------
-    `plottools.axes.common_ytick_labels()`
+    `plottools.axes.common_ylabels()`
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 

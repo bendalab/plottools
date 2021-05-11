@@ -5,6 +5,7 @@ Tag axes with a label and simplify common axis labels.
 ## Axes member functions
 
 - `aspect_ratio()`: aspect ratio of axes.
+- `set_xlim_equal()`: ensure equal aspect ratio by appropriately setting x limits.
 - `set_ylim_equal()`: ensure equal aspect ratio by appropriately setting y limits.
 
 
@@ -15,21 +16,24 @@ Tag axes with a label and simplify common axis labels.
 - `common_ylabels()`: simplify common ylabels.
 - `common_xticks()`: simplify common xtick labels and xlabels.
 - `common_yticks()`: simplify common ytick labels and ylabels.
+- `common_xspines()`: simplify common x-spines, xtick labels, and xlabels.
+- `common_yspines()`: simplify common y-spines, ytick labels, and ylabels.
 
 
 ## Settings
 
 - `axes_params()`: set `mpl.ptParams` for axes module.
-- `mpl.ptParams` defined by the axes module:
-  ```py
-  figure.tags.xoffs : 'auto',
-  figure.tags.yoffs : 'auto',
-  figure.tags.label : '%A',
-  figure.tags.minorlabel : '%A%mi',
-  figure.tags.font  : dict(fontsize='x-large',
-                           fontstyle='sans-serif',
-                           tweight='normal')
-  ```
+
+`mpl.ptParams` defined by the axes module:
+```py
+figure.tags.xoffs : 'auto',
+figure.tags.yoffs : 'auto',
+figure.tags.label : '%A',
+figure.tags.minorlabel : '%A%mi',
+figure.tags.font  : dict(fontsize='x-large',
+                         fontstyle='sans-serif',
+                         tweight='normal')
+```
 
 ## Install/uninstall axes functions
 
@@ -65,6 +69,42 @@ def aspect_ratio(ax):
     return (figh * h) / (figw * w)
 
 
+def set_xlim_equal(ax, xmin_frac=0.0, xmax_frac=1.0):
+    """ Ensure equal aspect ratio by appropriately setting x limits.
+
+    If you need both axis equally scaled, such that on the plot a unit
+    on the x-axis covers the same distance as a unit on the y-axis, one
+    usually calls `ax.set_aspect('equal')`. This mechanism scales the
+    physical dimensions of the plot to make the units on both axis
+    equal.  Problem is, that then the physical dimensions of the plot
+    differ from other plots in the grid.
+
+    The `set_xlim_equal()` function uses a different approach. Instead
+    of scaling the physical dimensions of the plot, the limits of the
+    x-axis are adapted to the aspect-ratio of the full plot. This way
+    the dimensions of the plot are not scaled.
+
+    Call this function *after* setting the limits of the x-axis.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes of which aspect ratio is computed.
+    xmin_frac: float
+        Fraction of the total range of the x-axis for the minimum value of the x-axis.
+    xmax_frac: float
+        Fraction of the total range of the x-axis for the maximum value of the x-axis.
+
+    See Also
+    --------
+    - `set_ylim_equal()`
+    - `aspect_ratio()`
+    """
+    yrange = np.diff(ax.get_ylim())[0]
+    xrange = ax.aspect_ratio()*yrange/(xmax_frac-xmin_frac)
+    ax.set_xlim(xmin_frac*xrange, xmax_frac*xrange)
+
+
 def set_ylim_equal(ax, ymin_frac=0.0, ymax_frac=1.0):
     """ Ensure equal aspect ratio by appropriately setting y limits.
 
@@ -90,6 +130,11 @@ def set_ylim_equal(ax, ymin_frac=0.0, ymax_frac=1.0):
         Fraction of the total range of the y-axis for the minimum value of the y-axis.
     ymax_frac: float
         Fraction of the total range of the y-axis for the maximum value of the y-axis.
+
+    See Also
+    --------
+    - `set_xlim_equal()`
+    - `aspect_ratio()`
     """
     xrange = np.diff(ax.get_xlim())[0]
     yrange = ax.aspect_ratio()*xrange/(ymax_frac-ymin_frac)
@@ -493,7 +538,7 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None)
     minor_label: string
         Label used to tag minor axes. See `tag()` for details.
     font: dict
-        Dictionary with font settings
+        Dictionary with font settings for tags
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
     """
     if hasattr(mpl, 'ptParams'):

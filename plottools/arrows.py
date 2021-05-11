@@ -9,7 +9,7 @@ Drawing arrows.
 - `point_to()`: text with arrow pointing to a point.
 
 
-## Setting and plotting arrow styles
+## Settings
 
 - `arrow_style()`: generate an arrow style.
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
@@ -351,7 +351,7 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
                 head_width=15, head_length=15, namespace=None, **kwargs):
     """ Generate an arrow style.
 
-    Add dictionary with name 'as'+name to namespace and to ars
+    Add dictionary with name 'as'+name to `namespace` and to `ars`
 
     Parameters
     ----------
@@ -402,7 +402,6 @@ def plot_arrowstyles(ax):
     ax.set_xlim(0.0, 2.0)
     ax.set_ylim(0.0, 0.5*k+1)
     ax.set_title('arrow styles')
-        
 
 
 def install_arrows():

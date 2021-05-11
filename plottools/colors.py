@@ -27,7 +27,7 @@ Color palettes and tools for manipulating colors.
 
 ## Exporting colors
 
-- `latex_colors()`: print `\definecolor` commands for LaTeX.
+- `latex_colors()`: print `\\definecolor` commands for LaTeX.
 
 
 ## Color maps
@@ -395,7 +395,7 @@ def gradient(color0, color1, r):
 
 
 def latex_colors(colors, name='', model='rgb'):
-    """ Print `\definecolor` commands for LaTeX.
+    """ Print `\\definecolor` commands for LaTeX.
 
     Parameters
     ----------
@@ -671,7 +671,7 @@ def demo(n=1, complementary=False, *args):
         - n>1: plot the selected color palette with n-1 lighter and darker colors or
           n gradient values for 'complementary'
     complementary: bool
-        If \c True, plot complementary colors of the selected palette
+        If `True`, plot complementary colors of the selected palette
     *args: list of strings
         names of color palettes or color maps, or 'default' for the default color palette.
     """
