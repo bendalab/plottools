@@ -435,15 +435,21 @@ def set_minor_yticks_off(ax):
 
 def ticks_params(tick_dir=None, tick_size=None, minor_tick_frac=0.6):
     """ Set default ticks appearance.
+                  
+    Only parameters that are not `None` are updated.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
     tick_dir: string
-        Direction of tick marks ('in', 'out', or 'inout')
+        Direction of tick marks ('in', 'out', or 'inout').
+        Sets rcParams `xtick.direction` and `ytick.direction`.
     tick_size: float
         Length of tick marks in points.
+        Sets rcParams `xtick.major.size`, `ytick.major.size`,
+        `xtick.minor.size`, and `ytick.minor.size`.
+        The minor tick sizes are multiplied with `minor_tick_frac`.
     minor_tick_frac: float
         Length of minor tick marks relative to tick_size.
     """

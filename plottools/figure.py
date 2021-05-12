@@ -102,6 +102,12 @@ and generates the respective pdf files.
 
 - `figure_params()`: set savefig options via matplotlib's rc settings.
 
+`mpl.ptParams` defined by the figures module:
+```py
+savefig.counter: 'A'
+pdf.stripfonts: False
+```
+
 
 ## Install/uninstall figure functions
 
@@ -589,47 +595,50 @@ def latex_include_figures():
     plot_saved_files = []
     
 
-def figure_params(color=None, format='pdf', counter='A',
-                  compression=6, fonttype=3, stripfonts=False):
-    """ Set savefig options via matplotlib's rc settings.
+def figure_params(color=None, format=None, counter=None,
+                  compression=None, fonttype=None, stripfonts=None):
+    """ Set figure parameter.
+                  
+    Only parameters that are not `None` are updated.
 
     Parameters
     ----------
     color: matplotlib color specification or 'none'
-        Background color for the whole figure (rc parameter `figure.facecolor`).
+        Background color for the whole figure. Sets rcParam `figure.facecolor`.
     format: 'png', 'ps', 'pdf', 'svg'
-        File format of the saved figure (rc parameter `savefig.format`).
+        File format of the saved figure. Sets rcParam `savefig.format`.
     counter: 'A', 'a', or '1'
         Specifies how a '@' character in the file name passed to `fig.savefig()`
-        is translated into a string (pt parameter `savefig.counter`).
+        is translated into a string. Sets ptParam `savefig.counter`.
     compression: int
-        Compression level of pdf file from 0 to 9 (rc parameter `pdf.compression`).
+        Compression level of pdf file from 0 to 9. Sets rcParam `pdf.compression`.
     fonttype: 3 or 42
-        Type 3 (Type3) or Type 42 (TrueType) fonts
-        (rc parameters `pdf.fonttype` and `ps.fonttype`).
+        Type 3 (Type3) or Type 42 (TrueType) fonts.
+        Sets rcParams `pdf.fonttype` and `ps.fonttype`.
         Type3 use less disk space but are less well editable,
         Type42 use more disk space but are better editable in vector graphics software
         (says the internet).
     stripfonts: boolean
         If output file format is pdf, then run ps2pdf on the generated pdf file to
         strip it from embedded fonts. This might then look ugly as a standalone figure,
-        but results in nice plots within a latex documents at a fraction of the file size
-        (pt parameter `pdf.stripfonts`).
+        but results in nice plots within a latex documents at a fraction of the file size.
+        Sets ptParam `pdf.stripfonts`.
     """
+    if hasattr(mpl, 'ptParams'):
+        if counter is not None:
+            mpl.ptParams.update({'savefig.counter': counter})
+        if stripfonts is not None:
+            mpl.ptParams['pdf.stripfonts'] = stripfonts
     if color is not None:
         mpl.rcParams['figure.facecolor'] = color
     if format is not None:
         mpl.rcParams['savefig.format'] = format
-    if counter is not None:
-        mpl.ptParams.update({'savefig.counter': counter})
     # these all have only minor effects on file size:
     if compression is not None:
         mpl.rcParams['pdf.compression'] = compression
     if fonttype is not None:
         mpl.rcParams['pdf.fonttype'] = fonttype
         mpl.rcParams['ps.fonttype'] = fonttype
-    if stripfonts is not None:
-        mpl.ptParams.update({'pdf.stripfonts': stripfonts})
     mpl.rcParams['pdf.use14corefonts'] = False
     mpl.rcParams['pdf.inheritcolor'] = False
 
@@ -682,8 +691,10 @@ def install_figure():
     # add figure parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
-    mpl.ptParams.update({'savefig.counter': 'A'})
-    mpl.ptParams.update({'pdf.stripfonts': False})
+    if 'savefig.counter' not in mpl.ptParams:
+        mpl.ptParams['savefig.counter'] = 'A'
+    if 'pdf.stripfonts' not in mpl.ptParams:
+        mpl.ptParams['pdf.stripfonts'] = False
 
 
 def uninstall_figure():

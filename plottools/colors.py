@@ -485,9 +485,11 @@ def cmap_color(cmap, x, alpha=None):
     return cmap(x, alpha)
 
 
-def colors_params(palette, colors):
+def colors_params(palette=None, colors=None):
     """ Set colors for the matplotlib color cycler.
 
+    Only parameters that are not `None` are updated.
+    
     Parameters
     ----------
     palette: dict
@@ -496,12 +498,13 @@ def colors_params(palette, colors):
         Names of the colors from `palette` that should go into the color cycler
         (rc parameter `axes.prop_cycle` or `axes.color_cycle`).
     """
-    color_cycle = [palette[c] for c in colors if c in palette]
-    if 'axes.prop_cycle' in mpl.rcParams:
-        from cycler import cycler
-        mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
-    else:
-        mpl.rcParams['axes.color_cycle'] = color_cycle
+    if palette is not None and colors is not None:
+        color_cycle = [palette[c] for c in colors if c in palette]
+        if 'axes.prop_cycle' in mpl.rcParams:
+            from cycler import cycler
+            mpl.rcParams['axes.prop_cycle'] = cycler(color=color_cycle)
+        else:
+            mpl.rcParams['axes.color_cycle'] = color_cycle
 
 
 def plot_colors(ax, colors, n=1):

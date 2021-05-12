@@ -13,6 +13,17 @@ Labeled scale bars.
 
 - `scalebar_params()`: set rc settings for scalebars.
 
+`mpl.ptParams` defined by the scalebar module:
+```py
+scalebar.format.large: '%.0f'
+scalebar.format.small: '%.1f'
+scalebar.linewidth: 2
+scalebar.color: 'k'
+scalebar.capsize: 0
+scalebar.caplinewidth: 0.5
+scalebar.font: dict(fontsize='medium', fontstyle='normal', fontweight='normal')
+```
+
 
 ## Install/uninstall scalebars functions
 
@@ -410,42 +421,50 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     return artists
 
 
-def scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color='k', capsize=0, clw=0.5, font=None):
+def scalebar_params(format_large=None, format_small=None,
+                    lw=2, color=None, capsize=None, clw=None, font=None):
     """ Set rc settings for scalebars.
+                  
+    Only parameters that are not `None` are updated.
 
     Parameter
     ---------
     format_large: string
         Format string for formatting the label of the scale bar
-        for scalebars longer than one.
+        for scalebars longer than one. Set ptParam `scalebar.format.large`.
     format_small: string
         Format string for formatting the label of the scale bar
-        for scalebars shorter than one.
+        for scalebars shorter than one. Set ptParam `scalebar.format.small`.
     lw: int, float
-        Line width of a scale bar.
+        Line width of a scale bar. Set ptParam `scalebar.linewidth`.
     color: matplotlib color
-        Color of the scalebar.
+        Color of the scalebar. Set ptParam `scalebar.color`.
     capsize: float
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
+         Set ptParam `scalebar.capsize`.
     clw: int, float
-        Line width of the cap lines.
+        Line width of the cap lines. Set ptParam `scalebar.caplinewidth`.
     font: dict
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+         Set ptParam `scalebar.font`.
     """
-    mpl.ptParams.update({'scalebar.format.large': format_large,
-                         'scalebar.format.small': format_small,
-                         'scalebar.linewidth': lw,
-                         'scalebar.color': color,
-                         'scalebar.capsize': capsize,
-                         'scalebar.caplinewidth': clw,
-                         'scalebar.fontsize': 'medium',
-                         'scalebar.fontstyle': 'normal',
-                         'scalebar.fontweight': 'normal'})
-    if font is not None:
-        mpl.ptParams.update({'scalebar.font': font})
+    if hasattr(mpl, 'ptParams'):
+        if format_large is not None:
+            mpl.ptParams['scalebar.format.large'] = format_large
+        if format_small is not None:
+            mpl.ptParams['scalebar.format.small'] = format_small
+        if lw is not None:
+            mpl.ptParams['scalebar.linewidth'] = lw
+        if color is not None:
+            mpl.ptParams['scalebar.color'] = color
+        if capsize is not None:
+            mpl.ptParams['scalebar.capsize'] = capsize
+        if clw is not None:
+            mpl.ptParams['scalebar.caplinewidth'] = clw
+        if font is not None:
+            mpl.ptParams.update({'scalebar.font': font})
 
 
 def install_scalebars():
@@ -466,15 +485,16 @@ def install_scalebars():
     # add scalebar parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
-    mpl.ptParams.update({'scalebar.format.large': '%.0f',
-                        'scalebar.format.small': '%.1f',
-                        'scalebar.linewidth': 2,
-                        'scalebar.color': 'k',
-                        'scalebar.capsize': 0,
-                        'scalebar.caplinewidth': 0.5,
-                        'scalebar.font': dict(fontsize='medium',
-                                            fontstyle='normal',
-                                            fontweight='normal')})
+    if 'scalebar.format.large' not in mpl.ptParams:
+        mpl.ptParams.update({'scalebar.format.large': '%.0f',
+                            'scalebar.format.small': '%.1f',
+                            'scalebar.linewidth': 2,
+                            'scalebar.color': 'k',
+                            'scalebar.capsize': 0,
+                            'scalebar.caplinewidth': 0.5,
+                            'scalebar.font': dict(fontsize='medium',
+                                                fontstyle='normal',
+                                                fontweight='normal')})
 
         
 def uninstall_scalebars():

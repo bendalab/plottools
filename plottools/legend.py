@@ -49,30 +49,41 @@ def legend_params(fontsize=None, frameon=None, borderpad=None,
                   numpoints=None, scatterpoints=None,
                   labelspacing=None, columnspacing=None):
     """ Set default parameter for the legend module.
+                  
+    Only parameters that are not `None` are updated.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
-    fontsize: float or string or None
-        If not None set font size for legend. Either the font size in points,
+    fontsize: float or string
+        Set font size for legend. Either the font size in points,
         or a string like 'medium', 'small', 'x-small', 'large', 'x-large'.
-    frameon: bool or None:
-        If not None, control whether to show a frame around the legend or not.
-    borderpad: float or None
-        If not None, whitespace between legend and frame in font size units.
-    handlelength: float or None
-        If not None, length of the legend handles in font size units.
-    handletextpad: float or None
-        If not None, white space between legend handles and text in font size units.
-    numpoints: int or None
-        If not None, the number of marker points in the legend handle.
-    scatterpoints: int or None,
-        If not None, the number of scatter points in the legend handle.
-    labelspacing: float or None
-        If not None, vertical space between legend entries in font size units.
+        Sets rcParam `legend.fontsize`.
+    frameon: bool
+        Control whether to show a frame around the legend or not.
+        Sets rcParam `legend.frameon`.
+    borderpad: float
+        Whitespace between legend and frame in font size units.
+        Sets rcParam `legend.borderpad`.
+    handlelength: float
+        Length of the legend handles in font size units.
+        Sets rcParam `legend.handlelength`.
+    handletextpad: float
+        White space between legend handles and text in font size units.
+        Sets rcParam `legend.handletextpad`.
+    numpoints: int
+        The number of marker points in the legend handle.
+        Sets rcParam `legend.numpoints`.
+    scatterpoints: int
+        The number of scatter points in the legend handle.
+        Sets rcParam `legend.scatterpoints`.
+    labelspacing: float
+        Vertical space between legend entries in font size units.
+        Sets rcParam `legend.labelspacing`.
     columnspacing: float or None
-        If not None, space between columns in font size units.
+        Space between columns in font size units.
+        Sets rcParam `legend.columnspacing`.
     """
     if fontsize is not None:
         mpl.rcParams['legend.fontsize'] = fontsize

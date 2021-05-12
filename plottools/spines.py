@@ -15,6 +15,28 @@ Modify the appearance of spines.
 
 - `spines_params()`: set default spine appearance.
 
+`mpl.ptParams` defined by the spines module:
+```py
+axes.spines.show   : 'lrtb'
+axes.spines.offsets: {'lrtb': 0}
+axes.spines.positions: {'lrtb': None}
+axes.spines.bounds : {'lrtb': 'full'}
+axes.spines.arrows: '',
+axes.spines.arrows.flushx: 0.0
+axes.spines.arrows.flushy: 0.0
+axes.spines.arrows.extendx: 1.0
+axes.spines.arrows.extendy: 1.0
+axes.spines.arrows.height: 10.0
+axes.spines.arrows.ratio: 0.7
+axes.spines.arrows.overhang: 1.0
+axes.spines.twinx: 'r'
+axes.spines.twiny: 'l'
+axes.spines.inset.show   : 'lrtb'
+axes.spines.inset.offsets: {'lrtb': 0}
+axes.spines.inset.positions: {'lrtb': None}
+axes.spines.inset.bounds : {'lrtb': 'full'}
+```
+
 
 ## Install/uninstall spines functions
 
@@ -741,103 +763,114 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
                   inset_spines=None, inset_spines_offsets=None,
                   inset_spines_positions=None, inset_spines_bounds=None):
     """ Set default spine appearance.
+                  
+    Only parameters that are not `None` are updated.
 
     Call this function *before* you create a matplotlib figure.
 
     Parameters
     ----------
     spines: string
-        Spines to be shown. See `spines.show_spines()` for details.
+        Spines to be shown. Sets ptParam `axes.spines.show`.
+        See `spines.show_spines()` for details.
     spines_offsets: dict or float
-        Offsets for moving spines outward. See `spines.set_spines_outward()` for details.
+        Offsets for moving spines outward. Sets ptParam `axes.spines.offsets`.
+        See `spines.set_spines_outward()` for details.
     spines_positions: dict or float
-        Positions for spines in data coordinates. See `spines.set_spines_zero()` for details.
+        Positions for spines in data coordinates. Sets ptParam `axes.spines.positions`.
+        See `spines.set_spines_zero()` for details.
     spines_bounds: dict
-        Bounds for the spines. See `spines.set_spines_bounds()` for details.
+        Bounds for the spines. Sets ptParam `axes.spines.bounds`.
+        See `spines.set_spines_bounds()` for details.
     arrows: string
-        Spines as arrows. See `spines.arrow_spines()` for details.
+        Spines as arrows. Sets ptParam `axes.spines.arrows`.
+        See `spines.arrow_spines()` for details.
     flushx: float
         Extend tail of arrowed top or bottom spine by this factor times offset of other axis
         (if set outwards) or by this factor times the height of the arrow
-        (if set to a data coordinate).
+        (if set to a data coordinate). Sets ptParam `axes.spines.arrows.flushx`.
         See `spines.arrow_spines()` for details.
     extendx: float
         Extend head of arrowed top or bottom spine by this factor times height of arrow.
-        See `spines.arrow_spines()` for details.
+        Sets ptParam `axes.spines.arrows.extendx`. See `spines.arrow_spines()` for details.
     flushy: float
         Extend tail of arrowed left or right spine by this factor times offset of other axis
         (if set outwards) or by this factor times the height of the arrow
-        (if set to a data coordinate).
+        (if set to a data coordinate). Sets ptParam `axes.spines.arrows.flushy`.
         See `spines.arrow_spines()` for details.
     extendy: float
         Extend head of arrowed left or right spine by this factor times height of arrow.
-        See `spines.arrow_spines()` for details.
+        Sets ptParam `axes.spines.arrows.extendy`. See `spines.arrow_spines()` for details.
     height: float
         Height of arrow head of arrowed spine in points.
-        See `spines.arrow_spines()` for details.
+        Sets ptParam `axes.spines.arrows.height`. See `spines.arrow_spines()` for details.
     ratio: float
         Width relative to height of arrow head of arrowed spine in points.
-        See `spines.arrow_spines()` for details.
+        Sets ptParam `axes.spines.arrows.ratio`. See `spines.arrow_spines()` for details.
     overhang: float
         Fraction that the arrow is swept back: 0 is triangular arrow,
         1 is pure line arrow, negative values extend the arrow backwards.
-        See `spines.arrow_spines()` for details.
+        Sets ptParam `axes.spines.arrows.overhang`. See `spines.arrow_spines()` for details.
     twinx_spines: string
-        Spines to be shown for `twinx()` axes. See `spines.show_spines()` for details.
+        Spines to be shown for `twinx()` axes. Sets ptParam `axes.spines.twinx`.
+        See `spines.show_spines()` for details.
         Twinned axes get the same default offsets, positions, and bounds
         as the defaults for normal axes.
     twiny_spines: string
-        Spines to be shown for `twiny()` axes. See `spines.show_spines()` for details.
+        Spines to be shown for `twiny()` axes. Sets ptParam `axes.spines.twiny`.
+        See `spines.show_spines()` for details.
         Twinned axes get the same default offsets, positions, and bounds
         as the defaults for normal axes.
     inset_spines: string
-        Spines to be shown for an inset. See `spines.show_spines()` for details.
+        Spines to be shown for an inset. Sets ptParam `axes.spines.inset.show`.
+        See `spines.show_spines()` for details.
     inset_spines_offsets: dict
         Offsets for moving spines outward for an inset.
-        See `spines.set_spines_outward()` for details.
+        Sets ptParam `axes.spines.inset.offsets`. See `spines.set_spines_outward()` for details.
     inset_spines_positions: dict
         Positions of spines in data coordinates for an inset.
-        See `spines.set_spines_zero()` for details.
+        Sets ptParam `axes.spines.inset.positions`. See `spines.set_spines_zero()` for details.
     inset_spines_bounds: dict
-        Bounds for the spines of an inset. See `spines.set_spines_bounds()` for details.
+        Bounds for the spines of an inset. Sets ptParam `axes.spines.inset.bounds`.
+        See `spines.set_spines_bounds()` for details.
     """
-    install_spines()
-    if spines is not None:
-        mpl.ptParams.update({'axes.spines.show': spines})
-    if spines_offsets is not None:
-        mpl.ptParams.update({'axes.spines.offsets': spines_offsets})
-    if spines_positions is not None:
-        mpl.ptParams.update({'axes.spines.positions': spines_positions})
-    if spines_bounds is not None:
-        mpl.ptParams.update({'axes.spines.bounds': spines_bounds})
-    if arrows is not None:
-        mpl.ptParams.update({'axes.spines.arrows': arrows})
-    if flushx is not None:
-        mpl.ptParams.update({'axes.spines.arrows.flushx': flushx})
-    if extendx is not None:
-        mpl.ptParams.update({'axes.spines.arrows.extendx': extendx})
-    if flushy is not None:
-        mpl.ptParams.update({'axes.spines.arrows.flushy': flushy})
-    if extendy is not None:
-        mpl.ptParams.update({'axes.spines.arrows.extendy': extendy})
-    if height is not None:
-        mpl.ptParams.update({'axes.spines.arrows.height': height})
-    if ratio is not None:
-        mpl.ptParams.update({'axes.spines.arrows.ratio': ratio})
-    if overhang is not None:
-        mpl.ptParams.update({'axes.spines.arrows.overhang': overhang})
-    if twinx_spines is not None:
-        mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
-    if twiny_spines is not None:
-        mpl.ptParams.update({'axes.spines.twiny': twiny_spines})
-    if inset_spines is not None:
-        mpl.ptParams.update({'axes.spines.inset.show': inset_spines})
-    if inset_spines_offsets is not None:
-        mpl.ptParams.update({'axes.spines.inset.offsets': inset_spines_offsets})
-    if inset_spines_positions is not None:
-        mpl.ptParams.update({'axes.spines.inset.positions': inset_spines_positions})
-    if inset_spines_bounds is not None:
-        mpl.ptParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
+    if hasattr(mpl, 'ptParams'):
+        if spines is not None:
+            mpl.ptParams.update({'axes.spines.show': spines})
+        if spines_offsets is not None:
+            mpl.ptParams.update({'axes.spines.offsets': spines_offsets})
+        if spines_positions is not None:
+            mpl.ptParams.update({'axes.spines.positions': spines_positions})
+        if spines_bounds is not None:
+            mpl.ptParams.update({'axes.spines.bounds': spines_bounds})
+        if arrows is not None:
+            mpl.ptParams.update({'axes.spines.arrows': arrows})
+        if flushx is not None:
+            mpl.ptParams.update({'axes.spines.arrows.flushx': flushx})
+        if extendx is not None:
+            mpl.ptParams.update({'axes.spines.arrows.extendx': extendx})
+        if flushy is not None:
+            mpl.ptParams.update({'axes.spines.arrows.flushy': flushy})
+        if extendy is not None:
+            mpl.ptParams.update({'axes.spines.arrows.extendy': extendy})
+        if height is not None:
+            mpl.ptParams.update({'axes.spines.arrows.height': height})
+        if ratio is not None:
+            mpl.ptParams.update({'axes.spines.arrows.ratio': ratio})
+        if overhang is not None:
+            mpl.ptParams.update({'axes.spines.arrows.overhang': overhang})
+        if twinx_spines is not None:
+            mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
+        if twiny_spines is not None:
+            mpl.ptParams.update({'axes.spines.twiny': twiny_spines})
+        if inset_spines is not None:
+            mpl.ptParams.update({'axes.spines.inset.show': inset_spines})
+        if inset_spines_offsets is not None:
+            mpl.ptParams.update({'axes.spines.inset.offsets': inset_spines_offsets})
+        if inset_spines_positions is not None:
+            mpl.ptParams.update({'axes.spines.inset.positions': inset_spines_positions})
+        if inset_spines_bounds is not None:
+            mpl.ptParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
 
 
 def install_spines():

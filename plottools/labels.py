@@ -218,33 +218,36 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_labels(*args, **kwargs)
 
 
-def labels_params(lformat=None, xdist=None, ydist=None, label_size='small'):
+def labels_params(lformat=None, xdist=None, ydist=None, label_size=None):
     """ Set parameters for axis labels.
+                  
+    Only parameters that are not `None` are updated.
     
     Parameters
     ----------
-    lformat: string or None
-        If not None set the string specifying how axes labels are formatted.
+    lformat: string
+        Set the string specifying how axes labels are formatted.
         In this string '{label}' is replaced by the axes' label,
         and '{unit}' is replaced by the axes' unit.
         The default format string is '{label} [{unit}]'.
+        Set ptParam `axes.label.format`.
     xdist: float
         Minimum vertical distance between xtick labels and label of x-axis.
-        Used by `align_labels()`.
+        Used by `align_labels()`. Set ptParam `axes.label.xdist`.
     ydist: float
         Minimum horizontal distance between ytick labels and label of y-axis.
-        Used by `align_labels()`.
-    label_size: float or string or None
-        If not None set font size for x- and y-axis labels
-        (rc parameters `xtick.labelsize` and `ytick.labelsize`).
+        Used by `align_labels()`. Set ptParam `axes.label.ydist`.
+    label_size: float or string
+        Set font size for x- and y-axis labels
+        Sets rcParams `xtick.labelsize` and `ytick.labelsize`.
     """
-    install_labels()
-    if lformat is not None:
-        mpl.ptParams['axes.label.format'] = lformat
-    if xdist is not None:
-        mpl.ptParams['axes.label.xdist'] = xdist
-    if ydist is not None:
-        mpl.ptParams['axes.label.ydist'] = ydist
+    if hasattr(mpl, 'ptParams'):
+        if lformat is not None:
+            mpl.ptParams['axes.label.format'] = lformat
+        if xdist is not None:
+            mpl.ptParams['axes.label.xdist'] = xdist
+        if ydist is not None:
+            mpl.ptParams['axes.label.ydist'] = ydist
     if label_size is not None:
         mpl.rcParams['xtick.labelsize'] = label_size
         mpl.rcParams['ytick.labelsize'] = label_size
@@ -281,11 +284,11 @@ def install_labels():
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
     if 'axes.label.format' not in mpl.ptParams:
-        mpl.ptParams.update({'axes.label.format': '{label} [{unit}]'})
+        mpl.ptParams['axes.label.format'] = '{label} [{unit}]'
     if 'axes.label.xdist' not in mpl.ptParams:
-        mpl.ptParams.update({'axes.label.xdist': 5})
+        mpl.ptParams['axes.label.xdist'] = 5
     if 'axes.label.ydist' not in mpl.ptParams:
-        mpl.ptParams.update({'axes.label.ydist': 10})
+        mpl.ptParams['axes.label.ydist'] = 10
         
 
 def uninstall_labels():

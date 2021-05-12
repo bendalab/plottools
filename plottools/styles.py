@@ -72,10 +72,10 @@ from .ticks import ticks_params
 from .labels import labels_params, install_align_labels, uninstall_align_labels
 from .legend import legend_params, install_legend, uninstall_legend
 from .text import text_params, install_text, uninstall_text
-from .arrows import harrow, varrow, arrow_style, plot_arrowstyles
+from .arrows import arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
 from .axes import axes_params
-from .scalebars import xscalebar, yscalebar, scalebars, scalebar_params
+from .scalebars import scalebar_params
 from .significance import significance_bar
 from .neurons import neuron
 

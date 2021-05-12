@@ -68,23 +68,24 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     return txt
 
 
-def text_params(font_size=10.0, font_family='sans-serif',
-                latex=False, preamble=None):
+def text_params(font_size=None, font_family=None, latex=None, preamble=None):
     """ Set default parameter for the text module.
+                  
+    Only parameters that are not `None` are updated.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
-    font_size: float or None
-        If not None set font size for text in points (rc parameter `font.size`).
-    font_family: string or None
-        If not None set name of font to be used (rc parameter `font.family`).
-    latex: boolean or None
-        If not None then use LaTeX for setting text and enable unicode support
-        when set to `True` (rc parameter `text.usetex`).
-    preamble: sequence of strings or None
-        Lines for the latex preamble (rc parameter `text.latex.preamble`).
+    font_size: float
+        Set font size for text in points (rcParam `font.size`).
+    font_family: string
+        Set name of font to be used (rcParam `font.family`).
+    latex: boolean
+        Use LaTeX for setting text and enable unicode support
+        when set to `True` (rcParam `text.usetex`).
+    preamble: sequence of strings
+        Lines for the latex preamble (rcParam `text.latex.preamble`).
         For convinience, strings starting with 'p:xxx'
         are translated into '\\usepackage{xxx}', strings starting with
         'p:[yyy]xxx' are translated into '\\usepackage[yyy]{xxx}'.

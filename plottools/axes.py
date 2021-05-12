@@ -30,9 +30,7 @@ figure.tags.xoffs : 'auto',
 figure.tags.yoffs : 'auto',
 figure.tags.label : '%A',
 figure.tags.minorlabel : '%A%mi',
-figure.tags.font  : dict(fontsize='x-large',
-                         fontstyle='sans-serif',
-                         tweight='normal')
+figure.tags.font  : dict(fontsize='x-large', fontstyle='sans-serif', fonttweight='normal')
 ```
 
 ## Install/uninstall axes functions
@@ -529,24 +527,29 @@ def axes_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None,
         of a character (simply 60% of the current font size).
         If 'auto', set it to the distance of the right-most axis to the left figure border,
         or to a previously computed value from that figure.
+        Sets ptParam `figure.tags.xoffs`.
     yoffs: float or 'auto'
         Y-coordinate of tag relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
         If 'auto', set it to the distance of the top-most axis to the top figure border,
         or to a previously computed value from that figure.
+        Sets ptParam `figure.tags.yoffs`.
     label: string
-        Label used to tag axes. See `tag()` for details.
+        Label used to tag axes. Sets ptParam `figure.tags.label`.
+        See `tag()` for details.
     minor_label: string
-        Label used to tag minor axes. See `tag()` for details.
+        Label used to tag minor axes. Sets ptParam `figure.tags.minorlabel`.
+        See `tag()` for details.
     font: dict
         Dictionary with font settings for tags
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+        Updates ptParam `figure.tags.font`.
     xmargin: float
-        Padding added to x-axis limits in fractions of the data interval
-        (rc parameter `axes.xmargin`).
+        Padding added to x-axis limits in fractions of the data interval.
+        Sets rcParam `axes.xmargin`.
     ymargin: float
-        Padding added to y-axis limits in fractions of the data interval
-        (rc parameter `axes.ymargin`).
+        Padding added to y-axis limits in fractions of the data interval.
+        Sets rcParam `axes.ymargin`.
     """
     if hasattr(mpl, 'ptParams'):
         if xoffs is not None:
@@ -593,11 +596,12 @@ def install_axes():
     # add tag parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
-    mpl.ptParams.update({'figure.tags.xoffs': 'auto',
-                         'figure.tags.yoffs': 'auto',
-                         'figure.tags.label': '%A',
-                         'figure.tags.minorlabel': '%A%mi',
-                         'figure.tags.font': dict(fontsize='x-large')})
+    if 'figure.tags.xoffs' not in mpl.ptParams:
+        mpl.ptParams.update({'figure.tags.xoffs': 'auto',
+                             'figure.tags.yoffs': 'auto',
+                             'figure.tags.label': '%A',
+                             'figure.tags.minorlabel': '%A%mi',
+                             'figure.tags.font': dict(fontsize='x-large')})
 
 
 def uninstall_axes():
