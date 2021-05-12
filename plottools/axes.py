@@ -2,13 +2,6 @@
 Tag axes with a label and simplify common axis labels.
 
 
-## Axes member functions
-
-- `aspect_ratio()`: aspect ratio of axes.
-- `set_xlim_equal()`: ensure equal aspect ratio by appropriately setting x limits.
-- `set_ylim_equal()`: ensure equal aspect ratio by appropriately setting y limits.
-
-
 ## Figure member functions
 
 - `tag()`: tag each axes with a label.
@@ -47,96 +40,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.gridspec as gridspec
-
-
-def aspect_ratio(ax):
-    """Aspect ratio of axes.
-
-    Parameters
-    ----------
-    ax: matplotlib axes
-        Axes of which aspect ratio is computed.
-
-    Returns
-    -------
-    aspect: float
-        Aspect ratio (height in inches relative to width).
-    """
-    figw, figh = ax.get_figure().get_size_inches()
-    _, _, w, h = ax.get_position().bounds
-    return (figh * h) / (figw * w)
-
-
-def set_xlim_equal(ax, xmin_frac=0.0, xmax_frac=1.0):
-    """ Ensure equal aspect ratio by appropriately setting x limits.
-
-    If you need both axis equally scaled, such that on the plot a unit
-    on the x-axis covers the same distance as a unit on the y-axis, one
-    usually calls `ax.set_aspect('equal')`. This mechanism scales the
-    physical dimensions of the plot to make the units on both axis
-    equal.  Problem is, that then the physical dimensions of the plot
-    differ from other plots in the grid.
-
-    The `set_xlim_equal()` function uses a different approach. Instead
-    of scaling the physical dimensions of the plot, the limits of the
-    x-axis are adapted to the aspect-ratio of the full plot. This way
-    the dimensions of the plot are not scaled.
-
-    Call this function *after* setting the limits of the x-axis.
-
-    Parameters
-    ----------
-    ax: matplotlib axes
-        Axes of which aspect ratio is computed.
-    xmin_frac: float
-        Fraction of the total range of the x-axis for the minimum value of the x-axis.
-    xmax_frac: float
-        Fraction of the total range of the x-axis for the maximum value of the x-axis.
-
-    See Also
-    --------
-    - `set_ylim_equal()`
-    - `aspect_ratio()`
-    """
-    yrange = np.diff(ax.get_ylim())[0]
-    xrange = ax.aspect_ratio()*yrange/(xmax_frac-xmin_frac)
-    ax.set_xlim(xmin_frac*xrange, xmax_frac*xrange)
-
-
-def set_ylim_equal(ax, ymin_frac=0.0, ymax_frac=1.0):
-    """ Ensure equal aspect ratio by appropriately setting y limits.
-
-    If you need both axis equally scaled, such that on the plot a unit
-    on the x-axis covers the same distance as a unit on the y-axis, one
-    usually calls `ax.set_aspect('equal')`. This mechanism scales the
-    physical dimensions of the plot to make the units on both axis
-    equal.  Problem is, that then the physical dimensions of the plot
-    differ from other plots in the grid.
-
-    The `set_ylim_equal()` function uses a different approach. Instead
-    of scaling the physical dimensions of the plot, the limits of the
-    y-axis are adapted to the aspect-ratio of the full plot. This way
-    the dimensions of the plot are not scaled.
-
-    Call this function *after* setting the limits of the x-axis.
-
-    Parameters
-    ----------
-    ax: matplotlib axes
-        Axes of which aspect ratio is computed.
-    ymin_frac: float
-        Fraction of the total range of the y-axis for the minimum value of the y-axis.
-    ymax_frac: float
-        Fraction of the total range of the y-axis for the maximum value of the y-axis.
-
-    See Also
-    --------
-    - `set_xlim_equal()`
-    - `aspect_ratio()`
-    """
-    xrange = np.diff(ax.get_xlim())[0]
-    yrange = ax.aspect_ratio()*xrange/(ymax_frac-ymin_frac)
-    ax.set_ylim(ymin_frac*yrange, ymax_frac*yrange)
 
 
 def common_xlabels(fig, axes=None):
@@ -575,10 +478,6 @@ def install_axes():
     --------
     uninstall_axes()
     """
-    if not hasattr(mpl.axes.Axes, 'aspect_ratio'):
-        mpl.axes.Axes.aspect_ratio = aspect_ratio
-    if not hasattr(mpl.axes.Axes, 'set_ylim_equal'):
-        mpl.axes.Axes.set_ylim_equal = set_ylim_equal
     if not hasattr(mpl.figure.Figure, 'common_xlabels'):
         mpl.figure.Figure.common_xlabels = common_xlabels
     if not hasattr(mpl.figure.Figure, 'common_ylabels'):
@@ -611,10 +510,6 @@ def uninstall_axes():
     --------
     install_axes()
     """
-    if hasattr(mpl.axes.Axes, 'aspect_ratio'):
-        delattr(mpl.axes.Axes, 'aspect_ratio')
-    if hasattr(mpl.axes.Axes, 'set_ylim_equal'):
-        delattr(mpl.axes.Axes, 'set_ylim_equal')
     if hasattr(mpl.figure.Figure, 'common_xlabels'):
         delattr(mpl.figure.Figure, 'common_xlabels')
     if hasattr(mpl.figure.Figure, 'common_ylabels'):

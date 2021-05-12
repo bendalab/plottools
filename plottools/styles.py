@@ -75,6 +75,7 @@ from .text import text_params, install_text, uninstall_text
 from .arrows import arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
 from .axes import axes_params
+from .aspect import install_aspect
 from .scalebars import scalebar_params
 from .significance import significance_bar
 from .neurons import neuron

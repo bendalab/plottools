@@ -8,6 +8,7 @@ from plottools.labels import demo as labels_demo
 from plottools.labels import uninstall_align_labels
 from plottools.arrows import demo as arrows_demo
 from plottools.text import demo as text_demo
+from plottools.aspect import demo as aspect_demo
 from plottools.axes import demo as axes_demo
 from plottools.insets import demo as insets_demo
 from plottools.scalebars import demo as scalebars_demo
@@ -50,6 +51,10 @@ if __name__ == "__main__":
 
     print('plottools.text ...')
     text_demo()
+    print()
+
+    print('plottools.aspect ...')
+    aspect_demo()
     print()
 
     print('plottools.axes ...')

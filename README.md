@@ -36,6 +36,7 @@ The following modules are provided by the plottools package:
 - `text`: enhance textual annotations.
 - `legend`: enhance legend text.
 - `arrows`: arrows.
+- `aspect`: adapting plots to aspect ratio of axes.
 - `axes`: tag axes with a label and simplify common axis labels.
 - `insets`: insets made easy. [More...](docs/insets.md)
 - `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
