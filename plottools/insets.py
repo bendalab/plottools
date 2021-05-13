@@ -167,6 +167,7 @@ def demo():
         ax.text(0.02, 0.98, '4', ha='left', va='top', fontweight='bold', transform=ax.transAxes)
     
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.insets')
     x = np.arange(-2.0, 5.0, 0.01)
     y = np.sin(2.0*np.pi*4.0*x)
     ax.plot(x, y)

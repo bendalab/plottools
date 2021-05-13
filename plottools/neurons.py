@@ -201,6 +201,7 @@ def demo():
     """ Run a demonstration of the neurons module.
     """
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.neurons')
     ax.set_aspect('equal')
     ax.set_xlim(0, 10)
     neuronstyle = dict(ec='gray', lw=1.0, fs='medium')

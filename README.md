@@ -27,23 +27,24 @@ plottools package expands on this. See the styles module for details.
 
 The following modules are provided by the plottools package:
 
-- `styles`: layout settings and plot styles.
-- `colors`: color palettes and tools for manipulating colors. [More...](docs/colors.md)
-- `figure`: size and file names of a figure.
-- `subplots`: enhanced subplots with margins.
-- `spines`: modify the appearance of spines. [More...](docs/spines.md)
-- `ticks`: setting tick locations and formats. [More...](docs/ticks.md)
-- `labels`: annotate axis with label and unit and align axes labels.
-- `text`: enhance textual annotations.
-- `legend`: enhance legend text.
+- `align`: align axes labels.
 - `arrows`: arrows.
 - `aspect`: adapting plots to aspect ratio of axes.
-- `tag`: tag axes with a label.
 - `axes`: simplify common axis labels.
+- `colors`: color palettes and tools for manipulating colors. [More...](docs/colors.md)
+- `figure`: size and file names of a figure.
 - `insets`: insets made easy. [More...](docs/insets.md)
+- `labels`: annotate axis with label and unit.
+- `legend`: enhance legend text.
+- `neurons`: draw sketches of neurons.
 - `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
 - `significance`: indicating statsitical significance.
-- `neurons`: draw sketches of neurons.
+- `spines`: modify the appearance of spines. [More...](docs/spines.md)
+- `styles`: layout settings and plot styles.
+- `subplots`: enhanced subplots with margins.
+- `tag`: tag axes with a label.
+- `text`: enhance textual annotations.
+- `ticks`: setting tick locations and formats. [More...](docs/ticks.md)
 
 See [documentation](https://bendalab.github.io/plottools/api) in the
 modules for more infos.

@@ -572,6 +572,7 @@ def demo():
     """ Run a demonstration of the ticks module.
     """
     fig, axs = plt.subplots(4, 2)
+    fig.subplots_adjust(wspace=0.2, hspace=0.6)
 
     fig.suptitle('plottools.ticks')
 
@@ -596,7 +597,8 @@ def demo():
     axs[1,1].set_yticks_blank()
 
     axs[2,0].text(0.1, 0.8, 'ax.set_xticks_fixed((0, 0.3, 1))')
-    axs[2,0].text(0.1, 0.6, "ax.set_yticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))")
+    axs[2,0].text(0.1, 0.6, "ax.set_yticks_fixed((0, 0.5, 1),")
+    axs[2,0].text(0.1, 0.4, "                    ('a', 'b', 'c'))")
     axs[2,0].set_xticks_fixed((0, 0.3, 1))
     axs[2,0].set_yticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))
 

@@ -108,6 +108,7 @@ def demo():
     """ Run a demonstration of the significance module.
     """
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.significance')
     x1 = 1.0+0.3*np.random.randn(50)
     x2 = 4.0+0.5*np.random.randn(50)
     ax.boxplot([x1, x2])

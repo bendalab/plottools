@@ -12,6 +12,10 @@ Drawing arrows.
 ## Settings
 
 - `arrow_style()`: generate an arrow style.
+
+
+## Display
+
 - `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
 
 
@@ -438,9 +442,10 @@ install_arrows()
 
         
 def demo():
-    """ Run a demonstration of the arrow module.
+    """ Run a demonstration of the arrows module.
     """
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.arrows')
     ax.set_xlim(0.0, 3.0)
     ax.set_ylim(0.0, 2.0)
     for y in [1.1, 1.3, 1.5, 1.7, 1.9]:

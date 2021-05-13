@@ -536,6 +536,7 @@ def demo():
                     font=dict(fontweight='bold'))
     
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.scalebars')
     x = np.arange(-2.0, 5.0, 0.01)
     ax.plot(x, np.sin(2.0*np.pi*1.0*x))
     ax.set_xlim(-2.0, 5.0)

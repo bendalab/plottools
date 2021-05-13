@@ -50,6 +50,11 @@ module, `install_subplots()` is called automatically.
 
 - `install_subplots()`: install functions of the subplots module in matplotlib.
 - `uninstall_subplots()`: uninstall all code of the subplots module from matplotlib.
+
+
+## Todo
+
+- default figure margins
 """
 
 import __main__
@@ -60,7 +65,7 @@ import matplotlib.gridspec as gridspec
 
 
 def __adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
-                leftm=6.0, bottomm=3.0, rightm=1.5, topm=0.5,
+                leftm=None, bottomm=None, rightm=None, topm=None,
                 nomargins=False, **kwargs):
     """ Compute plot margins from multiples of the current font size.
 

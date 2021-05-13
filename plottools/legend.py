@@ -146,6 +146,7 @@ def demo(usetex=False):
                   handlelength=2, handletextpad=4,
                   numpoints=1, scatterpoints=1, labelspacing=2)
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.legend')
     slope1 = 0.5
     slope2 = 0.2
     x = np.linspace(0, 2, 10)

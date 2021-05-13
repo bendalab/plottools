@@ -307,6 +307,7 @@ def demo():
 
     def afigure():
         fig, axs = plt.subplots(2, 2)
+        fig.suptitle('plottools.axes')
         for ax in axs.ravel():
             ax.set_xlabel('xlabel')
             ax.set_ylabel('ylabel')

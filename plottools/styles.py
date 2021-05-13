@@ -65,21 +65,24 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from .align import align_params, install_align, uninstall_align
+from .arrows import arrow_style, plot_arrowstyles, install_arrows, uninstall_arrows
+from .aspect import install_aspect, install_aspect, uninstall_aspect
+from .axes import axes_params, install_axes, uninstall_axes
 from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
-from .figure import figure_params, latex_include_figures
-from .spines import show_spines, set_spines_outward, set_spines_bounds, spines_params
-from .ticks import ticks_params
-from .labels import labels_params, install_align_labels, uninstall_align_labels
+from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure
+from .insets import install_insets, uninstall_insets
+from .labels import labels_params, install_labels, uninstall_labels
 from .legend import legend_params, install_legend, uninstall_legend
+from .neurons import install_neurons, uninstall_neurons
+from .scalebars import scalebar_params, install_scalebars, uninstall_scalebars
+from .significance import install_significance, uninstall_significance
+from .spines import spines_params, install_spines, uninstall_spines
+from .subplots import install_subplots, uninstall_subplots
+from .tag import tag_params, install_tag, uninstall_tag
 from .text import text_params, install_text, uninstall_text
-from .arrows import arrow_style, plot_arrowstyles
-from .insets import inset, zoomed_inset
-from .tag import tag_params
-from .axes import axes_params
-from .aspect import install_aspect
-from .scalebars import scalebar_params
-from .significance import significance_bar
-from .neurons import neuron
+from .ticks import ticks_params, install_ticks, uninstall_ticks
+from .version import __version__
 
 
 def lighter_styles(style, n):
@@ -744,25 +747,24 @@ def screen_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(axes_color=palette['white'], namespace=namespace)
-    ticks_params(tick_dir='out', tick_size=4.0)
-    text_params(font_size=10.0, font_family='sans-serif')
+    align_params(xdist=5, ydist=10)
+    axes_params(xmargin=0, ymargin=0)
+    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
+    colors_params(palette, cycle_colors)
+    figure_params(color=palette['gray'], format='png',
+                  compression=6, fonttype=3, stripfonts=False)
+    labels_params(lformat='{label} [{unit}]', label_size='medium')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    axes_params(xmargin=0, ymargin=0)
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(color=palette['gray'], format='png',
-                  compression=6, fonttype=3, stripfonts=False)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
-    # color cycle:
-    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors)
-    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10, label_size='small')
-    install_align_labels()
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+    text_params(font_size=10.0, font_family='sans-serif')
+    ticks_params(tick_dir='out', tick_size=4.0)
+    plot_params(axes_color=palette['white'], namespace=namespace)
 
     
 def paper_style(namespace=None):
@@ -829,25 +831,25 @@ def paper_style(namespace=None):
                 color=palette['black'], head_length=10, head_width=6, namespace=namespace)
     # rc settings:
     mpl.rcdefaults()
-    plot_params(axes_color='none', namespace=namespace)
-    ticks_params(tick_dir='out', tick_size=2.5)
-    text_params(font_size=10.0, font_family='sans-serif')
-    legend_params(fontsize='small', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.8,
-                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
+    align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0)
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(fig_color='none', format='pdf', compression=6, fonttype=3, stripfonts=False)
-    spines_params(spines='lb', spines_offsets={'lrtb': 3}, spines_bounds={'lrtb': 'full'})
-    # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(palette, cycle_colors)
-    labels_params(lformat='{label} [{unit}]', xdist=5, ydist=10, label_size='small')
-    install_align_labels()
-
+    figure_params(color='none', format='pdf',
+                  compression=6, fonttype=3, stripfonts=False)
+    labels_params(lformat='{label} [{unit}]', label_size='small')
+    legend_params(fontsize='small', frameon=False, borderpad=0,
+                  handlelength=1.5, handletextpad=0.5,
+                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f',
+                    lw=2, color=palette['black'], capsize=0, clw=0.5)
+    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+    text_params(font_size=10.0, font_family='sans-serif')
+    ticks_params(tick_dir='out', tick_size=2.5)
+    plot_params(axes_color='none', namespace=namespace)
+    
    
 def sketch_style(namespace=None):
     """ Layout and plot styles with xkcd style activated.
@@ -916,26 +918,25 @@ def sketch_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
-    plot_params(axes_color='none', namespace=namespace)
-    ticks_params(tick_dir='out', tick_size=6)
-    text_params(font_size=10.0, font_family='sans-serif')
-    legend_params(fontsize='medium', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.8,
-                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
+    align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0)
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
-    figure_params(fig_color=palette['white'], format='pdf',
-                  compression=6, fonttype=3, stripfonts=False)
-    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
-    # color cycle:
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(palette, cycle_colors)
-    labels_params(lformat='{label} ({unit})', xdist=5, ydist=10, label_size='medium')
-    install_align_labels()
-    
+    figure_params(color='none', format='pdf',
+                  compression=6, fonttype=3, stripfonts=False)
+    labels_params(lformat='{label} ({unit})', label_size='medium')
+    legend_params(fontsize='medium', frameon=False, borderpad=0,
+                  handlelength=1.5, handletextpad=0.5,
+                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
+    scalebar_params(format_large='%.0f', format_small='%.1f',
+                    lw=2, color=palette['black'], capsize=0, clw=0.5)
+    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
+    text_params(font_size=10.0, font_family='sans-serif')
+    ticks_params(tick_dir='out', tick_size=6)
+    plot_params(axes_color='none', namespace=namespace)
+        
 
 def plot_linestyles(ax):
     """ Plot names and lines of all available line styles.

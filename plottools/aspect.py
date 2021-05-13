@@ -150,6 +150,7 @@ def demo():
     """ Run a demonstration of the aspect module.
     """
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1)
+    fig.suptitle('plottools.aspect')
     for ax in (ax1, ax2, ax3):
         ax.plot([-2, 2, 2, -2, -2], [-2, -2, 2, 2, -2])
         ax.plot([-50, 50, -50, 50], [-50, 50, 50, -50])

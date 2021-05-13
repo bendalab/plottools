@@ -294,6 +294,7 @@ def demo():
 
     def afigure():
         fig = plt.figure()
+        fig.suptitle('plottools.tag')
         gs = gridspec.GridSpec(2, 3, width_ratios=[5, 1.5, 2.4])
         gs.update(left=0.075, bottom=0.14, right=0.985, top=0.9, wspace=0.6, hspace=0.6)
         ax1 = fig.add_subplot(gs[:,0])

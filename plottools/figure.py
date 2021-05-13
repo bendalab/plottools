@@ -51,6 +51,15 @@ This prints to the console
 and generates the respective pdf files.
 
 
+## Strip embedded fonts from pdf file
+
+By setting `stripfonts=True` in `savefig()` or via
+`ptParams['pdf.stripfonts']`, figures saved as pdf files
+are run through `ps2pdf` in order to remove embedded fonts.
+This significantly reduces the file size, in particular
+when using LaTeX mode.
+
+
 ## Functions
 
 - `cm_size()`: convert dimensions from cm to inch.
@@ -403,6 +412,7 @@ def demo():
     """
     figure_params(counter='A')
     fig, axs = plt.subplots(2, 1, cmsize=(18.0, 10.0))  # figsize in cm!
+    fig.suptitle('plottools.figure')
     [ax.set_visible(False) for ax in axs.ravel()]
     axs[0].set_visible(True)
     axs[0].text(0.1, 1.6, 'fig, ax = plt.subplots(2, 1, cmsize=(18.0, 10.0))')

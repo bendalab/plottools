@@ -1068,6 +1068,7 @@ def demo_basic():
     """ Run a basic demonstration of the spine module.
     """
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
+    fig.suptitle('plottools.spines')
     # set spines outward:
     fig.set_spines_outward('lrtb', 10)
     # spine visibility:
@@ -1110,6 +1111,7 @@ def demo_arrows():
     """ Run a demonstration of the spine module showing arrowed spines.
     """
     fig, axs = plt.subplots(3, 2, figsize=(10, 8))
+    fig.suptitle('plottools.spines')
     fig.show_spines('')
     # spine arrows:
     axs[0, 0].arrow_spines('lb')
@@ -1153,6 +1155,7 @@ def demo_twin_inset():
                   twinx_spines='r', twiny_spines='t',
                   inset_spines='lrb', inset_spines_offsets={'b': 10})
     fig, axs = plt.subplots(1, 3, figsize=(14, 4))
+    fig.suptitle('plottools.spines')
     fig.subplots_adjust(wspace=0.5)
     axs[0].text(0.05, 1.85, "spines='lb'")
     axt = axs[1].twinx()

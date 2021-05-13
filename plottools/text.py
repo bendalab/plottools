@@ -158,6 +158,7 @@ def demo(usetex=False):
     """
     text_params(font_size=12, latex=usetex, preamble=r'\usepackage{SIunits}')
     fig, ax = plt.subplots()
+    fig.suptitle('plottools.text')
     slope1 = 0.5
     slope2 = 0.2
     x = np.linspace(0, 2, 10)
