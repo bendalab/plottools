@@ -2,6 +2,7 @@ from plottools.version import __version__, versions
 from plottools.styles import demo as styles_demo
 from plottools.colors import demo as colors_demo
 from plottools.figure import demo as figure_demo
+from plottools.subplots import demo as subplots_demo
 from plottools.spines import demo as spines_demo
 from plottools.ticks import demo as ticks_demo
 from plottools.labels import demo as labels_demo
@@ -32,6 +33,10 @@ if __name__ == "__main__":
 
     print('plottools.figure ...')
     figure_demo()
+    print()
+
+    print('plottools.subplots ...')
+    subplots_demo()
     print()
 
     print('plottools.spines ...')
