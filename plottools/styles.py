@@ -74,6 +74,7 @@ from .legend import legend_params, install_legend, uninstall_legend
 from .text import text_params, install_text, uninstall_text
 from .arrows import arrow_style, plot_arrowstyles
 from .insets import inset, zoomed_inset
+from .tag import tag_params
 from .axes import axes_params
 from .aspect import install_aspect
 from .scalebars import scalebar_params
@@ -749,9 +750,9 @@ def screen_style(namespace=None):
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
-                xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0)
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(color=palette['gray'], format='png',
@@ -834,9 +835,9 @@ def paper_style(namespace=None):
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.8,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
-                xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0)
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(fig_color='none', format='pdf', compression=6, fonttype=3, stripfonts=False)
@@ -921,9 +922,9 @@ def sketch_style(namespace=None):
     legend_params(fontsize='medium', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.8,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    axes_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'),
-                xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0)
+    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
+               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
     figure_params(fig_color=palette['white'], format='pdf',
