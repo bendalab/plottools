@@ -421,18 +421,11 @@ install_subplots()
 def demo():
     """ Run a demonstration of the subplots module.
     """
-    fig, axs = plt.subplots(2, 1, height_ratios=[5, 1])
-    fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
-    axs[0].text(0.1, 1.7, 'fig, ax = plt.subplots(height_ratios=[5, 1])')
-    axs[0].text(0.1, 1.4, 'fig.subplots_adjust(leftm=5.0, bottomm=2.0, topm=1.0, rightm=2.0)  # in fontsize margins!')
-    x = np.linspace(0.0, 2.0, 200)
-    axs[0].plot(x, np.sin(2.0*np.pi*x))
-    axs[0].set_ylim(-1.0, 2.0)
-
-    fig, axs = plt.subplots(3, 3)
+    fig, axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])
     # in fontsize margins and even with old matplotlib versions:
-    fig.subplots_adjust(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=4)
-    fig.suptitle('axs = plt.subplots(3, 3)\nfig.subplots_adjust(wspace=0.3, hspace=0.3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=4)')
+    fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
+    fig.suptitle('axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
+    x = np.linspace(0.0, 2.0, 200)
     ax = fig.merge(axs[1:3,0:2])
     ax.plot(x, np.sin(2.0*np.pi*x))
     ax.text(0.05, 0.1, 'ax = fig.merge(axs[1:3,0:2])', transform=ax.transAxes)
