@@ -151,18 +151,19 @@ def demo():
     """
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1)
     for ax in (ax1, ax2, ax3):
-        ax.plot([-50, 50], [-50, 50])
+        ax.plot([-2, 2, 2, -2, -2], [-2, -2, 2, 2, -2])
+        ax.plot([-50, 50, -50, 50], [-50, 50, 50, -50])
         ax.set_xlim(-10, 10)
         ax.set_ylim(-10, 10)
-    ax1.text(0.1, 0.8, 'aspect ratio = %.2f' % ax1.aspect_ratio(), transform=ax1.transAxes)
-    ax1.text(0.1, 0.6, 'ax1.set_xlim(-10, 10)', transform=ax1.transAxes)
-    ax1.text(0.1, 0.4, 'ax1.set_ylim(-10, 10)', transform=ax1.transAxes)
+    ax1.text(0.02, 0.8, 'aspect ratio = %.2f' % ax1.aspect_ratio(), transform=ax1.transAxes)
+    ax1.text(0.02, 0.6, 'ax1.set_xlim(-10, 10)', transform=ax1.transAxes)
+    ax1.text(0.02, 0.4, 'ax1.set_ylim(-10, 10)', transform=ax1.transAxes)
     ax2.set_xlim_equal(-0.5, 0.5)
-    ax2.text(0.1, 0.8, 'aspect ratio = %.2f' % ax2.aspect_ratio(), transform=ax2.transAxes)
-    ax2.text(0.1, 0.6, 'ax2.set_xlim_equal(-0.5, 0.5)', transform=ax2.transAxes)
+    ax2.text(0.02, 0.8, 'aspect ratio = %.2f' % ax2.aspect_ratio(), transform=ax2.transAxes)
+    ax2.text(0.02, 0.6, 'ax2.set_xlim_equal(-0.5, 0.5)', transform=ax2.transAxes)
     ax3.set_ylim_equal(-0.5, 0.5)
-    ax3.text(0.1, 0.8, 'aspect ratio = %.2f' % ax3.aspect_ratio(), transform=ax3.transAxes)
-    ax3.text(0.1, 0.6, 'ax3.set_ylim_equal(-0.5, 0.5)', transform=ax3.transAxes)
+    ax3.text(0.02, 0.8, 'aspect ratio = %.2f' % ax3.aspect_ratio(), transform=ax3.transAxes)
+    ax3.text(0.02, 0.6, 'ax3.set_ylim_equal(-0.5, 0.5)', transform=ax3.transAxes)
     plt.show()
         
 
