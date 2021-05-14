@@ -22,9 +22,15 @@ then the file name of the main script is used. So you can call
 fig.savefig()
 ```
 and get a 'figure.pdf' file (if the python script was called 'figure.py').
+If the file name just specifies a path that ends with '/', then the name
+of the main script is appended:
+```py
+fig.savefig('plots/')
+```
+writes the file `plots/figure.pdf'.
 
-If the the file name specified in `fig.savefig()` starts with a '+',
-then the file name without the plus is added to the name of the main script.
+If the file name specified in `fig.savefig()` starts with a '+',
+then this string without the plus is added to the name of the main script.
 This is usefull for saving several figures for a (LaTeX beamer) talk.
 For example, a python script named 'example.py'
 ```py
@@ -37,7 +43,7 @@ was specified in `rcParams['savefig.format']`).
 A '@' character in the file name is replaced by 'A', 'B', 'C', ...
 according to how often `fig.savefig()` is called from within the same
 figure. If the '@' is the first character of the file name,
-it is added to the name of the main script. So in our 'example.py' we can write
+it is added to the name of the main script. So in 'example.py' we can write
 ```py
 fig.savefig('@')
 fig.savefig('@')
@@ -48,7 +54,10 @@ This prints to the console
 \\includegraphics<1>{exampleA}
 \\includegraphics<2>{exampleB}
 ```
-and generates the respective pdf files.
+and generates the respective files.
+By setting `ptParams['savefig.counter']` (`counter` argument in `figure_params()`)
+to 'A', 'a', or '1', '@' in file names is replaced 'A', 'B', 'C', ...,
+'a', 'b', 'c', ... or '1', '2', '3', ..., respectively.
 
 
 ## Strip embedded fonts from pdf file
@@ -56,8 +65,9 @@ and generates the respective pdf files.
 By setting `stripfonts=True` in `savefig()` or via
 `ptParams['pdf.stripfonts']`, figures saved as pdf files
 are run through `ps2pdf` in order to remove embedded fonts.
-This significantly reduces the file size, in particular
-when using LaTeX mode.
+This significantly reduces the file size of the generated
+figure files, and is in particular useful when using LaTeX mode
+and including the figures in a LaTeX document.
 
 
 ## Functions
@@ -194,12 +204,15 @@ def __savefig_filename(fig, fname):
         fig.__saved_files_counter = 0
     fig.__saved_files_counter += 1
     # set file name:
+    basename = os.path.splitext(os.path.basename(__main__.__file__))[0]
     if len(fname) == 0:
         fname = '.' + mpl.rcParams['savefig.format']
-    if fname[0] in '.@':
-        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname
+    if fname[0] in '.@' and '/' not in fname:
+        fname = basename + fname
     elif fname[0] == '+':
-        fname = os.path.splitext(os.path.basename(__main__.__file__))[0] + fname[1:]
+        fname = basename + fname[1:]
+    if fname[-1] == '/':
+        fname += basename
     if '@' in fname:
         cs = chr(ord('A')+fig.__saved_files_counter-1)
         if hasattr(mpl, 'ptParams') and 'savefig.counter' in mpl.ptParams:
@@ -324,7 +337,7 @@ def figure_params(color=None, format=None, counter=None,
     """
     if hasattr(mpl, 'ptParams'):
         if counter is not None:
-            mpl.ptParams.update({'savefig.counter': counter})
+            mpl.ptParams['savefig.counter'] = counter
         if stripfonts is not None:
             mpl.ptParams['pdf.stripfonts'] = stripfonts
     if color is not None:
