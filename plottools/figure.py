@@ -207,11 +207,11 @@ def __savefig_filename(fig, fname):
     basename = os.path.splitext(os.path.basename(__main__.__file__))[0]
     if len(fname) == 0:
         fname = '.' + mpl.rcParams['savefig.format']
-    if fname[0] in '.@' and '/' not in fname:
+    if fname[0] in '.@' and '/' not in fname and os.path.sep not in fname:
         fname = basename + fname
     elif fname[0] == '+':
         fname = basename + fname[1:]
-    if fname[-1] == '/':
+    if fname[-1] == '/' or fname[-1] == os.path.sep:
         fname += basename
     if '@' in fname:
         cs = chr(ord('A')+fig.__saved_files_counter-1)
