@@ -750,7 +750,7 @@ def screen_style(namespace=None):
     align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0)
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors)
+    colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color=palette['gray'], format='png',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} [{unit}]', label_size='medium')
@@ -834,7 +834,7 @@ def paper_style(namespace=None):
     align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0)
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors)
+    colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} [{unit}]', label_size='small')
@@ -921,7 +921,7 @@ def sketch_style(namespace=None):
     align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0)
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors)
+    colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} ({unit})', label_size='medium')
