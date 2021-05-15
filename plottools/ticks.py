@@ -6,22 +6,30 @@ Setting tick locations and formats.
 
 - `set_xticks_delta()`: set interval between major xticks.
 - `set_yticks_delta()`: set interval between major yticks.
+  ![delta](figures/ticks-delta.png)
 - `set_xticks_log()`: set major ticks on a logarithmic x-axis.
 - `set_yticks_log()`: set major ticks on a logarithmic y-axis.
 - `set_xticks_fixed()`: set custom xticks at fixed positions.
 - `set_yticks_fixed()`: set custom yticks at fixed positions.
+  ![fixedlabels](figures/ticks-fixedlabels.png)
 - `set_xticks_prefix()`: format xticks with SI prefixes.
 - `set_yticks_prefix()`: format yticks with SI prefixes.
+  ![prefix](figures/ticks-prefix.png)
 - `set_xticks_fracs()`: format and place xticks as fractions.
 - `set_yticks_fracs()`: format and place xticks as fractions.
+  ![fracs](figures/ticks-fracs.png)
 - `set_xticks_pifracs()`: format and place xticks as mutiples of pi.
 - `set_yticks_pifracs()`: format and place yticks as mutiples of pi.
+  ![pifracs](figures/ticks-pifracs.png)
 - `set_xticks_format()`: format xticks according to formatter string.
 - `set_yticks_format()`: format yticks according to formatter string.
+  ![format](figures/ticks-format.png)
 - `set_xticks_blank()`: draw xticks without labeling them.
 - `set_yticks_blank()`: draw yticks without labeling them.
+  ![blank](figures/ticks-blank.png)
 - `set_xticks_off()`: do not draw and label any xticks.
 - `set_yticks_off()`: do not draw and label any yticks.
+  ![off](figures/ticks-off.png)
 - `set_minor_xticks_off()`: do not draw any minor xticks.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
 
@@ -56,6 +64,13 @@ def set_xticks_delta(ax, delta):
         Axis on which the xticks are set.
     delta: float
         Interval between xticks.
+
+    Examples
+    --------
+    ```
+    ax.set_xticks_delta(0.5)
+    ```
+    ![delta](figures/ticks-delta.png)
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(delta))
 
@@ -69,6 +84,10 @@ def set_yticks_delta(ax, delta):
         Axis on which the yticks are set.
     delta: float
         Interval between yticks.
+
+    See also
+    --------
+    `set_xticks_delta()`
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
 
@@ -104,6 +123,10 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
         ???
     numticks: int
         Maximum number of ticks placed on the axis.
+
+    See also
+    --------
+    `set_xticks_log()`
     """
     ax.set_yscale('log')
     ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
@@ -126,6 +149,20 @@ def set_xticks_fixed(ax, locs, labels='%g'):
     -----
     On logarithmic axis you may want to turn off minor ticks, e.g. via
     `ax.set_minor_xticks_off()`.
+
+    Examples
+    --------
+    Fixed locations:
+    ```
+    ax.set_xticks_fixed((0, 0.3, 1))
+    ```
+    ![fixed](figures/ticks-fixed.png)
+
+    Fixed locations and labels:
+    ```
+    ax.set_xticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))
+    ```
+    ![fixedlabels](figures/ticks-fixedlabels.png)
     """
     ax.xaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
@@ -151,6 +188,10 @@ def set_yticks_fixed(ax, locs, labels='%g'):
     -----
     On logarithmic axis you may want to turn off minor ticks, e.g. via
     `ax.set_minor_yticks_off()`.
+
+    See also
+    --------
+    `set_xticks_fixed()`
     """
     ax.yaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
@@ -192,6 +233,15 @@ def set_xticks_prefix(ax):
     ----------
     ax: matplotlib axis
         Axis on which the xticks are set.
+
+    Examples
+    --------
+    ```
+    ax.set_xscale('log')
+    ax.set_xlim(1e-6, 1e0)
+    ax.set_xticks_prefix()
+    ```
+    ![prefix](figures/ticks-prefix.png)
     """
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(prefix_formatter))
 
@@ -210,6 +260,10 @@ def set_yticks_prefix(ax):
     ----------
     ax: matplotlib axis
         Axis on which the yticks are set.
+
+    See also
+    --------
+    `set_xticks_prefix()`
     """
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(prefix_formatter))
 
@@ -277,6 +331,14 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
         Textual representation of factor that is appended to the fractions.
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
+
+    Examples
+    --------
+    ```
+    ax.set_xlim(-1, 1)
+    ax.set_xticks_fracs(4)
+    ```
+    ![fracs](figures/ticks-fracs.png)
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
@@ -298,6 +360,10 @@ def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
         Textual representation of factor that is appended to the fractions.
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
+
+    See also
+    --------
+    `set_xticks_fracs()`
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
@@ -314,6 +380,21 @@ def set_xticks_pifracs(ax, denominator, ontop=False):
         XTicks are located at multiples of pi/denominator.
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
+
+    Examples
+    --------
+    ```
+    ax.set_xlim(-np.pi, 2*np.pi)
+    ax.set_xticks_pifracs(2)
+    ```
+    ![pifracs](figures/ticks-pifracs.png)
+
+    Pi in the nominator:
+    ```
+    ax.set_xlim(0, 4*np.pi/3)
+    ax.set_xticks_pifracs(3, True)
+    ```
+    ![pifracstop](figures/ticks-pifracstop.png)
     """
     ax.set_xticks_fracs(denominator, np.pi, '\\pi', ontop)
 
@@ -329,6 +410,10 @@ def set_yticks_pifracs(ax, denominator, ontop=False):
         YTicks are located at multiples of pi/denominator.
     ontop: boolean
         Place fstring into the numerator instead of after the fraction.
+
+    See also
+    --------
+    `set_xticks_pifracs()`
     """
     ax.set_yticks_fracs(denominator, np.pi, '\\pi', ontop)
 
@@ -342,6 +427,13 @@ def set_xticks_format(ax, fs):
         Axis on which the xticks are set.
     fs: string
         Format string used to format xticks.
+
+    Examples
+    --------
+    ```
+    ax.set_xticks_format('%04.1f')
+    ```
+    ![format](figures/ticks-format.png)
     """
     ax.xaxis.set_major_formatter(ticker.FormatStrFormatter(fs))
 
@@ -355,6 +447,10 @@ def set_yticks_format(ax, fs):
         Axis on which the yticks are set.
     fs: string
         Format string used to format xticks.
+
+    See also
+    --------
+    `set_xticks_format()`
     """
     ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(fs))
 
@@ -370,6 +466,13 @@ def set_xticks_blank(ax):
     See also
     --------
     `plottools.axes.common_xlabels()`
+
+    Examples
+    --------
+    ```
+    ax.set_xticks_blank()
+    ```
+    ![blank](figures/ticks-blank.png)
     """
     ax.xaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -385,6 +488,10 @@ def set_yticks_blank(ax):
     See also
     --------
     `plottools.axes.common_ylabels()`
+
+    See also
+    --------
+    `set_xticks_blank()`
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -396,6 +503,13 @@ def set_xticks_off(ax):
     ----------
     ax: matplotlib axis
         Axis on which the xticks are set.
+
+    Examples
+    --------
+    ```
+    ax.set_xticks_off()
+    ```
+    ![off](figures/ticks-off.png)
     """
     ax.xaxis.set_major_locator(ticker.NullLocator())
 
@@ -407,6 +521,10 @@ def set_yticks_off(ax):
     ----------
     ax: matplotlib axis
         Axis on which the yticks are set.
+
+    See also
+    --------
+    `set_xticks_off()`
     """
     ax.yaxis.set_major_locator(ticker.NullLocator())
 
@@ -429,6 +547,10 @@ def set_minor_yticks_off(ax):
     ----------
     ax: matplotlib axis
         Axis on which the minor yticks are set.
+
+    See also
+    --------
+    `set_minor_xticks_off()`
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
