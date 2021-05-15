@@ -10,6 +10,8 @@ done
 PACKAGE="plottools"
 PACKAGEROOT="$(dirname "$(realpath "$0")")"
 BUILDROOT="$PACKAGEROOT/site"
+APIIMAGEFOLDER='figures'
+APIIMAGES="$PACKAGEROOT/docs/$APIIMAGEFOLDER"
 
 echo
 echo "Clean up documentation of $PACKAGE"
@@ -31,6 +33,9 @@ echo
 
 cd "$PACKAGEROOT"
 pdoc3 --html --output-dir "$BUILDROOT/api-tmp" $PACKAGE
+mkdir "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER"
+pwd
+cp "$APIIMAGES/"*.png "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER/"
 mv "$BUILDROOT/api-tmp/$PACKAGE" "$BUILDROOT/api"
 rmdir "$BUILDROOT/api-tmp"
 cd - > /dev/null

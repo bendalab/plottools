@@ -198,7 +198,7 @@ writes to the console
 Then copy the color definitions into you LaTeX preamble. Do not forget to
 load the `color` or `xcolor` packages before:
 ```
-\usepackage{color}
+\usepackage{xcolor}
 ```
 You then can use the newly defined  colors with the usual commands, like for example:
 ```
