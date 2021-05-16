@@ -8,6 +8,7 @@
 
 ## Duplicate and modify plotting styles
 
+- `style()`: copy and update a style.
 - `lighter_styles()`: duplicate style with a range of lighter colors.
 - `darker_styles()`: duplicate style with a range of darker colors.
 - `lighter_darker_styles()`: duplicate style with a range of lighter and darker colors.
@@ -85,6 +86,26 @@ from .ticks import ticks_params, install_ticks, uninstall_ticks
 from .version import __version__
 
 
+def style(orig_style, **kwargs):
+    """ Copy and update a style.
+
+    Parameters
+    ----------
+    orig_style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    kwargs: dict
+        Key-word arguments used to update keys in `orig_style`.
+
+    Returns
+    -------
+    new_style: dict
+        Style dictionary with the new keys provided by `kwargs`.
+    """
+    new_style = dict(orig_style)
+    new_style.update(**kwargs)
+    return new_style
+
+    
 def lighter_styles(style, n):
     """ Duplicate style with a range of lighter colors.
 
