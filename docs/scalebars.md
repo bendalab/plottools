@@ -11,12 +11,13 @@ ax.scalebars(1.05, 0.0, 2, 1, 's', 'mV', ha='right', va='bottom')
 Do *not* use scalebars if a specific value on the axis (most likely
 zero!) has a special meaning!
 
-The scalebar module provides the three functions
+The scalebar module installs the three functions
+
 - `xscalebar()`
 - `yscalebar()`
 - `scalebars()`
 
-for drawing and annotating horizontal or vertical scalebars, or both.
+on matplotlib axes for drawing and annotating horizontal or vertical scalebars, or both.
 
 ```
 import matplotlib.pyplot as plt

@@ -1,6 +1,7 @@
 """
 Labeled scale bars.
 
+![scalebars](figures/scalebars-scalebars.png)
 
 ## Axes member functions
 
@@ -51,6 +52,31 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
               **kwargs):
     """ Horizontal scale bar with label.
 
+    The first two arguments set the anchor point
+    on which the scalebar is positioned. The scalebar position is given in
+    relative coordinates of the axes (ranging from 0 to 1).
+    
+    The third argument sets the length of the scale bar in data
+    coordinates of the x-axis, followed by a string setting the unit of
+    the scale.
+
+    The following code and figure illustrate the positioning of the
+    scalebar and its annotation.  `ha` (horizontal alignment) determines
+    whether the anchor is on the 'left', 'center', or 'right' of the
+    scalebar. The vertical alignment (`va`) determines whether the
+    annotation is on top ('top') or below ('bottom') the scalebar. In
+    the figure the position of the scalebar, the anchor point, is shown
+    as a red circle.
+    ```py
+    ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='top')
+    ax.xscalebar(0.5, 0.8, 2, 's', ha='center', va='top')
+    ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='top')
+    ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom')
+    ax.xscalebar(0.5, 0.3, 2, 's', ha='center', va='bottom')
+    ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom')
+    ```
+    ![xpos](figures/scalebars-xpos.png)    
+
     Parameter
     ---------
     ax: matplotlib axes
@@ -95,10 +121,23 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     artists: list of matplotlib artists
         The Lin2D and Text objects making up the scalebar.
         Use it to hide the scale bar like this
-        ```
+        ```py
         sb = ax.xscalebar(1.0, 0.0, 1, 'ms', ha='right')
         [a.set_visible(False) for a in sb]
         ```
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
+    import plottools.scalebars
+    
+    fig, ax = plt.subplots()
+    ax.show_spines('')
+    ax.xscalebar(1.0, 0.0, 2, 's', ha='right', va='bottom')
+    ```
+    ![xscalebar](figures/scalebars-xscalebar.png)
     """
     artists = []
     ax.autoscale(False)
@@ -194,6 +233,32 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
               **kwargs):
     """ Vertical scale bar with label.
 
+    The first two arguments set the anchor point
+    on which the scalebar is positioned. The scalebar position is given in
+    relative coordinates of the axes (ranging from 0 to 1).
+    
+    The third argument sets the length of the scale bar in data
+    coordinates of the y-axis, followed by a string setting the unit of
+    the scale.
+              
+    The following code and figure illustrate the positioning of the
+    scalebar and its annotation. `va` (vertical alignment) determines
+    whether the anchor is on the 'top', 'center', or 'bottom' of the
+    scalebar. The horizontal alignment (`ha`) determines whether the
+    annotation is to the 'left' or to the 'right' of the scale bar. In
+    the figure the position of the scalebar, the anchor point, is shown
+    as a red circle.
+
+    ```py
+    ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top')
+    ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center')
+    ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom')
+    ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top')
+    ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center')
+    ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom')
+    ```
+    ![ypos](figures/scalebars-ypos.png)              
+
     Parameter
     ---------
     ax: matplotlib axes
@@ -239,10 +304,23 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     artists: list of matplotlib artists
         The Lin2D and Text objects making up the scalebar.
         Use it to hide the scale bar like this
-        ```
+        ```py
         sb = ax.yscalebar(1.0, 0.0, 1, 'mV', ha='right')
         [a.set_visible(False) for a in sb]
         ```
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
+    import plottools.scalebars
+    
+    fig, ax = plt.subplots()
+    ax.show_spines('')
+    ax.yscalebar(1.05, 0.0, 1, 'mV', ha='right', va='bottom')
+    ```
+    ![yscalebar](figures/scalebars-yscalebar.png)
     """
     artists = []
     ax.autoscale(False)
@@ -338,6 +416,29 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
               lw=None, color=None, **kwargs):
     """ Horizontal and vertical scale bars with labels.
 
+    The first two arguments set the anchor point
+    on which the scalebar is positioned. The scalebar position is given in
+    relative coordinates of the axes (ranging from 0 to 1).
+    
+    The third and forth arguments set the length of the scale bars in data
+    coordinates of the x- and y-axis, followed by two strings setting the unit of
+    the scales.
+
+    Horizontal alignment (`ha`) determines whether the anchor point and the
+    vertical scalebar is on the 'left' or on the 'right' of the horizontal
+    scalebar. Vertical alignment (`va`) determines whether the anchor point
+    and the horizontal scalebar are at the 'top' or 'bottom' of the vertical
+    scalebar. In the figure the position of the scalebar, the anchor point,
+    is shown as a red circle.
+
+    ```py
+    ax.scalebars(0.2, 0.8, 2, 1, 's', 'mV', ha='left', va='top')
+    ax.scalebars(0.8, 0.8, 2, 1, 's', 'mV', ha='right', va='top')
+    ax.scalebars(0.2, 0.1, 2, 1, 's', 'mV', ha='left', va='bottom')
+    ax.scalebars(0.8, 0.1, 2, 1, 's', 'mV', ha='right', va='bottom')
+    ```
+    ![pos](figures/scalebars-pos.png)
+              
     Parameter
     ---------
     ax: matplotlib axes
@@ -383,10 +484,23 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     artists: list of matplotlib artists
         The Lin2D and Text objects making up the scalebar.
         Use it to hide the scale bar like this
-        ```
+        ```py
         sb = ax.scalebar(1.0, 0.0, 2, 1, 'ms', 'mV')
         [a.set_visible(False) for a in sb]
         ```
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
+    import plottools.scalebars
+    
+    fig, ax = plt.subplots()
+    ax.show_spines('')
+    ax.scalebars(1.05, 0.0, 2, 1, 's', 'mV', ha='right', va='bottom')
+    ```
+    ![scalebars](figures/scalebars-scalebars.png)
     """
     artists = []
     # line width:
