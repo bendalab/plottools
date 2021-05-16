@@ -100,6 +100,15 @@ def style(orig_style, **kwargs):
     -------
     new_style: dict
         Style dictionary with the new keys provided by `kwargs`.
+
+    Examples
+    --------
+    ```py
+    lsRed = dict(color='red', linewidth=1, linestyle='-')
+    lsBlue = style(lsRed, color='blue')
+    ax.plot(x, y, **lsRed)
+    ax.plot(x, z, **lsBlue)
+    ```
     """
     new_style = dict(orig_style)
     new_style.update(**kwargs)
