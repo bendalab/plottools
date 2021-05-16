@@ -58,7 +58,7 @@ The following modules are provided by the plottools package:
 - [`spines`](https://bendalab.github.io/plottools/api/spines.html):
   modify the appearance of spines. [More...](docs/spines.md)
 - [`styles`](https://bendalab.github.io/plottools/api/styles.html):
-  plot styles.
+  plotting styles.
 - [`subplots`](https://bendalab.github.io/plottools/api/subplots.html):
   enhanced subplots with margins. [More...](docs/subplots.md)
 - [`tag`](https://bendalab.github.io/plottools/api/tag.html):

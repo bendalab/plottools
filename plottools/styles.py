@@ -1,4 +1,79 @@
 """
+Plotting styles.
+
+
+Usually you specify the line style for a plot command like this:
+
+```py
+ax.plot(x, y, color='#aa0000', lw=2, ls='--')
+```
+
+This way to define the appearance of the plotted line, however, has a
+number of disadvantages:
+
+1. Specifying the keyword arguments is quite lenghty, it is
+    a lot to type and distracts the reader from what you actually want to plot.
+2. When you want to change the design of all your plots, you need to change this
+   everywhere. For this reason I bet you really do not want to change any colors
+   and line widths in your plots any more, which is sad.
+
+To address the first issue, you may put all the key-word arguments
+specifying the line style into a dictionary, like this:
+
+```py
+lsRed = dict(color='#aa0000', lw=2, ls='--')  # red line style (ls)
+...
+ax.plot(x, y, **lsRed)
+```
+
+We here call such dictionaries defining how something is plotted
+"plotting styles".  With plotting styles plot commands are much more
+expressive and better readable. Even better is to give the plotting
+styles functional names, like `lsStimulus` or `lsResponse`.
+
+To address the second issue, you simply collect all plotting styles in a
+module that you then import in all plotting scripts. Problem is, that
+you then need to reference all the many plotting styles by the module
+name. To circumvent this, we define in the module all plotting styles in
+the global namespace of the script that imports the module. This may
+sound ugly, because everybody tells you to never use global variables,
+but in this case it really pays off. It makes your plot commands sweet
+and short.
+
+So, this is how your central module, named "plotstyles.py' might look like:
+```py
+import __main__
+
+def plot_styles():
+    ns = __main__
+    ns.lsRed = dict(color='#aa0000', lw=2, ls='--')
+    ns.lsStimulus = dict(color='#00bb00', lw=1, ls='-')
+    ns.lsResponse = dict(color='#aa0000', lw=1, ls='-')
+```
+Then, a script producing a figure looks like this:
+```py
+import matplotlib.pyplot as plt
+from plotstyles import plot_styles
+
+fig, ax = plt.subplots()
+ax.plot(x, y, **lsResponse)
+fig.savefig('example.pdf')
+```
+
+With this you can change the appaerance of *all* your figures by modifying
+the plotting styles in a single central file. This way you can first code
+your figures and concentrate on the technicalities of the data. And later on,
+when you are done, you can then can easily improve the design of your plots.
+Plotting styles used in this way are a central element for separating content
+from design. And python's key-word arguments provide a nice mechanism to achieve this.
+
+In your central "plotstyle.py" module you can, of course, import all the
+cool plottool modules you need, or just the `plottools.param` module to get and
+install them all. You also should set matplotlib's `rcParam` variables to define
+the appaerance of your plots in this central place (or use the `_params()` functions
+of the plottools modules).
+
+
 ## Duplicate and modify plotting styles
 
 - `style()`: copy and update a style.
@@ -24,31 +99,6 @@
 - `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
 - `plot_fillstyles()`: plot names and patches of all available fill styles.
 """
-
-# line (ls), point (ps), and fill styles (fs).
-
-# Each style is derived from a main color as indicated by the capital letter.
-# Substyles, indicated by the number following the capital letter, have
-# the same style and similar hues.
-
-# Line styles come in two variants:
-# - plain style with a thick/solid line (e.g. lsA1), and
-# - minor style with a thinner or dashed line (e.g. lsA1m).
-
-# Point (marker) styles come in four variants:
-# - plain style with large solid markers (e.g. psB1),
-# - plain style with large circular markers (e.g. psB1c), and
-# - minor style with smaller (circular) markers (e.g. psB1m).
-
-# Linepoint styles (markers connected by lines) come in two variants:
-# - plain style with large solid markers (e.g. lpsA2),
-# - plain style with large circular markers (e.g. lpsA2c),
-# - minor style with smaller (circular) markers (e.g. lpsA2m).
-
-# Fill styles come in three variants:
-# - plain (e.g. fsA3) for a solid fill color and an edge color,
-# - solid (e.g. fsA3s) for a solid fill color without edge color, and
-# - alpha (e.g. fsA3a) for a transparent fill color.
 
 import __main__
 import sys
@@ -656,7 +706,8 @@ def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
                    fillalpha=0.4, namespace=None):
     """ Generates some generic line, points, linepoints and fill styles.
     
-    Generates a range of line, point, linepoint and fill styles defined in `namespace`,
+    Generates a range of line (ls), point (ps), linepoint (lps) and
+    fill (fs) styles defined in `namespace`,
     named A1-A3 (red, orange, yellow), B1-B4 (blues), C1-C4 (greens),
     that can be used as follows:
     ```py
@@ -666,18 +717,34 @@ def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
     ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
     ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
     ```
-    The following variants are provided for each style:
-    - major line style, e.g. `lsA1`
-    - minor line style (thin lines), e.g. `lsA1m`
-    - major point style (markers only), e.g. `psA1`
-    - minor point style (small markers only), e.g. `psA1m`
-    - circular point style (circular markers only), e.g. `psA1c`
-    - major line-point style (markers with connecting lines), e.g. `lpsA1`
-    - minor line-point style (small markers with connecting thin lines), e.g. `lpsA1m`
-    - circular line-point style (circular markers with connecting lines), e.g. `lpsA1c`
-    - fill style (solid fill color with edge color), e.g. `fsA1`
-    - solid fill style (solid fill color), e.g. `fsA1s`
-    - alpha fill style (transparent fill), e.g. `fsA1a`
+
+    Each style is derived from a main color as indicated by the capital letter.
+    Substyles, indicated by the number following the capital letter, have
+    the same style and similar hues.
+
+    Line styles (ls):
+    
+    - plain style with a thick, solid line (e.g. `lsA1`), and
+    - minor style with a thinner line (e.g. `lsA1m`).
+
+    Point (marker) styles (ps):
+    
+    - plain style with large solid markers (e.g. `psB1`),
+    - plain style with large circular markers (e.g. `psB1c`), and
+    - minor style with smaller, circular markers (e.g. `psB1m`).
+    
+    Linepoint styles (lps, markers connected by lines):
+    
+    - plain style with large solid markers (e.g. `lpsA2`),
+    - plain style with large circular markers (e.g. `lpsA2c`),
+    - minor style with smaller (circular) markers (e.g. `lpsA2m`).
+    
+    Fill styles (fs):
+    
+    - plain (e.g. `fsA3`) for a solid fill color and an edge color,
+    - solid (e.g. `fsA3s`) for a solid fill color without edge color, and
+    - alpha (e.g. `fsA3a`) for a transparent fill color.
+    
     See `plot_styles()` for details.
 
     `palette`, a dictionary with colors of the specified color palette,
