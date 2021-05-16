@@ -158,6 +158,8 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         ymin, ymax = ax.get_ylim()
         dyu = np.abs(ymax - ymin)/pixely
         dy = 0.5*lw + dist
+        if 'ha' in kwargs:
+            del kwargs['ha']
         if va == 'top':
             ax.text(x+0.5*dx, y+dy*dyu, text, ha='center', va='bottom',
                     transform=transform, clip_on=False, **kwargs)
@@ -289,6 +291,10 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         xmin, xmax = ax.get_xlim()
         dxu = np.abs(xmax - xmin)/pixelx
         dx = 0.5*lw + dist
+        if 'ha' in kwargs:
+            del kwargs['ha']
+        if 'va' in kwargs:
+            del kwargs['va']
         if ha == 'right':
             ax.text(x+dx*dxu, y+0.5*dy, text, ha='left', va='center',
                     transform=transform, clip_on=False, **kwargs)
@@ -391,16 +397,57 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
     setattr(namespace, 'as' + name, ad)
     getattr(namespace, 'ars')[name] = ad
 
+    
+def generic_arrow_styles(palette, scale=1, namespace=None):
+    """ Generates some generic arrow styles.
 
-def plot_arrowstyles(ax):
+    - `asLine`: simple arrow
+    - `asFilled`: arrow with filled head
+    - `asPoint`: big arrow with filled head and thick line
+    - `asPointSmall`: arrow with filled head and thin line
+    - `asMarker`: arrow with filled head, annotation on a transparent background
+
+    This is just a suggestion. Copy it and adapt it to your needs!
+
+    Parameters
+    ----------
+    palette: dict
+        Color palette. Uses black for the arrow and white for text background.
+    scale: float
+        Scale factor for line width, head height and width.
+    """
+    arrow_style( 'Line', dist=3, style='>', shrink=0, lw=0.6*scale,
+                color=palette['black'], head_length=4*scale, head_width=4*scale,
+                namespace=namespace)
+    arrow_style('Filled', dist=3, style='>>', shrink=0, lw=0.6*scale,
+                color=palette['black'], head_length=8*scale, head_width=5*scale,
+                namespace=namespace)
+    arrow_style('Point', dist=3, style='>>', shrink=0, lw=1.2*scale,
+                color=palette['black'], head_length=8*scale, head_width=6*scale,
+                namespace=namespace)
+    arrow_style('PointSmall', dist=3, style='>>', shrink=0, lw=1*scale,
+                color=palette['black'], head_length=5*scale, head_width=5*scale,
+                namespace=namespace, fontsize='small')
+    arrow_style('Marker', dist=3, style='>>', shrink=0, lw=0.9*scale,
+                color=palette['black'], head_length=5*scale, head_width=5*scale,
+                fontsize='small', ha='center', va='center', namespace=namespace,
+                bbox=dict(boxstyle='round, pad=0.1, rounding_size=0.4',
+                          facecolor=palette['white'], edgecolor='none', alpha=0.6))
+
+
+def plot_arrowstyles(ax, namespace=None):
     """ Plot names and arrows of all available arrow styles.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the arrow styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
     """
-    namespace = __main__
+    if namespace is None:
+        namespace = __main__
     for k, name in enumerate(namespace.ars):
         ax.harrow(0.5, 0.5*k+0.5, 1.0, 'both', 'as'+name, **namespace.ars[name])
     ax.set_xlim(0.0, 2.0)

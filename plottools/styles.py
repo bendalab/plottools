@@ -1,11 +1,4 @@
 """
-## Layout settings and plot styles
-
-- `screen_style()`: layout and plot styles optimized for display on a screen.
-- `paper_style()`: layout and plot styles optimized for inclusion into a paper.
-- `sketch_style()`: layout and plot styles with xkcd style activated.
-
-
 ## Duplicate and modify plotting styles
 
 - `style()`: copy and update a style.
@@ -21,14 +14,10 @@
 - `make_linepointstyles()`: generate line styles, point styles, and line point styles.
 - `make_fillstyles()`: generate dictionaries for fill styles.
 - `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
+- `generic_styles()`: generates some generic line, points, linepoints and fill styles.
 
 
-## Settings
-
-- `plot_params()`: set some default plot parameter via matplotlib's rc settings.
-
-
-## Plot styles
+## Display plotting styles
 
 - `plot_linestyles()`: plot names and lines of all available line styles.
 - `plot_pointstyles()`: plot names and lines of all available point styles.
@@ -66,25 +55,7 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from .align import align_params, install_align, uninstall_align
-from .arrows import arrow_style, plot_arrowstyles, install_arrows, uninstall_arrows
-from .aspect import install_aspect, install_aspect, uninstall_aspect
-from .axes import axes_params
-from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
-from .common import install_common, uninstall_common
-from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure
-from .insets import install_insets, uninstall_insets
-from .labels import labels_params, install_labels, uninstall_labels
-from .legend import legend_params, install_legend, uninstall_legend
-from .neurons import install_neurons, uninstall_neurons
-from .scalebars import scalebar_params, install_scalebars, uninstall_scalebars
-from .significance import install_significance, uninstall_significance
-from .spines import spines_params, install_spines, uninstall_spines
-from .subplots import install_subplots, uninstall_subplots
-from .tag import tag_params, install_tag, uninstall_tag
-from .text import text_params, install_text, uninstall_text
-from .ticks import ticks_params, install_ticks, uninstall_ticks
-from .version import __version__
+from plottools.colors import color_palettes, lighter
 
 
 def style(orig_style, **kwargs):
@@ -679,314 +650,104 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
     # fill styles:
     make_fillstyles('fs', names, ['', 's', 'a'], colors, mec, mew, fillalpha, namespace)
 
+    
+def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4, namespace=None):
+    """ Generates some generic line, points, linepoints and fill styles.
+    
+    Generates a range of line, point, linepoint and fill styles defined in `namespace`,
+    named A1-A3 (red, orange, yellow), B1-B4 (blues), C1-C4 (greens),
+    that can be used as follows:
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
+    The following variants are provided for each style:
+    - major line style, e.g. `lsA1`
+    - minor line style (thin lines), e.g. `lsA1m`
+    - major point style (markers only), e.g. `psA1`
+    - minor point style (small markers only), e.g. `psA1m`
+    - circular point style (circular markers only), e.g. `psA1c`
+    - major line-point style (markers with connecting lines), e.g. `lpsA1`
+    - minor line-point style (small markers with connecting thin lines), e.g. `lpsA1m`
+    - circular line-point style (circular markers with connecting lines), e.g. `lpsA1c`
+    - fill style (solid fill color with edge color), e.g. `fsA1`
+    - solid fill style (solid fill color), e.g. `fsA1s`
+    - alpha fill style (transparent fill), e.g. `fsA1a`
+    See `plot_styles()` for details.
 
-def plot_params(axes_color='none', namespace=None):
-    """ Set some default plot parameter via matplotlib's rc settings.
-
-    Call this function *before* you create any matplotlib figure.
-
-    Parameters
-    ----------
-    axes_color: matplotlib color specification or 'none'
-        Background color for each subplot.
-    namespace: dict
-        Namespace to which generated line, point, linepoint and fill styles were added.
-        If None use the global namespace of the __main__ module.
-        `lsSpine` and `lsGrid` of the namespace are used to set spine and grid properties.
-    """
-    if namespace is None:
-        namespace = __main__
-    # axes, label, ticks and text color:
-    mpl.rcParams['axes.facecolor'] = axes_color
-    if hasattr(namespace, 'lsSpine'):
-        mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
-        mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
-        mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['xtick.color'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['ytick.color'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['text.color'] = mpl.rcParams['axes.edgecolor']
-    # grid style:
-    if hasattr(namespace, 'lsGrid'):
-        mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
-        mpl.rcParams['grid.linestyle'] = getattr(namespace, 'lsGrid')['linestyle']
-        mpl.rcParams['grid.linewidth'] = getattr(namespace, 'lsGrid')['linewidth']
-
-
-def screen_style(namespace=None):
-    """ Layout and plot styles optimized for display on a screen.
-
-    You might want to copy this function and adjust it according to your needs.
-
-    Call this function *before* you create any matplotlib figure
-    to have the following features in effect:
-    - modified rc settings.
-    - figure sizes are to be specified in centimeter.
-    - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
-    - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
-    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+    `palette`, a dictionary with colors of the specified color palette,
+    is added to `namespace` as well.
 
     Parameters
     ----------
+    colors: string
+        Name of the color palette from `plottools.colors` to be used.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
+    mec: float
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
     namespace: dict
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
-    palette = color_palettes['vivid']
-    lwthick=2.5
-    lwthin=1.5
-    lwspines=1.0    
-    names = ['A1', 'A2', 'A3',
-             'B1', 'B2', 'B3', 'B4',
-             'C1', 'C2', 'C3', 'C4',
-             'Male', 'Female']
-    colors = [palette['red'], palette['orange'], palette['yellow'],
-              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
-              palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan'],
-              palette['blue'], palette['pink']]
-    dashes = ['-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-']
-    markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
-               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
-               ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
-               ('o', 1.0), ('o', 1.0)]
     if namespace is None:
         namespace = __main__
-    plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
-                markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
-                fillalpha=0.4, namespace=namespace)
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines,
-                    namespace, clip_on=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick,
-                    namespace, clip_on=False)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
-    # rc settings:
-    mpl.rcdefaults()
-    align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
-    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
-    figure_params(color=palette['gray'], format='png',
-                  compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} [{unit}]', label_size='medium')
-    legend_params(fontsize='small', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.5,
-                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=10.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=4.0)
-    plot_params(axes_color=palette['white'], namespace=namespace)
+    namespace.palette = color_palettes[colors]
+    palette = namespace.palette
+    names = ['A1', 'A2', 'A3',
+             'B1', 'B2', 'B3', 'B4',
+             'C1', 'C2', 'C3', 'C4']
+    colors = [palette['red'], palette['orange'], palette['yellow'],
+              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
+              palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan']]
+    markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
+               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
+               ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4)]
+    plot_styles(names, colors, '-', markers, lwthick=lwthick, lwthin=lwthin,
+                markerlarge=markerlarge, markersmall=markersmall, mec=mec, mew=mew,
+                fillalpha=fillalpha, namespace=namespace)
 
     
-def paper_style(namespace=None):
-    """ Layout and plot styles optimized for inclusion into a paper.
-
-    You might want to copy this function and adjust it according to your needs.
-
-    Call this function *before* you create any matplotlib figure
-    to have the following features in effect:
-    - modified rc settings.
-    - figure sizes are to be specified in centimeter.
-    - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
-    - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
-    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
-
-    Parameters
-    ----------
-    namespace: dict
-        Namespace to which the generated line, point, linepoint and fill styles are added.
-        If None add styles to the global namespace of the __main__ module.
-    """
-    palette = color_palettes['muted']
-    lwthick=1.7
-    lwthin=0.8
-    lwspines=0.8    
-    names = ['A1', 'A2', 'A3',
-             'B1', 'B2', 'B3', 'B4',
-             'C1', 'C2', 'C3', 'C4',
-             'Male', 'Female']
-    colors = [palette['red'], palette['orange'], palette['yellow'],
-              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
-              palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan'],
-              palette['blue'], palette['pink']]
-    dashes = ['-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-']
-    markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
-               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
-               ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
-               ('o', 1.0), ('o', 1.0)]
-    if namespace is None:
-        namespace = __main__
-    plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
-                markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
-                fillalpha=0.4, namespace=namespace)
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
-    # rc settings:
-    mpl.rcdefaults()
-    align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
-    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
-    figure_params(color='none', format='pdf',
-                  compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} [{unit}]', label_size='small')
-    legend_params(fontsize='small', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.5,
-                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=10.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=2.5)
-    plot_params(axes_color='none', namespace=namespace)
-    
-   
-def sketch_style(namespace=None):
-    """ Layout and plot styles with xkcd style activated.
-
-    You might want to copy this function and adjust it according to your needs.
-
-    Call this function *before* you create any matplotlib figure
-    to have the following features in effect:
-    - modified rc settings.
-    - figure sizes are to be specified in centimeter.
-    - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
-    - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
-    - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
-
-    Parameters
-    ----------
-    namespace: dict
-        Namespace to which the generated line, point, linepoint and fill styles are added.
-        If None add styles to the global namespace of the __main__ module.
-    """
-    #global bar_fac
-    #bar_fac = 0.9
-    palette = color_palettes['vivid']
-    lwthick=3.0
-    lwthin=1.8
-    lwspines=1.8    
-    names = ['A1', 'A2', 'A3',
-             'B1', 'B2', 'B3', 'B4',
-             'C1', 'C2', 'C3', 'C4',
-             'Male', 'Female']
-    colors = [palette['red'], palette['orange'], palette['yellow'],
-              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
-              palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan'],
-              palette['blue'], palette['pink']]
-    dashes = ['-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-', '-', '-',
-              '-', '-']
-    markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
-               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
-               ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4),
-               ('o', 1.0), ('o', 1.0)]
-    if namespace is None:
-        namespace = __main__
-    plot_styles(names, colors, dashes, markers, lwthick=lwthick, lwthin=lwthin,
-                markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
-                fillalpha=0.4, namespace=namespace)
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    arrow_style('Line', dist=3.0, style='>', shrink=0, lw=0.8,
-                color=palette['black'], head_length=5, head_width=5, namespace=namespace)
-    arrow_style('Filled', dist=3.0, style='>>', shrink=0, lw=1,
-                color=palette['black'], head_length=10, head_width=6, namespace=namespace)
-    # rc settings:
-    mpl.rcdefaults()
-    plt.xkcd()
-    align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
-    cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
-    figure_params(color='none', format='pdf',
-                  compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} ({unit})', label_size='medium')
-    legend_params(fontsize='medium', frameon=False, borderpad=0,
-                  handlelength=1.5, handletextpad=0.5,
-                  numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
-    tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
-               font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=10.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=6)
-    plot_params(axes_color='none', namespace=namespace)
-        
-
-def plot_linestyles(ax):
+def plot_linestyles(ax, namespace=None):
     """ Plot names and lines of all available line styles.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the line styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
     """
+    if namespace is None:
+        namespace = __main__
     k = 0
-    for j, name in enumerate(style_names):
+    for j, name in enumerate(namespace.style_names):
         gotit = False
-        if name in ls:
+        if name in namespace.ls:
             ax.text(k, 0.9, 'ls'+name)
-            ax.plot([k, k+3.5], [1.0, 1.8], **ls[name])
+            ax.plot([k, k+3.5], [1.0, 1.8], **namespace.ls[name])
             gotit = True
-        if name in lsm:
+        if name in namespace.lsm:
             ax.text(k, -0.1, 'ls'+name+'m')
-            ax.plot([k, k+3.5], [0.0, 0.8], **lsm[name])
+            ax.plot([k, k+3.5], [0.0, 0.8], **namespace.lsm[name])
             gotit = True
         if gotit:
             k += 1
@@ -995,29 +756,34 @@ def plot_linestyles(ax):
     ax.set_title('line styles')
         
 
-def plot_pointstyles(ax):
+def plot_pointstyles(ax, namespace=None):
     """ Plot names and lines of all available point styles.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the point styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
     """
+    if namespace is None:
+        namespace = __main__
     dy = 0.2
     k = 0
-    for j, name in enumerate(reversed(style_names)):
+    for j, name in enumerate(reversed(namespace.style_names)):
         gotit = False
-        if name in ps:
+        if name in namespace.ps:
             ax.text(0.1, k, 'ps'+name)
-            ax.plot([0.6], [k+dy], **ps[name])
+            ax.plot([0.6], [k+dy], **namespace.ps[name])
             gotit = True
-        if name in psc:
+        if name in namespace.psc:
             ax.text(1.1, k, 'ps'+name+'c')
-            ax.plot([1.6], [k+dy], **psc[name])
+            ax.plot([1.6], [k+dy], **namespace.psc[name])
             gotit = True
-        if name in psm:
+        if name in namespace.psm:
             ax.text(2.1, k, 'ps'+name+'m')
-            ax.plot([2.6], [k+dy], **psm[name])
+            ax.plot([2.6], [k+dy], **namespace.psm[name])
             gotit = True
         if gotit:
             k += 1
@@ -1026,29 +792,34 @@ def plot_pointstyles(ax):
     ax.set_title('point styles')
         
 
-def plot_linepointstyles(ax):
+def plot_linepointstyles(ax, namespace=None):
     """ Plot names and lines of all available linepoint styles.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the linepoint styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
     """
+    if namespace is None:
+        namespace = __main__
     dy = 0.2
     k = 0
-    for j, name in enumerate(reversed(style_names)):
+    for j, name in enumerate(reversed(namespace.style_names)):
         gotit = False
-        if name in lps:
+        if name in namespace.lps:
             ax.text(0.1, k-dy, 'lps'+name)
-            ax.plot([0.8, 1.1, 1.4], [k, k, k], **lps[name])
+            ax.plot([0.8, 1.1, 1.4], [k, k, k], **namespace.lps[name])
             gotit = True
-        if name in lpsc:
+        if name in namespace.lpsc:
             ax.text(2.1, k-dy, 'lps'+name+'c')
-            ax.plot([2.8, 3.1, 3.4], [k, k, k], **lpsc[name])
+            ax.plot([2.8, 3.1, 3.4], [k, k, k], **namespace.lpsc[name])
             gotit = True
-        if name in lpsm:
+        if name in namespace.lpsm:
             ax.text(4.1, k-dy, 'lps'+name+'m')
-            ax.plot([4.8, 5.1, 5.4], [k, k, k], **lpsm[name])
+            ax.plot([4.8, 5.1, 5.4], [k, k, k], **namespace.lpsm[name])
             gotit = True
         if gotit:
             k += 1
@@ -1057,14 +828,19 @@ def plot_linepointstyles(ax):
     ax.set_title('linepoint styles')
         
 
-def plot_fillstyles(ax):
+def plot_fillstyles(ax, namespace=None):
     """ Plot names and patches of all available fill styles.
 
     Parameters
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the fill styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
     """
+    if namespace is None:
+        namespace = __main__
     x = np.linspace(0.0, 0.8, 50)
     y0 = np.zeros(len(x))
     y1 = -x*(x-0.6)*0.6/0.3/0.3
@@ -1075,22 +851,22 @@ def plot_fillstyles(ax):
     ax.text(0.0, 1.75, 'solid')
     ax.text(0.0, 0.75, 'alpha')
     k = 0
-    for j, name in enumerate(style_names):
+    for j, name in enumerate(namespace.style_names):
         gotit = False
-        if name in fs:
+        if name in namespace.fs:
             ax.text(k, 1.9, 'fs'+name)
-            ax.fill_between(x+k, y0+2, y2+2, **fs[name])
-            ax.fill_between(x+k, y0+2, y1+2, **fs[name])
+            ax.fill_between(x+k, y0+2, y2+2, **namespace.fs[name])
+            ax.fill_between(x+k, y0+2, y1+2, **namespace.fs[name])
             gotit = True
-        if name in fss:
+        if name in namespace.fss:
             ax.text(k, 0.9, 'fs'+name+'s')
-            ax.fill_between(x+k, y0+1, y2+1, **fss[name])
-            ax.fill_between(x+k, y0+1, y1+1, **fss[name])
+            ax.fill_between(x+k, y0+1, y2+1, **namespace.fss[name])
+            ax.fill_between(x+k, y0+1, y1+1, **namespace.fss[name])
             gotit = True
-        if name in fsa:
+        if name in namespace.fsa:
             ax.text(k, -0.1, 'fs'+name+'a')
-            ax.fill_between(x+k, y0+0, y2+0, **fsa[name])
-            ax.fill_between(x+k, y0+0, y1+0, **fsa[name])
+            ax.fill_between(x+k, y0+0, y2+0, **namespace.fsa[name])
+            ax.fill_between(x+k, y0+0, y1+0, **namespace.fsa[name])
             gotit = True
         if gotit:
             k += 1
@@ -1099,13 +875,11 @@ def plot_fillstyles(ax):
     ax.set_title('fill styles')
         
 
-def demo(style='screen', mode='line'):
-    """ Run a demonstration of the plotformat module.
+def demo(mode='line'):
+    """ Run a demonstration of the styles module.
 
     Parameters
     ----------
-    style: string
-        'screen', 'print', or 'sketch': style to use.
     mode: string
         'line': plot the names and lines of all available line styles
         'point': plot the names and points (markers) of all available point styles
@@ -1113,26 +887,25 @@ def demo(style='screen', mode='line'):
         'fill': plot the names and patches of all available fill styles
         'arrow': plot the names and arrows of all available arrow styles
     """
-    if style == 'sketch':
-        sketch_style(sys.modules[__name__])
-    elif style == 'paper':
-        paper_style(sys.modules[__name__])
-    else:
-        screen_style(sys.modules[__name__])
+    generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4)
     fig, ax = plt.subplots()
-    if 'linep' in mode:
+    if mode == 'lps' or 'linep' in mode:
         plot_linepointstyles(ax)
-    elif 'line' in mode:
+    elif mode == 'ls' or 'line' in mode:
         plot_linestyles(ax)
-    elif 'point' in mode:
+    elif mode == 'ps' or 'point' in mode:
         plot_pointstyles(ax)
-    elif 'fill' in mode:
+    elif mode == 'fs' or 'fill' in mode:
         plot_fillstyles(ax)
-    elif 'arrow' in mode:
+    elif mode == 'ars' or mode == 'as' or 'arrow' in mode:
+        from .arrows import generic_arrow_styles, plot_arrowstyles
+        generic_arrow_styles(color_palettes['muted'], 3)
         plot_arrowstyles(ax)
     else:
         print('unknown option %s!' % mode)
-        print('possible options are: line, point, linep(oint), fill, arrow')
+        print('possible options are: line, ls, point, ps, linep(oint), lps, fill, fs, arrow, as, ars')
         return
     plt.show()
 
@@ -1141,4 +914,4 @@ if __name__ == "__main__":
     mode = 'line'
     if len(sys.argv) > 1:
         mode = sys.argv[1]
-    demo(mode=mode)
+    demo(mode)

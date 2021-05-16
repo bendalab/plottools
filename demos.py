@@ -1,3 +1,4 @@
+import __main__
 from plottools.align import demo as align_demo
 from plottools.arrows import demo as arrows_demo
 from plottools.aspect import demo as aspect_demo
@@ -13,12 +14,13 @@ from plottools.scalebars import demo as scalebars_demo
 from plottools.significance import demo as significance_demo
 from plottools.spines import demo as spines_demo
 from plottools.spines import install_spines, uninstall_spines
+from plottools.styles import demo as styles_demo
 from plottools.subplots import demo as subplots_demo
 from plottools.tag import demo as tag_demo
 from plottools.text import demo as text_demo
 from plottools.ticks import demo as ticks_demo
 from plottools.version import __version__, versions
-from plottools.styles import demo as styles_demo
+from plottools.params import demo as params_demo
 
 
 if __name__ == "__main__":
@@ -81,6 +83,10 @@ if __name__ == "__main__":
     spines_demo()
     uninstall_spines()
     print()
+    
+    print('plottools.styles ...')
+    styles_demo()
+    print()
 
     print('plottools.subplots ...')
     subplots_demo()
@@ -98,6 +104,6 @@ if __name__ == "__main__":
     ticks_demo()
     print()
     
-    print('plottools.styles ...')
-    styles_demo()
+    print('plottools.params ...')
+    params_demo()
     print()

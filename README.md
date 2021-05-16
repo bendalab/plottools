@@ -20,7 +20,7 @@ and necessary annotation like axes labels. The design should be
 controllable by a single central function or module that is used by
 all the scripts generating the figures. matplotlib's rcParams are a
 big step in this direction but do not completely reach this goal. The
-plottools package expands on this. See the styles module for details.
+plottools package expands on this.
 
 
 ## Modules
@@ -49,6 +49,8 @@ The following modules are provided by the plottools package:
   enhance legend text.
 - [`neurons`](https://bendalab.github.io/plottools/api/neurons.html):
   draw sketches of neurons.
+- [`params`](https://bendalab.github.io/plottools/api/params.html):
+  default rc param settings for all modules.
 - [`scalebars`](https://bendalab.github.io/plottools/api/scalebars.html):
   labeled scale bars. [More...](docs/scalebars.md)
 - [`significance`](https://bendalab.github.io/plottools/api/significance.html):
@@ -56,7 +58,7 @@ The following modules are provided by the plottools package:
 - [`spines`](https://bendalab.github.io/plottools/api/spines.html):
   modify the appearance of spines. [More...](docs/spines.md)
 - [`styles`](https://bendalab.github.io/plottools/api/styles.html):
-  layout settings and plot styles.
+  plot styles.
 - [`subplots`](https://bendalab.github.io/plottools/api/subplots.html):
   enhanced subplots with margins. [More...](docs/subplots.md)
 - [`tag`](https://bendalab.github.io/plottools/api/tag.html):
@@ -82,7 +84,7 @@ functions. Simply import the module of interest and you are all set.
 
 Each module can be imported separately. No other functionality of the
 plottools is then installed or executed. The only exception is the
-`styles` module that imports all the other modules. For example, if
+`params` module that imports all the other modules. For example, if
 you are only interested in the functions the `ticks` module provides,
 then you can do
 ```py
