@@ -191,11 +191,11 @@ install_labels()
 def demo():
     """ Run a demonstration of the labels module.
     """
-    fig, axs = plt.subplots(1, 2)
-    fig.suptitle('plottools.labels')
+    fig, axs = plt.subplots(1, 2, figsize=(10,6))
     fig.subplots_adjust(wspace=0.5)
+    fig.suptitle('plottools.labels')
 
-    x = np.linspace(0.0, 4.0*np.pi, 200)
+    x = np.linspace(0, 20, 200)
     y = np.sin(x)
     
     axs[0].plot(x, y)

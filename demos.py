@@ -3,6 +3,7 @@ from plottools.arrows import demo as arrows_demo
 from plottools.aspect import demo as aspect_demo
 from plottools.axes import demo as axes_demo
 from plottools.colors import demo as colors_demo
+from plottools.common import demo as common_demo
 from plottools.figure import demo as figure_demo
 from plottools.insets import demo as insets_demo
 from plottools.labels import demo as labels_demo
@@ -42,6 +43,10 @@ if __name__ == "__main__":
 
     print('plottools.colors ...')
     colors_demo()
+    print()
+
+    print('plottools.common ...')
+    common_demo()
     print()
 
     print('plottools.figure ...')

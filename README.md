@@ -34,9 +34,11 @@ The following modules are provided by the plottools package:
 - [`aspect`](https://bendalab.github.io/plottools/api/aspect.html):
   adapting plots to aspect ratio of axes.
 - [`axes`](https://bendalab.github.io/plottools/api/axes.html):
-  simplify common axis labels.
+  appearance of axes.
 - [`colors`](https://bendalab.github.io/plottools/api/colors.html):
   color palettes and tools for manipulating colors. [More...](docs/colors.md)
+- [`common`](https://bendalab.github.io/plottools/api/common.html):
+  reduce common axis labels.
 - [`figure`](https://bendalab.github.io/plottools/api/figure.html):
   size and file names of a figure.
 - [`insets`](https://bendalab.github.io/plottools/api/insets.html):

@@ -69,8 +69,9 @@ import matplotlib.pyplot as plt
 from .align import align_params, install_align, uninstall_align
 from .arrows import arrow_style, plot_arrowstyles, install_arrows, uninstall_arrows
 from .aspect import install_aspect, install_aspect, uninstall_aspect
-from .axes import axes_params, install_axes, uninstall_axes
+from .axes import axes_params
 from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
+from .common import install_common, uninstall_common
 from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure
 from .insets import install_insets, uninstall_insets
 from .labels import labels_params, install_labels, uninstall_labels

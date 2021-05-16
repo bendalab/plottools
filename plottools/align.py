@@ -227,24 +227,28 @@ install_align()
 
 
 def demo():
-    """ Run a demonstration of the labels module.
+    """ Run a demonstration of the align module.
     """
     fig, axs = plt.subplots(3, 2, figsize=(11, 8))
     fig.subplots_adjust(wspace=0.5)
 
     fig.suptitle('plottools.align')
-    x = np.linspace(0.0, 4.0*np.pi, 200)
+    x = np.linspace(0, 20, 200)
     y = np.sin(x)
 
+    axs[0, 0].plot(x, 5000*y)
     axs[0, 0].set_ylim(-10000.0, 10000.0)
     axs[0, 0].set_ylabel('Velocity [m/s]')
     
+    axs[0, 1].plot(x, y)
     axs[0, 1].set_ylim(-1.0, 1.7)
     axs[0, 1].set_ylabel('Accelaration [m/s^2]')
     
+    axs[1, 0].plot(x, y)
     axs[1, 0].set_ylim(-1.0, 1.0)
     axs[1, 0].set_ylabel('Voltage [mV]')
     
+    axs[1, 1].plot(x, 5000*y)
     axs[1, 1].set_ylim(-10000.0, 10000.0)
     axs[1, 1].set_ylabel('Voltage [mV]')
     
@@ -255,7 +259,7 @@ def demo():
     
     axs[2, 1].plot(x, 1000*y)
     axs[2, 1].set_ylim(-1000, 1700)
-    axs[2, 1].set_xlabel('Time [ms]')
+    axs[2, 1].set_xlabel('Timepoints [ms]')
     axs[2, 1].set_ylabel('Amplitude [Pa]')
     
     plt.show()
