@@ -11,6 +11,17 @@ Modify the appearance of spines.
 - `arrow_spines()`: spines with arrows.
 
 
+## Figure member functions
+
+Same functions as the ones for the Axes. Functions are called on all figure axes.
+
+- `show_spines()`: show and hide spines and corresponding tick marks.
+- `set_spines_outward()`: set the specified spines outward.
+- `set_spines_zero()`: set the position of the specified spines to the data value of the other axis.
+- `set_spines_bounds()`: set bounds for the specified spines.
+- `arrow_spines()`: spines with arrows.
+
+
 ## Settings
 
 - `spines_params()`: set default spine appearance.
@@ -72,6 +83,19 @@ def show_spines(ax, spines='lrtb'):
         as well as their tick marks and labels.
         '' shows no spines at all.
         'lrtb' shows all spines and tick marks.
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
+
+    fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+    ax0.show_spines('lb')
+    ax1.show_spines('bt')
+    ax2.show_spines('tr')
+    ```
+    ![show](figures/spines-show.png)
     """
     # collect spine visibility:
     xspines = []
@@ -88,6 +112,7 @@ def show_spines(ax, spines='lrtb'):
     if isinstance(ax, (list, tuple, np.ndarray)):
         axs = ax
     elif hasattr(ax, 'get_axes'):
+        # ax is figure:
         axs = ax.get_axes()
     else:
         axs = [ax]
@@ -159,12 +184,22 @@ def set_spines_outward(ax, spines, offset=0):
 
     Examples
     --------
-    ```
-    # set left and right spine outwards by 10 pixels:
-    ax.set_spines_outward('lr', 10)
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
 
+    fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+    ax0.set_spines_outward('lb', 0)
+    # set left and bottom spine outwards by 10 pixels:
+    ax1.set_spines_outward('lb', 10)
+    # set left and bottom spine inwards by 10 pixels:
+    ax2.set_spines_outward('lb', -10)
+    ```
+    ![outward](figures/spines-outward.png)
+
+    ```py
     # set the left and right spines outwards by 10 pixels and the top and bottom ones by 5:
-    ax.set_spines_outward({'lr': 10, 'bt': 5})
+    ax0.set_spines_outward({'lr': 10, 'bt': 5})
 
     # set the bottom spine of all axis of the figure outward by 5 pixels:
     fig.set_spines_outward('b', 5)
@@ -232,7 +267,7 @@ def set_spines_zero(ax, spines, pos=0):
 
     Examples
     --------
-    ```
+    ```py
     # set left and right spine to the origin of the data coordinates:
     ax.set_spines_zero('lr')
 
@@ -313,6 +348,19 @@ def set_spines_bounds(ax, spines, bounds='full'):
     ------
     ValueError:
         If an invalid `bounds` argument was specified.
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.spines
+
+    fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+    ax0.set_spines_bounds('lb', 'full')
+    ax1.set_spines_bounds('lb', 'data')
+    ax2.set_spines_bounds('lb', 'ticks')
+    ```
+    ![bounds](figures/spines-bounds.png)
     """
     if isinstance(spines, dict):
         for sp in spines:
@@ -395,6 +443,20 @@ def arrow_spines(ax, spines, flush=None, extend=None, height=None, ratio=None,
         Line width of spine. If `None` set to `rcParams[axes.linewidth]`.
     color: matplotlib color specificaion or None
         Color of spine. If `None` set to `rcParams[axes.edgecolor]`.
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    from plottools.spines import spines_params
+
+    fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+    spines_params(spines='', height=10)
+    ax0.arrow_spines('lb')
+    ax1.arrow_spines('lb', flush=1.0)
+    ax2.arrow_spines('lb', flush=2.0)
+    ```
+    ![arrow](figures/spines-arrow.png)
     """
     # collect spine visibility:
     spns = []

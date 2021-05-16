@@ -92,7 +92,7 @@ ax.set_xticks_blank()
 ```
 ![blank](figures/ticks-blank.png)
 
-You most likely want to use `common_xtick_labels()` from the `axes` module. 
+You most likely want to use `common_xlabels()` from the `axes` module. 
 
 
 ## No ticks at all
