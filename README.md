@@ -27,33 +27,55 @@ plottools package expands on this. See the styles module for details.
 
 The following modules are provided by the plottools package:
 
-- `align`: align axes labels.
-- `arrows`: arrows.
-- `aspect`: adapting plots to aspect ratio of axes.
-- `axes`: simplify common axis labels.
-- `colors`: color palettes and tools for manipulating colors. [More...](docs/colors.md)
-- `figure`: size and file names of a figure.
-- `insets`: insets made easy. [More...](docs/insets.md)
-- `labels`: annotate axis with label and unit.
-- `legend`: enhance legend text.
-- `neurons`: draw sketches of neurons.
-- `scalebars`: labeled scale bars. [More...](docs/scalebars.md)
-- `significance`: indicating statsitical significance.
-- `spines`: modify the appearance of spines. [More...](docs/spines.md)
-- `styles`: layout settings and plot styles.
-- `subplots`: enhanced subplots with margins.
-- `tag`: tag axes with a label.
-- `text`: enhance textual annotations.
-- `ticks`: setting tick locations and formats. [More...](docs/ticks.md)
+- [`align`](https://bendalab.github.io/plottools/api/align.html):
+  align axes labels.
+- [`arrows`](https://bendalab.github.io/plottools/api/arrows.html):
+  arrows.
+- [`aspect`](https://bendalab.github.io/plottools/api/aspect.html):
+  adapting plots to aspect ratio of axes.
+- [`axes`](https://bendalab.github.io/plottools/api/axes.html):
+  simplify common axis labels.
+- [`colors`](https://bendalab.github.io/plottools/api/colors.html):
+  color palettes and tools for manipulating colors. [More...](docs/colors.md)
+- [`figure`](https://bendalab.github.io/plottools/api/figure.html):
+  size and file names of a figure.
+- [`insets`](https://bendalab.github.io/plottools/api/insets.html):
+  insets made easy. [More...](docs/insets.md)
+- [`labels`](https://bendalab.github.io/plottools/api/labels.html):
+  annotate axis with label and unit.
+- [`legend`](https://bendalab.github.io/plottools/api/legend/html):
+  enhance legend text.
+- [`neurons`](https://bendalab.github.io/plottools/api/neurons.html):
+  draw sketches of neurons.
+- [`scalebars`](https://bendalab.github.io/plottools/api/scalebars.html):
+  labeled scale bars. [More...](docs/scalebars.md)
+- [`significance`](https://bendalab.github.io/plottools/api/significance.html):
+  indicating statsitical significance.
+- [`spines`](https://bendalab.github.io/plottools/api/spines.html):
+  modify the appearance of spines. [More...](docs/spines.md)
+- [`styles`](https://bendalab.github.io/plottools/api/styles.html):
+  layout settings and plot styles.
+- [`subplots`](https://bendalab.github.io/plottools/api/subplots.html):
+  enhanced subplots with margins. [More...](docs/subplots.md)
+- [`tag`](https://bendalab.github.io/plottools/api/tag.html):
+  tag axes with a label.
+- [`text`](https://bendalab.github.io/plottools/api/text.html):
+  enhance textual annotations.
+- [`ticks`](https://bendalab.github.io/plottools/api/ticks.html):
+  setting tick locations and formats. [More...](docs/ticks.md)
 
-See [documentation](https://bendalab.github.io/plottools/api) in the
+See [API documentation](https://bendalab.github.io/plottools/api) in the
 modules for more infos.
 
 Most modules patch the matplotlib Figure and Axes classes. The
 patching is done by each module's `install_<module>()` function. This
-function is called automatically upon importing the module. A
-`uninstall_<module>()` function is provided to undo the patching.  So
-you usually do not need to care about the install/uninstall
+function is called automatically upon importing the module. While some
+modules simply add a few new member functions
+(e.g. [`insets`](https://bendalab.github.io/plottools/api/insets.html))
+others modify existing functions
+(e.g. [`figure`](https://bendalab.github.io/plottools/api/figure.html)).
+A `uninstall_<module>()` function is provided to undo the patching.
+So you usually do not need to care about the install/uninstall
 functions. Simply import the module of interest and you are all set.
 
 Each module can be imported separately. No other functionality of the
@@ -120,7 +142,7 @@ appreciated.
 
 You can also open an issue, describing the error. Before doing so,
 check whether you get the error when you run the demo of the
-respective module:
+respective module. E.g.
 ```py
 python -m plottools.figures
 ```
@@ -136,4 +158,5 @@ versions) into the issue.
 
 ## Documentation
 
-[Documentation](https://bendalab.github.io/plottools)
+The full [documentation](https://bendalab.github.io/plottools) is provided on 
+[github.io](https://bendalab.github.io/plottools).

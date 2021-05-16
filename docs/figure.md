@@ -1,16 +1,13 @@
 # Figure module
 
-Alternative ways to set the size, margins and default filename of a figure.
+Size and file names of a figure.
 
-Calling `install_figure()` from the figure module adds some arguments
-to the matplotlib functions `plt.figure()`, `plt.subplots()`,
-`fig.add_gridspec()`, `gridspec.update()`, `fig.savefig()`,
-`plt.savefig()`.
+Importing the figure module modifies the matplotlib functions
+`plt.figure()`, `plt.subplots()`, `fig.savefig()`, and `plt.savefig()`.
+
 ```
 import matplotlib.pyplot as plt
-from plottools.figure import install_figure
-
-install_figure()
+import plottools.figure
 ```
 
 Then the following features are available:
@@ -27,36 +24,11 @@ or
 ```
 fig = plt.subplots(3, 2, cmsize=(12, 8))  # in centimeters
 ```
-Alternatively, a `set_size_cm()` function is provided:
+A `set_size_cm()` function is also provided:
 ```
 fig = plt.figure()
 fig.set_size_cm(12, 8)  # in centimeters
 ```
-
-
-## Figure margins
-
-In matplotlib margins, i.e. the space between the axes and the figure
-edges, are controlled via `left`, `right`, `top`, and `bottom`
-arguments to the `fig.subplots_adjust()` and related functions. These
-arguments are given in fractions of the figure size as values ranging
-between 0 and 1. This is often quite cumbersome, because the margins
-get bigger if the figure size is enlarged, although the size of the
-tick and axis labels stays the same.
-
-The figure module introduces `leftm`, `rightm`, `topm`, and `bottomm`
-as additional arguments to the `plt.subplots()`,
-`fig.subplots_adjust()`, `fig.add_gridspec()` and `gridspec.update()`
-functions. These arguments specify the margins in units of the current
-font size, because the font size is what sets the size of the tick and
-axis labels. And they are measured from the respective figure edge,
-not from the figure's origin. I.e. specifying `topm=0` is the same as
-`top=1`, and results in no margin to the top of the upper axes. In
-addition, a resize event handler is installed, that ensures that the
-margins stay the same (when specified by the new arguments) when you
-resize the figure on the screen.
-
-TODO: image illustrating figure margins.
 
 
 ## Default file name
@@ -71,16 +43,41 @@ called without argument.
 
 If you have a python script `myplot.py` producing a figure and saving it like this:
 ```
-import matplotlib.pyplot as plt
-from plottools.figure import install_figure
-
-install_figure()
-
 fig, ax = plt.subplots(2, 3)
 # some fancy plots ...
 fig.savefig()
 ```
-The the plot is saved in a file named `myplot.pdf`.
+The plot is saved in a file named `myplot.pdf`.
+
+When only providing a path, the name of the script is appended:
+```
+fig.savefig('../')    # -> ../myplot.pdf
+```
+
+A string to be added to the name of the script is indicated by a initial '+':
+```
+fig.savefig('+-example')    # -> myplot-example.pdf
+```
+
+When saving a figure multiple times (for example when needed for a
+LaTeX beamer talk), then you may want to use the '@' character in the
+file name. This character in the file name is replaced by 'A', 'B',
+'C', ...  according to how often `fig.savefig()` is called from within
+the same figure.  If the '@' is the first character of the file name,
+it is added to the name of the main script. So in 'example.py' we can
+write
+
+```py
+fig.savefig('@')
+fig.savefig('@')
+latex_include_figures()
+```
+This prints to the console
+```txt
+\\includegraphics<1>{myplotA}
+\\includegraphics<2>{myplotB}
+```
+and generates the respective files.
 
 
 ## Strip fonts from a pdf figure
@@ -103,8 +100,3 @@ remove the fonts.
 ```
 fig.savefig(stripfonts=True)
 ```
-
-## Default settings
-
-TODO: describe default file type.
-
