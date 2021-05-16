@@ -5,7 +5,9 @@ Insets made easy.
 ## Axes member functions
 
 - `inset()`: add an inset in relative axes coordinates.
+  ![inset](figures/insets-inset.png)
 - `zoomed_inset()`: add an inset for displaying zoomed-in data.
+  ![zoomed_inset](figures/insets-zoomed_inset.png)
 
 
 ## Install/uninstall insets functions
@@ -38,6 +40,28 @@ def inset(ax, pos):
     -------
     axi: matplotlib axes
         Axes of the inset.
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.insets
+    
+    fig, ax = plt.subplots()
+    x = np.arange(-2.0, 5.0, 0.01)
+    y = np.sin(2.0*np.pi*4.0*x)
+    ax.plot(x, y)
+    ax.set_xlim(-2.0, 5.0)
+    ax.set_xlabel('Time [ms]')
+    ax.set_ylim(-1.5, 4.5)
+    ax.set_ylabel('Voltage [mV]')
+
+    axi = ax.inset((0.2, 0.6, 0.9, 0.95))
+    x = np.linspace(0, 1, 50)
+    axi.plot(x, x**2, 'r')
+    plt.show()
+    ```
+    ![inset](figures/insets-inset.png)
     """
     # inset:
     x0, y0, width, height = ax.get_position().bounds
@@ -82,6 +106,28 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
     -------
     axi: matplotlib axes
         Axes of the inset.
+
+    Examples
+    --------
+    ```py
+    import matplotlib.pyplot as plt
+    import plottools.insets
+    
+    fig, ax = plt.subplots()
+    x = np.arange(-2.0, 5.0, 0.01)
+    y = np.sin(2.0*np.pi*4.0*x)
+    ax.plot(x, y)
+    ax.set_xlim(-2.0, 5.0)
+    ax.set_xlabel('Time [ms]')
+    ax.set_ylim(-1.5, 4.5)
+    ax.set_ylabel('Voltage [mV]')
+    
+    axi = ax.zoomed_inset([0.2, 0.6, 0.9, 0.95], [0.0, -1.1, 2.0, 1.1],
+                          [(4, 1), (3, 2)], lw=0.5)
+    axi.plot(x, y)
+    plt.show()
+    ```
+    ![zoomed_inset](figures/insets-zoomed_inset.png)
     """
     # inset:
     axi = ax.inset(pos)
