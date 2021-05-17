@@ -10,6 +10,7 @@ from plottools.insets import demo as insets_demo
 from plottools.labels import demo as labels_demo
 from plottools.legend import demo as legend_demo
 from plottools.neurons import demo as neurons_demo
+from plottools.params import demo as params_demo
 from plottools.scalebars import demo as scalebars_demo
 from plottools.significance import demo as significance_demo
 from plottools.spines import demo as spines_demo
@@ -20,7 +21,6 @@ from plottools.tag import demo as tag_demo
 from plottools.text import demo as text_demo
 from plottools.ticks import demo as ticks_demo
 from plottools.version import __version__, versions
-from plottools.params import demo as params_demo
 
 
 if __name__ == "__main__":
@@ -71,6 +71,10 @@ if __name__ == "__main__":
     neurons_demo()
     print()
 
+    print('plottools.params ...')
+    params_demo()
+    print()
+
     print('plottools.scalebars ...')
     scalebars_demo()
     print()
@@ -102,8 +106,4 @@ if __name__ == "__main__":
 
     print('plottools.ticks ...')
     ticks_demo()
-    print()
-    
-    print('plottools.params ...')
-    params_demo()
     print()

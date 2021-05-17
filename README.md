@@ -95,6 +95,22 @@ fig, ax = plt.subplots()
 ax.set_xticks_delta(1.0)
 ```
 
+For importing all plottools modules, simply import the module
+
+- [`plottools`](https://bendalab.github.io/plottools/api/plottools.html):
+  import all plottool modules and install their functions in matplotlib.
+
+i.e.
+```py
+import plottools.plottools as pt 
+```
+
+This also imports all the functions of the modules such they can be used
+directly in the `pt` namespace. For example:
+```py
+light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
+```
+
 Each module also has a `<module>_params()` function for setting
 parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
