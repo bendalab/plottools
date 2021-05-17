@@ -1,5 +1,4 @@
-"""
-Plotting styles.
+"""Plotting styles.
 
 
 Usually you specify the line style for a plot command like this:
@@ -22,7 +21,6 @@ specifying the line style into a dictionary, like this:
 
 ```py
 lsRed = dict(color='#aa0000', lw=2, ls='--')  # red line style (ls)
-...
 ax.plot(x, y, **lsRed)
 ```
 
@@ -40,7 +38,7 @@ sound ugly, because everybody tells you to never use global variables,
 but in this case it really pays off. It makes your plot commands sweet
 and short.
 
-So, this is how your central module, named "plotstyles.py' might look like:
+So, this is how your central module, named "plotstyles.py" might look like:
 ```py
 import __main__
 
@@ -55,23 +53,28 @@ Then, a script producing a figure looks like this:
 import matplotlib.pyplot as plt
 from plotstyles import plot_styles
 
+plot_styles()
 fig, ax = plt.subplots()
 ax.plot(x, y, **lsResponse)
 fig.savefig('example.pdf')
 ```
 
-With this you can change the appaerance of *all* your figures by modifying
-the plotting styles in a single central file. This way you can first code
+This way you can change the appaerance of *all* your figures by modifying
+the plotting styles in a single central file. You can first code
 your figures and concentrate on the technicalities of the data. And later on,
 when you are done, you can then can easily improve the design of your plots.
 Plotting styles used in this way are a central element for separating content
-from design. And python's key-word arguments provide a nice mechanism to achieve this.
+from design. Python's key-word arguments provide a nice mechanism to achieve
+this.
 
-In your central "plotstyle.py" module you can, of course, import all the
+In your central "plotstyle.py" module you can, of course, also import all the
 cool plottool modules you need, or just the `plottools.param` module to get and
 install them all. You also should set matplotlib's `rcParam` variables to define
-the appaerance of your plots in this central place (or use the `_params()` functions
-of the plottools modules).
+the appaerance of your plots in this central place (or use the respective
+`_params()` functions of the plottools modules).
+
+The `styles` module provides a few functions that help you with
+generating and organizing pllotting styles.
 
 
 ## Duplicate and modify plotting styles
@@ -98,6 +101,7 @@ of the plottools modules).
 - `plot_pointstyles()`: plot names and lines of all available point styles.
 - `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
 - `plot_fillstyles()`: plot names and patches of all available fill styles.
+
 """
 
 import __main__
