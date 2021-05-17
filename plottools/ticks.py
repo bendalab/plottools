@@ -465,7 +465,7 @@ def set_xticks_blank(ax):
 
     See also
     --------
-    `plottools.axes.common_xlabels()`
+    `plottools.common.common_xlabels()`
 
     Examples
     --------
@@ -487,7 +487,7 @@ def set_yticks_blank(ax):
 
     See also
     --------
-    `plottools.axes.common_ylabels()`
+    `plottools.common.common_ylabels()`
 
     See also
     --------
