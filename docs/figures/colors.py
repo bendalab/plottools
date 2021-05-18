@@ -89,7 +89,7 @@ def colormap_figure():
     """ Generate a figure demonstrating the colormap() function.
     """
     fig, ax = plt.subplots(cmsize=(20.0, 4.0))
-    fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=0, bottomm=1.5)
+    fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=0, bottomm=2)
     cmcolors = [colors['red'], lighter(colors['orange'], 0.85),
                 lighter(colors['yellow'], 0.2), lighter(colors['lightblue'], 0.8),
                 colors['blue']]
@@ -135,7 +135,7 @@ def plotcolormap_figure():
     """ Generate a figure demonstrating the plot_colormap() function.
     """
     fig, ax = plt.subplots(cmsize=(20.0, 8.0))
-    fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=2, bottomm=1.5)
+    fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=2, bottomm=2)
     plot_colormap(ax, 'jet', True)
     fig.savefig('colors-plotcolormap.png')
 

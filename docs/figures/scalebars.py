@@ -13,7 +13,7 @@ def scalebars_figures():
 
     def draw_sine():
         fig, ax = plt.subplots(cmsize=(10, 6))
-        fig.subplots_adjust(leftm=0.1, rightm=3.5, topm=0.1, bottomm=1.5)
+        fig.subplots_adjust(leftm=0.1, rightm=4, topm=0.1, bottomm=1.5)
         ax.show_spines('')
         f = 0.5
         x = np.linspace(0.0, 10.0, 200)

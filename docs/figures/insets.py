@@ -14,7 +14,7 @@ def insets_figures():
         plt.rcParams['xtick.direction'] = 'out'
         plt.rcParams['ytick.direction'] = 'out'
         fig, ax = plt.subplots(cmsize=(12, 8))
-        fig.subplots_adjust(leftm=6.0, rightm=1.5, topm=0.5, bottomm=3.0)
+        fig.subplots_adjust(leftm=6.5, rightm=1.5, topm=0.5, bottomm=3.5)
         x = np.arange(-2.0, 5.0, 0.01)
         y = np.sin(2.0*np.pi*4.0*x)
         ax.plot(x, y)

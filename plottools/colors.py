@@ -782,9 +782,9 @@ def plot_color_comparison(ax, colorsa, *args):
                     ax.text(-0.1, 1.5+i, cbn[1], rotation='vertical', ha='right', va='center')
             if c in cb:
                 ax.fill(rectx + 1.5*k, recty + 1 + i, color=cb[c])
-        ax.text(0.5 + 1.5*k, -0.1, c, ha='center')
+        ax.text(0.5 + 1.5*k, -0.2, c, ha='center')
     ax.set_xlim(-0.5, len(colorsa)*1.5)
-    ax.set_ylim(-0.2, 1.1 + len(args))
+    ax.set_ylim(-0.3, 1.1 + len(args))
 
 
 def plot_colormap(ax, cmap, luminance=True):

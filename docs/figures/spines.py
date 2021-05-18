@@ -16,9 +16,9 @@ def spines_figures():
         plt.rcParams['ytick.direction'] = 'out'
         fig, axs = plt.subplots(1, 3, cmsize=(28, 10))
         if margin == 'lb':
-            fig.subplots_adjust(leftm=7.5, rightm=1.5, topm=1, bottomm=3.5, wspace=0.4)
+            fig.subplots_adjust(leftm=8, rightm=1.5, topm=1, bottomm=4.5, wspace=0.4)
         else:
-            fig.subplots_adjust(leftm=7.5, rightm=7.5, topm=3.5, bottomm=3.5, wspace=0.4)
+            fig.subplots_adjust(leftm=8, rightm=8, topm=3.5, bottomm=4.5, wspace=0.4)
         for ax in axs:
             x = np.linspace(0, 1.5, 200)
             y = fac*np.sin(2*np.pi*5*x)
