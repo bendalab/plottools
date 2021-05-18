@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
-from plottools.figure import install_figure
-from plottools.spines import install_spines
+import plottools.figure
+import plottools.subplots
+import plottools.spines
 from plottools.scalebars import scalebar_params
 
     
@@ -36,8 +37,6 @@ def scalebars_figures():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes, clip_on=False)
     
-    install_figure()
-    install_spines()
     scalebar_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
     
     fig, ax = draw_sine()

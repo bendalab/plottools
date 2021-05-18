@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
-from plottools.figure import install_figure
-from plottools.spines import spines_params
+import plottools.figure
+import plottools.subplots
 import plottools.ticks
+from plottools.spines import spines_params
 
     
 def spines_figures():
@@ -34,7 +35,6 @@ def spines_figures():
         fig.savefig('spines-' + name + '.png')
         plt.close()
         
-    install_figure()
     spines_params(height=10)
 
     fig, axs = new_figure()

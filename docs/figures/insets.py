@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
-from plottools.figure import install_figure
+import plottools.figure
+import plottools.subplots
 import plottools.insets
 
     
@@ -32,8 +33,6 @@ def insets_figures():
     def save_fig(fig, name):
         fig.savefig('insets-' + name + '.png')
         plt.close()
-        
-    install_figure()
 
     fig, ax, _, _ = new_figure()
     axi = ax.inset((0.2, 0.6, 0.9, 0.95))

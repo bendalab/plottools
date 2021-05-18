@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
-from plottools.figure import install_figure
-from plottools.spines import install_spines
+import plottools.figure
+import plottools.subplots
+import plottools.spines
 import plottools.ticks
 
     
@@ -22,9 +23,6 @@ def ticks_figures():
         fig.savefig('ticks-' + name + '.png')
         plt.close()
         
-    install_figure()
-    install_spines()
-    
     fig, ax = new_figure()
     ax.set_xticks_delta(0.5)
     save_fig(fig, 'delta')
