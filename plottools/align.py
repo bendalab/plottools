@@ -229,7 +229,7 @@ install_align()
 def demo():
     """ Run a demonstration of the align module.
     """
-    fig, axs = plt.subplots(3, 2, figsize=(11, 8))
+    fig, axs = plt.subplots(3, 2, figsize=(8, 6))
     fig.subplots_adjust(wspace=0.5)
 
     fig.suptitle('plottools.align')

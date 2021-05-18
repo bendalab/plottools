@@ -286,7 +286,7 @@ install_common()
 def demo():
     """ Run a demonstration of the common module.
     """
-    fig, axs = plt.subplots(4, 4, figsize=(16,8))
+    fig, axs = plt.subplots(4, 4, figsize=(13,7))
     fig.subplots_adjust(left=0.05, right=0.98, bottom=0.08, wspace=0.3, hspace=0.5)
     fig.suptitle('plottools.common')
     for ax in axs.ravel():

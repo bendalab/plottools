@@ -866,7 +866,8 @@ def demo(n=1, complementary=False, *args):
     *args: list of strings
         names of color palettes or color maps, or 'default' for the default color palette.
     """
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(12, 6))
+    fig.subplots_adjust(left=0.05, right=0.98, bottom=0.05, top=0.95)
     if len(args) == 0:
         args = ('default',)
     if len(args) == 1 and args[0] != 'all':

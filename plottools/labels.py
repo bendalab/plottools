@@ -191,7 +191,7 @@ install_labels()
 def demo():
     """ Run a demonstration of the labels module.
     """
-    fig, axs = plt.subplots(1, 2, figsize=(10,6))
+    fig, axs = plt.subplots(1, 2, figsize=(9, 5))
     fig.subplots_adjust(wspace=0.5)
     fig.suptitle('plottools.labels')
 
