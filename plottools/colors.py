@@ -8,6 +8,8 @@ Color palettes and tools for manipulating colors.
 - `colors_plain`: plain rgb colors. ![plain](figures/colors-plain.png)
 - `colors_vivid`: vivid colors. ![vivid](figures/colors-vivid.png)
 - `colors_muted`: muted colors. ![muted](figures/colors-muted.png)
+- `colors_tableau`: matplotlib's tableau (tab10) colors.
+  ![tableau](figures/colors-tableau.png)
 - `colors_henninger`: colors by Joerg Henninger upond which the muted colors are build.
   ![henninger](figures/colors-henninger.png)
 - `colors_scicomp`: colors from the scientific computing script.
@@ -129,6 +131,19 @@ colors_muted['white'] = '#FFFFFF'
 colors_muted['gray'] = '#A0A0A0'
 colors_muted['black'] = '#000000'
 
+""" matplotlib's tableau (tab10) colors. """
+colors_tableau = OrderedDict()
+colors_tableau['red'] = '#D62728'
+colors_tableau['orange'] = '#FF7F0E'
+colors_tableau['lightgreen'] = '#BCBD22'   # olive
+colors_tableau['green'] = '#2CA02C'
+colors_tableau['cyan'] = '#17BECF'
+colors_tableau['blue'] = '#1F77B4'
+colors_tableau['purple'] = '#9467BD'
+colors_tableau['pink'] = '#E377C2'
+colors_tableau['brown'] = '#8C564B'
+colors_tableau['gray'] = '#7F7F7F'
+
 """ Colors by Joerg Henninger. """
 colors_henninger = OrderedDict()
 colors_henninger['red'] = '#BA2D22'
@@ -232,6 +247,7 @@ color_palettes = OrderedDict()
 color_palettes['plain'] = colors_plain
 color_palettes['vivid'] = colors_vivid
 color_palettes['muted'] = colors_muted
+color_palettes['tableau'] = colors_tableau
 color_palettes['henninger'] = colors_henninger
 color_palettes['scicomp'] = colors_scicomp
 color_palettes['unituebingen'] = colors_unituebingen

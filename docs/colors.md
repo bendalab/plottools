@@ -73,6 +73,18 @@ c.colors_vivid
 Vivid but not plain basic colors for a fresh look.
 
 
+### Tableau
+
+```
+c.colors_tableau
+```
+
+![tableau](figures/colors-tableau.png)
+
+This is matplotlib's tableau palette, the default in newer matplotlib
+versions, also known as `tab10`.
+
+
 ### Color palette by J&ouml;rg Henninger
 
 ```

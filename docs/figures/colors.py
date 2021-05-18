@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plottoolspath
-from plottools.figure import install_figure
-from plottools.spines import install_spines
+import plottools.figure
+import plottools.subplots
+import plottools.spines
 from plottools.colors import colors, color_palettes, lighter, darker, gradient, colormap
 from plottools.colors import plot_colors, plot_complementary_colors
 from plottools.colors import plot_color_comparison, plot_colormap
@@ -140,8 +141,6 @@ def plotcolormap_figure():
 
     
 if __name__ == "__main__":
-    install_figure()
-    install_spines()
     colors_figures()
     lighter_figure()
     darker_figure()
