@@ -14,26 +14,22 @@ import plottools.colors as c
 ## Color palettes
 
 The color module provides a few color palettes as dictionaries that
-reference colors by standard color names. For example:
-```
-c.colors_muted['red']
-```
-returns the red color of the `colors_muted` palette. The returned
-colors are valid matplotlib colors and can be passed on to `color`,
-`facecolor`, `edgecolor`, etc. arguments of the various plotting
-functions.
-
-```
-c.color
-```
-is a default color palette set to one of the available color palettes
-(currently ```colors_muted```). Feel free to overwrite it.
-
+reference colors by standard color names.
 ```
 c.color_palettes
 ```
 is a dictionary referencing all color palettes provided by the module
 by their name.
+
+For example
+```
+colors = c.color_palettes['muted']
+colors['red']
+```
+returns the red color of the `colors_muted` palette. The returned
+colors are valid matplotlib colors and can be passed on to the `color`,
+`facecolor`, `edgecolor`, etc. arguments of the various matplotlib
+plotting functions.
 
 The following sections display the colors and their names of all provided palettes.
 
@@ -151,8 +147,8 @@ Make colors lighter.
 
 For 40% lightness of blue do
 ```
-color = c.colors['blue']
-lightblue = c.lighter(color, 0.4)
+colors = c.color_palettes['muted']
+lightblue = c.lighter(colors['blue'], 0.4)
 ```
 
 
@@ -164,8 +160,8 @@ Make colors darker.
 
 For 40% darker blue do
 ```
-color = c.colors['blue']
-darkblue = c.darker(color, 0.4)
+colors = c.color_palettes['muted']
+darkblue = c.darker(colors['blue'], 0.4)
 ```
 
 
@@ -177,11 +173,10 @@ Mix two colors.
 
 For 30% transition between blue and orange do
 ```
-cb = c.colors['blue']
-co = c.colors['orange']
-color = c.gradient(cb, co, 0.3)
+colors = c.color_palettes['muted']
+colors = c.color_palettes['muted']
+color = c.gradient(colors['blue'], colors['orange'], 0.3)
 ```
-
 
 
 ## LaTeX colors
@@ -190,7 +185,8 @@ If you want to use in your LaTeX document the same colors as in your plots,
 then you can export matplotlib colors using the `latex_colors()` function.
 Either for single colors:
 ```
-c.latex_colors(c.colors['red'], 'red')
+colors = c.color_palettes['muted']
+c.latex_colors(colors['red'], 'red')
 ```
 writes to the console
 ```
@@ -198,7 +194,7 @@ writes to the console
 ```
 or for a whole palette:
 ```
-c.latex_colors(c.colors_vivid)
+c.latex_colors(c.color_palettes['vivid'])
 ```
 writes to the console
 ```
@@ -222,9 +218,12 @@ You then can use the newly defined  colors with the usual commands, like for exa
 
 Generate and register a color map from colors like this:
 ```
-cmcolors = [c.colors['red'], c.lighter(c.colors['orange'], 0.85),
-            c.lighter(c.colors['yellow'], 0.2), c.lighter(c.colors['lightblue'], 0.8),
-            c.colors['blue']]
+colors = c.color_palettes['muted']
+cmcolors = [colors['red'],
+            c.lighter(colors['orange'], 0.85),
+            c.lighter(colors['yellow'], 0.2),
+            c.lighter(colors['lightblue'], 0.8),
+            colors['blue']]
 cmvalues = [0.0, 0.25, 0.5, 0.8, 1.0]
 c.colormap('RYB', cmcolors, cmvalues)
 ```

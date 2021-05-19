@@ -4,7 +4,6 @@ Color palettes and tools for manipulating colors.
 
 ## Dictionaries with colors
 
-- `colors`: the default colors, set to one of the following:
 - `colors_plain`: plain rgb colors. ![plain](figures/colors-plain.png)
 - `colors_vivid`: vivid colors. ![vivid](figures/colors-vivid.png)
 - `colors_muted`: muted colors. ![muted](figures/colors-muted.png)
@@ -254,9 +253,6 @@ color_palettes['unituebingen'] = colors_unituebingen
 color_palettes['itten'] = colors_itten
 color_palettes['solarized'] = colors_solarized
 color_palettes['material'] = colors_material
-    
-""" Default color palette. """
-colors = colors_muted
 
 
 def lighter(color, lightness):
@@ -287,8 +283,8 @@ def lighter(color, lightness):
     For 40% lightness of blue do
     ```py
     import plottools.colors as c
-    color = c.colors['blue']
-    lightblue = c.lighter(color, 0.4)
+    colors = c.color_palettes['muted']
+    lightblue = c.lighter(colors['blue'], 0.4)
     ```
     """
     try:
@@ -344,8 +340,8 @@ def darker(color, saturation):
     For 40% darker blue do
     ```py
     import plottools.colors as c
-    color = c.colors['blue']
-    darkblue = c.darker(color, 0.4)
+    colors = c.color_palettes['muted']
+    darkblue = c.darker(colors['blue'], 0.4)
     ```
     """
     try:
@@ -409,9 +405,8 @@ def gradient(color0, color1, r):
     For 30% transition between blue and orange do
     ```py
     import plottools.colors as c
-    cb = c.colors['blue']
-    co = c.colors['orange']
-    color = c.gradient(cb, co, 0.3)
+    colors = c.color_palettes['muted']
+    color = c.gradient(colors['blue'], colors['orange'], 0.3)
     ```
     """
     try:
@@ -486,7 +481,8 @@ def latex_colors(colors, name='', model='rgb'):
     Print LaTeX color definition for a single color:
     ```py
     import plottools.colors as c
-    c.latex_colors(c.colors['red'], 'red')
+    colors = c.color_palettes['muted']
+    c.latex_colors(colors['red'], 'red')
     ```
     writes to the console
     ```tex
@@ -552,9 +548,12 @@ def colormap(name, colors, values=None):
     Generate and register a color map from colors like this:
     ```py
     import plottools.colors as c
-    cmcolors = [c.colors['red'], c.lighter(c.colors['orange'], 0.85),
-                c.lighter(c.colors['yellow'], 0.2), c.lighter(c.colors['lightblue'], 0.8),
-                c.colors['blue']]
+    colors = c.color_palettes['muted']
+    cmcolors = [colors['red'],
+                c.lighter(colors['orange'], 0.85),
+                c.lighter(colors['yellow'], 0.2),
+                c.lighter(colors['lightblue'], 0.8),
+                colors['blue']]
     cmvalues = [0.0, 0.25, 0.5, 0.8, 1.0]
     c.colormap('RYB', cmcolors, cmvalues)
     ```
@@ -649,7 +648,7 @@ def plot_colors(ax, colors, n=1):
     import matplotlib.pyplot as plt
     import plottools.colors as c
     fig, ax = plt.subplots()
-    c.plot_colors(ax, c.colors, 5)
+    c.plot_colors(ax, c.color_palettes['muted'], 5)
     ```
     ![plotcolors](figures/colors-plotcolors.png)    
     """
@@ -704,7 +703,7 @@ def plot_complementary_colors(ax, colors, n=0):
     import matplotlib.pyplot as plt
     import plottools.colors as c
     fig, ax = plt.subplots()
-    c.plot_complementary_colors(ax, c.colors)
+    c.plot_complementary_colors(ax, c.color_palettes['muted'])
     ```
     ![plotcomplementary](figures/colors-plotcomplementary.png)
     """
