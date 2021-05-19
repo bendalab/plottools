@@ -636,7 +636,7 @@ def plot_colors(ax, colors, n=1):
     ax: matplotlib axes
         Subplot to use for plotting the colors.
     colors: dict
-        A dictionary with names and rgb hex-strings of colors.
+        A dictionary with names and matplotlib colors.
     n: int
         If one, plot the colors of the palette only.
         If larger than one, plot in addition that many
@@ -693,7 +693,7 @@ def plot_complementary_colors(ax, colors, n=0):
     ax: matplotlib axes
         Subplot to use for plotting the colors.
     colors: dict
-        A dictionary with names and rgb hex-strings of colors.
+        A dictionary with names and matplotlib colors.
     n: int
         Number of additional gradient values to be plotted inbetween the complementary colors.
 
@@ -745,14 +745,16 @@ def plot_color_comparison(ax, colorsa, *args):
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the colors.
-    colorsa: dict or tuple (dict, string)
-        A dictionary with names and rgb hex-strings of colors.
+    colorsa: dict or tuple (dict, string) or string
+        A dictionary with names and matplotlib colors.
         This is the reference palette which is plotted completely at the bottom.
         The optional second name is used as a string to annotate the colors.
-    args: list of dicts or tuples (dict, string)
-        Further dictionaries with names and rgb hex-strings of colors.
+        Alternatively, just the name of the color palette in `color_palettes`.
+    args: list of dicts or tuples (dict, string) or strings
+        Further dictionaries with names and matplotlib colors.
         Colors with names matching the ones from `colorsa` are plotted on top.
         The optional second element is used as a string to annotated the colors.
+        Alternatively, just the names of the color palettes in `color_palettes`.
 
     Examples
     --------
@@ -768,19 +770,30 @@ def plot_color_comparison(ax, colorsa, *args):
     """
     rectx = np.array([0.0, 1.0, 1.0, 0.0, 0.0])
     recty = np.array([0.0, 0.0, 1.0, 1.0, 0.0])
+    namea = None
     if isinstance(colorsa, (list, tuple)):
-        ax.text(-0.1, 0.5, colorsa[1], rotation='vertical', ha='right', va='center')
         colorsa = colorsa[0]
+        namea = colorsa[1]
+    elif not isinstance(colorsa, dict):
+        namea = colorsa
+        colorsa = color_palettes[colorsa]
+    if namea is not None:
+        ax.text(-0.1, 0.5, namea, rotation='vertical', ha='right', va='center')
     for k, c in enumerate(colorsa):
         ax.fill(rectx + 1.5*k, recty + 0.0, color=colorsa[c])
-        for i, cbn in enumerate(args):
-            cb = cbn
-            if isinstance(cbn, (list, tuple)):
-                cb = cbn[0]
-                if k == 0:
-                    ax.text(-0.1, 1.5+i, cbn[1], rotation='vertical', ha='right', va='center')
-            if c in cb:
-                ax.fill(rectx + 1.5*k, recty + 1 + i, color=cb[c])
+        for i, cbi in enumerate(args):
+            colorsb = cbi
+            nameb = None
+            if isinstance(cbi, (list, tuple)):
+                colorsb = cbi[0]
+                nanmeb = cbi[1]
+            elif not isinstance(cbi, dict):
+                colorsb = color_palettes[cbi]
+                nameb = cbi
+            if k == 0 and nameb is not None:
+                ax.text(-0.1, 1.5+i, nameb, rotation='vertical', ha='right', va='center')
+            if c in colorsb:
+                ax.fill(rectx + 1.5*k, recty + 1 + i, color=colorsb[c])
         ax.text(0.5 + 1.5*k, -0.2, c, ha='center')
     ax.set_xlim(-0.5, len(colorsa)*1.5)
     ax.set_ylim(-0.3, 1.1 + len(args))
@@ -863,16 +876,14 @@ def demo(n=1, complementary=False, *args):
     complementary: bool
         If `True`, plot complementary colors of the selected palette
     *args: list of strings
-        names of color palettes or color maps, or 'default' for the default color palette.
+        names of color palettes or color maps.
     """
     fig, ax = plt.subplots(figsize=(12, 6))
     fig.subplots_adjust(left=0.05, right=0.98, bottom=0.05, top=0.95)
     if len(args) == 0:
-        args = ('default',)
+        args = ('muted',)
     if len(args) == 1 and args[0] != 'all':
-        if 'default' in args[0]:
-            palette = colors
-        elif args[0] in color_palettes:
+        if args[0] in color_palettes:
             palette = color_palettes[args[0]]
         else:
             try:
@@ -888,7 +899,7 @@ def demo(n=1, complementary=False, *args):
             plot_colors(ax, palette, n)
     else:
         if args[0] == 'all':
-            palettes = [(color_palettes[c], c) for c in color_palettes]
+            palettes = list(color_palettes.keys())
         else:
             palettes = []
             for c in args:
@@ -896,7 +907,7 @@ def demo(n=1, complementary=False, *args):
                     print('unknown color palette %s!' % c)
                     print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
                 else:
-                    palettes.append((color_palettes[c], c))
+                    palettes.append(c)
         plot_color_comparison(ax, *palettes)
     plt.show()
 
@@ -915,6 +926,4 @@ if __name__ == "__main__":
     if len(names) > 0 and names[-1] in 'complementary':
         names.pop()
         compl = True
-    if len(names) == 0:
-        names = ['default']
     demo(n, compl, *names)
