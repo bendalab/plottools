@@ -43,12 +43,11 @@ def plot_params(axes_color='none', namespace=None):
     """
     if namespace is None:
         namespace = __main__
-    # axes and label color:
+    # axes:
     mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
         mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
         mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
-        mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
     # grid style:
     if hasattr(namespace, 'lsGrid'):
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
@@ -108,7 +107,9 @@ def screen_style(namespace=None):
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color=palette['gray'], format='png',
                   compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} [{unit}]', label_size='medium')
+    labels_params(lformat='{label} [{unit}]', labelsize='medium', labelweight='normal',
+                  labelcolor='axes', labelpad=4,
+                  xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
@@ -175,7 +176,9 @@ def paper_style(namespace=None):
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} [{unit}]', label_size='small')
+    labels_params(lformat='{label} [{unit}]', label_size='small', labelweight='normal',
+                  labelcolor='axes', labelpad=4,
+                  xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
@@ -245,7 +248,9 @@ def sketch_style(namespace=None):
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} ({unit})', label_size='medium')
+    labels_params(lformat='{label} ({unit})', label_size='medium', labelweight='normal',
+                  labelcolor='axes', labelpad=4,
+                  xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
@@ -285,6 +290,8 @@ def demo(style='screen'):
     ax.text(0.1, 0.9, '%s_style()' % style, transform=ax.transAxes)
     ax.text(0.1, 0.8, 'ax.plot(x, y, **lsA1)', transform=ax.transAxes)
     ax.set_ylim(-1.2, 2.0)
+    ax.set_xlabel('Time', 'ms')
+    ax.set_ylabel('Amplitude')
     plt.show()
 
 

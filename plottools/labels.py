@@ -106,7 +106,8 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
-def labels_params(lformat=None, label_size=None):
+def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='axes',
+                  labelpad=None, xlabellocation=None, ylabellocation=None):
     """ Set parameters for axis labels.
                   
     Only parameters that are not `None` are updated.
@@ -119,16 +120,41 @@ def labels_params(lformat=None, label_size=None):
         and '{unit}' is replaced by the axes' unit.
         The default format string is '{label} [{unit}]'.
         Set ptParam `axes.label.format`.
-    label_size: float or string
-        Set font size for x- and y-axis labels
-        Sets rcParams `xtick.labelsize` and `ytick.labelsize`.
+    labelsize: float or string
+        Set font size for x- and y-axis labels.
+        Sets rcParam `axes.labelsize`.
+    labelweight: {'normal', 'bold', 'bolder', 'lighter'}
+        Set font weight for x- and y-axis labels.
+        Sets rcParam `axes.labelweight`.
+    labelcolor: matplotlib color or 'axes'
+        Color of x- and y-axis labels.
+        If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        Sets rcParam `axes.labelcolor`.
+    labelpad: float
+        Set space between x- and y-axis labels and axis in points.
+        Sets rcParam `axes.labelpad`.
+    xlabellocation: {'center', 'left', 'right'}
+        Location of xlabels. Sets rcParams `xaxis.labellocation`.
+    ylabellocation: {'center', 'bottom', 'top'}
+        Location of ylabels. Sets rcParams `yaxis.labellocation`.
     """
     if hasattr(mpl, 'ptParams'):
         if lformat is not None:
             mpl.ptParams['axes.label.format'] = lformat
-    if label_size is not None:
-        mpl.rcParams['xtick.labelsize'] = label_size
-        mpl.rcParams['ytick.labelsize'] = label_size
+    if labelsize is not None:
+        mpl.rcParams['axes.labelsize'] = labelsize
+    if labelweight is not None:
+        mpl.rcParams['axes.labelweight'] = labelweight
+    if labelcolor == 'axes':
+        mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
+    elif labelcolor is not None:
+        mpl.rcParams['axes.labelcolor'] = labelcolor
+    if 'axes.labelpad' in mpl.rcParams and labelpad is not None:
+        mpl.rcParams['axes.labelpad'] = labelpad
+    if 'xaxis.labellocation' in mpl.rcParams and xlabellocation is not None:
+        mpl.rcParams['xaxis.labellocation'] = xlabellocation
+    if 'yaxis.labellocation' in mpl.rcParams and ylabellocation is not None:
+        mpl.rcParams['yaxis.labellocation'] = ylabellocation
 
 
 def install_labels():
