@@ -823,7 +823,8 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
                   height=None, ratio=None, overhang=None,
                   twinx_spines=None, twiny_spines=None,
                   inset_spines=None, inset_spines_offsets=None,
-                  inset_spines_positions=None, inset_spines_bounds=None):
+                  inset_spines_positions=None, inset_spines_bounds=None,
+                  color=None, linewidth=None):
     """ Set default spine appearance.
                   
     Only parameters that are not `None` are updated.
@@ -895,44 +896,52 @@ def spines_params(spines=None, spines_offsets=None, spines_positions=None, spine
     inset_spines_bounds: dict
         Bounds for the spines of an inset. Sets ptParam `axes.spines.inset.bounds`.
         See `spines.set_spines_bounds()` for details.
+    color: matplotlib color
+        Color of spines. Sets rcParam `axes.edgecolor`.
+    linewidth: float
+        Width of spines. Sets rcParam `axes.linewidth`.
     """
     if hasattr(mpl, 'ptParams'):
         if spines is not None:
-            mpl.ptParams.update({'axes.spines.show': spines})
+            mpl.ptParams['axes.spines.show'] = spines
         if spines_offsets is not None:
-            mpl.ptParams.update({'axes.spines.offsets': spines_offsets})
+            mpl.ptParams['axes.spines.offsets'] = spines_offsets
         if spines_positions is not None:
-            mpl.ptParams.update({'axes.spines.positions': spines_positions})
+            mpl.ptParams['axes.spines.positions'] = spines_positions
         if spines_bounds is not None:
-            mpl.ptParams.update({'axes.spines.bounds': spines_bounds})
+            mpl.ptParams['axes.spines.bounds'] = spines_bounds
         if arrows is not None:
-            mpl.ptParams.update({'axes.spines.arrows': arrows})
+            mpl.ptParams['axes.spines.arrows'] = arrows
         if flushx is not None:
-            mpl.ptParams.update({'axes.spines.arrows.flushx': flushx})
+            mpl.ptParams['axes.spines.arrows.flushx'] = flushx
         if extendx is not None:
-            mpl.ptParams.update({'axes.spines.arrows.extendx': extendx})
+            mpl.ptParams['axes.spines.arrows.extendx'] = extendx
         if flushy is not None:
-            mpl.ptParams.update({'axes.spines.arrows.flushy': flushy})
+            mpl.ptParams['axes.spines.arrows.flushy'] = flushy
         if extendy is not None:
-            mpl.ptParams.update({'axes.spines.arrows.extendy': extendy})
+            mpl.ptParams['axes.spines.arrows.extendy'] = extendy
         if height is not None:
-            mpl.ptParams.update({'axes.spines.arrows.height': height})
+            mpl.ptParams['axes.spines.arrows.height'] = height
         if ratio is not None:
-            mpl.ptParams.update({'axes.spines.arrows.ratio': ratio})
+            mpl.ptParams['axes.spines.arrows.ratio'] = ratio
         if overhang is not None:
-            mpl.ptParams.update({'axes.spines.arrows.overhang': overhang})
+            mpl.ptParams['axes.spines.arrows.overhang'] = overhang
         if twinx_spines is not None:
-            mpl.ptParams.update({'axes.spines.twinx': twinx_spines})
+            mpl.ptParams['axes.spines.twinx'] = twinx_spines
         if twiny_spines is not None:
-            mpl.ptParams.update({'axes.spines.twiny': twiny_spines})
+            mpl.ptParams['axes.spines.twiny'] = twiny_spines
         if inset_spines is not None:
-            mpl.ptParams.update({'axes.spines.inset.show': inset_spines})
+            mpl.ptParams['axes.spines.inset.show'] = inset_spines
         if inset_spines_offsets is not None:
-            mpl.ptParams.update({'axes.spines.inset.offsets': inset_spines_offsets})
+            mpl.ptParams['axes.spines.inset.offsets'] = inset_spines_offsets
         if inset_spines_positions is not None:
-            mpl.ptParams.update({'axes.spines.inset.positions': inset_spines_positions})
+            mpl.ptParams['axes.spines.inset.positions'] = inset_spines_positions
         if inset_spines_bounds is not None:
-            mpl.ptParams.update({'axes.spines.inset.bounds': inset_spines_bounds})
+            mpl.ptParams['axes.spines.inset.bounds'] = inset_spines_bounds
+        if color is not None:
+            mpl.rcParams['axes.edgecolor'] = color
+        if linewidth is not None:
+            mpl.rcParams['axes.linewidth'] = linewidth
 
 
 def install_spines():

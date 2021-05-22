@@ -41,10 +41,6 @@ def plot_params(namespace=None):
     """
     if namespace is None:
         namespace = __main__
-    # axes:
-    if hasattr(namespace, 'lsSpine'):
-        mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
-        mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
     # grid style:
     if hasattr(namespace, 'lsGrid'):
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
@@ -112,7 +108,8 @@ def screen_style(namespace=None):
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
+    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
+                  color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=11.0, font_family='sans-serif', color='axes')
@@ -181,7 +178,8 @@ def paper_style(namespace=None):
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
+    spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
+                  color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=10.0, font_family='sans-serif', color='axes')
@@ -253,7 +251,8 @@ def sketch_style(namespace=None):
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
                     lw=2, color=palette['black'], capsize=0, clw=0.5)
-    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
+    spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
+                  color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=10.0, font_family='sans-serif', color='axes')
