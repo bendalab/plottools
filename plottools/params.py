@@ -27,15 +27,13 @@ import matplotlib.pyplot as plt
 from .plottools import *
 
 
-def plot_params(axes_color='none', namespace=None):
+def plot_params(namespace=None):
     """ Set some default plot parameter via matplotlib's rc settings.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
-    axes_color: matplotlib color specification or 'none'
-        Background color for each subplot.
     namespace: dict
         Namespace to which generated line, point, linepoint and fill styles were added.
         If None use the global namespace of the __main__ module.
@@ -44,7 +42,6 @@ def plot_params(axes_color='none', namespace=None):
     if namespace is None:
         namespace = __main__
     # axes:
-    mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
         mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
         mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
@@ -102,7 +99,7 @@ def screen_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0, zmargin=0, color=palette['white'])
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color=palette['gray'], format='png',
@@ -123,7 +120,7 @@ def screen_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(axes_color=palette['white'], namespace=namespace)
+    plot_params(namespace=namespace)
 
     
 def paper_style(namespace=None):
@@ -171,7 +168,7 @@ def paper_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
@@ -192,7 +189,7 @@ def paper_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(axes_color='none', namespace=namespace)
+    plot_params(namespace=namespace)
     
    
 def sketch_style(namespace=None):
@@ -243,7 +240,7 @@ def sketch_style(namespace=None):
     mpl.rcdefaults()
     plt.xkcd()
     align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
@@ -264,7 +261,7 @@ def sketch_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(axes_color='none', namespace=namespace)
+    plot_params(namespace=namespace)
         
 
 def demo(style='screen'):

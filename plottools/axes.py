@@ -11,7 +11,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def axes_params(xmargin=None, ymargin=None):
+def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None):
     """ Set rc settings for axes.
 
     Only parameters that are not `None` are updated.
@@ -24,11 +24,21 @@ def axes_params(xmargin=None, ymargin=None):
     ymargin: float
         Padding added to y-axis limits in fractions of the data interval.
         Sets rcParam `axes.ymargin`.
+    zmargin: float
+        Padding added to z-axis limits in fractions of the data interval.
+        Sets rcParam `axes.zmargin`.
+    color: matplotlib color or 'none'
+        Background color for each subplot.
+        Sets rcParam `axes.facecolor`.
     """
     if xmargin is not None:
         mpl.rcParams['axes.xmargin'] = xmargin
     if ymargin is not None:
         mpl.rcParams['axes.ymargin'] = ymargin
+    if 'axes.zmargin' in mpl.rcParams and zmargin is not None:
+        mpl.rcParams['axes.zmargin'] = zmargin
+    if color is not None:
+        mpl.rcParams['axes.facecolor'] = color
 
 
 def demo():
