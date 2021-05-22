@@ -43,13 +43,12 @@ def plot_params(axes_color='none', namespace=None):
     """
     if namespace is None:
         namespace = __main__
-    # axes, label, and text color:
+    # axes and label color:
     mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
         mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
         mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
         mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['text.color'] = mpl.rcParams['axes.edgecolor']
     # grid style:
     if hasattr(namespace, 'lsGrid'):
         mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
@@ -118,7 +117,7 @@ def screen_style(namespace=None):
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=11.0, font_family='sans-serif')
+    text_params(font_size=11.0, font_family='sans-serif', color='axes')
     ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=4.0, minor_tick_frac=0.6,
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
@@ -185,7 +184,7 @@ def paper_style(namespace=None):
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=10.0, font_family='sans-serif')
+    text_params(font_size=10.0, font_family='sans-serif', color='axes')
     ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=2.5, minor_tick_frac=0.6,
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
@@ -255,7 +254,7 @@ def sketch_style(namespace=None):
     spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'})
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
-    text_params(font_size=10.0, font_family='sans-serif')
+    text_params(font_size=10.0, font_family='sans-serif', color='axes')
     ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=6, minor_tick_frac=0.6,
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',

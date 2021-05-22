@@ -68,7 +68,8 @@ def text(ax, x, y, s, *args, slope=None, **kwargs):
     return txt
 
 
-def text_params(font_size=None, font_family=None, latex=None, preamble=None):
+def text_params(font_size=None, font_family=None, color='axes',
+                latex=None, preamble=None):
     """ Set default parameter for the text module.
                   
     Only parameters that are not `None` are updated.
@@ -81,6 +82,9 @@ def text_params(font_size=None, font_family=None, latex=None, preamble=None):
         Set font size for text in points (rcParam `font.size`).
     font_family: string
         Set name of font to be used (rcParam `font.family`).
+    color: matplotlib color or 'axes'
+        Color of text. If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        Sets rcParam `text.color`.
     latex: boolean
         Use LaTeX for setting text and enable unicode support
         when set to `True` (rcParam `text.usetex`).
@@ -94,6 +98,10 @@ def text_params(font_size=None, font_family=None, latex=None, preamble=None):
         mpl.rcParams['font.size'] = font_size
     if font_family is not None:
         mpl.rcParams['font.family'] = font_family
+    if color == 'axes':
+        mpl.rcParams['text.color'] = mpl.rcParams['axes.edgecolor']
+    elif color is not None:
+        mpl.rcParams['text.color'] = color
     if latex is not None:
         mpl.rcParams['text.usetex'] = latex
         if latex:
@@ -156,7 +164,7 @@ def demo(usetex=False):
     usetex: bool
         If `True` use LaTeX mode.
     """
-    text_params(font_size=12, latex=usetex, preamble=r'\usepackage{SIunits}')
+    text_params(font_size=12, color='axes', latex=usetex, preamble=r'\usepackage{SIunits}')
     fig, ax = plt.subplots()
     fig.suptitle('plottools.text')
     slope1 = 0.5
