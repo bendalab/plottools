@@ -555,35 +555,171 @@ def set_minor_yticks_off(ax):
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
 
-def ticks_params(tick_dir=None, tick_size=None, minor_tick_frac=0.6):
+def ticks_params(xtick_minor=None, ytick_minor='same',
+                 xtick_dir=None, ytick_dir='same',
+                 xtick_size=None, ytick_size='same', minor_tick_frac=0.6,
+                 xtick_major_width=None, ytick_major_width='same',
+                 xtick_minor_width=None, ytick_minor_width='same',
+                 xtick_major_pad=None, ytick_major_pad='same',
+                 xtick_alignment=None, ytick_alignment=None,
+                 xtick_color='axes', ytick_color='same',
+                 xtick_labelcolor='ticks', ytick_labelcolor='same',
+                 xtick_labelsize=None, ytick_labelsize='same'):
     """ Set default ticks appearance.
                   
     Only parameters that are not `None` are updated.
+
+    Arguments for ytick parameters with default 'same', are set to the
+    respective xtick parameter, if that one is supplied. If you want to
+    set the xtick parameter, but not the ytick parameter, you need to
+    explicitly set the ytick parameter to `None`.
 
     Call this function *before* you create any matplotlib figure.
 
     Parameters
     ----------
-    tick_dir: string
-        Direction of tick marks ('in', 'out', or 'inout').
-        Sets rcParams `xtick.direction` and `ytick.direction`.
-    tick_size: float
-        Length of tick marks in points.
-        Sets rcParams `xtick.major.size`, `ytick.major.size`,
-        `xtick.minor.size`, and `ytick.minor.size`.
-        The minor tick sizes are multiplied with `minor_tick_frac`.
+    xtick_minor: bool
+        Show minor xticks.
+        Sets rcParams `xtick.minor.visible`.
+    ytick_minor: bool
+        Show minor yticks. If 'same' set to the value of `ytick_minor`.
+        Sets rcParams `ytick.minor.visible`.
+    xtick_dir: {'in', 'out', 'inout'}
+        Direction of xticks.
+        Sets rcParams `xtick.direction`.
+    ytick_dir: {'in', 'out', 'inout', 'same'}
+        Direction of yticks. If 'same' set to the value of `xtick_dir`.
+        Sets rcParams `ytick.direction`.
+    xtick_size: float
+        Length of major xticks marks in points.
+        Sets rcParams `xtick.major.size` and `xtick.minor.size`.
+        The minor tick size is multiplied with `minor_tick_frac`.
+    ytick_size: float or 'same'
+        Length of major yticks in points. If 'same' set to the value of `xtick_size`.
+        Sets rcParams `ytick.major.size` and `ytick.minor.size`.
+        The minor ytick size is multiplied with `minor_tick_frac`.
     minor_tick_frac: float
-        Length of minor tick marks relative to tick_size.
+        Length of minor ticks relative to major tick size.
+    xtick_major_width: float
+        Width of major xticks in points.
+        Sets rcParams `xtick.major.width`.
+    ytick_major_width: float or 'same'
+        Width of major yticks in points. If 'same' set to the value of `xtick_major_width`.
+        Sets rcParams `ytick.major.width`.
+    xtick_minor_width: float
+        Width of minor xticks in points.
+        Sets rcParams `xtick.minor.width`.
+    ytick_minor_width: float or 'same'
+        Width of minor yticks in points. If 'same' set to the value of `ytick_minor_width`.
+        Sets rcParams `ytick.minor.width`.
+    xtick_major_pad: float
+        Distance of major xtick labels from major xticks in points.
+        Sets rcParams `xtick.major.pad`.
+    ytick_major_pad: float or 'same'
+        Distance of major ytick labels from major yticks in points.
+        If 'same' set to the value of `xtick_major_pad`.
+        Sets rcParams `ytick.major.pad`.
+    xtick_alignment: {'center', 'left', 'right'}
+        Alignment of xtick labels relative to xticks.
+        Sets rcParams `xtick.alignment`.
+    ytick_alignment: {'center', 'top', 'bottom', 'baseline', 'center_baseline'}
+        Alignment of ytick labels relative to yticks.
+        Sets rcParams `ytick.alignment`.
+    xtick_color: matplotlib color or 'axes'
+        Color of xticks. If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        Sets rcParam `xtick.color`.
+    ytick_color: matplotlib color, 'axes', or 'same'
+        Color of yticks. If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        If 'same' set to the value of `xtick_color`. Sets rcParam `ytick.color`.
+    xtick_labelcolor: matplotlib color, 'axes' or 'ticks'
+        Color of xtick labels. If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        If 'ticks' set to color of xticks (rcParam `xtick.color`).
+        Sets rcParam `xtick.labelcolor`.
+    ytick_labelcolor: matplotlib color, 'axes', 'ticks', or 'same'
+        Color of ytick labels. If 'axes' set to color of axes (rcParam `axes.edgecolor`).
+        If 'ticks' set to color of yticks (rcParam `ytick.color`).
+        If 'same' set to the value of `xtick_labelcolor`. Sets rcParam `ytick.labelcolor`.
+    xtick_labelsize: float
+        Font size of xtick labels. Sets rcParam `xtick.labelsize`.
+    ytick_labelsize: float or 'same'
+        Font size of ytick labels. If 'same' set to the value of `xtick_labelsize`.
+        Sets rcParam `ytick.labelsize`.
     """
-    if tick_dir is not None:
-        mpl.rcParams['xtick.direction'] = tick_dir
-        mpl.rcParams['ytick.direction'] = tick_dir
-    if tick_size is not None:
-        mpl.rcParams['xtick.major.size'] = tick_size
-        mpl.rcParams['ytick.major.size'] = tick_size
-        mpl.rcParams['xtick.minor.size'] = minor_tick_frac*tick_size
-        mpl.rcParams['ytick.minor.size'] = minor_tick_frac*tick_size
-    
+    if ytick_minor == 'same':
+        ytick_minor = xtick_minor
+    if 'xtick.minor.visible' in mpl.rcParams and xtick_minor is not None:
+        mpl.rcParams['xtick.minor.visible'] = xtick_minor
+    if 'ytick.minor.visible' in mpl.rcParams and ytick_minor is not None:
+        mpl.rcParams['ytick.minor.visible'] = ytick_minor
+    if ytick_dir == 'same':
+        ytick_dir = xtick_dir
+    if xtick_dir is not None:
+        mpl.rcParams['xtick.direction'] = xtick_dir
+    if ytick_dir is not None:
+        mpl.rcParams['ytick.direction'] = ytick_dir
+    if ytick_size == 'same':
+        ytick_size = xtick_size
+    if xtick_size is not None:
+        mpl.rcParams['xtick.major.size'] = xtick_size
+        mpl.rcParams['xtick.minor.size'] = minor_tick_frac*xtick_size
+    if ytick_size is not None:
+        mpl.rcParams['ytick.major.size'] = ytick_size
+        mpl.rcParams['ytick.minor.size'] = minor_tick_frac*ytick_size
+    if ytick_major_width == 'same':
+        ytick_major_width = xtick_major_width
+    if xtick_major_width is not None:
+        mpl.rcParams['xtick.major.width'] = xtick_major_width
+    if ytick_major_width is not None:
+        mpl.rcParams['ytick.major.width'] = ytick_major_width
+    if ytick_minor_width == 'same':
+        ytick_minor_width = xtick_minor_width
+    if xtick_minor_width is not None:
+        mpl.rcParams['xtick.minor.width'] = xtick_minor_width
+    if ytick_minor_width is not None:
+        mpl.rcParams['ytick.minor.width'] = ytick_minor_width
+    if ytick_major_pad == 'same':
+        ytick_major_pad = xtick_major_pad
+    if xtick_major_pad is not None:
+        mpl.rcParams['xtick.major.pad'] = xtick_major_pad
+    if ytick_major_pad is not None:
+        mpl.rcParams['ytick.major.pad'] = ytick_major_pad
+    if 'xtick.alignment' in mpl.rcParams and xtick_alignment is not None:
+        mpl.rcParams['xtick.alignment'] = xtick_alignment
+    if 'ytick.alignment' in mpl.rcParams and ytick_alignment is not None:
+        mpl.rcParams['ytick.alignment'] = ytick_alignment
+    if ytick_color == 'same':
+        ytick_color = xtick_color
+    if xtick_color == 'axes':
+        mpl.rcParams['xtick.color'] = mpl.rcParams['axes.edgecolor']
+    elif xtick_color is not None:
+        mpl.rcParams['xtick.color'] = xtick_color
+    if ytick_color == 'axes':
+        mpl.rcParams['ytick.color'] = mpl.rcParams['axes.edgecolor']
+    elif ytick_color is not None:
+        mpl.rcParams['ytick.color'] = ytick_color
+    if ytick_labelcolor == 'same':
+        ytick_labelcolor = xtick_labelcolor
+    if 'xtick.labelcolor' in mpl.rcParams:
+        if xtick_labelcolor == 'axes':
+            mpl.rcParams['xtick.labelcolor'] = mpl.rcParams['axes.edgecolor']
+        elif xtick_labelcolor == 'ticks':
+            mpl.rcParams['xtick.labelcolor'] = mpl.rcParams['xtick.color']
+        elif xtick_labelcolor is not None:
+            mpl.rcParams['xtick.labelcolor'] = xtick_labelcolor
+    if 'ytick.labelcolor' in mpl.rcParams:
+        if ytick_labelcolor == 'axes':
+            mpl.rcParams['ytick.labelcolor'] = mpl.rcParams['axes.edgecolor']
+        elif ytick_labelcolor == 'ticks':
+            mpl.rcParams['ytick.labelcolor'] = mpl.rcParams['ytick.color']
+        elif ytick_labelcolor is not None:
+            mpl.rcParams['ytick.labelcolor'] = ytick_labelcolor
+    if ytick_labelsize == 'same':
+        ytick_labelsize = xtick_labelsize
+    if xtick_labelsize is not None:
+        mpl.rcParams['xtick.labelsize'] = xtick_labelsize
+    if ytick_labelsize is not None:
+        mpl.rcParams['ytick.labelsize'] = ytick_labelsize
+
 
 def install_ticks():
     """ Install ticks functions on matplotlib axes.

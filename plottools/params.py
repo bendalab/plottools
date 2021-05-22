@@ -43,14 +43,12 @@ def plot_params(axes_color='none', namespace=None):
     """
     if namespace is None:
         namespace = __main__
-    # axes, label, ticks and text color:
+    # axes, label, and text color:
     mpl.rcParams['axes.facecolor'] = axes_color
     if hasattr(namespace, 'lsSpine'):
         mpl.rcParams['axes.linewidth'] = getattr(namespace, 'lsSpine')['linewidth']
         mpl.rcParams['axes.edgecolor'] = getattr(namespace, 'lsSpine')['color']
         mpl.rcParams['axes.labelcolor'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['xtick.color'] = mpl.rcParams['axes.edgecolor']
-        mpl.rcParams['ytick.color'] = mpl.rcParams['axes.edgecolor']
         mpl.rcParams['text.color'] = mpl.rcParams['axes.edgecolor']
     # grid style:
     if hasattr(namespace, 'lsGrid'):
@@ -121,7 +119,10 @@ def screen_style(namespace=None):
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=11.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=4.0)
+    ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=4.0, minor_tick_frac=0.6,
+                 xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
+                 xtick_alignment='center', ytick_alignment='center_baseline',
+                 xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
     plot_params(axes_color=palette['white'], namespace=namespace)
 
     
@@ -185,7 +186,10 @@ def paper_style(namespace=None):
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=10.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=2.5)
+    ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=2.5, minor_tick_frac=0.6,
+                 xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
+                 xtick_alignment='center', ytick_alignment='center_baseline',
+                 xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
     plot_params(axes_color='none', namespace=namespace)
     
    
@@ -252,7 +256,10 @@ def sketch_style(namespace=None):
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
                font=dict(fontsize='x-large', fontstyle='normal', fontweight='normal'))
     text_params(font_size=10.0, font_family='sans-serif')
-    ticks_params(tick_dir='out', tick_size=6)
+    ticks_params(xtick_minor=False, xtick_dir='out', xtick_size=6, minor_tick_frac=0.6,
+                 xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
+                 xtick_alignment='center', ytick_alignment='center_baseline',
+                 xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
     plot_params(axes_color='none', namespace=namespace)
         
 
