@@ -78,27 +78,26 @@ def screen_style(namespace=None):
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
+    ns = namespace
     if namespace is None:
-        namespace = __main__
+        ns = __main__
+    #ns.bar_fac = 0.9
     lwthick=2.5
     lwthin=1.5
     generic_styles(colors='vivid', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
-                   fillalpha=0.4, namespace=namespace)
-    lwspines=1.0    
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines,
-                    namespace, clip_on=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick,
-                    namespace, clip_on=False)
-    generic_arrow_styles(namespace.palette, 1.3)
+                   fillalpha=0.4, namespace=ns)
+    make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 1.0, ns, clip_on=False)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clip_on=False)
+    generic_arrow_styles(ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()
     align_params(xdist=5, ydist=10)
-    axes_params(xmargin=0, ymargin=0, zmargin=0, color=palette['white'])
+    axes_params(xmargin=0, ymargin=0, zmargin=0, color=ns.palette['white'])
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
-    figure_params(color=palette['gray'], format='png',
+    colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
+    figure_params(color=ns.palette['gray'], format='png',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} [{unit}]', labelsize='medium', labelweight='normal',
                   labelcolor='axes', labelpad=4,
@@ -107,7 +106,7 @@ def screen_style(namespace=None):
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
+                    lw=2, color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
                   color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
@@ -117,7 +116,7 @@ def screen_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=namespace)
+    plot_params(namespace=ns)
 
     
 def paper_style(namespace=None):
@@ -150,24 +149,25 @@ def paper_style(namespace=None):
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
+    ns = namespace
     if namespace is None:
-        namespace = __main__
+        ns = __main__
+    #ns.bar_fac = 0.9
     lwthick=1.7
     lwthin=0.8
     generic_styles(colors='muted', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
-                   fillalpha=0.4, namespace=namespace)
-    lwspines=0.8    
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    generic_arrow_styles(namespace.palette, 1.0)
+                   fillalpha=0.4, namespace=ns)
+    make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 0.8, ns, clipon=False)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clipon=False)
+    generic_arrow_styles(ns.palette, 1.0)
     # rc settings:
     mpl.rcdefaults()
     align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
+    colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} [{unit}]', label_size='small', labelweight='normal',
@@ -177,7 +177,7 @@ def paper_style(namespace=None):
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
+                    lw=2, color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
                   color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
@@ -187,7 +187,7 @@ def paper_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=namespace)
+    plot_params(namespace=ns)
     
    
 def sketch_style(namespace=None):
@@ -220,27 +220,26 @@ def sketch_style(namespace=None):
         Namespace to which the generated line, point, linepoint and fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
-    #global bar_fac
-    #bar_fac = 0.9
+    ns = namespace
     if namespace is None:
-        namespace = __main__
+        ns = __main__
+    #ns.bar_fac = 0.9
     lwthick=3.0
     lwthin=1.8
     generic_styles(colors='vivid', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
-                   fillalpha=0.4, namespace=namespace)
-    lwspines=1.8    
-    make_linestyles('ls', 'Spine', '', palette['black'], '-', lwspines, namespace, clipon=False)
-    make_linestyles('ls', 'Grid', '', palette['gray'], '--', lwthin, namespace)
-    make_linestyles('ls', 'Marker', '', palette['black'], '-', lwthick, namespace, clipon=False)
-    generic_arrow_styles(namespace.palette, 1.3)
+                   fillalpha=0.4, namespace=ns)
+    make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 1.8, ns, clipon=False)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clipon=False)
+    generic_arrow_styles(ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
     align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
-    colors_params(palette, cycle_colors, cmap='RdYlBu')
+    colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     labels_params(lformat='{label} ({unit})', label_size='medium', labelweight='normal',
@@ -250,7 +249,7 @@ def sketch_style(namespace=None):
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
     scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=palette['black'], capsize=0, clw=0.5)
+                    lw=2, color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lb', spines_offsets={'lrtb': 0}, spines_bounds={'lrtb': 'full'},
                   color=lsSpine['color'], linewidth=lsSpine['linewidth'])
     tag_params(xoffs='auto', yoffs='auto', label='%A', minor_label='%A%mi',
@@ -260,7 +259,7 @@ def sketch_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=namespace)
+    plot_params(namespace=ns)
         
 
 def demo(style='screen'):
