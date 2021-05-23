@@ -194,7 +194,7 @@ tutorial](https://matplotlib.org/stable/tutorials/intermediate/gridspec.html).
 First of all, you want to specify the size of your figure. Make each
 figure as large as you want it to be in your manuscript or
 presentation to ensure that the plot labels of all your figures have
-the same size (*no* scaling of the figures in the manuscript or
+the same font size (*no* scaling of the figures in the manuscript or
 presentation).
 ```py
 fig, axs = plt.subplots(2, 3, figsize=(8, 5))  # in inch!
@@ -221,7 +221,7 @@ Third, adjust the whitespace between the subplots. Don't let your urge
 to give each subplot as much space as possible win. Figures usually
 look much better with quite a lot of whitespace between them:
 ```py
-fig.subplots_adjust(wspace=0.5, hspace=0.6)
+fig.subplots_adjust(wspace=0.5, hspace=0.4)
 ```
 Both `wspace` and `hspace` specify the amount of whitespace relative
 to the average width/height of the subplots. `hspace` stands for
@@ -243,3 +243,9 @@ plt.rcParams['xtick.labelsize'] = 'small'
 plt.rcParams['ytick.labelsize'] = 'small'
 ```
 before you create any figures and axes.
+
+
+## Cheat sheets
+
+matplotlib provides some nice cheat sheets:
+https://github.com/matplotlib/cheatsheets/blob/master/cheatsheets.pdf
