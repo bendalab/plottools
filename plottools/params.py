@@ -67,7 +67,6 @@ def screen_style(namespace=None):
     generic_arrow_styles(ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()
-    align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0, zmargin=0, color=ns.palette['white'])
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
@@ -138,7 +137,6 @@ def paper_style(namespace=None):
     generic_arrow_styles(ns.palette, 1.0)
     # rc settings:
     mpl.rcdefaults()
-    align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
@@ -210,7 +208,6 @@ def sketch_style(namespace=None):
     # rc settings:
     mpl.rcdefaults()
     plt.xkcd()
-    align_params(xdist=5, ydist=10)
     axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
@@ -262,6 +259,7 @@ def demo(style='screen'):
     ax.set_xlabel('Time', 'ms')
     ax.set_ylabel('Amplitude')
     plt.show()
+    mpl.rcdefaults()
 
 
 if __name__ == "__main__":

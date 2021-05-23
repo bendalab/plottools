@@ -7,16 +7,6 @@ Align axes labels.
 - `align_labels()`: align x- and ylabels of a figure.
 
 
-## Settings
-
-- `align_params()`: set align parameters.
-
-`mpl.ptParams` defined by the align module:
-```py
-axes.label.xdist: 5
-axes.label.ydist: 10
-```
-
 ## Install/uninstall align functions
 
 You usually do not need to call the `install_align()` function. Upon
@@ -45,16 +35,24 @@ def align_labels(fig, axs=None):
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
         Axes of which labels should be aligned. If None align labels of all axes.
-
-    TODO
-    ----
-    The size of the ticks should be included as well in computing the position of the labels.
     """
-    xdist = 5
-    ydist = 10
-    if hasattr(mpl, 'ptParams'):
-        xdist = mpl.ptParams.get('axes.label.xdist', 5)
-        ydist = mpl.ptParams.get('axes.label.ydist', 10)
+    xdist = mpl.rcParams.get('axes.labelpad', 3)
+    ydist = mpl.rcParams.get('axes.labelpad', 3)
+    xdist -= mpl.rcParams['xtick.major.pad']
+    ydist -= mpl.rcParams['ytick.major.pad']
+    # tick sizes are *not* part of ax.get_window_extent()!?!
+    xtick_size = mpl.rcParams['xtick.major.size']
+    ytick_size = mpl.rcParams['ytick.major.size']
+    if mpl.rcParams['xtick.direction'] == 'inout':
+        xtick_size *= 0.5
+    elif mpl.rcParams['xtick.direction'] == 'in':
+        xtick_size = 0.0
+    if mpl.rcParams['ytick.direction'] == 'inout':
+        ytick_size *= 0.5
+    elif mpl.rcParams['ytick.direction'] == 'in':
+        ytick_size = 0.0
+    xdist += xtick_size
+    ydist += ytick_size
     if axs is None:
         axs = fig.get_axes()
     # get axes positions and ticklabel widths:
@@ -134,31 +132,16 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_align(*args, **kwargs)
 
 
-def align_params(xdist=None, ydist=None):
-    """ Set align parameters.
-                  
-    Only parameters that are not `None` are updated.
-    
-    Parameters
-    ----------
-    xdist: float
-        Minimum vertical distance between xtick labels and label of x-axis.
-        Used by `align_labels()`. Set ptParam `axes.label.xdist`.
-    ydist: float
-        Minimum horizontal distance between ytick labels and label of y-axis.
-        Used by `align_labels()`. Set ptParam `axes.label.ydist`.
-    """
-    if hasattr(mpl, 'ptParams'):
-        if xdist is not None:
-            mpl.ptParams['axes.label.xdist'] = xdist
-        if ydist is not None:
-            mpl.ptParams['axes.label.ydist'] = ydist
-
-
-def install_align():
+def install_align(auto=True):
     """ Install code for aligning axes labels into `show()` and `savefig()` functions.
 
     This function is also called automatically upon importing the module.
+
+    Parameters
+    ----------
+    auto: bool
+        If `True` then `align_labels` is called automatically before showing
+        or saving the figure.
 
     See also
     --------
@@ -169,18 +152,19 @@ def install_align():
             mpl.figure.Figure.__align_labels_orig_align = mpl.figure.Figure.align_labels
         mpl.figure.Figure.align_labels = align_labels
         mpl.figure.Figure.__installed_align_labels = True
-    if not hasattr(mpl.figure.Figure, '__savefig_orig_align'):
-        mpl.figure.Figure.__savefig_orig_align = mpl.figure.Figure.savefig
-        mpl.figure.Figure.savefig = __fig_savefig_labels
-    if not hasattr(mpl.figure.Figure, '__show_orig_align'):
-        mpl.figure.Figure.__show_orig_align = mpl.figure.Figure.show
-        mpl.figure.Figure.show = __fig_show_labels
-    if not hasattr(plt, '__savefig_orig_align'):
-        plt.__savefig_orig_align = plt.savefig
-        plt.savefig = __plt_savefig_labels
-    if not hasattr(plt, '__show_orig_align'):
-        plt.__show_orig_align = plt.show
-        plt.show = __plt_show_labels
+    if auto:
+        if not hasattr(mpl.figure.Figure, '__savefig_orig_align'):
+            mpl.figure.Figure.__savefig_orig_align = mpl.figure.Figure.savefig
+            mpl.figure.Figure.savefig = __fig_savefig_labels
+        if not hasattr(mpl.figure.Figure, '__show_orig_align'):
+            mpl.figure.Figure.__show_orig_align = mpl.figure.Figure.show
+            mpl.figure.Figure.show = __fig_show_labels
+        if not hasattr(plt, '__savefig_orig_align'):
+            plt.__savefig_orig_align = plt.savefig
+            plt.savefig = __plt_savefig_labels
+        if not hasattr(plt, '__show_orig_align'):
+            plt.__show_orig_align = plt.show
+            plt.show = __plt_show_labels
     # add labels parameter to rc configuration:
     if not hasattr(mpl, 'ptParams'):
         mpl.ptParams = {}
@@ -223,21 +207,21 @@ def uninstall_align():
         mpl.ptParams.pop('axes.label.ydist', None)
 
 
-install_align()
+install_align(True)
 
 
 def demo():
     """ Run a demonstration of the align module.
     """
-    fig, axs = plt.subplots(3, 2, figsize=(8, 6))
+    fig, axs = plt.subplots(3, 2, figsize=(9, 6))
     fig.subplots_adjust(wspace=0.5)
 
     fig.suptitle('plottools.align')
     x = np.linspace(0, 20, 200)
     y = np.sin(x)
 
-    axs[0, 0].plot(x, 5000*y)
-    axs[0, 0].set_ylim(-10000.0, 10000.0)
+    axs[0, 0].plot(x, 4000*y)
+    axs[0, 0].set_ylim(-5000.0, 5000.0)
     axs[0, 0].set_ylabel('Velocity [m/s]')
     
     axs[0, 1].plot(x, y)
@@ -261,7 +245,7 @@ def demo():
     axs[2, 1].set_ylim(-1000, 1700)
     axs[2, 1].set_xlabel('Timepoints [ms]')
     axs[2, 1].set_ylabel('Amplitude [Pa]')
-    
+
     plt.show()
 
 

@@ -67,6 +67,7 @@ def demo():
     ax.set_xlabel('Time [ms]')
     ax.set_ylabel('Amplitude')
     plt.show()
+    grid_params(grid=False)
 
 
 if __name__ == "__main__":
