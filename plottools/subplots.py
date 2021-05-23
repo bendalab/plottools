@@ -40,7 +40,7 @@ To merge several subplots into a single axes, call `fig.merge()`.
 
 ## Figure member functions
 
-- `merge()`: add axis that covers bounding box of several axes.
+- `merge()`: add axis merging several axes.
 
 
 ## Install/uninstall subplots functions
@@ -268,9 +268,6 @@ def __resize(event):
         for gs in fig.__gridspecs:
             if hasattr(gs, '__subplots_margins'):
                 gs.update(**gs.__subplots_margins)
-    for ax in fig.get_axes():
-        if hasattr(ax, '__merged_axis'):
-            ax.__set_merged_position(ax.__merged_axis)
 
     
 def __fig_figure(*args, **kwargs):
@@ -281,31 +278,12 @@ def __fig_figure(*args, **kwargs):
     return fig
 
 
-def __set_merged_position(self, axs):
-    """ Set position of axis to bounding box of other axis.
-
-    Parameters
-    ----------
-    self: axis object
-        Axis whose position is set.
-    axs: flat array of axis objects
-        The axis from which the bounding box is taken.
-    """
-    bboxes = np.array([ax.get_position().get_points().ravel() for ax in axs])
-    x0 = np.min(bboxes[:,0])
-    y0 = np.min(bboxes[:,1])
-    x1 = np.max(bboxes[:,2])
-    y1 = np.max(bboxes[:,3])
-    pos = [x0, y0, x1-x0, y1-y0]
-    self.set_position(pos)
-
-
 def merge(fig, axs):
-    """ Add axis that covers bounding box of several axes.
+    """ Add axis merging several axes.
 
     Add a new axis to the figure at the position and size of the common
-    bounding box of all axis in `axs`. All axis in `axs` are then made
-    invisible. This way you do not need to use `gridspec` explicitly.
+    bounding box of all axis in `axs`. All axis in `axs` are then
+    removed. This way you do not need to use `gridspec` explicitly.
 
     Parameters
     ----------
@@ -342,16 +320,22 @@ def merge(fig, axs):
     ```
     """
     axs = np.asarray(axs).ravel()
+    idxs = []
     for ax in axs:
-        ax.set_visible(False)
-    count = 0
-    if hasattr(fig, '__merged_axis_counter'):
-        count = fig.__merged_axis_counter
-    count += 1
-    fig.__merged_axis_counter = count
-    ax = fig.add_axes([0, 0, 1, 1], label='merged%d' % count)
-    ax.__set_merged_position(axs)
-    ax.__merged_axis = axs
+        sps = ax.get_subplotspec()
+        gs = sps.get_gridspec()
+        nrows, ncols, idx, _ = sps.get_geometry()
+        idxs.append(idx)
+        try:
+            ax.remove()
+        except NotImplementedError:
+            ax.set_visible(False)
+    idxs = np.array(idxs)
+    minrow = np.min(idxs//nrows)
+    maxrow = np.max(idxs//nrows)
+    mincol = np.min(idxs%nrows)
+    maxcol = np.max(idxs%nrows)
+    ax = fig.add_subplot(gs[minrow:maxrow+1, mincol:maxcol+1])
     return ax
 
 
@@ -427,7 +411,6 @@ def demo():
     """ Run a demonstration of the subplots module.
     """
     fig, axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])
-    # in fontsize margins and even with old matplotlib versions:
     fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
     fig.suptitle('axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
     x = np.linspace(0.0, 2.0, 200)
