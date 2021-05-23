@@ -22,6 +22,7 @@ from .axes import axes_params
 from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
 from .common import install_common, uninstall_common
 from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure
+from .grid import grid_params
 from .insets import install_insets, uninstall_insets
 from .labels import labels_params, install_labels, uninstall_labels
 from .legend import legend_params, install_legend, uninstall_legend

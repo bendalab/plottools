@@ -6,6 +6,7 @@ from plottools.axes import demo as axes_demo
 from plottools.colors import demo as colors_demo
 from plottools.common import demo as common_demo
 from plottools.figure import demo as figure_demo
+from plottools.grid import demo as grid_demo
 from plottools.insets import demo as insets_demo
 from plottools.labels import demo as labels_demo
 from plottools.legend import demo as legend_demo
@@ -53,6 +54,10 @@ if __name__ == "__main__":
 
     print('plottools.figure ...')
     figure_demo()
+    print()
+
+    print('plottools.grid ...')
+    grid_demo()
     print()
     
     print('plottools.insets ...')

@@ -7,16 +7,11 @@ functions as a template. Copy it to your own module and adapt it to your
 needs.
 
 
-## Default parameters and plot styles
+## Default plot styles and parameters
 
 - `screen_style()`: layout and plot styles optimized for display on a screen.
 - `paper_style()`: layout and plot styles optimized for inclusion into a paper.
 - `sketch_style()`: layout and plot styles with xkcd style activated.
-
-
-## Settings
-
-- `plot_params()`: set some default plot parameter via matplotlib's rc settings.
 """
 
 import __main__
@@ -25,27 +20,6 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from .plottools import *
-
-
-def plot_params(namespace=None):
-    """ Set some default plot parameter via matplotlib's rc settings.
-
-    Call this function *before* you create any matplotlib figure.
-
-    Parameters
-    ----------
-    namespace: dict
-        Namespace to which generated line, point, linepoint and fill styles were added.
-        If None use the global namespace of the __main__ module.
-        `lsSpine` and `lsGrid` of the namespace are used to set spine and grid properties.
-    """
-    if namespace is None:
-        namespace = __main__
-    # grid style:
-    if hasattr(namespace, 'lsGrid'):
-        mpl.rcParams['grid.color'] = getattr(namespace, 'lsGrid')['color']
-        mpl.rcParams['grid.linestyle'] = getattr(namespace, 'lsGrid')['linestyle']
-        mpl.rcParams['grid.linewidth'] = getattr(namespace, 'lsGrid')['linewidth']
 
 
 def screen_style(namespace=None):
@@ -88,7 +62,7 @@ def screen_style(namespace=None):
                    markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
                    fillalpha=0.4, namespace=ns)
     make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 1.0, ns, clip_on=False)
-    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', 0.2, ns)
     make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clip_on=False)
     generic_arrow_styles(ns.palette, 1.3)
     # rc settings:
@@ -99,6 +73,7 @@ def screen_style(namespace=None):
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
     figure_params(color=ns.palette['gray'], format='png',
                   compression=6, fonttype=3, stripfonts=False)
+    grid_params(grid=True, axis='both', which='major', **lsGrid)
     labels_params(lformat='{label} [{unit}]', labelsize='medium', labelweight='normal',
                   labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
@@ -116,7 +91,6 @@ def screen_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=ns)
 
     
 def paper_style(namespace=None):
@@ -159,7 +133,7 @@ def paper_style(namespace=None):
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4, namespace=ns)
     make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 0.8, ns, clipon=False)
-    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', 0.5, ns)
     make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clipon=False)
     generic_arrow_styles(ns.palette, 1.0)
     # rc settings:
@@ -170,7 +144,8 @@ def paper_style(namespace=None):
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} [{unit}]', label_size='small', labelweight='normal',
+    grid_params(grid=False, axis='both', which='major', **lsGrid)
+    labels_params(lformat='{label} [{unit}]', labelsize='small', labelweight='normal',
                   labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
@@ -187,7 +162,6 @@ def paper_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=ns)
     
    
 def sketch_style(namespace=None):
@@ -230,7 +204,7 @@ def sketch_style(namespace=None):
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4, namespace=ns)
     make_linestyles('ls', 'Spine', '', ns.palette['black'], '-', 1.8, ns, clipon=False)
-    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', lwthin, ns)
+    make_linestyles('ls', 'Grid', '', ns.palette['gray'], '--', 0.5, ns)
     make_linestyles('ls', 'Marker', '', ns.palette['black'], '-', lwthick, ns, clipon=False)
     generic_arrow_styles(ns.palette, 1.3)
     # rc settings:
@@ -240,9 +214,10 @@ def sketch_style(namespace=None):
     axes_params(xmargin=0, ymargin=0, zmargin=0, color='none')
     cycle_colors = ['blue', 'red', 'orange', 'lightgreen', 'magenta', 'yellow', 'cyan', 'pink']
     colors_params(ns.palette, cycle_colors, cmap='RdYlBu')
-    figure_params(color='none', format='pdf',
+    figure_params(color=ns.palette['white'], format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
-    labels_params(lformat='{label} ({unit})', label_size='medium', labelweight='normal',
+    grid_params(grid=False, axis='both', which='major', **lsGrid)
+    labels_params(lformat='{label} ({unit})', labelsize='medium', labelweight='normal',
                   labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
@@ -259,7 +234,6 @@ def sketch_style(namespace=None):
                  xtick_major_width=None, xtick_minor_width=None, xtick_major_pad=None,
                  xtick_alignment='center', ytick_alignment='center_baseline',
                  xtick_color='axes', xtick_labelcolor='ticks', xtick_labelsize='medium')
-    plot_params(namespace=ns)
         
 
 def demo(style='screen'):

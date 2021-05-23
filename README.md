@@ -41,6 +41,8 @@ The following modules are provided by the plottools package:
   reduce common axis labels.
 - [`figure`](https://bendalab.github.io/plottools/api/figure.html):
   size and file names of a figure.
+- [`grid`](https://bendalab.github.io/plottools/api/git.html):
+  setting grid appearance.
 - [`insets`](https://bendalab.github.io/plottools/api/insets.html):
   insets made easy. [More...](docs/insets.md)
 - [`labels`](https://bendalab.github.io/plottools/api/labels.html):
