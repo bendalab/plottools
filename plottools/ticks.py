@@ -60,8 +60,8 @@ def set_xticks_delta(ax, delta):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     delta: float
         Interval between xticks.
 
@@ -80,8 +80,8 @@ def set_yticks_delta(ax, delta):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
     delta: float
         Interval between yticks.
 
@@ -97,8 +97,8 @@ def set_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place major ticks.
     numdecs: int
@@ -115,8 +115,8 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place major ticks.
     numdecs: int
@@ -137,8 +137,8 @@ def set_xticks_fixed(ax, locs, labels='%g'):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     locs: list of floats
         Locations of xticks.
     labels: string or list of strings
@@ -176,8 +176,8 @@ def set_yticks_fixed(ax, locs, labels='%g'):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
     locs: list of floats
         Locations of yticks.
     labels: string or list of strings
@@ -231,8 +231,8 @@ def set_xticks_prefix(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
 
     Examples
     --------
@@ -258,8 +258,8 @@ def set_yticks_prefix(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
 
     See also
     --------
@@ -320,8 +320,8 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     denominator: int
         XTicks are located at multiples of factor/denominator.
     factor: float
@@ -349,8 +349,8 @@ def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     denominator: int
         YTicks are located at multiples of factor/denominator.
     factor: float
@@ -374,8 +374,8 @@ def set_xticks_pifracs(ax, denominator, ontop=False):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     denominator: int
         XTicks are located at multiples of pi/denominator.
     ontop: boolean
@@ -404,8 +404,8 @@ def set_yticks_pifracs(ax, denominator, ontop=False):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     denominator: int
         YTicks are located at multiples of pi/denominator.
     ontop: boolean
@@ -423,8 +423,8 @@ def set_xticks_format(ax, fs):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
     fs: string
         Format string used to format xticks.
 
@@ -443,8 +443,8 @@ def set_yticks_format(ax, fs):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
     fs: string
         Format string used to format xticks.
 
@@ -460,8 +460,8 @@ def set_xticks_blank(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
 
     See also
     --------
@@ -482,8 +482,8 @@ def set_yticks_blank(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
 
     See also
     --------
@@ -501,8 +501,8 @@ def set_xticks_off(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the xticks are set.
+    ax: matplotlib axes
+        Axes on which the xticks are set.
 
     Examples
     --------
@@ -519,8 +519,8 @@ def set_yticks_off(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the yticks are set.
+    ax: matplotlib axes
+        Axes on which the yticks are set.
 
     See also
     --------
@@ -534,8 +534,8 @@ def set_minor_xticks_off(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the minor xticks are set.
+    ax: matplotlib axes
+        Axes on which the minor xticks are set.
     """
     ax.xaxis.set_minor_locator(ticker.NullLocator())
 
@@ -545,8 +545,8 @@ def set_minor_yticks_off(ax):
 
     Parameters
     ----------
-    ax: matplotlib axis
-        Axis on which the minor yticks are set.
+    ax: matplotlib axes
+        Axes on which the minor yticks are set.
 
     See also
     --------

@@ -37,10 +37,15 @@ matplotlib versions that do not have this function yet.
 
 To merge several subplots into a single axes, call `fig.merge()`.
 
+To replace an axes by subplots, call `ax.subplots()`.
+
+`fig.merge()` and `ax.subplots()` can be arbitrarily combined.
+
 
 ## Figure member functions
 
 - `merge()`: add axis merging several axes.
+- `subplots()`: replace axes by subplots.
 
 
 ## Install/uninstall subplots functions
@@ -297,6 +302,11 @@ def merge(fig, axs):
     ax: axis object
         A single axis covering the area of all the axis objects in `axs`.
 
+    See also
+    --------
+    `subplots()`: subplots can be generated on a merged axes, and subplots
+    created with `subplots()` can be merged.
+    
     Example
     -------
     With gridspec you would do
@@ -309,7 +319,7 @@ def merge(fig, axs):
     ax4 = fig.add_subplot(gs[0,2])    # third in top row
     ax5 = fig.add_subplot(gs[1,2])    # last in second row
     ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
-    ``
+    ```
     with merge() this simplifies to
     ```
     fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axis objects
@@ -320,23 +330,92 @@ def merge(fig, axs):
     ```
     """
     axs = np.asarray(axs).ravel()
-    idxs = []
+    rows = []
+    cols = []
     for ax in axs:
         sps = ax.get_subplotspec()
         gs = sps.get_gridspec()
-        nrows, ncols, idx, _ = sps.get_geometry()
-        idxs.append(idx)
+        nrows, ncols, idx0, idx1 = sps.get_geometry()
+        if idx1 is None:
+            idx1 = idx0
+        rows.extend((idx0//ncols, idx1//ncols))
+        cols.extend((idx0%ncols, idx1%ncols))
         try:
             ax.remove()
         except NotImplementedError:
             ax.set_visible(False)
-    idxs = np.array(idxs)
-    minrow = np.min(idxs//nrows)
-    maxrow = np.max(idxs//nrows)
-    mincol = np.min(idxs%nrows)
-    maxcol = np.max(idxs%nrows)
-    ax = fig.add_subplot(gs[minrow:maxrow+1, mincol:maxcol+1])
+    ax = fig.add_subplot(gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1])
+    sps = ax.get_subplotspec()
     return ax
+
+
+def subplots(ax, nrows, ncols, **kwargs):
+    """ Replace axes by subplots.
+    
+    Replace axes by all plots of a subgridspec at that axes. This way
+    you do not need to use `subgridspec()` explicitly.
+
+    Parameters
+    ----------
+    ax: matplotlib.axes
+        Axes that should be replaced by subplots.
+    nrows: int
+        Number of rows of the new subgrid.
+    ncols: int
+        Number of columns of the new subgrid.
+    kwargs: dict
+        Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
+        e.g. `wspace`, `hspace`, `height_ratios`, `width_ratios`.
+
+    Returns
+    -------
+    axs: array of matplotlib axes
+        Axes of the new subgrid.
+
+    See also
+    --------
+    `merge()`: subplots can be created on a merged axes and subplots
+    returned from the `subplots()` function can be merged.
+
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    sgs = gs[0,2].subgridspec(2, 1)
+    ax1 = fig.add_subplot(gs[0,0])
+    # ... 8 more for all the subplots on gs
+    subax1 = fig.add_subplot(sgs[0])
+    subax2 = fig.add_subplot(sgs[1])
+    ```
+    As usual, this requires a lot of calls to `fig.add_subplot()`.
+    With subplots() this simplifies to
+    ```py
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axis objects
+    subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
+    ```
+    and you can use the axes in `axs` and `subaxs` right away.
+    """
+    sps = ax.get_subplotspec()
+    gs = sps.get_gridspec()
+    nr, nc, idx0, idx1 = sps.get_geometry()
+    if idx1 is None:
+        idx1 = idx0
+    rows = (idx0//nc, idx1//nc)
+    cols = (idx0%nc, idx1%nc)
+    gsi = gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1]
+    try:
+        sgs = gsi.subgridspec(nrows, ncols, **kwargs)
+    except AttributeError:
+        sgs = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gsi, **kwargs)
+    axs = np.array([ax.get_figure().add_subplot(sgs[r,c])
+                    for r in range(nrows) for c in range(ncols)])
+    try:
+        ax.remove()
+    except NotImplementedError:
+        ax.set_visible(False)
+    return axs.squeeze()
 
 
 def install_subplots():
@@ -351,9 +430,10 @@ def install_subplots():
     --------
     uninstall_subplots()
     """
+    if not hasattr(mpl.axes.Axes, 'subplots'):
+        mpl.axes.Axes.subplots = subplots
     if not hasattr(mpl.figure.Figure, 'merge'):
         mpl.figure.Figure.merge = merge
-        mpl.axes.Axes.__set_merged_position = __set_merged_position
     if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
         mpl.figure.Figure.__subplots_adjust_orig_subplots = mpl.figure.Figure.subplots_adjust
         mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust
@@ -381,9 +461,10 @@ def uninstall_subplots():
     --------
     install_subplots()
     """
+    if hasattr(mpl.axes.Axes, 'subplots'):
+        delattr(mpl.axes.Axes, 'subplots')
     if hasattr(mpl.figure.Figure, 'merge'):
         delattr(mpl.figure.Figure, 'merge')
-        delattr(mpl.axes.Axes, '__set_merged_position')
     if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
         mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_subplots
         delattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots')
@@ -410,19 +491,23 @@ install_subplots()
 def demo():
     """ Run a demonstration of the subplots module.
     """
-    fig, axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])
+    fig, axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])
     fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
-    fig.suptitle('axs = plt.subplots(3, 3, height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
+    fig.suptitle('axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
     x = np.linspace(0.0, 2.0, 200)
     ax = fig.merge(axs[1:3,0:2])
     ax.plot(x, np.sin(2.0*np.pi*x))
     ax.text(0.05, 0.1, 'ax = fig.merge(axs[1:3,0:2])', transform=ax.transAxes)
-    for k in range(3):
+    subaxs = axs[0,2].subplots(2, 1)
+    subaxs[0].text(0.05, 0.7, 'subaxs = axs[0,2].subplots(2, 1)', transform=subaxs[0].transAxes)
+    subaxs[0].text(0.05, 0.3, 'subaxs[0]', transform=subaxs[0].transAxes)
+    subaxs[1].text(0.05, 0.3, 'subaxs[1]', transform=subaxs[1].transAxes)
+    for k in range(2):
         axs[0,k].plot(x, np.sin(2.0*np.pi*x+k))
-        axs[0,k].text(0.1, 0.8, '0,%d' % k, transform=axs[0,k].transAxes)
+        axs[0,k].text(0.1, 0.8, 'axs[0,%d]' % k, transform=axs[0,k].transAxes)
     for k in range(1, 3):
         axs[k,2].plot(x, np.sin(2.0*np.pi*x-k))
-        axs[k,2].text(0.1, 0.8, '%d,2' % k, transform=axs[k,-1].transAxes)
+        axs[k,2].text(0.1, 0.8, 'axs[%d,2]' % k, transform=axs[k,-1].transAxes)
             
     plt.show()
 
