@@ -897,16 +897,16 @@ def demo(n=1, complementary=False, *args):
             plot_colors(ax, palette, n)
     else:
         if args[0] == 'all':
-            palettes = list(palettes.keys())
+            cpalettes = list(palettes.keys())
         else:
-            palettes = []
+            cpalettes = []
             for c in args:
                 if not c in palettes:
                     print('unknown color palette %s!' % c)
                     print('available color palettes: ' + ', '.join(palettes.keys()) + '.')
                 else:
-                    palettes.append(c)
-        plot_color_comparison(ax, *palettes)
+                    cpalettes.append(c)
+        plot_color_comparison(ax, *cpalettes)
     plt.show()
 
 

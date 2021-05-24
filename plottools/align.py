@@ -4,7 +4,7 @@ Align axes labels.
 
 ## Figure member functions
 
-- `align_labels()`: align x- and ylabels of a figure.
+- `align_xylabels()`: align x- and ylabels of a figure.
 
 
 ## Install/uninstall align functions
@@ -21,7 +21,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def align_labels(fig, axs=None):
+def align_xylabels(fig, axs=None):
     """ Align x- and ylabels of a figure.
 
     Labels with the same orientation and on axes with the same
@@ -34,7 +34,7 @@ def align_labels(fig, axs=None):
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
-        Axes of which labels should be aligned. If None align labels of all axes.
+        Axes of which labels should be aligned. If `None` align labels of all axes.
     """
     xdist = mpl.rcParams.get('axes.labelpad', 3)
     ydist = mpl.rcParams.get('axes.labelpad', 3)
@@ -150,7 +150,7 @@ def install_align(auto=True):
     if not hasattr(mpl.figure.Figure, '__installed_align_labels'):
         if hasattr(mpl.figure.Figure, 'align_labels'):
             mpl.figure.Figure.__align_labels_orig_align = mpl.figure.Figure.align_labels
-        mpl.figure.Figure.align_labels = align_labels
+        mpl.figure.Figure.align_labels = align_xylabels
         mpl.figure.Figure.__installed_align_labels = True
     if auto:
         if not hasattr(mpl.figure.Figure, '__savefig_orig_align'):
@@ -165,13 +165,6 @@ def install_align(auto=True):
         if not hasattr(plt, '__show_orig_align'):
             plt.__show_orig_align = plt.show
             plt.show = __plt_show_labels
-    # add labels parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'axes.label.xdist' not in mpl.ptParams:
-        mpl.ptParams['axes.label.xdist'] = 5
-    if 'axes.label.ydist' not in mpl.ptParams:
-        mpl.ptParams['axes.label.ydist'] = 10
 
 
 def uninstall_align():
@@ -200,11 +193,6 @@ def uninstall_align():
     if hasattr(plt, '__show_orig_align'):
         plt.show = plt.__show_orig_align
         delattr(plt, '__show_orig_align')
-    # remove labels parameter from mpl.ptParams:
-    if hasattr(mpl, 'ptParams') and 'axess.label.xdist' in mpl.ptParams:
-        mpl.ptParams.pop('axes.label.xdist', None)
-    if hasattr(mpl, 'ptParams') and 'axess.label.ydist' in mpl.ptParams:
-        mpl.ptParams.pop('axes.label.ydist', None)
 
 
 install_align(True)
