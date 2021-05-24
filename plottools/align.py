@@ -205,7 +205,7 @@ def uninstall_align():
         delattr(plt, '__show_orig_align')
 
 
-install_align(True)
+install_align(auto=True, overwrite=False)
 
 
 def demo():
@@ -236,13 +236,13 @@ def demo():
     
     axs[2, 0].plot(x, y)
     axs[2, 0].set_ylim(-1.0, 1.7)
-    axs[2, 0].set_xlabel('Time [ms]')
+    axs[2, 0].set_xlabel('time [ms]')
     axs[2, 0].set_ylabel('Amplitude [Pa]')
     
     axs[2, 1].plot(x, 1000*y)
     axs[2, 1].set_ylim(-1000, 1700)
-    axs[2, 1].set_xlabel('Timepoints [ms]')
-    axs[2, 1].set_ylabel('Amplitude [Pa]')
+    axs[2, 1].set_xlabel('Timepoints [ms]\nsince stimulus onset')
+    axs[2, 1].set_ylabel('Amplitude\nin water [Pa]')
 
     plt.show()
 
