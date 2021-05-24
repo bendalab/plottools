@@ -132,7 +132,7 @@ def __plt_savefig_labels(*args, **kwargs):
     plt.__savefig_orig_align(*args, **kwargs)
 
 
-def install_align(auto=True):
+def install_align(auto=True, overwrite=True):
     """ Install code for aligning axes labels into `show()` and `savefig()` functions.
 
     This function is also called automatically upon importing the module.
@@ -140,14 +140,22 @@ def install_align(auto=True):
     Parameters
     ----------
     auto: bool
-        If `True` then `align_labels` is called automatically before showing
-        or saving the figure.
+        If `True` then `align_labels()` is called automatically before showing
+        or saving the figure. Depending on `overwrite` this is either this
+        module's `align_xylabels()` function or matplotlib's `align_labels()` function.
+    overwrite: bool
+        If `True`, make this module's `align_xylabels()` function available as
+        `align_labels()`, overwriting matplotlib's original `align_labels()`,
+        which then is no longer accessible. In any case, this module's `align_xylabels()`
+        function will be available as `align_xylabels()` on matplotlib figures.
 
     See also
     --------
     - `uninstall_align()`
     """
-    if not hasattr(mpl.figure.Figure, '__installed_align_labels'):
+    if not hasattr(mpl.figure.Figure, 'align_xylabels'):
+        mpl.figure.Figure.align_xylabels = align_xylabels
+    if overwrite and not hasattr(mpl.figure.Figure, '__installed_align_labels'):
         if hasattr(mpl.figure.Figure, 'align_labels'):
             mpl.figure.Figure.__align_labels_orig_align = mpl.figure.Figure.align_labels
         mpl.figure.Figure.align_labels = align_xylabels
@@ -175,6 +183,8 @@ def uninstall_align():
     - `install_align_labels()`
     - `uninstall_labels()`
     """
+    if hasattr(mpl.figure.Figure, 'align_xylabels'):
+        delattr(mpl.figure.Figure, 'align_xylabels')
     if hasattr(mpl.figure.Figure, '__installed_align_labels'):
         delattr(mpl.figure.Figure, 'align_labels')
         delattr(mpl.figure.Figure, '__installed_align_labels')
@@ -218,11 +228,11 @@ def demo():
     
     axs[1, 0].plot(x, y)
     axs[1, 0].set_ylim(-1.0, 1.0)
-    axs[1, 0].set_ylabel('Voltage [mV]')
+    axs[1, 0].set_ylabel('Potential [mV]')
     
     axs[1, 1].plot(x, 5000*y)
     axs[1, 1].set_ylim(-10000.0, 10000.0)
-    axs[1, 1].set_ylabel('Voltage [mV]')
+    axs[1, 1].set_ylabel('Potential [mV]')
     
     axs[2, 0].plot(x, y)
     axs[2, 0].set_ylim(-1.0, 1.7)
