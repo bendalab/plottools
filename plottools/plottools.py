@@ -10,7 +10,7 @@ import plottools.plottools as pt
 This also imports all the functions of the modules such they can be used
 directly in the `pt` namespace. For example:
 ```py
-light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
+light_blue = pt.lighter(pt.palettes['muted']['blue'], 0.4)
 ```
 """
 
@@ -19,7 +19,7 @@ from .arrows import install_arrows, uninstall_arrows
 from .arrows import arrow_style, generic_arrow_styles, plot_arrowstyles
 from .aspect import install_aspect, install_aspect, uninstall_aspect
 from .axes import axes_params
-from .colors import colors_params, color_palettes, lighter, darker, gradient, colormap
+from .colors import colors_params, palettes, lighter, darker, gradient, colormap
 from .common import install_common, uninstall_common
 from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure
 from .grid import grid_params

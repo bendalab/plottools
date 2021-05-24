@@ -21,7 +21,7 @@ Color palettes and tools for manipulating colors.
 - `colors_material`: Google's material color palette.
   ![material](figures/colors-material.png)
 
-- `color_palettes`: a dictionary with all defined color dictionaries.
+- `palettes`: a dictionary with all defined color dictionaries.
 
 
 ## Manipulating colors
@@ -242,17 +242,17 @@ colors_material['black'] = '#000000'
 colors_material['brown'] = '#795548'
 
 """ All color palettes. """
-color_palettes = OrderedDict()
-color_palettes['plain'] = colors_plain
-color_palettes['vivid'] = colors_vivid
-color_palettes['muted'] = colors_muted
-color_palettes['tableau'] = colors_tableau
-color_palettes['henninger'] = colors_henninger
-color_palettes['scicomp'] = colors_scicomp
-color_palettes['unituebingen'] = colors_unituebingen
-color_palettes['itten'] = colors_itten
-color_palettes['solarized'] = colors_solarized
-color_palettes['material'] = colors_material
+palettes = OrderedDict()
+palettes['plain'] = colors_plain
+palettes['vivid'] = colors_vivid
+palettes['muted'] = colors_muted
+palettes['tableau'] = colors_tableau
+palettes['henninger'] = colors_henninger
+palettes['scicomp'] = colors_scicomp
+palettes['unituebingen'] = colors_unituebingen
+palettes['itten'] = colors_itten
+palettes['solarized'] = colors_solarized
+palettes['material'] = colors_material
 
 
 def lighter(color, lightness):
@@ -283,7 +283,7 @@ def lighter(color, lightness):
     For 40% lightness of blue do
     ```py
     import plottools.colors as c
-    colors = c.color_palettes['muted']
+    colors = c.palettes['muted']
     lightblue = c.lighter(colors['blue'], 0.4)
     ```
     """
@@ -340,7 +340,7 @@ def darker(color, saturation):
     For 40% darker blue do
     ```py
     import plottools.colors as c
-    colors = c.color_palettes['muted']
+    colors = c.palettes['muted']
     darkblue = c.darker(colors['blue'], 0.4)
     ```
     """
@@ -405,7 +405,7 @@ def gradient(color0, color1, r):
     For 30% transition between blue and orange do
     ```py
     import plottools.colors as c
-    colors = c.color_palettes['muted']
+    colors = c.palettes['muted']
     color = c.gradient(colors['blue'], colors['orange'], 0.3)
     ```
     """
@@ -481,7 +481,7 @@ def latex_colors(colors, name='', model='rgb'):
     Print LaTeX color definition for a single color:
     ```py
     import plottools.colors as c
-    colors = c.color_palettes['muted']
+    colors = c.palettes['muted']
     c.latex_colors(colors['red'], 'red')
     ```
     writes to the console
@@ -548,7 +548,7 @@ def colormap(name, colors, values=None):
     Generate and register a color map from colors like this:
     ```py
     import plottools.colors as c
-    colors = c.color_palettes['muted']
+    colors = c.palettes['muted']
     cmcolors = [colors['red'],
                 c.lighter(colors['orange'], 0.85),
                 c.lighter(colors['yellow'], 0.2),
@@ -648,7 +648,7 @@ def plot_colors(ax, colors, n=1):
     import matplotlib.pyplot as plt
     import plottools.colors as c
     fig, ax = plt.subplots()
-    c.plot_colors(ax, c.color_palettes['muted'], 5)
+    c.plot_colors(ax, c.palettes['muted'], 5)
     ```
     ![plotcolors](figures/colors-plotcolors.png)    
     """
@@ -703,7 +703,7 @@ def plot_complementary_colors(ax, colors, n=0):
     import matplotlib.pyplot as plt
     import plottools.colors as c
     fig, ax = plt.subplots()
-    c.plot_complementary_colors(ax, c.color_palettes['muted'])
+    c.plot_complementary_colors(ax, c.palettes['muted'])
     ```
     ![plotcomplementary](figures/colors-plotcomplementary.png)
     """
@@ -749,12 +749,12 @@ def plot_color_comparison(ax, colorsa, *args):
         A dictionary with names and matplotlib colors.
         This is the reference palette which is plotted completely at the bottom.
         The optional second name is used as a string to annotate the colors.
-        Alternatively, just the name of the color palette in `color_palettes`.
+        Alternatively, just the name of the color palette in `palettes`.
     args: list of dicts or tuples (dict, string) or strings
         Further dictionaries with names and matplotlib colors.
         Colors with names matching the ones from `colorsa` are plotted on top.
         The optional second element is used as a string to annotated the colors.
-        Alternatively, just the names of the color palettes in `color_palettes`.
+        Alternatively, just the names of the color palettes in `palettes`.
 
     Examples
     --------
@@ -762,9 +762,7 @@ def plot_color_comparison(ax, colorsa, *args):
     import matplotlib.pyplot as plt
     import plottools.colors as c
     fig, ax = plt.subplots()
-    c.plot_color_comparison(ax, (c.color_palettes['muted'], 'muted'),
-                            (c.color_palettes['vivid'], 'vivid'),
-                            (c.color_palettes['plain'], 'plain'))
+    c.plot_color_comparison(ax, ('muted', 'vivid', 'plain'))
     ```
     ![plotcomparison](figures/colors-plotcomparison.png)
     """
@@ -776,7 +774,7 @@ def plot_color_comparison(ax, colorsa, *args):
         namea = colorsa[1]
     elif not isinstance(colorsa, dict):
         namea = colorsa
-        colorsa = color_palettes[colorsa]
+        colorsa = palettes[colorsa]
     if namea is not None:
         ax.text(-0.1, 0.5, namea, rotation='vertical', ha='right', va='center')
     for k, c in enumerate(colorsa):
@@ -788,7 +786,7 @@ def plot_color_comparison(ax, colorsa, *args):
                 colorsb = cbi[0]
                 nanmeb = cbi[1]
             elif not isinstance(cbi, dict):
-                colorsb = color_palettes[cbi]
+                colorsb = palettes[cbi]
                 nameb = cbi
             if k == 0 and nameb is not None:
                 ax.text(-0.1, 1.5+i, nameb, rotation='vertical', ha='right', va='center')
@@ -883,15 +881,15 @@ def demo(n=1, complementary=False, *args):
     if len(args) == 0:
         args = ('muted',)
     if len(args) == 1 and args[0] != 'all':
-        if args[0] in color_palettes:
-            palette = color_palettes[args[0]]
+        if args[0] in palettes:
+            palette = palettes[args[0]]
         else:
             try:
                 plot_colormap(ax, args[0])
                 plt.show()
             except:
                 print('unknown color palette %s!' % args[0])
-                print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
+                print('available color palettes: ' + ', '.join(palettes.keys()) + '.')
             return
         if complementary:
             plot_complementary_colors(ax, palette, n-1)
@@ -899,13 +897,13 @@ def demo(n=1, complementary=False, *args):
             plot_colors(ax, palette, n)
     else:
         if args[0] == 'all':
-            palettes = list(color_palettes.keys())
+            palettes = list(palettes.keys())
         else:
             palettes = []
             for c in args:
-                if not c in color_palettes:
+                if not c in palettes:
                     print('unknown color palette %s!' % c)
-                    print('available color palettes: ' + ', '.join(color_palettes.keys()) + '.')
+                    print('available color palettes: ' + ', '.join(palettes.keys()) + '.')
                 else:
                     palettes.append(c)
         plot_color_comparison(ax, *palettes)

@@ -109,7 +109,7 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from plottools.colors import color_palettes, lighter
+from plottools.colors import palettes, lighter, darker
 
 
 def style(orig_style, **kwargs):
@@ -780,7 +780,7 @@ def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
     """
     if namespace is None:
         namespace = __main__
-    namespace.palette = color_palettes[colors]
+    namespace.palette = palettes[colors]
     palette = namespace.palette
     names = ['A1', 'A2', 'A3',
              'B1', 'B2', 'B3', 'B4',
@@ -972,7 +972,7 @@ def demo(mode='line'):
         plot_fillstyles(ax)
     elif mode == 'ars' or mode == 'as' or 'arrow' in mode:
         from .arrows import generic_arrow_styles, plot_arrowstyles
-        generic_arrow_styles(color_palettes['muted'], 3)
+        generic_arrow_styles(palettes['muted'], 3)
         plot_arrowstyles(ax)
     else:
         print('unknown option %s!' % mode)

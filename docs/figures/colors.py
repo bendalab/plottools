@@ -4,7 +4,7 @@ import plottoolspath
 import plottools.figure
 import plottools.subplots
 import plottools.spines
-from plottools.colors import colors, color_palettes, lighter, darker, gradient, colormap
+from plottools.colors import palettes, lighter, darker, gradient, colormap
 from plottools.colors import plot_colors, plot_complementary_colors
 from plottools.colors import plot_color_comparison, plot_colormap
 
@@ -12,7 +12,7 @@ from plottools.colors import plot_color_comparison, plot_colormap
 def colors_figures():
     """ Generate figures displaying the color palettes.
     """
-    for key, colors in color_palettes.items():
+    for key, colors in palettes.items():
         fig, ax = plt.subplots(cmsize=(1+2.2*len(colors), 3.3))
         fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
         ax.show_spines('')
@@ -30,7 +30,7 @@ def colors_figures():
 def lighter_figure():
     """ Generate figures demonstrating the lighter() function.
     """
-    color = color_palettes['muted']['blue']
+    color = palettes['muted']['blue']
     n = 10
     fig, ax = plt.subplots(cmsize=(1+2.2*(n+1), 3))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
@@ -49,7 +49,7 @@ def lighter_figure():
 def darker_figure():
     """ Generate figures demonstrating the darker() function.
     """
-    color = color_palettes['muted']['blue']
+    color = palettes['muted']['blue']
     n = 10
     fig, ax = plt.subplots(cmsize=(1+2.2*(n+1), 3))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
@@ -68,8 +68,8 @@ def darker_figure():
 def gradient_figure():
     """ Generate figures demonstrating the gradient() function.
     """
-    c1 = color_palettes['muted']['blue']
-    c2 = color_palettes['muted']['orange']
+    c1 = palettes['muted']['blue']
+    c2 = palettes['muted']['orange']
     n = 10
     fig, ax = plt.subplots(cmsize=(1+2.2*(n+1), 3))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
@@ -90,6 +90,7 @@ def colormap_figure():
     """
     fig, ax = plt.subplots(cmsize=(20.0, 4.0))
     fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=0, bottomm=2)
+    colors = palettes['muted']
     cmcolors = [colors['red'], lighter(colors['orange'], 0.85),
                 lighter(colors['yellow'], 0.2), lighter(colors['lightblue'], 0.8),
                 colors['blue']]
@@ -105,7 +106,7 @@ def plotcolors_figure():
     fig, ax = plt.subplots(cmsize=(35.0, 17.0))
     fig.subplots_adjust(leftm=1.5, rightm=1.5, topm=0, bottomm=0)
     ax.show_spines('')
-    plot_colors(ax, colors, 5)
+    plot_colors(ax, palettes['muted'], 5)
     fig.savefig('colors-plotcolors.png')
 
     
@@ -115,7 +116,7 @@ def plotcomplementary_figure():
     fig, ax = plt.subplots(cmsize=(25.0, 6.0))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
     ax.show_spines('')
-    plot_complementary_colors(ax, colors)
+    plot_complementary_colors(ax, palettes['muted'])
     fig.savefig('colors-plotcomplementary.png')
 
     
@@ -125,9 +126,7 @@ def plotcomparison_figure():
     fig, ax = plt.subplots(cmsize=(35.0, 8.0))
     fig.subplots_adjust(leftm=0, rightm=0, topm=0, bottomm=0)
     ax.show_spines('')
-    plot_color_comparison(ax, (color_palettes['muted'], 'muted'),
-                          (color_palettes['vivid'], 'vivid'),
-                          (color_palettes['plain'], 'plain'))
+    plot_color_comparison(ax, ('muted', 'vivid', 'plain'))
     fig.savefig('colors-plotcomparison.png')
 
     
