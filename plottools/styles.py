@@ -783,13 +783,13 @@ def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
     namespace.palette = palettes[colors]
     palette = namespace.palette
     names = ['A1', 'A2', 'A3',
-             'B1', 'B2', 'B3', 'B4',
+             'B1', 'B2', 'B3', 'B4', 'B5',
              'C1', 'C2', 'C3', 'C4']
     colors = [palette['red'], palette['orange'], palette['yellow'],
-              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'],
+              palette['blue'], palette['purple'], palette['magenta'], palette['lightblue'], palette['pink'], 
               palette['lightgreen'], palette['green'], palette['darkgreen'], palette['cyan']]
     markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
-               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25),
+               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25), ((3, 1, 0), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4)]
     plot_styles(names, colors, '-', markers, lwthick=lwthick, lwthin=lwthin,
                 markerlarge=markerlarge, markersmall=markersmall, mec=mec, mew=mew,

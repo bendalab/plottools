@@ -42,7 +42,8 @@ def common_xlabels(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
@@ -76,7 +77,8 @@ def common_ylabels(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     # center common ylabel:
     minx = np.min(coords[:,0])
@@ -111,7 +113,8 @@ def common_xticks(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
@@ -146,7 +149,8 @@ def common_yticks(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     minx = np.min(coords[:,0])
     miny = np.min(coords[:,1])
@@ -181,7 +185,8 @@ def common_xspines(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
@@ -217,7 +222,8 @@ def common_yspines(fig, axes=None):
     """
     if axes is None:
         axes = fig.get_axes()
-    axes = axes.ravel()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     minx = np.min(coords[:,0])
     miny = np.min(coords[:,1])
