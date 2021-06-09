@@ -205,7 +205,7 @@ def uninstall_align():
         delattr(plt, '__show_orig_align')
 
 
-install_align(auto=True, overwrite=False)
+install_align(auto=True, overwrite=True)
 
 
 def demo():
