@@ -1144,16 +1144,26 @@ def demo_basic():
     fig.set_spines_outward('lrtb', 10)
     # spine visibility:
     axs[0, 0].show_spines('lt')
+    axs[0, 0].set_xlabel('xlabel')
+    axs[0, 0].set_ylabel('ylabel')
     axs[0, 0].text(0.05, 1.7, "ax.show_spines('lt')")
     axs[0, 1].show_spines('rt')
+    axs[0, 1].set_xlabel('xlabel')
+    axs[0, 1].set_ylabel('ylabel')
     axs[0, 1].text(0.05, 1.7, "ax.show_spines('rt')")
     axs[1, 0].show_spines('l')
+    axs[1, 0].set_ylabel('ylabel')
     axs[1, 0].text(0.05, 1.7, "ax.show_spines('l')")
     axs[1, 1].show_spines('r')
+    axs[1, 1].set_ylabel('ylabel')
     axs[1, 1 ].text(0.05, 1.7, "ax.show_spines('r')")
     axs[2, 0].show_spines('lb')
+    axs[2, 0].set_xlabel('xlabel')
+    axs[2, 0].set_ylabel('ylabel')
     axs[2, 0].text(0.05, 1.7, "ax.show_spines('lb')")
     axs[2, 1].show_spines('rb')
+    axs[2, 1].set_xlabel('xlabel')
+    axs[2, 1].set_ylabel('ylabel')
     axs[2, 1 ].text(0.05, 1.7, "ax.show_spines('rb')")
     # set spine bounds:
     axs[0, 1].set_spines_bounds('lr', 'full')
@@ -1250,8 +1260,8 @@ def demo_twin_inset():
 
 def demo():
     demo_basic()
-    demo_arrows()
-    demo_twin_inset()
+    #demo_arrows()
+    #demo_twin_inset()
 
 
 if __name__ == "__main__":
