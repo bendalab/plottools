@@ -38,9 +38,6 @@ def align_xylabels(fig, axs=None):
     """
     xdist = mpl.rcParams.get('axes.labelpad', 3)
     ydist = mpl.rcParams.get('axes.labelpad', 3)
-    xdist -= mpl.rcParams['xtick.major.pad']
-    ydist -= mpl.rcParams['ytick.major.pad']
-    # tick sizes are *not* part of ax.get_window_extent()!?!
     xtick_size = mpl.rcParams['xtick.major.size']
     ytick_size = mpl.rcParams['ytick.major.size']
     if mpl.rcParams['xtick.direction'] == 'inout':
@@ -51,17 +48,21 @@ def align_xylabels(fig, axs=None):
         ytick_size *= 0.5
     elif mpl.rcParams['ytick.direction'] == 'in':
         ytick_size = 0.0
-    xdist += xtick_size
-    ydist += ytick_size
+    if xtick_size > 0:
+        xdist += xtick_size
+        xdist += mpl.rcParams['xtick.major.pad']
+    if ytick_size > 0:
+        ydist += ytick_size
+        ydist += mpl.rcParams['ytick.major.pad']
     if axs is None:
         axs = fig.get_axes()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
-    yap = np.zeros((len(fig.get_axes()), 2))
+    yap = np.zeros((len(fig.get_axes()), 3))
     yph = np.zeros(len(fig.get_axes()))
     ylh = np.zeros(len(fig.get_axes()))
     ylx = np.zeros(len(fig.get_axes()))
-    xap = np.zeros((len(fig.get_axes()), 2))
+    xap = np.zeros((len(fig.get_axes()), 3))
     xpw = np.zeros(len(fig.get_axes()))
     xlw = np.zeros(len(fig.get_axes()))
     xly = np.zeros(len(fig.get_axes()))
@@ -70,37 +71,51 @@ def align_xylabels(fig, axs=None):
         if xax.get_label_text():
             ax_bbox = ax.get_window_extent().get_points()
             pixely = np.abs(np.diff(ax_bbox[:,1]))[0]
-            th = xax.get_text_heights(renderer)[1]
-            th -= np.abs(np.diff(xax.get_label().get_window_extent(renderer).get_points()[:,1]))[0]
-            th += xdist
-            ylh[k] = th
+            pos = xax.get_label_position() == 'top'
+            tlh = np.abs(np.diff(xax.get_ticklabel_extents(renderer)[pos].get_points()[:,1]))[0]
+            tlh += xdist
+            if pos:
+                tlh += 0.5*xax.get_label().get_fontsize()
+            else:
+                tlh += 0.5*xax.get_label().get_fontsize()
+            ylh[k] = tlh
             yph[k] = pixely
             ylx[k] = xax.get_label().get_position()[0]
-            yap[k,:] = (ax_bbox[0,1], xax.get_label().get_rotation())
+            yap[k,:] = (ax_bbox[0,1], xax.get_label().get_rotation(), pos)
         yax = ax.yaxis
         if yax.get_label_text():
             ax_bbox = ax.get_window_extent().get_points()
             pixelx = np.abs(np.diff(ax_bbox[:,0]))[0]
-            tw = yax.get_text_widths(renderer)[0]
-            tw -= np.abs(np.diff(yax.get_label().get_window_extent(renderer).get_points()[:,0]))[0]
-            tw += ydist
-            xlw[k] = tw
+            pos = yax.get_label_position() == 'right'
+            tlw = np.abs(np.diff(yax.get_ticklabel_extents(renderer)[pos].get_points()[:,0]))[0]
+            tlw += ydist
+            if pos:
+                tlw += 0.7*yax.get_label().get_fontsize()
+            else:
+                tlw += 0.5*yax.get_label().get_fontsize()
+            xlw[k] = tlw
             xpw[k] = pixelx
             xly[k] = yax.get_label().get_position()[1]
-            xap[k,:] = (ax_bbox[0,0], yax.get_label().get_rotation())
+            xap[k,:] = (ax_bbox[0,0], yax.get_label().get_rotation(), pos)
     # compute label position for axes with same position:
-    for yp in set(zip(yap[:,0], yap[:,1])):
+    for yp in set(zip(yap[:,0], yap[:,1], yap[:,2])):
         idx = np.all(yap == yp, 1)
         ylh[idx] = np.max(ylh[idx])
-    for xp in set(zip(xap[:,0], xap[:,1])):
+    for xp in set(zip(xap[:,0], xap[:,1], xap[:,2])):
         idx = np.all(xap == xp, 1)
         xlw[idx] = np.max(xlw[idx])
     # set label position:
     for k, ax in enumerate(fig.get_axes()):
         if yap[k, 0] > 0:
-            ax.xaxis.set_label_coords(ylx[k], -ylh[k]/yph[k], None)
+            if yap[k, 2]:
+                ax.xaxis.set_label_coords(ylx[k], 1+ylh[k]/yph[k], None)
+            else:
+                ax.xaxis.set_label_coords(ylx[k], -ylh[k]/yph[k], None)
         if xap[k, 0] > 0:
-            ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
+            if xap[k, 2]:
+                ax.yaxis.set_label_coords(1+xlw[k]/xpw[k], xly[k], None)
+            else:
+                ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
 
     
 def __fig_show_labels(fig, *args, **kwargs):
@@ -212,7 +227,7 @@ def demo():
     """ Run a demonstration of the align module.
     """
     fig, axs = plt.subplots(3, 2, figsize=(9, 6))
-    fig.subplots_adjust(wspace=0.5)
+    fig.subplots_adjust(wspace=0.2)
 
     fig.suptitle('plottools.align')
     x = np.linspace(0, 20, 200)
@@ -220,11 +235,13 @@ def demo():
 
     axs[0, 0].plot(x, 4000*y)
     axs[0, 0].set_ylim(-5000.0, 5000.0)
-    axs[0, 0].set_ylabel('Velocity [m/s]')
+    axs[0, 0].set_ylabel('Velocity\nin water [m/s]')
     
     axs[0, 1].plot(x, y)
     axs[0, 1].set_ylim(-1.0, 1.7)
     axs[0, 1].set_ylabel('Accelaration [m/s^2]')
+    axs[0, 1].yaxis.set_ticks_position('right')
+    axs[0, 1].yaxis.set_label_position('right')
     
     axs[1, 0].plot(x, y)
     axs[1, 0].set_ylim(-1.0, 1.0)
@@ -233,6 +250,8 @@ def demo():
     axs[1, 1].plot(x, 5000*y)
     axs[1, 1].set_ylim(-10000.0, 10000.0)
     axs[1, 1].set_ylabel('Potential [mV]')
+    axs[1, 1].yaxis.set_ticks_position('right')
+    axs[1, 1].yaxis.set_label_position('right')
     
     axs[2, 0].plot(x, y)
     axs[2, 0].set_ylim(-1.0, 1.7)
@@ -242,7 +261,9 @@ def demo():
     axs[2, 1].plot(x, 1000*y)
     axs[2, 1].set_ylim(-1000, 1700)
     axs[2, 1].set_xlabel('Timepoints [ms]\nsince stimulus onset')
-    axs[2, 1].set_ylabel('Amplitude\nin water [Pa]')
+    axs[2, 1].set_ylabel('Amplitude [Pa]')
+    axs[2, 1].yaxis.set_ticks_position('right')
+    axs[2, 1].yaxis.set_label_position('right')
 
     plt.show()
 
