@@ -342,6 +342,11 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
+    """
+    for label in ax.get_xticklabels():
+        label.set_verticalalignment('center')
+        label.set_y(label.get_position()[1]-0.1)  # in axes coordinates
+    """
 
     
 def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
@@ -870,11 +875,11 @@ def demo():
     axs[2,1].set_yticks_prefix()
 
     axs[3,0].text(0.1, 0.8, 'ax.set_xticks_fracs(4)', transform=axs[3,0].transAxes)
-    axs[3,0].text(0.1, 0.6, "ax.set_yticks_fracs(3)", transform=axs[3,0].transAxes)
+    axs[3,0].text(0.1, 0.6, "ax.set_yticks_fracs(2)", transform=axs[3,0].transAxes)
     axs[3,0].set_xlim(-1, 1)
     axs[3,0].set_ylim(-1, 1)
     axs[3,0].set_xticks_fracs(4)
-    axs[3,0].set_yticks_fracs(3)
+    axs[3,0].set_yticks_fracs(2)
 
     axs[3,1].text(0.1, 0.8, 'ax.set_xticks_pifracs(2)', transform=axs[3,1].transAxes)
     axs[3,1].text(0.1, 0.6, "ax.set_yticks_pifracs(3, True)", transform=axs[3,1].transAxes)
