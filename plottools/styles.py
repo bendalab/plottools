@@ -62,19 +62,20 @@ fig.savefig('example.pdf')
 This way you can change the appaerance of *all* your figures by modifying
 the plotting styles in a single central file. You can first code
 your figures and concentrate on the technicalities of the data. And later on,
-when you are done, you can then can easily improve the design of your plots.
+when you are done, you then can easily improve the design of your plots.
+
 Plotting styles used in this way are a central element for separating content
 from design. Python's key-word arguments provide a nice mechanism to achieve
 this.
 
 In your central "plotstyle.py" module you can, of course, also import all the
-cool plottool modules you need, or just the `plottools.param` module to get and
+cool plottool modules you need, or just the `plottools.plottools` module to get and
 install them all. You also should set matplotlib's `rcParam` variables to define
-the appaerance of your plots in this central place (or use the respective
-`_params()` functions of the plottools modules).
+the appaerance of your plots in this central place. Alternatively you can use
+the respective `_params()` functions of the plottools modules.
 
 The `styles` module provides a few functions that help you with
-generating and organizing pllotting styles.
+generating and organizing plotting styles.
 
 
 ## Duplicate and modify plotting styles
@@ -87,19 +88,19 @@ generating and organizing pllotting styles.
 
 ## Generate plotting styles
 
-- `make_linestyles()`: generate dictionaries for line styles.
-- `make_pointstyles()`: generate dictionaries for point styles.
+- `make_linestyles()`: generate line styles.
+- `make_pointstyles()`: generate point styles.
 - `make_linepointstyles()`: generate line styles, point styles, and line point styles.
-- `make_fillstyles()`: generate dictionaries for fill styles.
-- `plot_styles()`: generate plot styles from names, dashes, colors, and markers.
+- `make_fillstyles()`: generate fill styles.
+- `plot_styles()`: generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
 - `generic_styles()`: generates some generic line, points, linepoints and fill styles.
 
 
 ## Display plotting styles
 
 - `plot_linestyles()`: plot names and lines of all available line styles.
-- `plot_pointstyles()`: plot names and lines of all available point styles.
-- `plot_linepointstyles()`: plot names and lines of all available linepoint styles.
+- `plot_pointstyles()`: plot names and markers of all available point styles.
+- `plot_linepointstyles()`: plot names, lines, and markers of all available linepoint styles.
 - `plot_fillstyles()`: plot names and patches of all available fill styles.
 
 """
@@ -279,7 +280,7 @@ def lighter_darker_styles(style, n):
 
 def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
                     namespace=None, **kwargs):
-    """ Generate dictionaries for line styles.
+    """ Generate line styles.
 
     The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style and line width a dictionary is generated
@@ -373,7 +374,7 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
 def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
                      markers=('o', 1.0), markersizes=5.0, markeredgecolors=0.0,
                      markeredgewidths=1.0, namespace=None, **kwargs):
-    """ Generate dictionaries for point styles.
+    """ Generate point styles.
 
     The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
     For each corresponding name, color, line style, line width, marker, marker size,
@@ -526,7 +527,7 @@ def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
 
 def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fillalphas,
                     namespace=None, **kwargs):
-    """ Generate dictionaries for fill styles.
+    """ Generate fill styles.
 
     The generated dictionaries can be passed as key-word arguments
     to `ax.fill_between()` commands.
@@ -632,7 +633,7 @@ def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fil
 def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
                 markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
                 fillalpha=0.4, namespace=None):
-    """ Generate plot styles from names, dashes, colors, and markers.
+    """ Generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
 
     For each color and name a variety of plot styles are generated
     (for the example, names is 'Female'):
@@ -748,8 +749,6 @@ def generic_styles(colors='muted', lwthick=1.7, lwthin=0.8,
     - plain (e.g. `fsA3`) for a solid fill color and an edge color,
     - solid (e.g. `fsA3s`) for a solid fill color without edge color, and
     - alpha (e.g. `fsA3a`) for a transparent fill color.
-    
-    See `plot_styles()` for details.
 
     `palette`, a dictionary with colors of the specified color palette,
     is added to `namespace` as well.
@@ -828,7 +827,7 @@ def plot_linestyles(ax, namespace=None):
         
 
 def plot_pointstyles(ax, namespace=None):
-    """ Plot names and lines of all available point styles.
+    """ Plot names and markers of all available point styles.
 
     Parameters
     ----------
@@ -864,7 +863,7 @@ def plot_pointstyles(ax, namespace=None):
         
 
 def plot_linepointstyles(ax, namespace=None):
-    """ Plot names and lines of all available linepoint styles.
+    """ Plot names, lines, and markers of all available linepoint styles.
 
     Parameters
     ----------
