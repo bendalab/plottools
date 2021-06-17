@@ -342,11 +342,11 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
     """
     ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
-    """
+    pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
     for label in ax.get_xticklabels():
+        fs = label.get_fontsize()
         label.set_verticalalignment('center')
-        label.set_y(label.get_position()[1]-0.1)  # in axes coordinates
-    """
+        label.set_y(label.get_position()[1]-1.05*fs/pixely)
 
     
 def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
@@ -887,7 +887,7 @@ def demo():
     axs[3,1].set_ylim(0, 4*np.pi/3)
     axs[3,1].set_xticks_pifracs(2)
     axs[3,1].set_yticks_pifracs(3, True)
-    
+
     plt.show()
 
 
