@@ -975,7 +975,7 @@ def install_spines():
     axes.spines.inset.bounds : {'lrtb': 'full'}
     ```
 
-    This function is also called automatically upon importing the module.
+    This function is called automatically upon importing the module.
 
     See also
     --------
