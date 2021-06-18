@@ -1,0 +1,2590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>plottools.styles API documentation</title>
+<meta name="description" content="Plotting styles …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.styles</code></h1>
+</header>
+<section id="section-intro">
+<p>Plotting styles.</p>
+<p>Usually you specify the line style for a plot command like this:</p>
+<pre><code class="language-py">ax.plot(x, y, color='#aa0000', lw=2, ls='--')
+</code></pre>
+<p>This way to define the appearance of the plotted line, however, has a
+number of disadvantages:</p>
+<ol>
+<li>Specifying the keyword arguments is quite lenghty, it is
+a lot to type and distracts the reader from what you actually want to plot.</li>
+<li>When you want to change the design of all your plots, you need to change this
+everywhere. For this reason I bet you really do not want to change any colors
+and line widths in your plots any more, which is sad.</li>
+</ol>
+<p>To address the first issue, you may put all the key-word arguments
+specifying the line style into a dictionary, like this:</p>
+<pre><code class="language-py">lsRed = dict(color='#aa0000', lw=2, ls='--')  # red line style (ls)
+ax.plot(x, y, **lsRed)
+</code></pre>
+<p>We here call such dictionaries defining how something is plotted
+"plotting styles".
+With plotting styles plot commands are much more
+expressive and better readable. Even better is to give the plotting
+styles functional names, like <code>lsStimulus</code> or <code>lsResponse</code>.</p>
+<p>To address the second issue, you simply collect all plotting styles in a
+module that you then import in all plotting scripts. Problem is, that
+you then need to reference all the many plotting styles by the module
+name. To circumvent this, we define in the module all plotting styles in
+the global namespace of the script that imports the module. This may
+sound ugly, because everybody tells you to never use global variables,
+but in this case it really pays off. It makes your plot commands sweet
+and short.</p>
+<p>So, this is how your central module, named "plotstyles.py" might look like:</p>
+<pre><code class="language-py">import __main__
+
+def plot_styles():
+    ns = __main__
+    ns.lsRed = dict(color='#aa0000', lw=2, ls='--')
+    ns.lsStimulus = dict(color='#00bb00', lw=1, ls='-')
+    ns.lsResponse = dict(color='#aa0000', lw=1, ls='-')
+</code></pre>
+<p>Then, a script producing a figure looks like this:</p>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+from plotstyles import plot_styles
+
+plot_styles()
+fig, ax = plt.subplots()
+ax.plot(x, y, **lsResponse)
+fig.savefig('example.pdf')
+</code></pre>
+<p>This way you can change the appaerance of <em>all</em> your figures by modifying
+the plotting styles in a single central file. You can first code
+your figures and concentrate on the technicalities of the data. And later on,
+when you are done, you then can easily improve the design of your plots.</p>
+<p>Plotting styles used in this way are a central element for separating content
+from design. Python's key-word arguments provide a nice mechanism to achieve
+this.</p>
+<p>In your central "plotstyle.py" module you can, of course, also import all the
+cool plottool modules you need, or just the <code><a title="plottools.plottools" href="plottools.html">plottools.plottools</a></code> module to get and
+install them all. You also should set matplotlib's <code>rcParam</code> variables to define
+the appaerance of your plots in this central place. Alternatively you can use
+the respective <code>_params()</code> functions of the plottools modules.</p>
+<p>The <code>styles</code> module provides a few functions that help you with
+generating and organizing plotting styles.</p>
+<h2 id="duplicate-and-modify-plotting-styles">Duplicate and modify plotting styles</h2>
+<ul>
+<li><code><a title="plottools.styles.style" href="#plottools.styles.style">style()</a></code>: copy and update a style.</li>
+<li><code><a title="plottools.styles.lighter_styles" href="#plottools.styles.lighter_styles">lighter_styles()</a></code>: duplicate style with a range of lighter colors.</li>
+<li><code><a title="plottools.styles.darker_styles" href="#plottools.styles.darker_styles">darker_styles()</a></code>: duplicate style with a range of darker colors.</li>
+<li><code><a title="plottools.styles.lighter_darker_styles" href="#plottools.styles.lighter_darker_styles">lighter_darker_styles()</a></code>: duplicate style with a range of lighter and darker colors.</li>
+</ul>
+<h2 id="generate-plotting-styles">Generate plotting styles</h2>
+<ul>
+<li><code><a title="plottools.styles.make_linestyles" href="#plottools.styles.make_linestyles">make_linestyles()</a></code>: generate line styles.</li>
+<li><code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles()</a></code>: generate point styles.</li>
+<li><code><a title="plottools.styles.make_linepointstyles" href="#plottools.styles.make_linepointstyles">make_linepointstyles()</a></code>: generate line styles, point styles, and line point styles.</li>
+<li><code><a title="plottools.styles.make_fillstyles" href="#plottools.styles.make_fillstyles">make_fillstyles()</a></code>: generate fill styles.</li>
+<li><code><a title="plottools.styles.plot_styles" href="#plottools.styles.plot_styles">plot_styles()</a></code>: generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.</li>
+<li><code><a title="plottools.styles.generic_styles" href="#plottools.styles.generic_styles">generic_styles()</a></code>: generates some generic line, points, linepoints and fill styles.</li>
+</ul>
+<h2 id="display-plotting-styles">Display plotting styles</h2>
+<ul>
+<li><code><a title="plottools.styles.plot_linestyles" href="#plottools.styles.plot_linestyles">plot_linestyles()</a></code>: plot names and lines of all available line styles.</li>
+<li><code><a title="plottools.styles.plot_pointstyles" href="#plottools.styles.plot_pointstyles">plot_pointstyles()</a></code>: plot names and markers of all available point styles.</li>
+<li><code><a title="plottools.styles.plot_linepointstyles" href="#plottools.styles.plot_linepointstyles">plot_linepointstyles()</a></code>: plot names, lines, and markers of all available linepoint styles.</li>
+<li><code><a title="plottools.styles.plot_fillstyles" href="#plottools.styles.plot_fillstyles">plot_fillstyles()</a></code>: plot names and patches of all available fill styles.</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Plotting styles.
+
+
+Usually you specify the line style for a plot command like this:
+
+```py
+ax.plot(x, y, color=&#39;#aa0000&#39;, lw=2, ls=&#39;--&#39;)
+```
+
+This way to define the appearance of the plotted line, however, has a
+number of disadvantages:
+
+1. Specifying the keyword arguments is quite lenghty, it is
+    a lot to type and distracts the reader from what you actually want to plot.
+2. When you want to change the design of all your plots, you need to change this
+   everywhere. For this reason I bet you really do not want to change any colors
+   and line widths in your plots any more, which is sad.
+
+To address the first issue, you may put all the key-word arguments
+specifying the line style into a dictionary, like this:
+
+```py
+lsRed = dict(color=&#39;#aa0000&#39;, lw=2, ls=&#39;--&#39;)  # red line style (ls)
+ax.plot(x, y, **lsRed)
+```
+
+We here call such dictionaries defining how something is plotted
+&#34;plotting styles&#34;.  With plotting styles plot commands are much more
+expressive and better readable. Even better is to give the plotting
+styles functional names, like `lsStimulus` or `lsResponse`.
+
+To address the second issue, you simply collect all plotting styles in a
+module that you then import in all plotting scripts. Problem is, that
+you then need to reference all the many plotting styles by the module
+name. To circumvent this, we define in the module all plotting styles in
+the global namespace of the script that imports the module. This may
+sound ugly, because everybody tells you to never use global variables,
+but in this case it really pays off. It makes your plot commands sweet
+and short.
+
+So, this is how your central module, named &#34;plotstyles.py&#34; might look like:
+```py
+import __main__
+
+def plot_styles():
+    ns = __main__
+    ns.lsRed = dict(color=&#39;#aa0000&#39;, lw=2, ls=&#39;--&#39;)
+    ns.lsStimulus = dict(color=&#39;#00bb00&#39;, lw=1, ls=&#39;-&#39;)
+    ns.lsResponse = dict(color=&#39;#aa0000&#39;, lw=1, ls=&#39;-&#39;)
+```
+Then, a script producing a figure looks like this:
+```py
+import matplotlib.pyplot as plt
+from plotstyles import plot_styles
+
+plot_styles()
+fig, ax = plt.subplots()
+ax.plot(x, y, **lsResponse)
+fig.savefig(&#39;example.pdf&#39;)
+```
+
+This way you can change the appaerance of *all* your figures by modifying
+the plotting styles in a single central file. You can first code
+your figures and concentrate on the technicalities of the data. And later on,
+when you are done, you then can easily improve the design of your plots.
+
+Plotting styles used in this way are a central element for separating content
+from design. Python&#39;s key-word arguments provide a nice mechanism to achieve
+this.
+
+In your central &#34;plotstyle.py&#34; module you can, of course, also import all the
+cool plottool modules you need, or just the `plottools.plottools` module to get and
+install them all. You also should set matplotlib&#39;s `rcParam` variables to define
+the appaerance of your plots in this central place. Alternatively you can use
+the respective `_params()` functions of the plottools modules.
+
+The `styles` module provides a few functions that help you with
+generating and organizing plotting styles.
+
+
+## Duplicate and modify plotting styles
+
+- `style()`: copy and update a style.
+- `lighter_styles()`: duplicate style with a range of lighter colors.
+- `darker_styles()`: duplicate style with a range of darker colors.
+- `lighter_darker_styles()`: duplicate style with a range of lighter and darker colors.
+
+
+## Generate plotting styles
+
+- `make_linestyles()`: generate line styles.
+- `make_pointstyles()`: generate point styles.
+- `make_linepointstyles()`: generate line styles, point styles, and line point styles.
+- `make_fillstyles()`: generate fill styles.
+- `plot_styles()`: generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
+- `generic_styles()`: generates some generic line, points, linepoints and fill styles.
+
+
+## Display plotting styles
+
+- `plot_linestyles()`: plot names and lines of all available line styles.
+- `plot_pointstyles()`: plot names and markers of all available point styles.
+- `plot_linepointstyles()`: plot names, lines, and markers of all available linepoint styles.
+- `plot_fillstyles()`: plot names and patches of all available fill styles.
+
+&#34;&#34;&#34;
+
+import __main__
+import sys
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from plottools.colors import palettes, lighter, darker
+
+
+def style(orig_style, **kwargs):
+    &#34;&#34;&#34; Copy and update a style.
+
+    Parameters
+    ----------
+    orig_style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    kwargs: dict
+        Key-word arguments used to update keys in `orig_style`.
+
+    Returns
+    -------
+    new_style: dict
+        Style dictionary with the new keys provided by `kwargs`.
+
+    Examples
+    --------
+    ```py
+    lsRed = dict(color=&#39;red&#39;, linewidth=1, linestyle=&#39;-&#39;)
+    lsBlue = style(lsRed, color=&#39;blue&#39;)
+    ax.plot(x, y, **lsRed)
+    ax.plot(x, z, **lsBlue)
+    ```
+    &#34;&#34;&#34;
+    new_style = dict(orig_style)
+    new_style.update(**kwargs)
+    return new_style
+
+    
+def lighter_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of lighter colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of lighter colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly lighter `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```py
+    lsBlue = dict(color=colors[&#39;blue&#39;], lw=2)
+    ```
+    Now you need 5 variants of this plot style with increasingly lighter colors.
+    Just call
+    ```py
+    lsBlues = lighter_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = lighter(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n
+
+
+def darker_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of darker colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly darker `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for green lines in a plot like
+    ```py
+    lsGreen = dict(color=colors[&#39;lightgreen&#39;], lw=2)
+    ```
+    Now you need 4 variants of this plot style with increasingly darker colors.
+    Just call
+    ```py
+    lsGreens = darker_styles(lsGreen, 4)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsGreens):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = darker(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n
+
+
+def lighter_darker_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of lighter and darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of modified colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with `color` or `facecolor` starting from a lighter color,
+        traversing over the original color to darker colors.
+        The central style has the original color if `n` is odd.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```py
+    lsBlue = dict(color=colors[&#39;blue&#39;], lw=2)
+    ```
+    Now you need 5 variants of this plot style with lighter and darker colors.
+    Just call
+    ```py
+    lsBlues = lighter_darker_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = lighter(c, 1+(k-(n-1)/2)/((n+1)//2))
+                styles.append(sd)
+            return styles
+    return [style]*n
+
+
+def make_linestyles(prefix, names, suffix, colors, dashes=&#39;-&#39;, lws=1,
+                    namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate line styles.
+
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
+    For each corresponding name, color, line style and line width a dictionary is generated
+    holding these attributes. The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_linestyles(&#39;ls&#39;, &#39;Male&#39;, &#39;&#39;, &#39;blue&#39;, &#39;-&#39;, 2)
+    ```
+    generates a dictionary named `lsMale` defining a blue solid line,
+    adds `Male` to the `style_names` list,
+    and adds the `lsMale` dictionary to `ls` under the key `Male`.
+    Simply throw the dictionary into a `plot()` command:
+    ```py
+    plt.plot(x, y, **lsMale)
+    ```
+    or
+    ```py
+    plt.plot(x, y, **ls[&#39;Male&#39;])
+    ```
+    this is the same as:
+    ```py
+    plt.plot(x, y, &#39;-&#39;, color=&#39;#0000FF&#39;, lw=2)
+    ```
+    but is more expressive and can be changed at a single central place.
+
+    This
+    ```py
+    make_linestyles(&#39;ls&#39;, [&#39;Red&#39;, &#39;Green&#39;], &#39;m&#39;, [&#39;r&#39;, &#39;g&#39;], [&#39;-&#39;, &#39;--&#39;], 0.5)
+    ```
+    adds two line styles &#39;lsRedm&#39;, &#39;lsGreenm&#39; to the main module
+    with the respective colors and a thin solid or dashed line, respectively.
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all line style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffix: string
+        Sufffix appended to all line style names.
+    colors: matplotlib color or list of matplotlib colors
+        Colors of the line styles.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        Dash styles of the connecting lines.
+    lws: float or list of floats
+        Widths of the connecting lines.
+    namespace: dict or None
+        Namespace to which the generated line styles are added.
+        If None add line styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further line properties, e.g. alpha, zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    ln = prefix + suffix 
+    if not hasattr(namespace, ln):
+        setattr(namespace, ln, {})
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, dashes, lws):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        sn = prefix + name + suffix
+        c = colors[k] if isinstance(colors, (tuple, list)) else colors
+        ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
+        lw = lws[k] if isinstance(lws, (tuple, list)) else lws
+        ld = dict(color=c, linestyle=ds, linewidth=lw, **kwargs)
+        setattr(namespace, sn, ld)
+        getattr(namespace, ln)[name] = ld
+
+
+def make_pointstyles(prefix, names, suffix, colors, dashes=&#39;none&#39;, lws=0,
+                     markers=(&#39;o&#39;, 1.0), markersizes=5.0, markeredgecolors=0.0,
+                     markeredgewidths=1.0, namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate point styles.
+
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
+    For each corresponding name, color, line style, line width, marker, marker size,
+    marker edge color and marker edge width a dictionary is generated holding these attributes.
+    The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_pointstyles(&#39;ps&#39;, &#39;Female&#39;, &#39;&#39;, &#39;red&#39;, &#39;-&#39;, 1, (&#39;o&#39;, 1.0), 8, 0.5, 1, alpha=0.5)
+    ```
+    generates a dictionary named `psFemale` defining transparent red filled markers
+    with a lighter edge, adds `Female` to `style_names`,
+    and adds the dictionary to `ps` under the key `Female`.
+    Simply throw the dictionary into a `plot()` command:
+    ```py
+    plt.plot(x, y, **psFemale)
+    ```
+    this is the same as:
+    ```py
+    plt.plot(x, y, **ps[&#39;Female&#39;])
+    ```
+    This
+    ```py
+    make_pointstyles(&#39;ps&#39;, &#39;Reds%d&#39;, &#39;c&#39;, [&#39;red&#39;, &#39;orange&#39;, &#39;yellow&#39;], &#39;none&#39;, 0, (&#39;o&#39;, 1.0), 8, 1, 0)
+    ```
+    generates &#39;psReds1&#39;,  &#39;psReds2&#39;,  &#39;psReds3&#39; for plotting
+    filled circels with colors red, orange, and yellow, respectively.
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all point style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffix: string
+        Sufffix appended to all point style names.
+    colors: matplotlib color or list of matplotlib colors
+        For each color in the list a point style is generated.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        Dash styles of the connecting lines. If points are not to be connected, set to &#39;none&#39;.
+    lws: float or list of floats
+        Widths of the connecting lines.
+    markers: 2-tuple or list of 2-tuples
+        For each point style a marker. The first element of the inner tuple is
+        the marker symbol, the second one is a factor that is used to scale
+        the marker&#39;s size.
+    markersizes: float or list of floats
+        For each point style a marker size. The marker size is multiplied with a factor
+        of the corresponding marker.
+    medgecolors: float or list of floats
+        Defines the edge color for each point style.
+        It is passed as the lightness argument to `lighter()`
+        using the face color form `colors`. That is, 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    markersizes: float, list of floats
+        For each point style a marker edge width.
+    namespace: dict or None
+        Namespace to which the generated point styles are added.
+        If None add point styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further marker properties, e.g. alpha, zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    ln = prefix + suffix 
+    if not hasattr(namespace, ln):
+        setattr(namespace, ln, {})
+    # number of markers:
+    n_markers = 1
+    if len(markers) &gt;= 2 and isinstance(markers[1], (tuple, list)):
+        n_markers = len(markers)
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, dashes, lws, markersizes,
+              markeredgecolors, markeredgewidths):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    if n &lt; n_markers:
+        n = n_markers
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        sn = prefix + name + suffix
+        c = colors[k] if isinstance(colors, (tuple, list)) else colors
+        ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
+        lw = lws[k] if isinstance(lws, (tuple, list)) else lws
+        mk = markers[k] if n_markers &gt; 1 else markers
+        ms = markersizes[k] if isinstance(markersizes, (tuple, list)) else markersizes
+        mc = markeredgecolors[k] if isinstance(markeredgecolors, (tuple, list)) else markeredgecolors
+        mw = markeredgewidths[k] if isinstance(markeredgewidths, (tuple, list)) else markeredgewidths
+        pd = dict(color=c, linestyle=ds, linewidth=lw, marker=mk[0], markersize=mk[1]*ms,
+                  markeredgecolor=lighter(c, mc), markeredgewidth=mw, **kwargs)
+        setattr(namespace, sn, pd)
+        getattr(namespace, ln)[name] = pd
+
+
+def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
+                         markers, markersizes, markeredgecolors,
+                         markeredgewidths=1.0, namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate line styles, point styles, and line point styles.
+
+    Passes the arguments on to `make_linestyles()` and twice to `make_pointstyles()`,
+    once with `dashes=&#39;none&#39;` for non-connected markers, and once
+    with dashes and line widths for connecting lines.
+    See those functions for a detailed description.
+
+    Parameters
+    ----------
+    prefixes: list of strings
+        If the first string is not None, generate line styles using `make_linestyles()`.
+        If the second string is not None, generate point styles using `make_pointstyles()`.
+        If the third string is not None, generate linepoint styles using `make_pointstyles()`
+        with `pointdict` and `linedict` merged.
+    namespace: dict or None
+        Namespace to which the generated styles are added.
+        If None add line styles to the __main__ module.
+    *args:
+        All remaining arguments are explained in the `make_linestyles()` and `make_pointstyles()`
+        functions.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    if prefixes[0]:
+        make_linestyles(prefixes[0], names, suffix, colors, dashes, lws,
+                        namespace, **kwargs)
+    if prefixes[1]:
+        make_pointstyles(prefixes[1], names, suffix, colors, &#39;none&#39;, 0,
+                         markers, markersizes, markeredgecolors, markeredgewidths,
+                         namespace, **kwargs)
+    if prefixes[2]:
+        make_pointstyles(prefixes[2], names, suffix, colors, dashes, lws,
+                         markers, markersizes, markeredgecolors, markeredgewidths,
+                         namespace, **kwargs)
+
+
+def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fillalphas,
+                    namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate fill styles.
+
+    The generated dictionaries can be passed as key-word arguments
+    to `ax.fill_between()` commands.
+    For each corresponding name, color, edge color, edge width and alpha
+    a dictionary is generated holding these attributes.
+    The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_fillstyles(&#39;fs&#39;, &#39;PSD&#39;, [&#39;&#39;, &#39;s&#39;, &#39;a&#39;], [#00FF00], 2.0, 0.5, 0.4)
+    ```
+    generates the dictionaries named `fsPSD`, `fsPSDs`, `fsPSDa` defining a green fill color.
+    The first, `fsPSD` gets a black edge color with edge width set to 0.5.
+    The second, `fsPSDs` is without edge.
+    The third, `fsPSDa` is without edge and has alpha set to 0.4.
+    Further, `PSD` is added to `style_names`, and the three dictionaries are added
+    to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
+    Simply throw the dictionaries into a `fill_between()` command:
+    ```py
+    plt.fill_between(x, y0, y1, **fsPSD)
+    ```
+    or like this (here for a transparent fill style):
+    ```py
+    plt.plot(x, y, **fsa[&#39;PSD&#39;])
+    ```
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all fill style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffixes: list of strings or None
+        Sufffixes appended to all fill style names.  The first is for a
+        fill style with edge color, the second for a solid fill style
+        without edge, and the third for a transparent fill style without
+        edge. If None the corresponding style is not generated.
+    colors: matplotlib color or list of matplotlib colors
+        Fill colors.
+    edgecolors: float or list of floats
+        Defines edge colors for the first fill style.
+        It is passed as the lightness argument to `lighter()`
+        using the face color from `colors`. That is, 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    edgewidth: float or list of floats
+        Widths for the edge color of the first fill style.
+    fillalphas: float or list of floats
+        Alpha values for the transparent (third) fill style.
+    namespace: dict or None
+        Namespace to which the generated fill styles are added.
+        If None add fill styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further fill properties, e.g. zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    for suffix in suffixes:
+        if suffix is not None:
+            ln = prefix + suffix 
+            if not hasattr(namespace, ln):
+                setattr(namespace, ln, {})
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, edgecolors, edgewidths, fillalphas):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        for j, suffix in enumerate(suffixes):
+            if suffix is not None:
+                sn = prefix + name + suffix
+                c = colors[k] if isinstance(colors, (tuple, list)) else colors
+                ec = edgecolors[k] if isinstance(edgecolors, (tuple, list)) else edgecolors
+                ew = edgewidths[k] if isinstance(edgewidths, (tuple, list)) else edgewidths
+                fa = fillalphas[k] if isinstance(fillalphas, (tuple, list)) else fillalphas
+                filldict = dict(facecolor=c, **kwargs)
+                if j == 0:   # fill with edge:
+                    filldict.update(dict(edgecolor=lighter(c, ec), linewidth=ew))
+                elif j == 1: # fill without edge:
+                    filldict.update(dict(edgecolor=&#39;none&#39;))
+                elif j == 2: # fill without edge, with alpha:
+                    filldict.update(dict(edgecolor=&#39;none&#39;, alpha=fa))
+                setattr(namespace, sn, filldict)
+                getattr(namespace, prefix + suffix)[name] = filldict
+
+    
+def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
+                markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
+                fillalpha=0.4, namespace=None):
+    &#34;&#34;&#34; Generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
+
+    For each color and name a variety of plot styles are generated
+    (for the example, names is &#39;Female&#39;):
+    - Major line styles (prefix &#39;ls&#39;, no suffix, e.g. &#39;lsFemale&#39;)
+      for normal lines without markers.
+    - Minor line styles (prefix &#39;ls&#39;, suffix &#39;m&#39;, e.g. &#39;lsFemalem&#39;)
+      for thinner lines without markers.
+    - Major point styles (prefix &#39;ps&#39;, no suffix, e.g. &#39;psFemale&#39;)
+      for large markers without connecting lines.
+    - Major circular point styles (prefix &#39;ps&#39;, suffix &#39;c&#39;, e.g. &#39;psFemalec&#39;)
+      for large circular markers without connecting lines.
+    - Minor point styles (prefix &#39;ps&#39;, suffix &#39;m&#39;, e.g. &#39;psFemalem&#39;)
+      for small circular markers without connecting lines.
+    - Major linepoint styles (prefix &#39;lps&#39;, no suffix, e.g. &#39;lpsFemale&#39;)
+      for large markers with connecting lines.
+    - Major circular linepoint styles (prefix &#39;lps&#39;, suffix &#39;c&#39;, e.g. &#39;lpsFemalec&#39;)
+      for large circular markers with connecting lines.
+    - Minor linepoint styles (prefix &#39;lps&#39;, suffix &#39;m&#39;, e.g. &#39;lpsFemalem&#39;)
+      for small circular markers with connecting lines.
+    - Fill styles with edge color (prefix &#39;fs&#39;, no suffix, e.g. &#39;fsFemale&#39;)
+    - Fill styles with solid fill color and no edge color (prefix &#39;fs&#39;, suffix &#39;s&#39;, e.g. &#39;fsFemals&#39;)
+    - Fill styles with transparent fill color and no edge color (prefix &#39;fs&#39;, suffix &#39;a&#39;, e.g. &#39;fsFemala&#39;)
+                
+    Parameters
+    ----------
+    names: list of strings
+        For each color in `colors` a name.
+    colors: list of RGB hex-strings
+        For each color in the list line, point, linepoint, and fill styles are generated.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        For each color a descriptor of a matplotlib linestyle
+        that is used for line and linepoint styles.
+    markers: tuple or list of tuples
+        For each color a marker that is used for point and linepoint styles.
+        The first element of the tuple is the marker symbol,
+        the second on is a factor that is used to scale the markeredgewidth in `pointdict`.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
+    mec: float
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
+    namespace: dict or None
+        Namespace to which the generated styles are added.
+        If None add styles to the __main__ module.
+    &#34;&#34;&#34;    
+    if namespace is None:
+        namespace = __main__
+
+    # line, point and linepoint styles:
+    make_linepointstyles([&#39;ls&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;&#39;, colors, dashes, lwthick,
+                         markers, markerlarge, mec, mew, namespace)
+    # circular point and linepoint styles:
+    make_linepointstyles([&#39;&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;c&#39;, colors, dashes, lwthick,
+                         (&#39;o&#39;, 1.0), markerlarge, mec, mew, namespace)
+    # minor line, point and linepoint styles:
+    make_linepointstyles([&#39;ls&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;m&#39;, colors, dashes, lwthin,
+                         (&#39;o&#39;, 1.0), markersmall, mec, mew, namespace)
+    # fill styles:
+    make_fillstyles(&#39;fs&#39;, names, [&#39;&#39;, &#39;s&#39;, &#39;a&#39;], colors, mec, mew, fillalpha, namespace)
+
+    
+def generic_styles(colors=&#39;muted&#39;, lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4, namespace=None):
+    &#34;&#34;&#34; Generates some generic line, points, linepoints and fill styles.
+    
+    Generates a range of line (ls), point (ps), linepoint (lps) and
+    fill (fs) styles defined in `namespace`,
+    named A1-A3 (red, orange, yellow), B1-B4 (blues), C1-C4 (greens),
+    that can be used as follows:
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
+
+    Each style is derived from a main color as indicated by the capital letter.
+    Substyles, indicated by the number following the capital letter, have
+    the same style and similar hues.
+
+    Line styles (ls):
+    
+    - plain style with a thick, solid line (e.g. `lsA1`), and
+    - minor style with a thinner line (e.g. `lsA1m`).
+
+    Point (marker) styles (ps):
+    
+    - plain style with large solid markers (e.g. `psB1`),
+    - plain style with large circular markers (e.g. `psB1c`), and
+    - minor style with smaller, circular markers (e.g. `psB1m`).
+    
+    Linepoint styles (lps, markers connected by lines):
+    
+    - plain style with large solid markers (e.g. `lpsA2`),
+    - plain style with large circular markers (e.g. `lpsA2c`),
+    - minor style with smaller (circular) markers (e.g. `lpsA2m`).
+    
+    Fill styles (fs):
+    
+    - plain (e.g. `fsA3`) for a solid fill color and an edge color,
+    - solid (e.g. `fsA3s`) for a solid fill color without edge color, and
+    - alpha (e.g. `fsA3a`) for a transparent fill color.
+
+    `palette`, a dictionary with colors of the specified color palette,
+    is added to `namespace` as well.
+
+    Parameters
+    ----------
+    colors: string
+        Name of the color palette from `plottools.colors` to be used.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
+    mec: float
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
+    namespace: dict
+        Namespace to which the generated line, point, linepoint and fill styles are added.
+        If None add styles to the global namespace of the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    namespace.palette = palettes[colors]
+    palette = namespace.palette
+    names = [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;,
+             &#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;,
+             &#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;, &#39;C4&#39;]
+    colors = [palette[&#39;red&#39;], palette[&#39;orange&#39;], palette[&#39;yellow&#39;],
+              palette[&#39;blue&#39;], palette[&#39;purple&#39;], palette[&#39;magenta&#39;], palette[&#39;lightblue&#39;], palette[&#39;pink&#39;], 
+              palette[&#39;lightgreen&#39;], palette[&#39;green&#39;], palette[&#39;darkgreen&#39;], palette[&#39;cyan&#39;]]
+    markers = [(&#39;o&#39;, 1.0), (&#39;p&#39;, 1.1), (&#39;h&#39;, 1.1),
+               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25), ((3, 1, 0), 1.25),
+               (&#39;s&#39;, 0.9), (&#39;D&#39;, 0.85), (&#39;*&#39;, 1.6), ((4, 1, 45), 1.4)]
+    plot_styles(names, colors, &#39;-&#39;, markers, lwthick=lwthick, lwthin=lwthin,
+                markerlarge=markerlarge, markersmall=markersmall, mec=mec, mew=mew,
+                fillalpha=fillalpha, namespace=namespace)
+
+    
+def plot_linestyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and lines of all available line styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the line styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    k = 0
+    for j, name in enumerate(namespace.style_names):
+        gotit = False
+        if name in namespace.ls:
+            ax.text(k, 0.9, &#39;ls&#39;+name)
+            ax.plot([k, k+3.5], [1.0, 1.8], **namespace.ls[name])
+            gotit = True
+        if name in namespace.lsm:
+            ax.text(k, -0.1, &#39;ls&#39;+name+&#39;m&#39;)
+            ax.plot([k, k+3.5], [0.0, 0.8], **namespace.lsm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(-0.2, k+2.8)
+    ax.set_ylim(-0.15, 1.9)
+    ax.set_title(&#39;line styles&#39;)
+        
+
+def plot_pointstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and markers of all available point styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the point styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    dy = 0.2
+    k = 0
+    for j, name in enumerate(reversed(namespace.style_names)):
+        gotit = False
+        if name in namespace.ps:
+            ax.text(0.1, k, &#39;ps&#39;+name)
+            ax.plot([0.6], [k+dy], **namespace.ps[name])
+            gotit = True
+        if name in namespace.psc:
+            ax.text(1.1, k, &#39;ps&#39;+name+&#39;c&#39;)
+            ax.plot([1.6], [k+dy], **namespace.psc[name])
+            gotit = True
+        if name in namespace.psm:
+            ax.text(2.1, k, &#39;ps&#39;+name+&#39;m&#39;)
+            ax.plot([2.6], [k+dy], **namespace.psm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(0.0, 3.0)
+    ax.set_ylim(-1.0, k)
+    ax.set_title(&#39;point styles&#39;)
+        
+
+def plot_linepointstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names, lines, and markers of all available linepoint styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the linepoint styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    dy = 0.2
+    k = 0
+    for j, name in enumerate(reversed(namespace.style_names)):
+        gotit = False
+        if name in namespace.lps:
+            ax.text(0.1, k-dy, &#39;lps&#39;+name)
+            ax.plot([0.8, 1.1, 1.4], [k, k, k], **namespace.lps[name])
+            gotit = True
+        if name in namespace.lpsc:
+            ax.text(2.1, k-dy, &#39;lps&#39;+name+&#39;c&#39;)
+            ax.plot([2.8, 3.1, 3.4], [k, k, k], **namespace.lpsc[name])
+            gotit = True
+        if name in namespace.lpsm:
+            ax.text(4.1, k-dy, &#39;lps&#39;+name+&#39;m&#39;)
+            ax.plot([4.8, 5.1, 5.4], [k, k, k], **namespace.lpsm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(0.0, 6.0)
+    ax.set_ylim(-1.0, k)
+    ax.set_title(&#39;linepoint styles&#39;)
+        
+
+def plot_fillstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and patches of all available fill styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the fill styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    x = np.linspace(0.0, 0.8, 50)
+    y0 = np.zeros(len(x))
+    y1 = -x*(x-0.6)*0.6/0.3/0.3
+    y1[y1&lt;0.0] = 0.0
+    y2 = np.zeros(len(x))
+    y2[x&gt;0.3] = 0.7
+    ax.text(0.0, 2.75, &#39;plain&#39;)
+    ax.text(0.0, 1.75, &#39;solid&#39;)
+    ax.text(0.0, 0.75, &#39;alpha&#39;)
+    k = 0
+    for j, name in enumerate(namespace.style_names):
+        gotit = False
+        if name in namespace.fs:
+            ax.text(k, 1.9, &#39;fs&#39;+name)
+            ax.fill_between(x+k, y0+2, y2+2, **namespace.fs[name])
+            ax.fill_between(x+k, y0+2, y1+2, **namespace.fs[name])
+            gotit = True
+        if name in namespace.fss:
+            ax.text(k, 0.9, &#39;fs&#39;+name+&#39;s&#39;)
+            ax.fill_between(x+k, y0+1, y2+1, **namespace.fss[name])
+            ax.fill_between(x+k, y0+1, y1+1, **namespace.fss[name])
+            gotit = True
+        if name in namespace.fsa:
+            ax.text(k, -0.1, &#39;fs&#39;+name+&#39;a&#39;)
+            ax.fill_between(x+k, y0+0, y2+0, **namespace.fsa[name])
+            ax.fill_between(x+k, y0+0, y1+0, **namespace.fsa[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(-0.2, k)
+    ax.set_ylim(-0.15, 2.9)
+    ax.set_title(&#39;fill styles&#39;)
+        
+
+def demo(mode=&#39;line&#39;):
+    &#34;&#34;&#34; Run a demonstration of the styles module.
+
+    Parameters
+    ----------
+    mode: string
+        &#39;line&#39;: plot the names and lines of all available line styles
+        &#39;point&#39;: plot the names and points (markers) of all available point styles
+        &#39;linepoint&#39;: plot the names and lines of all available linepoint styles
+        &#39;fill&#39;: plot the names and patches of all available fill styles
+        &#39;arrow&#39;: plot the names and arrows of all available arrow styles
+    &#34;&#34;&#34;
+    generic_styles(colors=&#39;muted&#39;, lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4)
+    fig, ax = plt.subplots()
+    if mode == &#39;lps&#39; or &#39;linep&#39; in mode:
+        plot_linepointstyles(ax)
+    elif mode == &#39;ls&#39; or &#39;line&#39; in mode:
+        plot_linestyles(ax)
+    elif mode == &#39;ps&#39; or &#39;point&#39; in mode:
+        plot_pointstyles(ax)
+    elif mode == &#39;fs&#39; or &#39;fill&#39; in mode:
+        plot_fillstyles(ax)
+    elif mode == &#39;ars&#39; or mode == &#39;as&#39; or &#39;arrow&#39; in mode:
+        from .arrows import generic_arrow_styles, plot_arrowstyles
+        generic_arrow_styles(palettes[&#39;muted&#39;], 3)
+        plot_arrowstyles(ax)
+    else:
+        print(&#39;unknown option %s!&#39; % mode)
+        print(&#39;possible options are: line, ls, point, ps, linep(oint), lps, fill, fs, arrow, as, ars&#39;)
+        return
+    plt.show()
+
+
+if __name__ == &#34;__main__&#34;:
+    mode = &#39;line&#39;
+    if len(sys.argv) &gt; 1:
+        mode = sys.argv[1]
+    demo(mode)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.styles.darker_styles"><code class="name flex">
+<span>def <span class="ident">darker_styles</span></span>(<span>style, n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Duplicate style with a range of darker colors.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>style</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary holding plot style parameter like <code>linewidth</code> and <code>color</code> or <code>facecolor</code>.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of darker colors to be generated (<code>n&gt;1</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>styles</code></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+<dd><code>n</code> copies of <code><a title="plottools.styles.style" href="#plottools.styles.style">style()</a></code> with increasingly darker <code>color</code> or <code>facecolor</code>.
+The first style is the original one.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p>Suppose you have a style for green lines in a plot like</p>
+<pre><code class="language-py">lsGreen = dict(color=colors['lightgreen'], lw=2)
+</code></pre>
+<p>Now you need 4 variants of this plot style with increasingly darker colors.
+Just call</p>
+<pre><code class="language-py">lsGreens = darker_styles(lsGreen, 4)
+</code></pre>
+<p>and you can do something like</p>
+<pre><code class="language-py">for k, ls in enumerate(lsGreens):
+    ax.plot(x, y+0.5*k, **ls)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def darker_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of darker colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly darker `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for green lines in a plot like
+    ```py
+    lsGreen = dict(color=colors[&#39;lightgreen&#39;], lw=2)
+    ```
+    Now you need 4 variants of this plot style with increasingly darker colors.
+    Just call
+    ```py
+    lsGreens = darker_styles(lsGreen, 4)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsGreens):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = darker(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>mode='line')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the styles module.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>mode</code></strong> :&ensp;<code>string</code></dt>
+<dd>'line': plot the names and lines of all available line styles
+'point': plot the names and points (markers) of all available point styles
+'linepoint': plot the names and lines of all available linepoint styles
+'fill': plot the names and patches of all available fill styles
+'arrow': plot the names and arrows of all available arrow styles</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def demo(mode=&#39;line&#39;):
+    &#34;&#34;&#34; Run a demonstration of the styles module.
+
+    Parameters
+    ----------
+    mode: string
+        &#39;line&#39;: plot the names and lines of all available line styles
+        &#39;point&#39;: plot the names and points (markers) of all available point styles
+        &#39;linepoint&#39;: plot the names and lines of all available linepoint styles
+        &#39;fill&#39;: plot the names and patches of all available fill styles
+        &#39;arrow&#39;: plot the names and arrows of all available arrow styles
+    &#34;&#34;&#34;
+    generic_styles(colors=&#39;muted&#39;, lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4)
+    fig, ax = plt.subplots()
+    if mode == &#39;lps&#39; or &#39;linep&#39; in mode:
+        plot_linepointstyles(ax)
+    elif mode == &#39;ls&#39; or &#39;line&#39; in mode:
+        plot_linestyles(ax)
+    elif mode == &#39;ps&#39; or &#39;point&#39; in mode:
+        plot_pointstyles(ax)
+    elif mode == &#39;fs&#39; or &#39;fill&#39; in mode:
+        plot_fillstyles(ax)
+    elif mode == &#39;ars&#39; or mode == &#39;as&#39; or &#39;arrow&#39; in mode:
+        from .arrows import generic_arrow_styles, plot_arrowstyles
+        generic_arrow_styles(palettes[&#39;muted&#39;], 3)
+        plot_arrowstyles(ax)
+    else:
+        print(&#39;unknown option %s!&#39; % mode)
+        print(&#39;possible options are: line, ls, point, ps, linep(oint), lps, fill, fs, arrow, as, ars&#39;)
+        return
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.generic_styles"><code class="name flex">
+<span>def <span class="ident">generic_styles</span></span>(<span>colors='muted', lwthick=1.7, lwthin=0.8, markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8, fillalpha=0.4, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generates some generic line, points, linepoints and fill styles.</p>
+<p>Generates a range of line (ls), point (ps), linepoint (lps) and
+fill (fs) styles defined in <code>namespace</code>,
+named A1-A3 (red, orange, yellow), B1-B4 (blues), C1-C4 (greens),
+that can be used as follows:</p>
+<pre><code class="language-py">ax.plot(x, y, **lsA1)   # major line only
+ax.plot(x, y, **lsB2m)  # minor line only
+ax.plot(x, y, **psA2)   # markers (points) only
+ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+</code></pre>
+<p>Each style is derived from a main color as indicated by the capital letter.
+Substyles, indicated by the number following the capital letter, have
+the same style and similar hues.</p>
+<p>Line styles (ls):</p>
+<ul>
+<li>plain style with a thick, solid line (e.g. <code>lsA1</code>), and</li>
+<li>minor style with a thinner line (e.g. <code>lsA1m</code>).</li>
+</ul>
+<p>Point (marker) styles (ps):</p>
+<ul>
+<li>plain style with large solid markers (e.g. <code>psB1</code>),</li>
+<li>plain style with large circular markers (e.g. <code>psB1c</code>), and</li>
+<li>minor style with smaller, circular markers (e.g. <code>psB1m</code>).</li>
+</ul>
+<p>Linepoint styles (lps, markers connected by lines):</p>
+<ul>
+<li>plain style with large solid markers (e.g. <code>lpsA2</code>),</li>
+<li>plain style with large circular markers (e.g. <code>lpsA2c</code>),</li>
+<li>minor style with smaller (circular) markers (e.g. <code>lpsA2m</code>).</li>
+</ul>
+<p>Fill styles (fs):</p>
+<ul>
+<li>plain (e.g. <code>fsA3</code>) for a solid fill color and an edge color,</li>
+<li>solid (e.g. <code>fsA3s</code>) for a solid fill color without edge color, and</li>
+<li>alpha (e.g. <code>fsA3a</code>) for a transparent fill color.</li>
+</ul>
+<p><code>palette</code>, a dictionary with colors of the specified color palette,
+is added to <code>namespace</code> as well.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>colors</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the color palette from <code><a title="plottools.colors" href="colors.html">plottools.colors</a></code> to be used.</dd>
+<dt><strong><code>lwthick</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for major line styles.</dd>
+<dt><strong><code>lwthin</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for minor line styles.</dd>
+<dt><strong><code>markerlarge</code></strong> :&ensp;<code>float</code></dt>
+<dd>Marker size for major point styles.</dd>
+<dt><strong><code>markersmall</code></strong> :&ensp;<code>float</code></dt>
+<dd>Marker size for minor point styles.</dd>
+<dt><strong><code>mec</code></strong> :&ensp;<code>float</code></dt>
+<dd>Edge color for markers and fill styles. A factor between 0 and 2 passed together
+with the facecolor to <code>lighter()</code>. I.e. 0 results in a white edge,
+1 in an edge of the color of the face color, and 2 in a black edge.</dd>
+<dt><strong><code>mew</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for marker edges and fill styles.</dd>
+<dt><strong><code>fillalpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for transparent fill styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Namespace to which the generated line, point, linepoint and fill styles are added.
+If None add styles to the global namespace of the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generic_styles(colors=&#39;muted&#39;, lwthick=1.7, lwthin=0.8,
+                   markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
+                   fillalpha=0.4, namespace=None):
+    &#34;&#34;&#34; Generates some generic line, points, linepoints and fill styles.
+    
+    Generates a range of line (ls), point (ps), linepoint (lps) and
+    fill (fs) styles defined in `namespace`,
+    named A1-A3 (red, orange, yellow), B1-B4 (blues), C1-C4 (greens),
+    that can be used as follows:
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
+
+    Each style is derived from a main color as indicated by the capital letter.
+    Substyles, indicated by the number following the capital letter, have
+    the same style and similar hues.
+
+    Line styles (ls):
+    
+    - plain style with a thick, solid line (e.g. `lsA1`), and
+    - minor style with a thinner line (e.g. `lsA1m`).
+
+    Point (marker) styles (ps):
+    
+    - plain style with large solid markers (e.g. `psB1`),
+    - plain style with large circular markers (e.g. `psB1c`), and
+    - minor style with smaller, circular markers (e.g. `psB1m`).
+    
+    Linepoint styles (lps, markers connected by lines):
+    
+    - plain style with large solid markers (e.g. `lpsA2`),
+    - plain style with large circular markers (e.g. `lpsA2c`),
+    - minor style with smaller (circular) markers (e.g. `lpsA2m`).
+    
+    Fill styles (fs):
+    
+    - plain (e.g. `fsA3`) for a solid fill color and an edge color,
+    - solid (e.g. `fsA3s`) for a solid fill color without edge color, and
+    - alpha (e.g. `fsA3a`) for a transparent fill color.
+
+    `palette`, a dictionary with colors of the specified color palette,
+    is added to `namespace` as well.
+
+    Parameters
+    ----------
+    colors: string
+        Name of the color palette from `plottools.colors` to be used.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
+    mec: float
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
+    namespace: dict
+        Namespace to which the generated line, point, linepoint and fill styles are added.
+        If None add styles to the global namespace of the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    namespace.palette = palettes[colors]
+    palette = namespace.palette
+    names = [&#39;A1&#39;, &#39;A2&#39;, &#39;A3&#39;,
+             &#39;B1&#39;, &#39;B2&#39;, &#39;B3&#39;, &#39;B4&#39;, &#39;B5&#39;,
+             &#39;C1&#39;, &#39;C2&#39;, &#39;C3&#39;, &#39;C4&#39;]
+    colors = [palette[&#39;red&#39;], palette[&#39;orange&#39;], palette[&#39;yellow&#39;],
+              palette[&#39;blue&#39;], palette[&#39;purple&#39;], palette[&#39;magenta&#39;], palette[&#39;lightblue&#39;], palette[&#39;pink&#39;], 
+              palette[&#39;lightgreen&#39;], palette[&#39;green&#39;], palette[&#39;darkgreen&#39;], palette[&#39;cyan&#39;]]
+    markers = [(&#39;o&#39;, 1.0), (&#39;p&#39;, 1.1), (&#39;h&#39;, 1.1),
+               ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25), ((3, 1, 0), 1.25),
+               (&#39;s&#39;, 0.9), (&#39;D&#39;, 0.85), (&#39;*&#39;, 1.6), ((4, 1, 45), 1.4)]
+    plot_styles(names, colors, &#39;-&#39;, markers, lwthick=lwthick, lwthin=lwthin,
+                markerlarge=markerlarge, markersmall=markersmall, mec=mec, mew=mew,
+                fillalpha=fillalpha, namespace=namespace)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.lighter_darker_styles"><code class="name flex">
+<span>def <span class="ident">lighter_darker_styles</span></span>(<span>style, n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Duplicate style with a range of lighter and darker colors.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>style</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary holding plot style parameter like <code>linewidth</code> and <code>color</code> or <code>facecolor</code>.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of modified colors to be generated (<code>n&gt;1</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>styles</code></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+<dd><code>n</code> copies of <code><a title="plottools.styles.style" href="#plottools.styles.style">style()</a></code> with <code>color</code> or <code>facecolor</code> starting from a lighter color,
+traversing over the original color to darker colors.
+The central style has the original color if <code>n</code> is odd.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p>Suppose you have a style for blue lines in a plot like</p>
+<pre><code class="language-py">lsBlue = dict(color=colors['blue'], lw=2)
+</code></pre>
+<p>Now you need 5 variants of this plot style with lighter and darker colors.
+Just call</p>
+<pre><code class="language-py">lsBlues = lighter_darker_styles(lsBlue, 5)
+</code></pre>
+<p>and you can do something like</p>
+<pre><code class="language-py">for k, ls in enumerate(lsBlues):
+    ax.plot(x, y+0.5*k, **ls)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lighter_darker_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of lighter and darker colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of modified colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with `color` or `facecolor` starting from a lighter color,
+        traversing over the original color to darker colors.
+        The central style has the original color if `n` is odd.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```py
+    lsBlue = dict(color=colors[&#39;blue&#39;], lw=2)
+    ```
+    Now you need 5 variants of this plot style with lighter and darker colors.
+    Just call
+    ```py
+    lsBlues = lighter_darker_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = lighter(c, 1+(k-(n-1)/2)/((n+1)//2))
+                styles.append(sd)
+            return styles
+    return [style]*n</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.lighter_styles"><code class="name flex">
+<span>def <span class="ident">lighter_styles</span></span>(<span>style, n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Duplicate style with a range of lighter colors.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>style</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary holding plot style parameter like <code>linewidth</code> and <code>color</code> or <code>facecolor</code>.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of lighter colors to be generated (<code>n&gt;1</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>styles</code></strong> :&ensp;<code>list</code> of <code>dict</code></dt>
+<dd><code>n</code> copies of <code><a title="plottools.styles.style" href="#plottools.styles.style">style()</a></code> with increasingly lighter <code>color</code> or <code>facecolor</code>.
+The first style is the original one.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<p>Suppose you have a style for blue lines in a plot like</p>
+<pre><code class="language-py">lsBlue = dict(color=colors['blue'], lw=2)
+</code></pre>
+<p>Now you need 5 variants of this plot style with increasingly lighter colors.
+Just call</p>
+<pre><code class="language-py">lsBlues = lighter_styles(lsBlue, 5)
+</code></pre>
+<p>and you can do something like</p>
+<pre><code class="language-py">for k, ls in enumerate(lsBlues):
+    ax.plot(x, y+0.5*k, **ls)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lighter_styles(style, n):
+    &#34;&#34;&#34; Duplicate style with a range of lighter colors.
+
+    Parameters
+    ----------
+    style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    n: int
+        Number of lighter colors to be generated (`n&gt;1`).
+
+    Returns
+    -------
+    styles: list of dict
+        `n` copies of `style` with increasingly lighter `color` or `facecolor`.
+        The first style is the original one.
+
+    Example
+    -------
+    Suppose you have a style for blue lines in a plot like
+    ```py
+    lsBlue = dict(color=colors[&#39;blue&#39;], lw=2)
+    ```
+    Now you need 5 variants of this plot style with increasingly lighter colors.
+    Just call
+    ```py
+    lsBlues = lighter_styles(lsBlue, 5)
+    ```
+    and you can do something like
+    ```py
+    for k, ls in enumerate(lsBlues):
+        ax.plot(x, y+0.5*k, **ls)
+    ```
+    &#34;&#34;&#34;
+    for ck in [&#39;color&#39;, &#39;facecolor&#39;]:
+        if ck in style:
+            c = style[ck]
+            styles = []
+            for k in range(n):
+                sd = dict(**style)
+                sd[ck] = lighter(c, 1.0-k/n)
+                styles.append(sd)
+            return styles
+    return [style]*n</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.make_fillstyles"><code class="name flex">
+<span>def <span class="ident">make_fillstyles</span></span>(<span>prefix, names, suffixes, colors, edgecolors, edgewidths, fillalphas, namespace=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate fill styles.</p>
+<p>The generated dictionaries can be passed as key-word arguments
+to <code>ax.fill_between()</code> commands.
+For each corresponding name, color, edge color, edge width and alpha
+a dictionary is generated holding these attributes.
+The generated dictionaries are named <code>prefix + name + suffix</code>,
+and are additionally added to the <code>prefix + suffix</code> dictionary in the given namespace.
+<code>name</code> is also added to the <code>style_names</code> list in the namespace.</p>
+<p>For example</p>
+<pre><code class="language-py">make_fillstyles('fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4)
+</code></pre>
+<p>generates the dictionaries named <code>fsPSD</code>, <code>fsPSDs</code>, <code>fsPSDa</code> defining a green fill color.
+The first, <code>fsPSD</code> gets a black edge color with edge width set to 0.5.
+The second, <code>fsPSDs</code> is without edge.
+The third, <code>fsPSDa</code> is without edge and has alpha set to 0.4.
+Further, <code>PSD</code> is added to <code>style_names</code>, and the three dictionaries are added
+to the <code>fs</code>, <code>fss</code> and <code>fsa</code> dictionaries under the key <code>PSD</code>.
+Simply throw the dictionaries into a <code>fill_between()</code> command:</p>
+<pre><code class="language-py">plt.fill_between(x, y0, y1, **fsPSD)
+</code></pre>
+<p>or like this (here for a transparent fill style):</p>
+<pre><code class="language-py">plt.plot(x, y, **fsa['PSD'])
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>prefix</code></strong> :&ensp;<code>string</code></dt>
+<dd>Prefix prepended to all fill style names.</dd>
+<dt><strong><code>names</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>Names of the line styles.
+If string and a '%' is contained, then formats like '%d' are replaced
+by the index of the line style plus one.</dd>
+<dt><strong><code>suffixes</code></strong> :&ensp;<code>list</code> of <code>strings</code> or <code>None</code></dt>
+<dd>Sufffixes appended to all fill style names.
+The first is for a
+fill style with edge color, the second for a solid fill style
+without edge, and the third for a transparent fill style without
+edge. If None the corresponding style is not generated.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>matplotlib color</code> or <code>list</code> of <code>matplotlib colors</code></dt>
+<dd>Fill colors.</dd>
+<dt><strong><code>edgecolors</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Defines edge colors for the first fill style.
+It is passed as the lightness argument to <code>lighter()</code>
+using the face color from <code>colors</code>. That is, 0 results in a white edge color,
+1 in an edge with the same color as the face color, and 2 in a black edge color.</dd>
+<dt><strong><code>edgewidth</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Widths for the edge color of the first fill style.</dd>
+<dt><strong><code>fillalphas</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Alpha values for the transparent (third) fill style.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace to which the generated fill styles are added.
+If None add fill styles to the <strong>main</strong> module.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key-word arguments with further fill properties, e.g. zorder.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_fillstyles(prefix, names, suffixes, colors, edgecolors, edgewidths, fillalphas,
+                    namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate fill styles.
+
+    The generated dictionaries can be passed as key-word arguments
+    to `ax.fill_between()` commands.
+    For each corresponding name, color, edge color, edge width and alpha
+    a dictionary is generated holding these attributes.
+    The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_fillstyles(&#39;fs&#39;, &#39;PSD&#39;, [&#39;&#39;, &#39;s&#39;, &#39;a&#39;], [#00FF00], 2.0, 0.5, 0.4)
+    ```
+    generates the dictionaries named `fsPSD`, `fsPSDs`, `fsPSDa` defining a green fill color.
+    The first, `fsPSD` gets a black edge color with edge width set to 0.5.
+    The second, `fsPSDs` is without edge.
+    The third, `fsPSDa` is without edge and has alpha set to 0.4.
+    Further, `PSD` is added to `style_names`, and the three dictionaries are added
+    to the `fs`, `fss` and `fsa` dictionaries under the key `PSD`.
+    Simply throw the dictionaries into a `fill_between()` command:
+    ```py
+    plt.fill_between(x, y0, y1, **fsPSD)
+    ```
+    or like this (here for a transparent fill style):
+    ```py
+    plt.plot(x, y, **fsa[&#39;PSD&#39;])
+    ```
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all fill style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffixes: list of strings or None
+        Sufffixes appended to all fill style names.  The first is for a
+        fill style with edge color, the second for a solid fill style
+        without edge, and the third for a transparent fill style without
+        edge. If None the corresponding style is not generated.
+    colors: matplotlib color or list of matplotlib colors
+        Fill colors.
+    edgecolors: float or list of floats
+        Defines edge colors for the first fill style.
+        It is passed as the lightness argument to `lighter()`
+        using the face color from `colors`. That is, 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    edgewidth: float or list of floats
+        Widths for the edge color of the first fill style.
+    fillalphas: float or list of floats
+        Alpha values for the transparent (third) fill style.
+    namespace: dict or None
+        Namespace to which the generated fill styles are added.
+        If None add fill styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further fill properties, e.g. zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    for suffix in suffixes:
+        if suffix is not None:
+            ln = prefix + suffix 
+            if not hasattr(namespace, ln):
+                setattr(namespace, ln, {})
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, edgecolors, edgewidths, fillalphas):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        for j, suffix in enumerate(suffixes):
+            if suffix is not None:
+                sn = prefix + name + suffix
+                c = colors[k] if isinstance(colors, (tuple, list)) else colors
+                ec = edgecolors[k] if isinstance(edgecolors, (tuple, list)) else edgecolors
+                ew = edgewidths[k] if isinstance(edgewidths, (tuple, list)) else edgewidths
+                fa = fillalphas[k] if isinstance(fillalphas, (tuple, list)) else fillalphas
+                filldict = dict(facecolor=c, **kwargs)
+                if j == 0:   # fill with edge:
+                    filldict.update(dict(edgecolor=lighter(c, ec), linewidth=ew))
+                elif j == 1: # fill without edge:
+                    filldict.update(dict(edgecolor=&#39;none&#39;))
+                elif j == 2: # fill without edge, with alpha:
+                    filldict.update(dict(edgecolor=&#39;none&#39;, alpha=fa))
+                setattr(namespace, sn, filldict)
+                getattr(namespace, prefix + suffix)[name] = filldict</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.make_linepointstyles"><code class="name flex">
+<span>def <span class="ident">make_linepointstyles</span></span>(<span>prefixes, names, suffix, colors, dashes, lws, markers, markersizes, markeredgecolors, markeredgewidths=1.0, namespace=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate line styles, point styles, and line point styles.</p>
+<p>Passes the arguments on to <code><a title="plottools.styles.make_linestyles" href="#plottools.styles.make_linestyles">make_linestyles()</a></code> and twice to <code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles()</a></code>,
+once with <code>dashes='none'</code> for non-connected markers, and once
+with dashes and line widths for connecting lines.
+See those functions for a detailed description.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>prefixes</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>If the first string is not None, generate line styles using <code><a title="plottools.styles.make_linestyles" href="#plottools.styles.make_linestyles">make_linestyles()</a></code>.
+If the second string is not None, generate point styles using <code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles()</a></code>.
+If the third string is not None, generate linepoint styles using <code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles()</a></code>
+with <code>pointdict</code> and <code>linedict</code> merged.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace to which the generated styles are added.
+If None add line styles to the <strong>main</strong> module.</dd>
+</dl>
+<p>*args:
+All remaining arguments are explained in the <code><a title="plottools.styles.make_linestyles" href="#plottools.styles.make_linestyles">make_linestyles()</a></code> and <code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles()</a></code>
+functions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
+                         markers, markersizes, markeredgecolors,
+                         markeredgewidths=1.0, namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate line styles, point styles, and line point styles.
+
+    Passes the arguments on to `make_linestyles()` and twice to `make_pointstyles()`,
+    once with `dashes=&#39;none&#39;` for non-connected markers, and once
+    with dashes and line widths for connecting lines.
+    See those functions for a detailed description.
+
+    Parameters
+    ----------
+    prefixes: list of strings
+        If the first string is not None, generate line styles using `make_linestyles()`.
+        If the second string is not None, generate point styles using `make_pointstyles()`.
+        If the third string is not None, generate linepoint styles using `make_pointstyles()`
+        with `pointdict` and `linedict` merged.
+    namespace: dict or None
+        Namespace to which the generated styles are added.
+        If None add line styles to the __main__ module.
+    *args:
+        All remaining arguments are explained in the `make_linestyles()` and `make_pointstyles()`
+        functions.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    if prefixes[0]:
+        make_linestyles(prefixes[0], names, suffix, colors, dashes, lws,
+                        namespace, **kwargs)
+    if prefixes[1]:
+        make_pointstyles(prefixes[1], names, suffix, colors, &#39;none&#39;, 0,
+                         markers, markersizes, markeredgecolors, markeredgewidths,
+                         namespace, **kwargs)
+    if prefixes[2]:
+        make_pointstyles(prefixes[2], names, suffix, colors, dashes, lws,
+                         markers, markersizes, markeredgecolors, markeredgewidths,
+                         namespace, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.make_linestyles"><code class="name flex">
+<span>def <span class="ident">make_linestyles</span></span>(<span>prefix, names, suffix, colors, dashes='-', lws=1, namespace=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate line styles.</p>
+<p>The generated dictionaries can be passed as key-word arguments to <code>ax.plot()</code> commands.
+For each corresponding name, color, line style and line width a dictionary is generated
+holding these attributes. The generated dictionaries are named <code>prefix + name + suffix</code>,
+and are additionally added to the <code>prefix + suffix</code> dictionary in the given namespace.
+<code>name</code> is also added to the <code>style_names</code> list in the namespace.</p>
+<p>For example</p>
+<pre><code class="language-py">make_linestyles('ls', 'Male', '', 'blue', '-', 2)
+</code></pre>
+<p>generates a dictionary named <code>lsMale</code> defining a blue solid line,
+adds <code>Male</code> to the <code>style_names</code> list,
+and adds the <code>lsMale</code> dictionary to <code>ls</code> under the key <code>Male</code>.
+Simply throw the dictionary into a <code>plot()</code> command:</p>
+<pre><code class="language-py">plt.plot(x, y, **lsMale)
+</code></pre>
+<p>or</p>
+<pre><code class="language-py">plt.plot(x, y, **ls['Male'])
+</code></pre>
+<p>this is the same as:</p>
+<pre><code class="language-py">plt.plot(x, y, '-', color='#0000FF', lw=2)
+</code></pre>
+<p>but is more expressive and can be changed at a single central place.</p>
+<p>This</p>
+<pre><code class="language-py">make_linestyles('ls', ['Red', 'Green'], 'm', ['r', 'g'], ['-', '--'], 0.5)
+</code></pre>
+<p>adds two line styles 'lsRedm', 'lsGreenm' to the main module
+with the respective colors and a thin solid or dashed line, respectively.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>prefix</code></strong> :&ensp;<code>string</code></dt>
+<dd>Prefix prepended to all line style names.</dd>
+<dt><strong><code>names</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>Names of the line styles.
+If string and a '%' is contained, then formats like '%d' are replaced
+by the index of the line style plus one.</dd>
+<dt><strong><code>suffix</code></strong> :&ensp;<code>string</code></dt>
+<dd>Sufffix appended to all line style names.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>matplotlib color</code> or <code>list</code> of <code>matplotlib colors</code></dt>
+<dd>Colors of the line styles.</dd>
+<dt><strong><code>dashes</code></strong> :&ensp;<code>matplotlib linestyle</code> or <code>list</code> of <code>matplotlib linestyles</code></dt>
+<dd>Dash styles of the connecting lines.</dd>
+<dt><strong><code>lws</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Widths of the connecting lines.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace to which the generated line styles are added.
+If None add line styles to the <strong>main</strong> module.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key-word arguments with further line properties, e.g. alpha, zorder.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_linestyles(prefix, names, suffix, colors, dashes=&#39;-&#39;, lws=1,
+                    namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate line styles.
+
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
+    For each corresponding name, color, line style and line width a dictionary is generated
+    holding these attributes. The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_linestyles(&#39;ls&#39;, &#39;Male&#39;, &#39;&#39;, &#39;blue&#39;, &#39;-&#39;, 2)
+    ```
+    generates a dictionary named `lsMale` defining a blue solid line,
+    adds `Male` to the `style_names` list,
+    and adds the `lsMale` dictionary to `ls` under the key `Male`.
+    Simply throw the dictionary into a `plot()` command:
+    ```py
+    plt.plot(x, y, **lsMale)
+    ```
+    or
+    ```py
+    plt.plot(x, y, **ls[&#39;Male&#39;])
+    ```
+    this is the same as:
+    ```py
+    plt.plot(x, y, &#39;-&#39;, color=&#39;#0000FF&#39;, lw=2)
+    ```
+    but is more expressive and can be changed at a single central place.
+
+    This
+    ```py
+    make_linestyles(&#39;ls&#39;, [&#39;Red&#39;, &#39;Green&#39;], &#39;m&#39;, [&#39;r&#39;, &#39;g&#39;], [&#39;-&#39;, &#39;--&#39;], 0.5)
+    ```
+    adds two line styles &#39;lsRedm&#39;, &#39;lsGreenm&#39; to the main module
+    with the respective colors and a thin solid or dashed line, respectively.
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all line style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffix: string
+        Sufffix appended to all line style names.
+    colors: matplotlib color or list of matplotlib colors
+        Colors of the line styles.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        Dash styles of the connecting lines.
+    lws: float or list of floats
+        Widths of the connecting lines.
+    namespace: dict or None
+        Namespace to which the generated line styles are added.
+        If None add line styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further line properties, e.g. alpha, zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    ln = prefix + suffix 
+    if not hasattr(namespace, ln):
+        setattr(namespace, ln, {})
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, dashes, lws):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        sn = prefix + name + suffix
+        c = colors[k] if isinstance(colors, (tuple, list)) else colors
+        ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
+        lw = lws[k] if isinstance(lws, (tuple, list)) else lws
+        ld = dict(color=c, linestyle=ds, linewidth=lw, **kwargs)
+        setattr(namespace, sn, ld)
+        getattr(namespace, ln)[name] = ld</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.make_pointstyles"><code class="name flex">
+<span>def <span class="ident">make_pointstyles</span></span>(<span>prefix, names, suffix, colors, dashes='none', lws=0, markers=('o', 1.0), markersizes=5.0, markeredgecolors=0.0, markeredgewidths=1.0, namespace=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate point styles.</p>
+<p>The generated dictionaries can be passed as key-word arguments to <code>ax.plot()</code> commands.
+For each corresponding name, color, line style, line width, marker, marker size,
+marker edge color and marker edge width a dictionary is generated holding these attributes.
+The generated dictionaries are named <code>prefix + name + suffix</code>,
+and are additionally added to the <code>prefix + suffix</code> dictionary in the given namespace.
+<code>name</code> is also added to the <code>style_names</code> list in the namespace.</p>
+<p>For example</p>
+<pre><code class="language-py">make_pointstyles('ps', 'Female', '', 'red', '-', 1, ('o', 1.0), 8, 0.5, 1, alpha=0.5)
+</code></pre>
+<p>generates a dictionary named <code>psFemale</code> defining transparent red filled markers
+with a lighter edge, adds <code>Female</code> to <code>style_names</code>,
+and adds the dictionary to <code>ps</code> under the key <code>Female</code>.
+Simply throw the dictionary into a <code>plot()</code> command:</p>
+<pre><code class="language-py">plt.plot(x, y, **psFemale)
+</code></pre>
+<p>this is the same as:</p>
+<pre><code class="language-py">plt.plot(x, y, **ps['Female'])
+</code></pre>
+<p>This</p>
+<pre><code class="language-py">make_pointstyles('ps', 'Reds%d', 'c', ['red', 'orange', 'yellow'], 'none', 0, ('o', 1.0), 8, 1, 0)
+</code></pre>
+<p>generates 'psReds1',
+'psReds2',
+'psReds3' for plotting
+filled circels with colors red, orange, and yellow, respectively.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>prefix</code></strong> :&ensp;<code>string</code></dt>
+<dd>Prefix prepended to all point style names.</dd>
+<dt><strong><code>names</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>Names of the line styles.
+If string and a '%' is contained, then formats like '%d' are replaced
+by the index of the line style plus one.</dd>
+<dt><strong><code>suffix</code></strong> :&ensp;<code>string</code></dt>
+<dd>Sufffix appended to all point style names.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>matplotlib color</code> or <code>list</code> of <code>matplotlib colors</code></dt>
+<dd>For each color in the list a point style is generated.</dd>
+<dt><strong><code>dashes</code></strong> :&ensp;<code>matplotlib linestyle</code> or <code>list</code> of <code>matplotlib linestyles</code></dt>
+<dd>Dash styles of the connecting lines. If points are not to be connected, set to 'none'.</dd>
+<dt><strong><code>lws</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Widths of the connecting lines.</dd>
+<dt><strong><code>markers</code></strong> :&ensp;<code>2-tuple</code> or <code>list</code> of <code>2-tuples</code></dt>
+<dd>For each point style a marker. The first element of the inner tuple is
+the marker symbol, the second one is a factor that is used to scale
+the marker's size.</dd>
+<dt><strong><code>markersizes</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>For each point style a marker size. The marker size is multiplied with a factor
+of the corresponding marker.</dd>
+<dt><strong><code>medgecolors</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Defines the edge color for each point style.
+It is passed as the lightness argument to <code>lighter()</code>
+using the face color form <code>colors</code>. That is, 0 results in a white edge color,
+1 in an edge with the same color as the face color, and 2 in a black edge color.</dd>
+<dt><strong><code>markersizes</code></strong> :&ensp;<code>float, list</code> of <code>floats</code></dt>
+<dd>For each point style a marker edge width.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace to which the generated point styles are added.
+If None add point styles to the <strong>main</strong> module.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key-word arguments with further marker properties, e.g. alpha, zorder.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_pointstyles(prefix, names, suffix, colors, dashes=&#39;none&#39;, lws=0,
+                     markers=(&#39;o&#39;, 1.0), markersizes=5.0, markeredgecolors=0.0,
+                     markeredgewidths=1.0, namespace=None, **kwargs):
+    &#34;&#34;&#34; Generate point styles.
+
+    The generated dictionaries can be passed as key-word arguments to `ax.plot()` commands.
+    For each corresponding name, color, line style, line width, marker, marker size,
+    marker edge color and marker edge width a dictionary is generated holding these attributes.
+    The generated dictionaries are named `prefix + name + suffix`,
+    and are additionally added to the `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
+    
+    For example
+    ```py
+    make_pointstyles(&#39;ps&#39;, &#39;Female&#39;, &#39;&#39;, &#39;red&#39;, &#39;-&#39;, 1, (&#39;o&#39;, 1.0), 8, 0.5, 1, alpha=0.5)
+    ```
+    generates a dictionary named `psFemale` defining transparent red filled markers
+    with a lighter edge, adds `Female` to `style_names`,
+    and adds the dictionary to `ps` under the key `Female`.
+    Simply throw the dictionary into a `plot()` command:
+    ```py
+    plt.plot(x, y, **psFemale)
+    ```
+    this is the same as:
+    ```py
+    plt.plot(x, y, **ps[&#39;Female&#39;])
+    ```
+    This
+    ```py
+    make_pointstyles(&#39;ps&#39;, &#39;Reds%d&#39;, &#39;c&#39;, [&#39;red&#39;, &#39;orange&#39;, &#39;yellow&#39;], &#39;none&#39;, 0, (&#39;o&#39;, 1.0), 8, 1, 0)
+    ```
+    generates &#39;psReds1&#39;,  &#39;psReds2&#39;,  &#39;psReds3&#39; for plotting
+    filled circels with colors red, orange, and yellow, respectively.
+
+    Parameters
+    ----------
+    prefix: string
+        Prefix prepended to all point style names.
+    names: string or list of strings
+        Names of the line styles.
+        If string and a &#39;%&#39; is contained, then formats like &#39;%d&#39; are replaced
+        by the index of the line style plus one.
+    suffix: string
+        Sufffix appended to all point style names.
+    colors: matplotlib color or list of matplotlib colors
+        For each color in the list a point style is generated.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        Dash styles of the connecting lines. If points are not to be connected, set to &#39;none&#39;.
+    lws: float or list of floats
+        Widths of the connecting lines.
+    markers: 2-tuple or list of 2-tuples
+        For each point style a marker. The first element of the inner tuple is
+        the marker symbol, the second one is a factor that is used to scale
+        the marker&#39;s size.
+    markersizes: float or list of floats
+        For each point style a marker size. The marker size is multiplied with a factor
+        of the corresponding marker.
+    medgecolors: float or list of floats
+        Defines the edge color for each point style.
+        It is passed as the lightness argument to `lighter()`
+        using the face color form `colors`. That is, 0 results in a white edge color,
+        1 in an edge with the same color as the face color, and 2 in a black edge color.
+    markersizes: float, list of floats
+        For each point style a marker edge width.
+    namespace: dict or None
+        Namespace to which the generated point styles are added.
+        If None add point styles to the __main__ module.
+    kwargs: dict
+        Key-word arguments with further marker properties, e.g. alpha, zorder.
+    &#34;&#34;&#34;
+    # prepare dictionaries:
+    if namespace is None:
+        namespace = __main__
+    if not hasattr(namespace, &#39;style_names&#39;):
+        namespace.style_names = []
+    ln = prefix + suffix 
+    if not hasattr(namespace, ln):
+        setattr(namespace, ln, {})
+    # number of markers:
+    n_markers = 1
+    if len(markers) &gt;= 2 and isinstance(markers[1], (tuple, list)):
+        n_markers = len(markers)
+    # number of line styles to be generated:
+    n = 1
+    for x in (names, colors, dashes, lws, markersizes,
+              markeredgecolors, markeredgewidths):
+        if isinstance(x, (tuple, list)) and len(x) &gt; n:
+            n = len(x)
+    if n &lt; n_markers:
+        n = n_markers
+    # generate styles:
+    for k in range(n):
+        if isinstance(names, (tuple, list)) :
+            name = names[k]
+        else:
+            if &#39;%&#39; in names:
+                name = names % (k+1)
+            else:
+                name = names
+        if name not in namespace.style_names:
+            namespace.style_names.append(name)
+        sn = prefix + name + suffix
+        c = colors[k] if isinstance(colors, (tuple, list)) else colors
+        ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
+        lw = lws[k] if isinstance(lws, (tuple, list)) else lws
+        mk = markers[k] if n_markers &gt; 1 else markers
+        ms = markersizes[k] if isinstance(markersizes, (tuple, list)) else markersizes
+        mc = markeredgecolors[k] if isinstance(markeredgecolors, (tuple, list)) else markeredgecolors
+        mw = markeredgewidths[k] if isinstance(markeredgewidths, (tuple, list)) else markeredgewidths
+        pd = dict(color=c, linestyle=ds, linewidth=lw, marker=mk[0], markersize=mk[1]*ms,
+                  markeredgecolor=lighter(c, mc), markeredgewidth=mw, **kwargs)
+        setattr(namespace, sn, pd)
+        getattr(namespace, ln)[name] = pd</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.plot_fillstyles"><code class="name flex">
+<span>def <span class="ident">plot_fillstyles</span></span>(<span>ax, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot names and patches of all available fill styles.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the fill styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace on which styles are defined.
+If None take styles from the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_fillstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and patches of all available fill styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the fill styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    x = np.linspace(0.0, 0.8, 50)
+    y0 = np.zeros(len(x))
+    y1 = -x*(x-0.6)*0.6/0.3/0.3
+    y1[y1&lt;0.0] = 0.0
+    y2 = np.zeros(len(x))
+    y2[x&gt;0.3] = 0.7
+    ax.text(0.0, 2.75, &#39;plain&#39;)
+    ax.text(0.0, 1.75, &#39;solid&#39;)
+    ax.text(0.0, 0.75, &#39;alpha&#39;)
+    k = 0
+    for j, name in enumerate(namespace.style_names):
+        gotit = False
+        if name in namespace.fs:
+            ax.text(k, 1.9, &#39;fs&#39;+name)
+            ax.fill_between(x+k, y0+2, y2+2, **namespace.fs[name])
+            ax.fill_between(x+k, y0+2, y1+2, **namespace.fs[name])
+            gotit = True
+        if name in namespace.fss:
+            ax.text(k, 0.9, &#39;fs&#39;+name+&#39;s&#39;)
+            ax.fill_between(x+k, y0+1, y2+1, **namespace.fss[name])
+            ax.fill_between(x+k, y0+1, y1+1, **namespace.fss[name])
+            gotit = True
+        if name in namespace.fsa:
+            ax.text(k, -0.1, &#39;fs&#39;+name+&#39;a&#39;)
+            ax.fill_between(x+k, y0+0, y2+0, **namespace.fsa[name])
+            ax.fill_between(x+k, y0+0, y1+0, **namespace.fsa[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(-0.2, k)
+    ax.set_ylim(-0.15, 2.9)
+    ax.set_title(&#39;fill styles&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.plot_linepointstyles"><code class="name flex">
+<span>def <span class="ident">plot_linepointstyles</span></span>(<span>ax, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot names, lines, and markers of all available linepoint styles.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the linepoint styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace on which styles are defined.
+If None take styles from the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_linepointstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names, lines, and markers of all available linepoint styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the linepoint styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    dy = 0.2
+    k = 0
+    for j, name in enumerate(reversed(namespace.style_names)):
+        gotit = False
+        if name in namespace.lps:
+            ax.text(0.1, k-dy, &#39;lps&#39;+name)
+            ax.plot([0.8, 1.1, 1.4], [k, k, k], **namespace.lps[name])
+            gotit = True
+        if name in namespace.lpsc:
+            ax.text(2.1, k-dy, &#39;lps&#39;+name+&#39;c&#39;)
+            ax.plot([2.8, 3.1, 3.4], [k, k, k], **namespace.lpsc[name])
+            gotit = True
+        if name in namespace.lpsm:
+            ax.text(4.1, k-dy, &#39;lps&#39;+name+&#39;m&#39;)
+            ax.plot([4.8, 5.1, 5.4], [k, k, k], **namespace.lpsm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(0.0, 6.0)
+    ax.set_ylim(-1.0, k)
+    ax.set_title(&#39;linepoint styles&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.plot_linestyles"><code class="name flex">
+<span>def <span class="ident">plot_linestyles</span></span>(<span>ax, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot names and lines of all available line styles.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the line styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace on which styles are defined.
+If None take styles from the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_linestyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and lines of all available line styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the line styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    k = 0
+    for j, name in enumerate(namespace.style_names):
+        gotit = False
+        if name in namespace.ls:
+            ax.text(k, 0.9, &#39;ls&#39;+name)
+            ax.plot([k, k+3.5], [1.0, 1.8], **namespace.ls[name])
+            gotit = True
+        if name in namespace.lsm:
+            ax.text(k, -0.1, &#39;ls&#39;+name+&#39;m&#39;)
+            ax.plot([k, k+3.5], [0.0, 0.8], **namespace.lsm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(-0.2, k+2.8)
+    ax.set_ylim(-0.15, 1.9)
+    ax.set_title(&#39;line styles&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.plot_pointstyles"><code class="name flex">
+<span>def <span class="ident">plot_pointstyles</span></span>(<span>ax, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot names and markers of all available point styles.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the point styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace on which styles are defined.
+If None take styles from the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_pointstyles(ax, namespace=None):
+    &#34;&#34;&#34; Plot names and markers of all available point styles.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Subplot to use for plotting the point styles.
+    namespace: dict or None
+        Namespace on which styles are defined.
+        If None take styles from the __main__ module.
+    &#34;&#34;&#34;
+    if namespace is None:
+        namespace = __main__
+    dy = 0.2
+    k = 0
+    for j, name in enumerate(reversed(namespace.style_names)):
+        gotit = False
+        if name in namespace.ps:
+            ax.text(0.1, k, &#39;ps&#39;+name)
+            ax.plot([0.6], [k+dy], **namespace.ps[name])
+            gotit = True
+        if name in namespace.psc:
+            ax.text(1.1, k, &#39;ps&#39;+name+&#39;c&#39;)
+            ax.plot([1.6], [k+dy], **namespace.psc[name])
+            gotit = True
+        if name in namespace.psm:
+            ax.text(2.1, k, &#39;ps&#39;+name+&#39;m&#39;)
+            ax.plot([2.6], [k+dy], **namespace.psm[name])
+            gotit = True
+        if gotit:
+            k += 1
+    ax.set_xlim(0.0, 3.0)
+    ax.set_ylim(-1.0, k)
+    ax.set_title(&#39;point styles&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.plot_styles"><code class="name flex">
+<span>def <span class="ident">plot_styles</span></span>(<span>names, colors, dashes, markers, lwthick=2.0, lwthin=1.0, markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0, fillalpha=0.4, namespace=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.</p>
+<p>For each color and name a variety of plot styles are generated
+(for the example, names is 'Female'):
+- Major line styles (prefix 'ls', no suffix, e.g. 'lsFemale')
+for normal lines without markers.
+- Minor line styles (prefix 'ls', suffix 'm', e.g. 'lsFemalem')
+for thinner lines without markers.
+- Major point styles (prefix 'ps', no suffix, e.g. 'psFemale')
+for large markers without connecting lines.
+- Major circular point styles (prefix 'ps', suffix 'c', e.g. 'psFemalec')
+for large circular markers without connecting lines.
+- Minor point styles (prefix 'ps', suffix 'm', e.g. 'psFemalem')
+for small circular markers without connecting lines.
+- Major linepoint styles (prefix 'lps', no suffix, e.g. 'lpsFemale')
+for large markers with connecting lines.
+- Major circular linepoint styles (prefix 'lps', suffix 'c', e.g. 'lpsFemalec')
+for large circular markers with connecting lines.
+- Minor linepoint styles (prefix 'lps', suffix 'm', e.g. 'lpsFemalem')
+for small circular markers with connecting lines.
+- Fill styles with edge color (prefix 'fs', no suffix, e.g. 'fsFemale')
+- Fill styles with solid fill color and no edge color (prefix 'fs', suffix 's', e.g. 'fsFemals')
+- Fill styles with transparent fill color and no edge color (prefix 'fs', suffix 'a', e.g. 'fsFemala')</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>names</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>For each color in <code>colors</code> a name.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>list</code> of <code>RGB hex-strings</code></dt>
+<dd>For each color in the list line, point, linepoint, and fill styles are generated.</dd>
+<dt><strong><code>dashes</code></strong> :&ensp;<code>matplotlib linestyle</code> or <code>list</code> of <code>matplotlib linestyles</code></dt>
+<dd>For each color a descriptor of a matplotlib linestyle
+that is used for line and linepoint styles.</dd>
+<dt><strong><code>markers</code></strong> :&ensp;<code>tuple</code> or <code>list</code> of <code>tuples</code></dt>
+<dd>For each color a marker that is used for point and linepoint styles.
+The first element of the tuple is the marker symbol,
+the second on is a factor that is used to scale the markeredgewidth in <code>pointdict</code>.</dd>
+<dt><strong><code>lwthick</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for major line styles.</dd>
+<dt><strong><code>lwthin</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for minor line styles.</dd>
+<dt><strong><code>markerlarge</code></strong> :&ensp;<code>float</code></dt>
+<dd>Marker size for major point styles.</dd>
+<dt><strong><code>markersmall</code></strong> :&ensp;<code>float</code></dt>
+<dd>Marker size for minor point styles.</dd>
+<dt><strong><code>mec</code></strong> :&ensp;<code>float</code></dt>
+<dd>Edge color for markers and fill styles. A factor between 0 and 2 passed together
+with the facecolor to <code>lighter()</code>. I.e. 0 results in a white edge,
+1 in an edge of the color of the face color, and 2 in a black edge.</dd>
+<dt><strong><code>mew</code></strong> :&ensp;<code>float</code></dt>
+<dd>Line width for marker edges and fill styles.</dd>
+<dt><strong><code>fillalpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for transparent fill styles.</dd>
+<dt><strong><code>namespace</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Namespace to which the generated styles are added.
+If None add styles to the <strong>main</strong> module.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
+                markerlarge=7.5, markersmall=5.5, mec=0.5, mew=1.0,
+                fillalpha=0.4, namespace=None):
+    &#34;&#34;&#34; Generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
+
+    For each color and name a variety of plot styles are generated
+    (for the example, names is &#39;Female&#39;):
+    - Major line styles (prefix &#39;ls&#39;, no suffix, e.g. &#39;lsFemale&#39;)
+      for normal lines without markers.
+    - Minor line styles (prefix &#39;ls&#39;, suffix &#39;m&#39;, e.g. &#39;lsFemalem&#39;)
+      for thinner lines without markers.
+    - Major point styles (prefix &#39;ps&#39;, no suffix, e.g. &#39;psFemale&#39;)
+      for large markers without connecting lines.
+    - Major circular point styles (prefix &#39;ps&#39;, suffix &#39;c&#39;, e.g. &#39;psFemalec&#39;)
+      for large circular markers without connecting lines.
+    - Minor point styles (prefix &#39;ps&#39;, suffix &#39;m&#39;, e.g. &#39;psFemalem&#39;)
+      for small circular markers without connecting lines.
+    - Major linepoint styles (prefix &#39;lps&#39;, no suffix, e.g. &#39;lpsFemale&#39;)
+      for large markers with connecting lines.
+    - Major circular linepoint styles (prefix &#39;lps&#39;, suffix &#39;c&#39;, e.g. &#39;lpsFemalec&#39;)
+      for large circular markers with connecting lines.
+    - Minor linepoint styles (prefix &#39;lps&#39;, suffix &#39;m&#39;, e.g. &#39;lpsFemalem&#39;)
+      for small circular markers with connecting lines.
+    - Fill styles with edge color (prefix &#39;fs&#39;, no suffix, e.g. &#39;fsFemale&#39;)
+    - Fill styles with solid fill color and no edge color (prefix &#39;fs&#39;, suffix &#39;s&#39;, e.g. &#39;fsFemals&#39;)
+    - Fill styles with transparent fill color and no edge color (prefix &#39;fs&#39;, suffix &#39;a&#39;, e.g. &#39;fsFemala&#39;)
+                
+    Parameters
+    ----------
+    names: list of strings
+        For each color in `colors` a name.
+    colors: list of RGB hex-strings
+        For each color in the list line, point, linepoint, and fill styles are generated.
+    dashes: matplotlib linestyle or list of matplotlib linestyles
+        For each color a descriptor of a matplotlib linestyle
+        that is used for line and linepoint styles.
+    markers: tuple or list of tuples
+        For each color a marker that is used for point and linepoint styles.
+        The first element of the tuple is the marker symbol,
+        the second on is a factor that is used to scale the markeredgewidth in `pointdict`.
+    lwthick: float
+        Line width for major line styles.
+    lwthin: float
+        Line width for minor line styles.
+    markerlarge: float
+        Marker size for major point styles.
+    markersmall: float
+        Marker size for minor point styles.
+    mec: float
+        Edge color for markers and fill styles. A factor between 0 and 2 passed together
+        with the facecolor to `lighter()`. I.e. 0 results in a white edge,
+        1 in an edge of the color of the face color, and 2 in a black edge.
+    mew: float
+        Line width for marker edges and fill styles.
+    fillalpha: float
+        Alpha value for transparent fill styles.
+    namespace: dict or None
+        Namespace to which the generated styles are added.
+        If None add styles to the __main__ module.
+    &#34;&#34;&#34;    
+    if namespace is None:
+        namespace = __main__
+
+    # line, point and linepoint styles:
+    make_linepointstyles([&#39;ls&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;&#39;, colors, dashes, lwthick,
+                         markers, markerlarge, mec, mew, namespace)
+    # circular point and linepoint styles:
+    make_linepointstyles([&#39;&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;c&#39;, colors, dashes, lwthick,
+                         (&#39;o&#39;, 1.0), markerlarge, mec, mew, namespace)
+    # minor line, point and linepoint styles:
+    make_linepointstyles([&#39;ls&#39;, &#39;ps&#39;, &#39;lps&#39;], names, &#39;m&#39;, colors, dashes, lwthin,
+                         (&#39;o&#39;, 1.0), markersmall, mec, mew, namespace)
+    # fill styles:
+    make_fillstyles(&#39;fs&#39;, names, [&#39;&#39;, &#39;s&#39;, &#39;a&#39;], colors, mec, mew, fillalpha, namespace)</code></pre>
+</details>
+</dd>
+<dt id="plottools.styles.style"><code class="name flex">
+<span>def <span class="ident">style</span></span>(<span>orig_style, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Copy and update a style.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>orig_style</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary holding plot style parameter like <code>linewidth</code> and <code>color</code> or <code>facecolor</code>.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key-word arguments used to update keys in <code>orig_style</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>new_style</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Style dictionary with the new keys provided by <code>kwargs</code>.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">lsRed = dict(color='red', linewidth=1, linestyle='-')
+lsBlue = style(lsRed, color='blue')
+ax.plot(x, y, **lsRed)
+ax.plot(x, z, **lsBlue)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def style(orig_style, **kwargs):
+    &#34;&#34;&#34; Copy and update a style.
+
+    Parameters
+    ----------
+    orig_style: dict
+        A dictionary holding plot style parameter like `linewidth` and `color` or `facecolor`.
+    kwargs: dict
+        Key-word arguments used to update keys in `orig_style`.
+
+    Returns
+    -------
+    new_style: dict
+        Style dictionary with the new keys provided by `kwargs`.
+
+    Examples
+    --------
+    ```py
+    lsRed = dict(color=&#39;red&#39;, linewidth=1, linestyle=&#39;-&#39;)
+    lsBlue = style(lsRed, color=&#39;blue&#39;)
+    ax.plot(x, y, **lsRed)
+    ax.plot(x, z, **lsBlue)
+    ```
+    &#34;&#34;&#34;
+    new_style = dict(orig_style)
+    new_style.update(**kwargs)
+    return new_style</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#duplicate-and-modify-plotting-styles">Duplicate and modify plotting styles</a></li>
+<li><a href="#generate-plotting-styles">Generate plotting styles</a></li>
+<li><a href="#display-plotting-styles">Display plotting styles</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="plottools.styles.darker_styles" href="#plottools.styles.darker_styles">darker_styles</a></code></li>
+<li><code><a title="plottools.styles.demo" href="#plottools.styles.demo">demo</a></code></li>
+<li><code><a title="plottools.styles.generic_styles" href="#plottools.styles.generic_styles">generic_styles</a></code></li>
+<li><code><a title="plottools.styles.lighter_darker_styles" href="#plottools.styles.lighter_darker_styles">lighter_darker_styles</a></code></li>
+<li><code><a title="plottools.styles.lighter_styles" href="#plottools.styles.lighter_styles">lighter_styles</a></code></li>
+<li><code><a title="plottools.styles.make_fillstyles" href="#plottools.styles.make_fillstyles">make_fillstyles</a></code></li>
+<li><code><a title="plottools.styles.make_linepointstyles" href="#plottools.styles.make_linepointstyles">make_linepointstyles</a></code></li>
+<li><code><a title="plottools.styles.make_linestyles" href="#plottools.styles.make_linestyles">make_linestyles</a></code></li>
+<li><code><a title="plottools.styles.make_pointstyles" href="#plottools.styles.make_pointstyles">make_pointstyles</a></code></li>
+<li><code><a title="plottools.styles.plot_fillstyles" href="#plottools.styles.plot_fillstyles">plot_fillstyles</a></code></li>
+<li><code><a title="plottools.styles.plot_linepointstyles" href="#plottools.styles.plot_linepointstyles">plot_linepointstyles</a></code></li>
+<li><code><a title="plottools.styles.plot_linestyles" href="#plottools.styles.plot_linestyles">plot_linestyles</a></code></li>
+<li><code><a title="plottools.styles.plot_pointstyles" href="#plottools.styles.plot_pointstyles">plot_pointstyles</a></code></li>
+<li><code><a title="plottools.styles.plot_styles" href="#plottools.styles.plot_styles">plot_styles</a></code></li>
+<li><code><a title="plottools.styles.style" href="#plottools.styles.style">style</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

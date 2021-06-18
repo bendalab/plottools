@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Benda-Lab">
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Subplots module - plottools</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Subplots module";
+    var mkdocs_page_input_path = "subplots.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="icon icon-home"> plottools</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="guide.html">Plotting guidelines</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">User Guide</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="colors.html">Colors</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="figure.html">Figure</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="spines.html">Spines</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="insets.html">Insets</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="ticks.html">Ticks</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="scalebars.html">Scalebars</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="" href="api/index.html">API reference</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">plottools</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Subplots module</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="subplots-module">Subplots module</h1>
+<p>Enhanced subplots with margins.</p>
+<p>Importing the subplots module modifies the matplotlib functions
+<code>plt.subplots()</code>, <code>fig.add_gridspec()</code>, <code>gridspec.update()</code>. </p>
+<p><code>import matplotlib.pyplot as plt 
+import plottools.subplots</code></p>
+<p>Then the following features are available:</p>
+<h2 id="figure-margins">Figure margins</h2>
+<p>In matplotlib margins, i.e. the space between the axes and the figure
+edges, are controlled via <code>left</code>, <code>right</code>, <code>top</code>, and <code>bottom</code>
+arguments to the <code>fig.subplots_adjust()</code> and related functions. These
+arguments are given in fractions of the figure size as values ranging
+between 0 and 1. This is often quite cumbersome, because the margins
+get bigger if the figure size is enlarged, although the size of the
+tick and axis labels stay the same.</p>
+<p>The subplots module introduces <code>leftm</code>, <code>rightm</code>, <code>topm</code>, and
+<code>bottomm</code> as additional arguments to the <code>plt.subplots()</code>,
+<code>fig.subplots_adjust()</code>, <code>fig.add_gridspec()</code> and <code>gridspec.update()</code>
+functions. These arguments specify the margins in units of the current
+font size, because the font size is what sets the size of the tick and
+axis labels. And they are measured from the respective figure edge,
+not from the figure's origin. I.e. specifying <code>topm=0</code> is the same as
+<code>top=1</code>, and results in no margin at the top of the upper axes. In
+addition, a resize event handler is installed, that ensures that the
+margins stay the same (when specified by the new arguments) when you
+resize the figure on the screen.</p>
+<p>TODO: image illustrating figure margins.</p>
+<h2 id="grid-specs">Grid specs</h2>
+<p><code>plt.subplots()</code> can be called with <code>width_ratios</code> and <code>height_ratios</code>.</p>
+<p>Further, <code>figure.add_gridspec()</code> is made available for older
+matplotlib versions that do not have this function yet.</p>
+<p>To merge several subplots into a single axes, call <code>fig.merge()</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
