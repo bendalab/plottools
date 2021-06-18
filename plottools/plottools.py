@@ -14,7 +14,7 @@ light_blue = pt.lighter(pt.palettes['muted']['blue'], 0.4)
 ```
 """
 
-from .align import install_align, uninstall_align
+from .align import install_align, uninstall_align, align_params
 from .arrows import install_arrows, uninstall_arrows
 from .arrows import arrow_style, generic_arrow_styles, plot_arrowstyles
 from .aspect import install_aspect, install_aspect, uninstall_aspect
