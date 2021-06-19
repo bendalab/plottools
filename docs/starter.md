@@ -249,3 +249,8 @@ before you create any figures and axes.
 
 matplotlib provides some nice cheat sheets:
 https://github.com/matplotlib/cheatsheets/blob/master/cheatsheets.pdf
+
+
+## How to prepare figures
+
+Continue reading with suggestions on [how to prepare figures](guide.md). 

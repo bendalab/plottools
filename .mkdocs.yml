@@ -1,5 +1,7 @@
 site_name: plottools
 
+site_url: https://bendalab.github.io/plottools/
+
 repo_url: https://github.com/bendalab/plottools/
 
 edit_uri: ""
@@ -13,12 +15,16 @@ markdown_extensions:
     
 nav:
     - Home: 'index.md'
-    - 'Plotting guidelines': 'guide.md'
+    - 'Tutorial':
+        - 'Getting started with matplotlib': 'starter.md'
+        - 'Plotting guidelines': 'guide.md'
+        - 'How to structure your code': 'structure.md'
     - 'User Guide':
         - 'Colors': 'colors.md'
         - 'Figure': 'figure.md'
+        - 'Subplots': 'subplots.md'
         - 'Spines': 'spines.md'
-        - 'Insets': 'insets.md'
         - 'Ticks': 'ticks.md'
+        - 'Insets': 'insets.md'
         - 'Scalebars': 'scalebars.md'
     - API reference: 'api/index.html'

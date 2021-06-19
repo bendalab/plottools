@@ -174,7 +174,7 @@ In any case, run
 ```py
 python -m plottools.version
 ```
-and paste the output (python, numpy, matplotlib and plottools
+and paste the output (python, numpy, pandas, matplotlib and plottools
 versions) into the issue.
 
 

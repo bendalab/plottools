@@ -45,3 +45,7 @@ echo "Done. Docs in:"
 echo
 echo "    file://$BUILDROOT/index.html"
 echo
+echo "Check with:"
+echo
+echo "    mkdocs serve -f ./mkdocs.yml"
+echo
