@@ -187,6 +187,8 @@ relative width/height.
 For more details on how to layout subplots you definitely want to read
 the [GridSpec
 tutorial](https://matplotlib.org/stable/tutorials/intermediate/gridspec.html).
+Also check out the note on [Figure and Axes
+creation/management](https://matplotlib.org/stable/users/whats_new.html#figure-and-axes-creation-management).
 
 
 ## Customizing figure layout

@@ -74,8 +74,8 @@ latex_include_figures()
 ```
 This prints to the console
 ```txt
-\\includegraphics<1>{myplotA}
-\\includegraphics<2>{myplotB}
+\includegraphics<1>{myplotA}
+\includegraphics<2>{myplotB}
 ```
 and generates the respective files.
 
