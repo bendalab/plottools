@@ -191,4 +191,7 @@ loading/generating the data within the plot function is, that
   use it there.
 
 
+### Multipanel figures
+
+
 
