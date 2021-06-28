@@ -65,14 +65,14 @@ import matplotlib.pyplot as plt
 from plotstyle import plot_style
 ```
 
-In contrast to your analysis scripts, try keep the number of imported
-packages as low as possible. This reduces dependencies to a minimum
-and makes it easier to reuse the code for generating the figures. A
-low number of imports should be is possible, because the plotting
-scripts are only plotting and are not supposed to do any complex data
-analysis.  The results of complex computation are stored in files. The
-plotting scripts just need to read these files and plot their content
-- not much overhead is needed.
+In contrast to your analysis scripts, try to keep the number of
+imported packages as low as possible. This reduces dependencies to a
+minimum and makes it easier to reuse the code for generating the
+figures. A low number of imports should be no problem, because the
+plotting scripts are only plotting and are not supposed to do any
+complex data analysis.  The results of complex computation are stored
+in files. The plotting scripts just need to read these files and plot
+their content - not much overhead is needed.
 
 
 ### Main code
@@ -84,10 +84,7 @@ if __name__ == "__main__":
    plot_style()
 ```
 The call of the `plot_style()` function sets up the plot
-appearance. You may pass a few arguments to `plot_style()`, but try to
-keep this simple. In the end, all the generated plots should follow
-the same design, so there is no need to pass many arguments to
-`plot_style()`.
+appearance as dicussed below.
 
 The following lines of code should set up the figure, call functions
 generating the actual plots, and save the figure to a file. In case of
@@ -115,13 +112,13 @@ Most certainly you need to adjust the figure margins via
 `fig.subplots_adjust()`. A good plot does not have excessive white
 space. In particular if you include your figure in a LaTeX document it
 is much simpler to handle when it tightly fills the figure
-canvas. `fig.tight_layout()` usually does not work instead, but you
-may give a try to the `constrained_layout` argument to
-`plt.subplots()`. A problem with `fig.subplots_adjust()` is, that the
-figure margins are specified relative to the figure size. When
-changing the figure size you need to re-adjust the figure margins,
-which is pretty annoying. Alternatively you may use the `topm`,
-`bottomm`, `leftm`, `rightm` arguments introduced by the
+canvas. `fig.tight_layout()` usually does not work, but you may give a
+try to the `constrained_layout` argument to `plt.subplots()`. A
+problem with `fig.subplots_adjust()` is, that the figure margins are
+specified relative to the figure size. Whenever changing the figure
+size you need to readjust the figure margins, which is pretty
+annoying. Alternatively you may use the `topm`, `bottomm`, `leftm`,
+`rightm` arguments introduced by the
 [plottools.subplots](subplots#figure-margins) module, that allow to
 specify the margins in units of the font size.
 
@@ -143,10 +140,10 @@ figure under the same as the script.
 
 The basic unit of any figure is a plot, a single matplotlib axes.  You
 may rearrange the position of an axes within a figure or even move an
-axes to another figure. To allow for this necessary flexibility it is
-mandatory to summarize all code needed to draw the content of an axes
-into a single dedicated function that takes as the first argument the
-axes into which it should draw.
+axes to another figure. To allow for this flexibility it is mandatory
+to summarize all code needed to draw the content of an axes into a
+single dedicated function that takes as the first argument the axes
+into which it should draw.
 
 *For every axes make a function that does the plotting and that takes
  this axes as an argument.*
@@ -165,7 +162,7 @@ plotted - symbolized by the `load_data()` function call.  The second
 part does the actual plotting. If you manage to separate content from
 design (more on this below), then these functions for the actual
 plotting are usually simple and sweet. Everybody can comprehend what
-is going on. The function - the plot - can be easily re-used in a
+is going on. The function - the plot - can be easily reused in a
 different context.
 
 Alternatively we could have called `load_data()` outside the
@@ -194,4 +191,9 @@ loading/generating the data within the plot function is, that
 ### Multipanel figures
 
 
+## Plot style
+
+You may pass a few arguments to `plot_style()`, but try to keep this
+simple. In the end, all the generated plots should follow the same
+design, so there is no need to pass many arguments to `plot_style()`.
 
