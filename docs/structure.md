@@ -38,19 +38,26 @@ working directory:
 +-- coolresult.py
 ```
 
-The content of the `plotstyle.py` module is discussed below, for now we
-assume that it provides a single empty function `plot_style()`:
+The `plotstyle.py` module provides a function that we name here
+`plot_style()`. This function contains code defining the overall
+design of your plots. So mainly some
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+settings. We discuss the details below, for now we only set the ticks
+to point outwards:
 ```py
+import matplotlib.pyplot as plt
+
 def plot_style():
-  pass
+    plt.rcParam['xtick.direction'] = 'out'
+    plt.rcParam['ytick.direction'] = 'out'
 ```
 
 
 ## Plotting scripts
 
-So how to write an actual script generating a figure?
+So how to write a script generating a figure?
 
-Let's start simple with a script `basicdata.py` generating a figure
+Let's start simple with the script `basicdata.py` generating a figure
 with just a single panel (subplot).
 
 
@@ -74,6 +81,9 @@ complex data analysis.  The results of complex computation are stored
 in files. The plotting scripts just need to read these files and plot
 their content - not much overhead is needed.
 
+In particular this implies that we do not need to import `numba` for
+plotting!
+
 
 ### Main code
 
@@ -81,7 +91,7 @@ We start out at the bottom of the script with the
 following two lines:
 ```py
 if __name__ == "__main__":
-   plot_style()
+    plot_style()
 ```
 The call of the `plot_style()` function sets up the plot
 appearance as dicussed below.
@@ -90,10 +100,10 @@ The following lines of code should set up the figure, call functions
 generating the actual plots, and save the figure to a file. In case of
 our simple example this looks like this:
 ```py
-  fig, ax = plt.subplots(figsize=(6, 4))
-  fig.subplots_adjust(top=0.95, bottom=0.1, left=0.1, right=0.95)
-  plot_data(ax)
-  fig.savefig('basicdata.pdf')
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.subplots_adjust(top=0.95, bottom=0.1, left=0.1, right=0.95)
+    plot_data(ax)
+    fig.savefig('basicdata.pdf')
 ```
 
 The call to `plt.subplots()` returns a new figure of the specified
@@ -109,16 +119,17 @@ argument, that allows to specifiy the figure size in centimeters
 instead of inches.
 
 Most certainly you need to adjust the figure margins via
-`fig.subplots_adjust()`. A good plot does not have excessive white
-space. In particular if you include your figure in a LaTeX document it
-is much simpler to handle when it tightly fills the figure
-canvas. `fig.tight_layout()` usually does not work, but you may give a
-try to the `constrained_layout` argument to `plt.subplots()`. A
-problem with `fig.subplots_adjust()` is, that the figure margins are
-specified relative to the figure size. Whenever changing the figure
-size you need to readjust the figure margins, which is pretty
-annoying. Alternatively you may use the `topm`, `bottomm`, `leftm`,
-`rightm` arguments introduced by the
+[`fig.subplots_adjust()`](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust). A
+good plot does not have excessive white space. In particular if you
+include your figure in a LaTeX document it is much simpler to handle
+when it tightly fills the figure canvas. `fig.tight_layout()` usually
+does not work, but you may give a try to the `constrained_layout`
+argument to `plt.subplots()`. A problem with
+[`fig.subplots_adjust()`](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust)
+is, that the figure margins are specified relative to the figure
+size. Whenever changing the figure size you need to readjust the
+figure margins, which is pretty annoying. Alternatively you may use
+the `topm`, `bottomm`, `leftm`, `rightm` arguments introduced by the
 [plottools.subplots](subplots.md#figure-margins) module, that allow to
 specify the margins in units of the font size and are thus independent
 of the figure size.
@@ -156,10 +167,10 @@ In our example this is the `plot_data()` function that might look
 like this:
 ```py
 def plot_data(ax):
-  x, y = load_data()
-  ax.plot(x, y)
-  ax.set_xlabel('x')
-  ax.set_ylabel('y')
+    x, y = load_data()
+    ax.plot(x, y)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
 ```
 The first part of the function loads or generates the data to be
 plotted - symbolized by the `load_data()` function call.  The second
@@ -173,15 +184,17 @@ Alternatively we could have called `load_data()` outside the
 `plot_data()` function and pass the loaded data as arguments to the
 plot function:
 ```py
-  x, y = load_data()
-  plot_data(ax, x, y)
+    x, y = load_data()
+    plot_data(ax, x, y)
 ```
 Then `plot_data()` would only contain plot commands. This is in
 particular useful for a multi-panel plot, where many panels use the
 same data for their plotting.  On the other hand, in many cases the
 data are loaded or generated in no time. So from a performance point
 of view it does not hurt to load/generate them for any plot within
-each plot function.
+each plot function. But with the load function inside you need less
+function arguments and the plot function can be more easily moved
+somewhere else.
 
 
 ### Complexity/simplicity of the plot function
@@ -195,9 +208,9 @@ function anly needs to provide content.
 Then a plotting function usually gets quite simple. What is left to
 specify simply is:
 
-- what to plot, e.g. `ax.plot(x, y)`. Of course this can be several
-  commands, but if you provide the data such that can directly stuff
-  it into the plot commands, this stays simple.
+- what to plot, e.g. `ax.plot(x, y)`. Of course, this might require
+  several commands, but if you provide the data such that they can
+  directly stuff it into the plot commands, this stays simple.
 - how to annotate, e.g. `ax.text()` and/or some arrows.
 - axis limits, e.g. `ax.set_xlim()`.
 - tick marks (actually that often is a matter of design and should not be here...).
@@ -209,7 +222,8 @@ these design issues should at least be bundled in some helper
 functions that would go into the central `plotstyle.py` module. Having
 code for the design directly in the plot function makes it very
 tedious to change the design later on, because this then needs to be
-changed in every plot function. Anyways, this is not a good coding
+changed in every plot function. Anyways, repeating the same commands
+over and over in all the different plot functions is not a good coding
 style!
 
 How to provide the data for the plotting function is the only other
@@ -218,8 +232,8 @@ are available in appropriate formats. The data should be stored in a
 way that makes it simple to plot them. Then it is simply a matter of
 loading a file and selecting, for example, the relevant rows and
 columns. No rearranging, fixing, or whatever annoying stuff should be
-needed to make the data plotable. Als this should go into scripts that
-output files on which the plotting is based.
+needed to make the data plotable. All this should go into scripts that
+output the files on which the plotting is based.
 
 The big advantages of keeping the plotting- as well as the
 data-handling code simple are
@@ -233,10 +247,34 @@ data-handling code simple are
 
 ### Multipanel figures
 
+Scripts for multipanel figures follow the same structure as the
+single-panel script discussed so far. We have the same minimal
+imports. The main code setting up the figure is more complex, of
+course. For example, the main code in a `coolresult.py` script might
+look like this:
+```py
+if __name__ == "__main__":
+    plot_style()
+    fig, axs = plt.subplots(2, 2, figsize=(6, 4))
+    fig.subplots_adjust(top=0.95, bottom=0.1, left=0.1, right=0.95, hspace=0.6, wspace=0.6)
+    plot_waveform(axs[0,0])
+    plot_temperature(axs[0,1])
+    plot_signal_n_power(axs[1,0], axs[1,1])
+    fig.savefig('coolresult.pdf')
+```
+With the `plt.subplots()` we generate an array of axes.
+
+We pass `hspace` and `wspace` arguments to
+[`fig.subplots_adjust()`](https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust). Try
+large values! You will be surprised how much better your plot looks
+with lot's of white space between the panels, althought the panels get
+smaller.
+
 
 ## Plot style
 
 You may pass a few arguments to `plot_style()`, but try to keep this
 simple. In the end, all the generated plots should follow the same
-design, so there is no need to pass many arguments to `plot_style()`.
+design, so there should be no need to pass arguments to
+`plot_style()`.
 
