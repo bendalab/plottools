@@ -306,7 +306,7 @@ def latex_include_figures():
     plot_saved_files = []
     
 
-def figure_params(color=None, format=None, counter=None,
+def figure_params(color=None, format=None, counter=None, dpi=None,
                   compression=None, fonttype=None, stripfonts=None):
     """ Set figure parameter.
                   
@@ -321,6 +321,8 @@ def figure_params(color=None, format=None, counter=None,
     counter: 'A', 'a', or '1'
         Specifies how a '@' character in the file name passed to `fig.savefig()`
         is translated into a string. Sets ptParam `savefig.counter`.
+    dpi: int
+        For pixel graphics the number of dots per inch.
     compression: int
         Compression level of pdf file from 0 to 9. Sets rcParam `pdf.compression`.
     fonttype: 3 or 42
@@ -344,6 +346,8 @@ def figure_params(color=None, format=None, counter=None,
         mpl.rcParams['figure.facecolor'] = color
     if format is not None:
         mpl.rcParams['savefig.format'] = format
+    if dpi is not None:
+        mpl.rcParams['figure.dpi'] = dpi
     # these all have only minor effects on file size:
     if compression is not None:
         mpl.rcParams['pdf.compression'] = compression
