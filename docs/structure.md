@@ -84,6 +84,14 @@ their content - not much overhead is needed.
 In particular this implies that we do not need to import `numba` for
 plotting!
 
+An well readable import list is necessary so that one can easily trace
+back the origin of some functions. To support this
+
+- import only what is needed by your script
+- import every package/symbol only once
+- sort the imports according to package - common packages first, your
+  own modules last.
+
 
 ### Main code
 
