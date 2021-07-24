@@ -11,7 +11,7 @@ This way to define the appearance of the plotted line, however, has a
 number of disadvantages:
 
 1. Specifying the keyword arguments is quite lenghty, it is
-    a lot to type and distracts the reader from what you actually want to plot.
+   a lot to type and distracts the reader from what you actually want to plot.
 2. When you want to change the design of all your plots, you need to change this
    everywhere. For this reason I bet you really do not want to change any colors
    and line widths in your plots any more, which is sad.
@@ -24,10 +24,12 @@ lsRed = dict(color='#aa0000', lw=2, ls='--')  # red line style (ls)
 ax.plot(x, y, **lsRed)
 ```
 
+The keyword expansion operator is such a powerful feature of python!
+
 We here call such dictionaries defining how something is plotted
 "plotting styles".  With plotting styles plot commands are much more
 expressive and better readable. Even better is to give the plotting
-styles functional names, like `lsStimulus` or `lsResponse`.
+styles functional names, like, for example, `lsStimulus` or `lsResponse`.
 
 To address the second issue, you simply collect all plotting styles in a
 module that you then import in all plotting scripts. Problem is, that
@@ -71,7 +73,7 @@ this.
 In your central "plotstyle.py" module you can, of course, also import all the
 cool plottool modules you need, or just the `plottools.plottools` module to get and
 install them all. You also should set matplotlib's `rcParam` variables to define
-the appaerance of your plots in this central place. Alternatively you can use
+the appearance of your plots in this central place. Alternatively you can use
 the respective `_params()` functions of the plottools modules.
 
 The `styles` module provides a few functions that help you with
@@ -324,7 +326,7 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
         Names of the line styles.
         If string and a '%' is contained, then formats like '%d' are replaced
         by the index of the line style plus one.
-    suffix: string
+    suffix: string or list of strings
         Sufffix appended to all line style names.
     colors: matplotlib color or list of matplotlib colors
         Colors of the line styles.
@@ -343,12 +345,15 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
         namespace = __main__
     if not hasattr(namespace, 'style_names'):
         namespace.style_names = []
-    ln = prefix + suffix 
-    if not hasattr(namespace, ln):
-        setattr(namespace, ln, {})
+    if not isinstance(suffix, (tuple, list)):
+        suffix = [suffix]
+    for sf in suffix:
+        ln = prefix + sf 
+        if not hasattr(namespace, ln):
+            setattr(namespace, ln, {})
     # number of line styles to be generated:
     n = 1
-    for x in (names, colors, dashes, lws):
+    for x in (names, suffix, colors, dashes, lws):
         if isinstance(x, (tuple, list)) and len(x) > n:
             n = len(x)
     # generate styles:
@@ -362,13 +367,13 @@ def make_linestyles(prefix, names, suffix, colors, dashes='-', lws=1,
                 name = names
         if name not in namespace.style_names:
             namespace.style_names.append(name)
-        sn = prefix + name + suffix
+        sf = suffix[k%len(suffix)]
         c = colors[k] if isinstance(colors, (tuple, list)) else colors
         ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
         lw = lws[k] if isinstance(lws, (tuple, list)) else lws
         ld = dict(color=c, linestyle=ds, linewidth=lw, **kwargs)
-        setattr(namespace, sn, ld)
-        getattr(namespace, ln)[name] = ld
+        setattr(namespace, prefix + name + sf, ld)
+        getattr(namespace, prefix + sf)[name] = ld
 
 
 def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
@@ -413,7 +418,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         Names of the line styles.
         If string and a '%' is contained, then formats like '%d' are replaced
         by the index of the line style plus one.
-    suffix: string
+    suffix: string or list of strings
         Sufffix appended to all point style names.
     colors: matplotlib color or list of matplotlib colors
         For each color in the list a point style is generated.
@@ -446,16 +451,19 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         namespace = __main__
     if not hasattr(namespace, 'style_names'):
         namespace.style_names = []
-    ln = prefix + suffix 
-    if not hasattr(namespace, ln):
-        setattr(namespace, ln, {})
+    if not isinstance(suffix, (tuple, list)):
+        suffix = [suffix]
+    for sf in suffix:
+        ln = prefix + sf 
+        if not hasattr(namespace, ln):
+            setattr(namespace, ln, {})
     # number of markers:
     n_markers = 1
     if len(markers) >= 2 and isinstance(markers[1], (tuple, list)):
         n_markers = len(markers)
     # number of line styles to be generated:
     n = 1
-    for x in (names, colors, dashes, lws, markersizes,
+    for x in (names, suffix, colors, dashes, lws, markersizes,
               markeredgecolors, markeredgewidths):
         if isinstance(x, (tuple, list)) and len(x) > n:
             n = len(x)
@@ -472,7 +480,7 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
                 name = names
         if name not in namespace.style_names:
             namespace.style_names.append(name)
-        sn = prefix + name + suffix
+        sf = suffix[k%len(suffix)]
         c = colors[k] if isinstance(colors, (tuple, list)) else colors
         ds = dashes[k] if isinstance(dashes, (tuple, list)) else dashes
         lw = lws[k] if isinstance(lws, (tuple, list)) else lws
@@ -482,8 +490,8 @@ def make_pointstyles(prefix, names, suffix, colors, dashes='none', lws=0,
         mw = markeredgewidths[k] if isinstance(markeredgewidths, (tuple, list)) else markeredgewidths
         pd = dict(color=c, linestyle=ds, linewidth=lw, marker=mk[0], markersize=mk[1]*ms,
                   markeredgecolor=lighter(c, mc), markeredgewidth=mw, **kwargs)
-        setattr(namespace, sn, pd)
-        getattr(namespace, ln)[name] = pd
+        setattr(namespace, prefix + name + sf, pd)
+        getattr(namespace, ln)[prefix + sf] = pd
 
 
 def make_linepointstyles(prefixes, names, suffix, colors, dashes, lws,
