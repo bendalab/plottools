@@ -283,7 +283,7 @@ def __fig_figure(*args, **kwargs):
     return fig
 
 
-def merge(fig, axs):
+def merge(fig, axs, remove=True):
     """ Add axis merging several axes.
 
     Add a new axis to the figure at the position and size of the common
@@ -296,6 +296,8 @@ def merge(fig, axs):
         The figure that contains the axes.
     axs: array of axis objects
         The axis that should be combined.
+    remove: bool
+        If `True` remove the orignal axes `axs`.
 
     Returns
     -------
@@ -340,10 +342,11 @@ def merge(fig, axs):
             idx1 = idx0
         rows.extend((idx0//ncols, idx1//ncols))
         cols.extend((idx0%ncols, idx1%ncols))
-        try:
-            ax.remove()
-        except NotImplementedError:
-            ax.set_visible(False)
+        if remove:
+            try:
+                ax.remove()
+            except NotImplementedError:
+                ax.set_visible(False)
     ax = fig.add_subplot(gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1])
     sps = ax.get_subplotspec()
     return ax
