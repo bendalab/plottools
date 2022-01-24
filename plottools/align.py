@@ -50,8 +50,8 @@ def align_xlabels(fig, axs=None):
     matplotlib function with the same name, this functions aligns all
     labels, independently of any grids.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
@@ -111,8 +111,8 @@ def align_ylabels(fig, axs=None):
     matplotlib function with the same name, this functions aligns all
     labels, independently of any grids.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
@@ -172,8 +172,8 @@ def align_labels(fig, axs=None):
     matplotlib function with the same name, this functions aligns all
     labels, independently of any grids.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes

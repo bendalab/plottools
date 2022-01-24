@@ -77,8 +77,8 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     ```
     ![xpos](figures/scalebars-xpos.png)    
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     ax: matplotlib axes
         Axes where to draw the scale bar.
     x: float
@@ -259,8 +259,8 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     ```
     ![ypos](figures/scalebars-ypos.png)              
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     ax: matplotlib axes
         Axes where to draw the scale bar.
     x: float
@@ -439,8 +439,8 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     ```
     ![pos](figures/scalebars-pos.png)
               
-    Parameter
-    ---------
+    Parameters
+    ----------
     ax: matplotlib axes
         Axes where to draw the scale bar.
     x: float
@@ -541,8 +541,8 @@ def scalebar_params(format_large=None, format_small=None,
                   
     Only parameters that are not `None` are updated.
 
-    Parameter
-    ---------
+    Parameters
+    ----------
     format_large: string
         Format string for formatting the label of the scale bar
         for scalebars longer than one. Set ptParam `scalebar.format.large`.
