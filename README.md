@@ -91,7 +91,8 @@ you are only interested in the functions the `ticks` module provides,
 then you can do
 ```py
 import matplotlib.pyplot as plt
-import plottools.ticks   # installs set_xticks_delta() (an others) on matplotlib Axes class
+import plottools.ticks
+# installs set_xticks_delta() (an others) on matplotlib Axes class
 
 fig, ax = plt.subplots()
 ax.set_xticks_delta(1.0)
@@ -116,9 +117,11 @@ light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
 Each module also has a `<module>_params()` function for setting
 parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
-[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
-Many plottools define additional rcParams (right now in a separate
-ptParams dictionary), that also can be set by this function.
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
+Many plottools define additional
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+(right now in a separate ptParams dictionary), that also can be set by
+this function.
 
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from
@@ -126,8 +129,8 @@ are set to `None`. Only the arguments that you provide and differ from
 ```py
 from plottools.text import text_params
 
-# set the default fon size and family:
-text_params(font_size=10.0, font_family='sans-serif')
+# set the default font size and family:
+text_params(font_size=12.0, font_family='sans-serif')
 # turn on LaTex mode:
 text_params(latex=True)
 ```
@@ -135,7 +138,7 @@ text_params(latex=True)
 
 ## Demos
 
-For a demonstration of the functionality of all modfules run
+For a demonstration of the functionality of all modules run
 ```py
 python demos.py
 ```
@@ -151,13 +154,15 @@ python -m plottools.spines
   matplotlib](docs/starter.md).
 - A general guidline for preparing figures for your next manuscript or
   presentation: [How to prepare figures](docs/guide.md).
+- A suggestion for structuring code that generates plot figures:
+  [How to structure your code](docs/structure.md).
 
 
 ## Bug reporting
 
-The plottools are still in a conceptual phase, interfaces might change
-without notice and tests on various python and matplotlib versions
-are not done yet. So getting an error is not unlikely.
+The `plottools` are still in a conceptual phase, interfaces might
+change without notice and tests on various python and matplotlib
+versions are not done yet. So getting an error is not unlikely.
 
 Providing a pull request that fixes the error is, of course, most
 appreciated.
