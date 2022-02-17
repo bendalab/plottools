@@ -123,6 +123,17 @@ Many plottools define additional
 (right now in a separate ptParams dictionary), that also can be set by
 this function.
 
+TODO: here is how to add new parameters to rcParams:
+```
+import matplotlib as mpl
+val = mpl.rcsetup._validators
+val['my.param'] = mpl.rcsetup.validate_float
+# now you can do:
+mpl.rcParams['my.param'] = 5
+mpl.rc('my', param=14)
+```
+See `mpl.rcsetup` for available validators.
+
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from
 `None` are actually set, the other ones stay untouched. For example:
