@@ -19,7 +19,7 @@ original functions instead of the ones provided by this module.
 
 - `align_params()`: set global align parameters.
 
-`mpl.ptParams` defined by the align module:
+Additional `matplotlib.rcParams` defined by the align module:
 ```py
 align.autox : True 
 align.autoy : True 
@@ -40,6 +40,7 @@ loading the align module, `install_align()` is called automatically.
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.rcsetup as mrc
 
 
 def align_xlabels(fig, axs=None):
@@ -188,7 +189,7 @@ def __align_xlabels(fig, axs=None):
     """ Select align_xlabels() function from matplotlib or plottools.
     """
     if (hasattr(fig, '__align_overwritex') and fig.__align_overwritex) or \
-       (not hasattr(fig, '__align_overwritex') and  mpl.ptParams['align.overwritex']):
+       (not hasattr(fig, '__align_overwritex') and  mpl.rcParams['align.overwritex']):
         fig.__align_xlabels(axs)
     else:
         fig.__align_xlabels_orig_align(axs)
@@ -198,7 +199,7 @@ def __align_ylabels(fig, axs=None):
     """ Select align_ylabels() function from matplotlib or plottools.
     """
     if (hasattr(fig, '__align_overwritey') and fig.__align_overwritey) or \
-       (not hasattr(fig, '__align_overwritey') and  mpl.ptParams['align.overwritey']):
+       (not hasattr(fig, '__align_overwritey') and  mpl.rcParams['align.overwritey']):
         fig.__align_ylabels(axs)
     else:
         fig.__align_ylabels_orig_align(axs)
@@ -208,10 +209,10 @@ def __fig_show_labels(fig, *args, **kwargs):
     """ Call `align_labels()` on the figure before showing it.
     """
     if (hasattr(fig, '__align_autox') and fig.__align_autox) or \
-       (not hasattr(fig, '__align_autox') and  mpl.ptParams['align.autox']):
+       (not hasattr(fig, '__align_autox') and  mpl.rcParams['align.autox']):
         fig.align_xlabels()
     if (hasattr(fig, '__align_autoy') and fig.__align_autoy) or \
-       (not hasattr(fig, '__align_autoy') and  mpl.ptParams['align.autoy']):
+       (not hasattr(fig, '__align_autoy') and  mpl.rcParams['align.autoy']):
         fig.align_ylabels()
     fig.__show_orig_align(*args, **kwargs)
 
@@ -220,10 +221,10 @@ def __fig_savefig_labels(fig, *args, **kwargs):
     """ Call `align_labels()` on the figure before saving it.
     """
     if (hasattr(fig, '__align_autox') and fig.__align_autox) or \
-       (not hasattr(fig, '__align_autox') and  mpl.ptParams['align.autox']):
+       (not hasattr(fig, '__align_autox') and  mpl.rcParams['align.autox']):
         fig.align_xlabels()
     if (hasattr(fig, '__align_autoy') and fig.__align_autoy) or \
-       (not hasattr(fig, '__align_autoy') and  mpl.ptParams['align.autoy']):
+       (not hasattr(fig, '__align_autoy') and  mpl.rcParams['align.autoy']):
         fig.align_ylabels()
     fig.__savefig_orig_align(*args, **kwargs)
 
@@ -233,10 +234,10 @@ def __plt_show_labels(*args, **kwargs):
     """
     for fig in map(plt.figure, plt.get_fignums()):
         if (hasattr(fig, '__align_autox') and fig.__align_autox) or \
-           (not hasattr(fig, '__align_autox') and  mpl.ptParams['align.autox']):
+           (not hasattr(fig, '__align_autox') and  mpl.rcParams['align.autox']):
             fig.align_xlabels()
         if (hasattr(fig, '__align_autoy') and fig.__align_autoy) or \
-           (not hasattr(fig, '__align_autoy') and  mpl.ptParams['align.autoy']):
+           (not hasattr(fig, '__align_autoy') and  mpl.rcParams['align.autoy']):
             fig.align_ylabels()
     plt.__show_orig_align(*args, **kwargs)
 
@@ -246,10 +247,10 @@ def __plt_savefig_labels(*args, **kwargs):
     """
     fig = plt.gcf()
     if (hasattr(fig, '__align_autox') and fig.__align_autox) or \
-       (not hasattr(fig, '__align_autox') and  mpl.ptParams['align.autox']):
+       (not hasattr(fig, '__align_autox') and  mpl.rcParams['align.autox']):
         fig.align_xlabels()
     if (hasattr(fig, '__align_autoy') and fig.__align_autoy) or \
-       (not hasattr(fig, '__align_autoy') and  mpl.ptParams['align.autoy']):
+       (not hasattr(fig, '__align_autoy') and  mpl.rcParams['align.autoy']):
         fig.align_ylabels()
     plt.__savefig_orig_align(*args, **kwargs)
 
@@ -300,40 +301,40 @@ def align_params(autox=None, autoy='same', overwritex=None, overwritey='same'):
     autox: bool
         If `True` then `align_xlabels()` is called automatically before showing
         or saving the figure.
-        Sets ptParam `align.autox`.
+        Sets rcParam `align.autox`.
     autoy: bool or 'same'
         If `True` then `align_ylabels()` is called automatically before showing
         or saving the figure.
         If 'same' use same argument as provided for `autox`.
-        Sets ptParam `align.autoy`.
+        Sets rcParam `align.autoy`.
     overwritex: bool
         If `True`, this module's `align_xlabels()` function is used instead of
         the respective function provided by matplotlib.
-        Sets ptParam `align.overwritex`.
+        Sets rcParam `align.overwritex`.
     overwritey: bool or 'same'
         If `True`, this module's `align_ylabels()` function is used instead of
         the respective function provided by matplotlib.
         If 'same' use same argument as provided for `overwritex`.
-        Sets ptParam `align.overwritey`.
+        Sets rcParam `align.overwritey`.
     """
     if autoy == 'same':
         autoy = autox
     if autox is not None:
-        mpl.ptParams['align.autox'] = autox
+        mpl.rcParams['align.autox'] = autox
     if autoy is not None:
-        mpl.ptParams['align.autoy'] = autoy
+        mpl.rcParams['align.autoy'] = autoy
     if overwritey == 'same':
         overwritey = overwritex
     if overwritex is not None:
-        mpl.ptParams['align.overwritex'] = overwritex
+        mpl.rcParams['align.overwritex'] = overwritex
     if overwritey is not None:
-        mpl.ptParams['align.overwritey'] = overwritey
+        mpl.rcParams['align.overwritey'] = overwritey
 
         
 def install_align():
     """ Install code for aligning axes labels into `show()` and `savefig()` functions.
 
-    Adds mpl.ptParams:
+    Adds `matplotlib.rcParams`:
     ```py
     align.autox : True 
     align.autoy : True 
@@ -378,10 +379,12 @@ def install_align():
         plt.__show_orig_align = plt.show
         plt.show = __plt_show_labels
     # add align parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'align.autox' not in mpl.ptParams:
-        mpl.ptParams.update({'align.autox': True,
+    if 'align.autox' not in mpl.rcParams:
+        mrc._validators['align.autox'] = mrc.validate_bool
+        mrc._validators['align.autoy'] = mrc.validate_bool
+        mrc._validators['align.overwritex'] = mrc.validate_bool
+        mrc._validators['align.overwritey'] = mrc.validate_bool
+        mpl.rcParams.update({'align.autox': True,
                              'align.autoy': True,
                              'align.overwritex': True,
                              'align.overwritey': True})
@@ -424,12 +427,15 @@ def uninstall_align():
     if hasattr(plt, '__show_orig_align'):
         plt.show = plt.__show_orig_align
         delattr(plt, '__show_orig_align')
-    # remove align parameter from mpl.ptParams:
-    if hasattr(mpl, 'ptParams') and 'align.autox' in mpl.ptParams:
-        mpl.ptParams.pop('align.autox', None)
-        mpl.ptParams.pop('align.autoy', None)
-        mpl.ptParams.pop('align.overwritex', None)
-        mpl.ptParams.pop('align.overwritey', None)
+    # remove align parameter from mpl.rcParams:
+    mrc._validators.pop('align.autox', None)
+    mrc._validators.pop('align.autoy', None)
+    mrc._validators.pop('align.overwritex', None)
+    mrc._validators.pop('align.overwritey', None)
+    #mpl.rcParams.pop('align.autox', None)
+    #mpl.rcParams.pop('align.autoy', None)
+    #mpl.rcParams.pop('align.overwritex', None)
+    #mpl.rcParams.pop('align.overwritey', None)
 
 
 install_align()
@@ -481,7 +487,7 @@ def demo():
     axs[2, 1].yaxis.set_label_position('right')
 
     plt.show()
-
+    
 
 if __name__ == "__main__":
     demo()

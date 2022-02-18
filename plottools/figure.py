@@ -55,7 +55,7 @@ This prints to the console
 \\includegraphics<2>{exampleB}
 ```
 and generates the respective files.
-By setting `ptParams['savefig.counter']` (`counter` argument in `figure_params()`)
+By setting `rcParams['savefig.counter']` (`counter` argument in `figure_params()`)
 to 'A', 'a', or '1', '@' in file names is replaced 'A', 'B', 'C', ...,
 'a', 'b', 'c', ... or '1', '2', '3', ..., respectively.
 
@@ -63,7 +63,7 @@ to 'A', 'a', or '1', '@' in file names is replaced 'A', 'B', 'C', ...,
 ## Strip embedded fonts from pdf file
 
 By setting `stripfonts=True` in `savefig()` or via
-`ptParams['pdf.stripfonts']`, figures saved as pdf files
+`rcParams['pdf.stripfonts']`, figures saved as pdf files
 are run through `ps2pdf` in order to remove embedded fonts.
 This significantly reduces the file size of the generated
 figure files, and is in particular useful when using LaTeX mode
@@ -86,7 +86,7 @@ and including the figures in a LaTeX document.
 
 - `figure_params()`: set savefig options via matplotlib's rc settings.
 
-`mpl.ptParams` defined by the figures module:
+`mpl.rcParams` defined by the figures module:
 ```py
 savefig.counter: 'A'
 pdf.stripfonts: False
@@ -108,6 +108,7 @@ import subprocess
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.rcsetup as mrc
 
 
 def cm_size(*args):
@@ -215,11 +216,10 @@ def __savefig_filename(fig, fname):
         fname += basename
     if '@' in fname:
         cs = chr(ord('A')+fig.__saved_files_counter-1)
-        if hasattr(mpl, 'ptParams') and 'savefig.counter' in mpl.ptParams:
-            if mpl.ptParams['savefig.counter'] == 'a':
-                cs = chr(ord('a')+fig.__saved_files_counter-1)
-            elif mpl.ptParams['savefig.counter'] == '1':
-                cs = '%d' % fig.__saved_files_counter
+        if mpl.rcParams['savefig.counter'] == 'a':
+            cs = chr(ord('a')+fig.__saved_files_counter-1)
+        elif mpl.rcParams['savefig.counter'] == '1':
+            cs = '%d' % fig.__saved_files_counter
         fname = fname.replace('@', cs)
     if len(os.path.splitext(fname)[1]) <= 1:
         fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
@@ -232,10 +232,7 @@ def __savefig_filename(fig, fname):
 def __savefig_stripfonts(fname, stripfonts):
     """ Postprocess pdf files. """
     if stripfonts is None:
-        if 'pdf.stripfonts' in mpl.ptParams:
-            stripfonts = mpl.ptParams['pdf.stripfonts']
-        else:
-            stripfonts = False
+        stripfonts = mpl.rcParams['pdf.stripfonts']
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
         subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
         os.rename('tmp-'+fname, fname)
@@ -320,7 +317,7 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
         File format of the saved figure. Sets rcParam `savefig.format`.
     counter: 'A', 'a', or '1'
         Specifies how a '@' character in the file name passed to `fig.savefig()`
-        is translated into a string. Sets ptParam `savefig.counter`.
+        is translated into a string. Sets rcParam `savefig.counter`.
     dpi: int
         For pixel graphics the number of dots per inch.
     compression: int
@@ -335,13 +332,12 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
         If output file format is pdf, then run ps2pdf on the generated pdf file to
         strip it from embedded fonts. This might then look ugly as a standalone figure,
         but results in nice plots within a latex documents at a fraction of the file size.
-        Sets ptParam `pdf.stripfonts`.
+        Sets rcParam `pdf.stripfonts`.
     """
-    if hasattr(mpl, 'ptParams'):
-        if counter is not None:
-            mpl.ptParams['savefig.counter'] = counter
-        if stripfonts is not None:
-            mpl.ptParams['pdf.stripfonts'] = stripfonts
+    if counter is not None:
+        mpl.rcParams['savefig.counter'] = counter
+    if stripfonts is not None:
+        mpl.rcParams['pdf.stripfonts'] = stripfonts
     if color is not None:
         mpl.rcParams['figure.facecolor'] = color
     if format is not None:
@@ -385,12 +381,12 @@ def install_figure():
         plt.__subplots_orig_figure = plt.subplots
         plt.subplots = __plt_subplots
     # add figure parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'savefig.counter' not in mpl.ptParams:
-        mpl.ptParams['savefig.counter'] = 'A'
-    if 'pdf.stripfonts' not in mpl.ptParams:
-        mpl.ptParams['pdf.stripfonts'] = False
+    if 'savefig.counter' not in mpl.rcParams:
+        mrc._validators['savefig.counter'] = mrc.ValidateInStrings('savefig.counter', ['A', 'a', '1'])
+        mpl.rcParams['savefig.counter'] = 'A'
+    if 'pdf.stripfonts' not in mpl.rcParams:
+        mrc._validators['pdf.stripfonts'] = mrc.validate_bool
+        mpl.rcParams['pdf.stripfonts'] = False
 
 
 def uninstall_figure():
@@ -416,9 +412,11 @@ def uninstall_figure():
     if hasattr(plt, '__subplots_orig_figure'):
         plt.subplots = plt.__subplots_orig_figure
         delattr(plt, '__subplots_orig_figure')
-    if hasattr(mpl, 'ptParams') and 'savefig.counter' in mpl.ptParams:
-        del mpl.ptParams['savefig.counter']
-        del mpl.ptParams['pdf.stripfonts']
+    # remove figure parameter from mpl.rcParams:
+    mrc._validators.pop('savefig.counter', None)
+    mrc._validators.pop('pdf.stripfonts', None)
+    #del mpl.rcParams['savefig.counter']
+    #del mpl.rcParams['pdf.stripfonts']
 
 
 install_figure()

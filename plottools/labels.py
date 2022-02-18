@@ -13,7 +13,7 @@ Annotate axis with label and unit.
 
 - `labels_params()`: set parameters for axis labels.
 
-`mpl.ptParams` defined by the labels module:
+`mpl.rcParams` defined by the labels module:
 ```py
 axes.label.format: '{label} [{unit}]'
 ```
@@ -30,6 +30,7 @@ loading the labels module, `install_labels()` is called automatically.
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.rcsetup as mrc
 from mpl_toolkits.mplot3d import Axes3D
 
 
@@ -47,12 +48,12 @@ def __axis_label(label, unit=None):
     -------
     label: string
         An axis label formatted from `label` and `unit` according to
-        the `ptParams['axes.label.format']` string.
+        the `rcParams['axes.label.format']` string.
     """
     if not unit:
         return label
     else:
-        return mpl.ptParams['axes.label.format'].format(label=label, unit=unit)
+        return mpl.rcParams['axes.label.format'].format(label=label, unit=unit)
 
 
 def set_xlabel(ax, label, unit=None, **kwargs):
@@ -119,7 +120,7 @@ def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='ax
         In this string '{label}' is replaced by the axes' label,
         and '{unit}' is replaced by the axes' unit.
         The default format string is '{label} [{unit}]'.
-        Set ptParam `axes.label.format`.
+        Set rcParam `axes.label.format`.
     labelsize: float or string
         Set font size for x- and y-axis labels.
         Sets rcParam `axes.labelsize`.
@@ -138,9 +139,8 @@ def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='ax
     ylabellocation: {'center', 'bottom', 'top'}
         Location of ylabels. Sets rcParams `yaxis.labellocation`.
     """
-    if hasattr(mpl, 'ptParams'):
-        if lformat is not None:
-            mpl.ptParams['axes.label.format'] = lformat
+    if lformat is not None:
+        mpl.rcParams['axes.label.format'] = lformat
     if labelsize is not None:
         mpl.rcParams['axes.labelsize'] = labelsize
     if labelweight is not None:
@@ -160,7 +160,7 @@ def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='ax
 def install_labels():
     """ Install labels functions on matplotlib axes.
 
-    Adds mpl.ptParams:
+    Adds `matplotlib.rcParams`:
     ```py
     axes.label.format: '{label} [{unit}]'
     ```
@@ -182,10 +182,8 @@ def install_labels():
         Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
         Axes3D.set_zlabel = set_zlabel
     # add labels parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'axes.label.format' not in mpl.ptParams:
-        mpl.ptParams['axes.label.format'] = '{label} [{unit}]'
+    mrc._validators['axes.label.format'] = mrc.validate_string
+    mpl.rcParams['axes.label.format'] = '{label} [{unit}]'
         
 
 def uninstall_labels():
@@ -207,8 +205,8 @@ def uninstall_labels():
         Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
         delattr(Axes3D, '__set_zlabel_labels')
     # remove labels parameter from mpl.ptParams:
-    if hasattr(mpl, 'ptParams') and 'axess.label.format' in mpl.ptParams:
-        mpl.ptParams.pop('axes.label.format', None)
+    mrc._validators.pop('axes.label.format', None)
+    #mpl.rcParams.pop('axes.label.format', None)
 
 
 install_labels()

@@ -12,6 +12,7 @@ Drawing arrows.
 ## Settings
 
 - `arrow_style()`: generate an arrow style.
+- `generic_arrow_styles()`: some generic arrow styles.
 
 
 ## Display
@@ -399,7 +400,7 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
 
     
 def generic_arrow_styles(palette, scale=1, namespace=None):
-    """ Generates some generic arrow styles.
+    """ Some generic arrow styles.
 
     - `asLine`: simple arrow
     - `asFilled`: arrow with filled head
@@ -416,7 +417,7 @@ def generic_arrow_styles(palette, scale=1, namespace=None):
     scale: float
         Scale factor for line width, head height and width.
     """
-    arrow_style( 'Line', dist=3, style='>', shrink=0, lw=0.6*scale,
+    arrow_style('Line', dist=3, style='>', shrink=0, lw=0.6*scale,
                 color=palette['black'], head_length=4*scale, head_width=4*scale,
                 namespace=namespace)
     arrow_style('Filled', dist=3, style='>>', shrink=0, lw=0.6*scale,

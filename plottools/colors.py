@@ -615,7 +615,7 @@ def colors_params(palette=None, colors=None, cmap=None):
         Names of the colors from `palette` that should go into the color cycler
         (rcParam `axes.prop_cycle` or `axes.color_cycle`).
     cmap: string
-        Name of defaul color map (`rcParam['image.cmap']`).
+        Name of default color map (`rcParam['image.cmap']`).
     """
     if palette is not None and colors is not None:
         color_cycle = [palette[c] for c in colors if c in palette]
