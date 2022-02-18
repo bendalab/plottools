@@ -379,7 +379,7 @@ def install_align():
         plt.__show_orig_align = plt.show
         plt.show = __plt_show_labels
     # add align parameter to rc configuration:
-    if 'align.autox' not in mpl.rcParams:
+    if 'align.autox' not in mrc._validators:
         mrc._validators['align.autox'] = mrc.validate_bool
         mrc._validators['align.autoy'] = mrc.validate_bool
         mrc._validators['align.overwritex'] = mrc.validate_bool

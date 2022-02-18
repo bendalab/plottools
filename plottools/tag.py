@@ -11,13 +11,13 @@ Tag axes with a label.
 
 - `tag_params()`: set default tag appearance.
 
-`mpl.ptParams` defined by the tag module:
+`matplotlib.rcParams` defined by the tag module:
 ```py
 figure.tags.xoffs : 'auto',
 figure.tags.yoffs : 'auto',
 figure.tags.label : '%A',
 figure.tags.minorlabel : '%A%mi',
-figure.tags.font  : dict(fontsize='x-large', fontstyle='sans-serif', fonttweight='normal')
+figure.tags.font  : dict(fontsize='x-large', fontfamily='sans-serif')
 ```
 
 ## Install/uninstall tag functions
@@ -32,7 +32,9 @@ module, `install_tag()` is called automatically.
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.rcsetup as mrc
 import matplotlib.gridspec as gridspec
+from .rcsetup import install_rcsetup, uninstall_rcsetup
 
 
 def tag(fig=None, axes=None, xoffs=None, yoffs=None,
@@ -57,14 +59,14 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the right-most axis to the left figure border,
         otherwise use the value computed by the first call.
-        If None take value from `mpl.ptParams['figure.tags.xoffs']`.
+        If None take value from `mpl.rcParams['figure.tags.xoffs']`.
     yoffs: float, 'auto', or None
         Y-coordinate of label relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the top-most axis to the top figure border,
         otherwise use the value computed by the first call.
-        If None take value from `mpl.ptParams['figure.tags.yoffs']`.
+        If None take value from `mpl.rcParams['figure.tags.yoffs']`.
     labels: string or list of strings
         If string, then replace formatting substrings 
         '%A', '%a', '%1', '%i', and '%I' to generate labels for each axes in the outer list.
@@ -77,7 +79,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         
         Subsequent calls to `tag()` keep incrementing the label.
         With a list arbitary labels can be specified.
-        If None, set to `mpl.ptParams['figure.tags.label']`.
+        If None, set to `mpl.rcParams['figure.tags.label']`.
     minor_label: string
         If `axes` is a nested list of axes, then for the inner lists
         `minor_label` is used for formatting the axes label.
@@ -85,7 +87,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         by the corresponding tags for the outer list, '%mA', '%ma', '%m1', '%mi',
         and '%mI' are replaced by the equivalently formatted tags for the inner list.
         See `labels` for meaning of the formatting substrings.
-        If None, set to `mpl.ptParams['figure.tags.minorlabel']`.
+        If None, set to `mpl.rcParams['figure.tags.minorlabel']`.
     major_index: int or None
         Start labeling major axes with this index (0 = 'A').
         If None, use last index from previous call to `tag()`.
@@ -94,7 +96,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         If None, start with 0.
     kwargs: dict
         Key-word arguments are passed on to ax.text() for formatting the tag label.
-        Overrides settings in `mpl.ptParams['figure.tags.font']`.
+        Overrides settings in `mpl.rcParams['figure.tags.font']`.
     """
     if fig is None:
         fig = axes[0].get_figure()
@@ -103,9 +105,9 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
     if not isinstance(axes, (list, tuple, np.ndarray)):
         axes = [axes]
     if labels is None:
-        labels = mpl.ptParams['figure.tags.label']
+        labels = mpl.rcParams['figure.tags.label']
     if minor_label is None:
-        minor_label = mpl.ptParams['figure.tags.minorlabel']
+        minor_label = mpl.rcParams['figure.tags.minorlabel']
     if not isinstance(labels, (list, tuple, np.ndarray)):
         # generate labels:
         romans_lower = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x',
@@ -153,7 +155,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         else:
             axes_list.append(axs)
     # font settings:
-    fkwargs = dict(**mpl.ptParams['figure.tags.font'])
+    fkwargs = dict(**mpl.rcParams['figure.tags.font'])
     fkwargs.update(**kwargs)
     # get axes offsets:
     xo = -1.0
@@ -172,9 +174,9 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
     fs = mpl.rcParams['font.size']*fig.dpi/ppi
     # compute offsets:
     if xoffs is None:
-        xoffs = mpl.ptParams['figure.tags.xoffs']
+        xoffs = mpl.rcParams['figure.tags.xoffs']
     if yoffs is None:
-        yoffs = mpl.ptParams['figure.tags.yoffs']
+        yoffs = mpl.rcParams['figure.tags.yoffs']
     if xoffs == 'auto':
         if hasattr(fig, 'tags_xoffs'):
             xoffs = fig.tags_xoffs
@@ -217,37 +219,47 @@ def tag_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
         of a character (simply 60% of the current font size).
         If 'auto', set it to the distance of the right-most axis to the left figure border,
         or to a previously computed value from that figure.
-        Sets ptParam `figure.tags.xoffs`.
+        Sets rcParam `figure.tags.xoffs`.
     yoffs: float or 'auto'
         Y-coordinate of tag relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
         If 'auto', set it to the distance of the top-most axis to the top figure border,
         or to a previously computed value from that figure.
-        Sets ptParam `figure.tags.yoffs`.
+        Sets rcParam `figure.tags.yoffs`.
     label: string
-        Label used to tag axes. Sets ptParam `figure.tags.label`.
+        Label used to tag axes. Sets rcParam `figure.tags.label`.
         See `tag()` for details.
     minor_label: string
-        Label used to tag minor axes. Sets ptParam `figure.tags.minorlabel`.
+        Label used to tag minor axes. Sets rcParam `figure.tags.minorlabel`.
         See `tag()` for details.
     font: dict
         Dictionary with font settings for tags
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
-        Updates ptParam `figure.tags.font`.
+        Updates rcParam `figure.tags.font`.
     """
-    if hasattr(mpl, 'ptParams'):
-        if xoffs is not None:
-            mpl.ptParams['figure.tags.xoffs'] = xoffs
-        if yoffs is not None:
-            mpl.ptParams['figure.tags.yoffs'] = yoffs
-        if label is not None:
-            mpl.ptParams['figure.tags.label'] = label
-        if minor_label is not None:
-            mpl.ptParams['figure.tags.minorlabel'] = minor_label
-        if font is not None:
-            mpl.ptParams['figure.tags.font'].update(**font)
+    if xoffs is not None:
+        mpl.rcParams['figure.tags.xoffs'] = xoffs
+    if yoffs is not None:
+        mpl.rcParams['figure.tags.yoffs'] = yoffs
+    if label is not None:
+        mpl.rcParams['figure.tags.label'] = label
+    if minor_label is not None:
+        mpl.rcParams['figure.tags.minorlabel'] = minor_label
+    if font is not None:
+        mpl.rcParams['figure.tags.font'].update(**font)
 
+            
+def _validate_tagoffs(s):
+    """ Validator for matplotlib.rcsetup.
+    """
+    if s in ('auto',):
+        return s
+    try:
+        return float(s)
+    except ValueError as e:
+        raise ValueError('not a valid offset specification for tag') from e
 
+    
 def install_tag():
     """ Install functions of the tag module in matplotlib.
 
@@ -257,15 +269,20 @@ def install_tag():
     """
     if not hasattr(mpl.figure.Figure, 'tag'):
         mpl.figure.Figure.tag = tag
+    if not hasattr(mrc, 'validate_tagoffs'):
+        mrc.validate_tagoffs = _validate_tagoffs
     # add tag parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'figure.tags.xoffs' not in mpl.ptParams:
-        mpl.ptParams.update({'figure.tags.xoffs': 'auto',
+    if 'figure.tags.xoffs' not in mrc._validators:
+        mrc._validators['figure.tags.xoffs'] = mrc.validate_tagoffs
+        mrc._validators['figure.tags.yoffs'] = mrc.validate_tagoffs
+        mrc._validators['figure.tags.label'] = mrc.validate_string
+        mrc._validators['figure.tags.minorlabel'] = mrc.validate_string
+        mrc._validators['figure.tags.font'] = mrc.validate_fontdict
+        mpl.rcParams.update({'figure.tags.xoffs': 'auto',
                              'figure.tags.yoffs': 'auto',
                              'figure.tags.label': '%A',
                              'figure.tags.minorlabel': '%A%mi',
-                             'figure.tags.font': dict(fontsize='x-large')})
+                             'figure.tags.font': dict(fontsize='x-large', fontfamily='sans-serif') })
 
 
 def uninstall_tag():
@@ -277,12 +294,13 @@ def uninstall_tag():
     """
     if hasattr(mpl.figure.Figure, 'tag'):
         delattr(mpl.figure.Figure, 'tag')
-    if hasattr(mpl, 'ptParams'):
-        del mpl.ptParams['figure.tags.xoffs']
-        del mpl.ptParams['figure.tags.yoffs']
-        del mpl.ptParams['figure.tags.label']
-        del mpl.ptParams['figure.tags.minorlabel']
-        del mpl.ptParams['figure.tags.font']
+    if hasattr(mrc, 'validate_tagoffs'):
+        delattr(mrc, 'validate_tagoffs')
+    mrc._validators.pop('figure.tags.xoffs', None)
+    mrc._validators.pop('figure.tags.yoffs', None)
+    mrc._validators.pop('figure.tags.label', None)
+    mrc._validators.pop('figure.tags.minorlabel', None)
+    mrc._validators.pop('figure.tags.font', None)
 
 
 install_tag()
@@ -326,7 +344,7 @@ def demo():
                 transform=axs[0].transAxes)
     fig.tag([0, [1, 2, 3]], xoffs=0, yoffs=3, labels='Panel %A)', minor_label='%A.%mi)')
     plt.show()
-        
+
 
 if __name__ == "__main__":
     demo()

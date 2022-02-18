@@ -14,7 +14,7 @@ Labeled scale bars.
 
 - `scalebar_params()`: set rc settings for scalebars.
 
-`mpl.ptParams` defined by the scalebar module:
+`matplotlib.rcParams` defined by the scalebar module:
 ```py
 scalebar.format.large: '%.0f'
 scalebar.format.small: '%.1f'
@@ -22,7 +22,7 @@ scalebar.linewidth: 2
 scalebar.color: 'k'
 scalebar.capsize: 0
 scalebar.caplinewidth: 0.5
-scalebar.font: dict(fontsize='medium', fontstyle='normal', fontweight='normal')
+scalebar.font: dict()
 ```
 
 
@@ -45,6 +45,8 @@ module, `install_scalebars()` is called automatically.
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.rcsetup as mrc
+from .rcsetup import install_rcsetup, uninstall_rcsetup
 
 
 def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
@@ -92,29 +94,29 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     wformat: string or None
         Optional format string for formatting the label of the scale bar
         or simply a string used for labeling the scale bar.
-        If None take value from rc setting 'scalebar.format.large' for width larger than one,
-        or 'scalebar.format.small' for width smaller than one.
+        If None take value from rcParams `scalebar.format.large` for width larger than one,
+        or `scalebar.format.small` for width smaller than one.
     ha: 'left', 'right', or 'center'
         Scale bar aligned left, right, or centered to (x, y)
     va: 'top' or 'bottom'
         Label of the scale bar either above or below the scale bar.
     lw: int, float, None
-        Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+        Line width of the scale bar. If None take value from rcSetting `scalebar.linewidth`.
     color: matplotlib color
         Color of the scalebar.
     capsize: float or None
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
-        If None take value from rc setting 'scalebar.capsize'.
+        If None take value from rcParam `scalebar.capsize`.
     clw: int, float, None
         Line width of the cap lines.
-        If None take value from rc setting 'scalebar.caplinewidth'.
+        If None take value from rcParam `scalebar.caplinewidth`.
     return_coords: bool
         For internal usage only. If `True` return `x0`, `x1`, and `y`
         coordinates of scale bar in addition to artists.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar label.
-        Defaults to scalebar.font ptParams settings.
+        Defaults to `scalebar.font` rcParams settings.
 
     Returns
     -------
@@ -155,9 +157,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     y = ymin + y*unity
     # bar length:
     if wformat is None:
-        wformat = mpl.ptParams['scalebar.format.large']
+        wformat = mpl.rcParams['scalebar.format.large']
         if width < 1.0:
-            wformat = mpl.ptParams['scalebar.format.small']
+            wformat = mpl.rcParams['scalebar.format.small']
     try:
         ls = wformat % width
         width = float(ls)
@@ -175,10 +177,10 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         x1 = x+0.5*width
     # line width:
     if lw is None:
-        lw = mpl.ptParams['scalebar.linewidth']
+        lw = mpl.rcParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.ptParams['scalebar.color']
+        color = mpl.rcParams['scalebar.color']
     # scalebar:
     lh = ax.plot([x0, x1], [y, y], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
@@ -188,9 +190,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
     ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
     # caps:
     if capsize is None:
-        capsize = mpl.ptParams['scalebar.capsize']
+        capsize = mpl.rcParams['scalebar.capsize']
     if clw is None:
-        clw = mpl.ptParams['scalebar.caplinewidth']
+        clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dy = capsize*dyu
         cl = ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
@@ -205,9 +207,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
             ls += '\\,%s' % wunit
         else:
             ls += u'\u2009%s' % wunit
-    for k in mpl.ptParams['scalebar.font']:
+    for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
-            kwargs[k] = mpl.ptParams['scalebar.font'][k]
+            kwargs[k] = mpl.rcParams['scalebar.font'][k]
     if va == 'top':
         th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
                      ha='center', va='bottom', **kwargs)
@@ -274,30 +276,30 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     hformat: string or None
         Optional format string for formatting the label of the scale bar
         or simply a string used for labeling the scale bar.
-        If None take value from rc setting 'scalebar.format.large' for hight larger than one,
-        or 'scalebar.format.small' for hight smaller than one.
+        If None take value from rcParams `scalebar.format.large` for hight larger than one,
+        or `scalebar.format.small` for hight smaller than one.
     ha: 'left' or 'right'
         Label of the scale bar either to the left or to the right
         of the scale bar.
     va: 'top', 'bottom', or 'center'
         Scale bar aligned above, below, or centered on (x, y).
     lw: int, float, None
-        Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+        Line width of the scale bar. If None take value from rcParams `scalebar.linewidth`.
     color: matplotlib color
         Color of the scalebar.
     capsize: float or None
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
-        If None take value from rc setting 'scalebar.capsize'.
+        If None take value from rcParams `scalebar.capsize`.
     clw: int, float
         Line width of the cap lines.
-        If None take value from rc setting 'scalebar.caplinewidth'.
+        If None take value from rcParams `scalebar.caplinewidth`.
     return_coords: bool
         For internal usage only. If `True` return `x`, `y0`, and `y1`
         coordinates of scale bar in addition to artists.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar label.
-        Defaults to scalebar.font ptParams settings.
+        Defaults to `scalebar.font` rcParams settings.
 
     Returns
     -------
@@ -338,9 +340,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     y = ymin + y*unity
     # bar length:
     if hformat is None:
-        hformat = mpl.ptParams['scalebar.format.large']
+        hformat = mpl.rcParams['scalebar.format.large']
         if height < 1.0:
-            hformat = mpl.ptParams['scalebar.format.small']
+            hformat = mpl.rcParams['scalebar.format.small']
     try:
         ls = hformat % height
         width = float(ls)
@@ -358,10 +360,10 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
         y1 = y+0.5*height
     # line width:
     if lw is None:
-        lw = mpl.ptParams['scalebar.linewidth']
+        lw = mpl.rcParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.ptParams['scalebar.color']
+        color = mpl.rcParams['scalebar.color']
     # scalebar:
     lh = ax.plot([x, x], [y0, y1], '-', color=color, lw=lw,
                  solid_capstyle='butt', clip_on=False)
@@ -371,9 +373,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
     lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
     # caps:
     if capsize is None:
-        capsize = mpl.ptParams['scalebar.capsize']
+        capsize = mpl.rcParams['scalebar.capsize']
     if clw is None:
-        clw = mpl.ptParams['scalebar.caplinewidth']
+        clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dx = capsize*dxu
         cl = ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw,
@@ -388,9 +390,9 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom'
             ls += '\\,%s' % hunit
         else:
             ls += u'\u2009%s' % hunit
-    for k in mpl.ptParams['scalebar.font']:
+    for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
-            kwargs[k] = mpl.ptParams['scalebar.font'][k]
+            kwargs[k] = mpl.rcParams['scalebar.font'][k]
     if ha == 'right':
         th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
                      ha='left', va='center', **kwargs)
@@ -458,13 +460,13 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     wformat: string or None
         Optional format string for formatting the x-label of the scale bar
         or simply a string used for labeling the x scale bar.
-        If None take value from rc setting 'scalebar.format.large' for width larger than one,
-        or 'scalebar.format.small' for width smaller than one.
+        If None take value from rcParams `scalebar.format.large` for width larger than one,
+        or `scalebar.format.small` for width smaller than one.
     hformat: string or None
         Optional format string for formatting the y-label of the scale bar
         or simply a string used for labeling the y scale bar.
-        If None take value from rc setting 'scalebar.format.large' for height larger than one,
-        or 'scalebar.format.small' for height smaller than one.
+        If None take value from rcParams `scalebar.format.large` for height larger than one,
+        or `scalebar.format.small` for height smaller than one.
     ha: 'left' or 'right'
         Scale bars aligned left or right to (x, y).
         Vertical scale bar left or right.
@@ -472,12 +474,12 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
         Scale bars aligned above or below (x, y).
         Horizontal scale bar on top or a the bottom.
     lw: int, float, None
-        Line width of the scale bar. If None take value from rc setting 'scalebar.linewidth'.
+        Line width of the scale bar. If None take value from rcParams `scalebar.linewidth`.
     color: matplotlib color
         Color of the scalebar.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the scale bar labels.
-        Defaults to scalebar.font ptParams settings.
+        Defaults to `scalebar.font` rcParams settings.
 
     Returns
     -------
@@ -505,10 +507,10 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     artists = []
     # line width:
     if lw is None:
-        lw = mpl.ptParams['scalebar.linewidth']
+        lw = mpl.rcParams['scalebar.linewidth']
     # color:
     if color is None:
-        color = mpl.ptParams['scalebar.color']
+        color = mpl.rcParams['scalebar.color']
     a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
                               lw, color, 0.0, 1, return_coords=True, **kwargs)
     artists.extend(a)
@@ -545,40 +547,39 @@ def scalebar_params(format_large=None, format_small=None,
     ----------
     format_large: string
         Format string for formatting the label of the scale bar
-        for scalebars longer than one. Set ptParam `scalebar.format.large`.
+        for scalebars longer than one. Set rcParam `scalebar.format.large`.
     format_small: string
         Format string for formatting the label of the scale bar
-        for scalebars shorter than one. Set ptParam `scalebar.format.small`.
+        for scalebars shorter than one. Set rcParam `scalebar.format.small`.
     lw: int, float
-        Line width of a scale bar. Set ptParam `scalebar.linewidth`.
+        Line width of a scale bar. Set rcParam `scalebar.linewidth`.
     color: matplotlib color
-        Color of the scalebar. Set ptParam `scalebar.color`.
+        Color of the scalebar. Set rcParam `scalebar.color`.
     capsize: float
         If larger then zero draw cap lines at the ends of the bar.
         The length of the lines is given in points (same unit as linewidth).
-         Set ptParam `scalebar.capsize`.
+         Set rcParam `scalebar.capsize`.
     clw: int, float
-        Line width of the cap lines. Set ptParam `scalebar.caplinewidth`.
+        Line width of the cap lines. Set rcParam `scalebar.caplinewidth`.
     font: dict
         Dictionary with font settings
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
-         Set ptParam `scalebar.font`.
+         Set rcParam `scalebar.font`.
     """
-    if hasattr(mpl, 'ptParams'):
-        if format_large is not None:
-            mpl.ptParams['scalebar.format.large'] = format_large
-        if format_small is not None:
-            mpl.ptParams['scalebar.format.small'] = format_small
-        if lw is not None:
-            mpl.ptParams['scalebar.linewidth'] = lw
-        if color is not None:
-            mpl.ptParams['scalebar.color'] = color
-        if capsize is not None:
-            mpl.ptParams['scalebar.capsize'] = capsize
-        if clw is not None:
-            mpl.ptParams['scalebar.caplinewidth'] = clw
-        if font is not None:
-            mpl.ptParams.update({'scalebar.font': font})
+    if format_large is not None:
+        mpl.rcParams['scalebar.format.large'] = format_large
+    if format_small is not None:
+        mpl.rcParams['scalebar.format.small'] = format_small
+    if lw is not None:
+        mpl.rcParams['scalebar.linewidth'] = lw
+    if color is not None:
+        mpl.rcParams['scalebar.color'] = color
+    if capsize is not None:
+        mpl.rcParams['scalebar.capsize'] = capsize
+    if clw is not None:
+        mpl.rcParams['scalebar.caplinewidth'] = clw
+    if font is not None:
+        mpl.rcParams.update({'scalebar.font': font})
 
 
 def install_scalebars():
@@ -597,18 +598,21 @@ def install_scalebars():
     if not hasattr(mpl.axes.Axes, 'scalebars'):
         mpl.axes.Axes.scalebars = scalebars
     # add scalebar parameter to rc configuration:
-    if not hasattr(mpl, 'ptParams'):
-        mpl.ptParams = {}
-    if 'scalebar.format.large' not in mpl.ptParams:
-        mpl.ptParams.update({'scalebar.format.large': '%.0f',
-                            'scalebar.format.small': '%.1f',
-                            'scalebar.linewidth': 2,
-                            'scalebar.color': 'k',
-                            'scalebar.capsize': 0,
-                            'scalebar.caplinewidth': 0.5,
-                            'scalebar.font': dict(fontsize='medium',
-                                                fontstyle='normal',
-                                                fontweight='normal')})
+    if 'scalebar.format.large' not in mpl.rcParams:
+        mrc._validators['scalebar.format.large'] = mrc.validate_string
+        mrc._validators['scalebar.format.small'] = mrc.validate_string
+        mrc._validators['scalebar.linewidth'] = mrc.validate_float
+        mrc._validators['scalebar.color'] = mrc.validate_string
+        mrc._validators['scalebar.capsize'] = mrc.validate_float
+        mrc._validators['scalebar.caplinewidth'] = mrc.validate_float
+        mrc._validators['scalebar.font'] = mrc.validate_fontdict
+        mpl.rcParams.update({'scalebar.format.large': '%.0f',
+                             'scalebar.format.small': '%.1f',
+                             'scalebar.linewidth': 2,
+                             'scalebar.color': 'k',
+                             'scalebar.capsize': 0,
+                             'scalebar.caplinewidth': 0.5,
+                             'scalebar.font': dict()})
 
         
 def uninstall_scalebars():
@@ -626,14 +630,13 @@ def uninstall_scalebars():
         delattr(mpl.axes.Axes, 'yscalebar')
     if hasattr(mpl.axes.Axes, 'scalebars'):
         delattr(mpl.axes.Axes, 'scalebars')
-    if hasattr(mpl, 'ptParams'):
-        del mpl.ptParams['scalebar.format.large']
-        del mpl.ptParams['scalebar.format.small']
-        del mpl.ptParams['scalebar.linewidth']
-        del mpl.ptParams['scalebar.color']
-        del mpl.ptParams['scalebar.capsize']
-        del mpl.ptParams['scalebar.caplinewidth']
-        del mpl.ptParams['scalebar.font']
+    mrc._validators.pop('scalebar.format.large', None)
+    mrc._validators.pop('scalebar.format.small', None)
+    mrc._validators.pop('scalebar.linewidth', None)
+    mrc._validators.pop('scalebar.color', None)
+    mrc._validators.pop('scalebar.capsize', None)
+    mrc._validators.pop('scalebar.caplinewidth', None)
+    mrc._validators.pop('scalebar.font', None)
 
 
 install_scalebars()

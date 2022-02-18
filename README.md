@@ -136,7 +136,7 @@ mrc._validators.pop('align.autox', None)
 # how to remove from mpl.rcParams?
 ```
 See `mpl.rcsetup` for available validators.
-To be done: from scalebars.py on.
+To be done: spines.py.
 
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from
