@@ -46,7 +46,7 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.rcsetup as mrc
-from .rcsetup import install_rcsetup, uninstall_rcsetup
+from .rcsetup import _validate_fontdict
 
 
 def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
@@ -605,7 +605,7 @@ def install_scalebars():
         mrc._validators['scalebar.color'] = mrc.validate_string
         mrc._validators['scalebar.capsize'] = mrc.validate_float
         mrc._validators['scalebar.caplinewidth'] = mrc.validate_float
-        mrc._validators['scalebar.font'] = mrc.validate_fontdict
+        mrc._validators['scalebar.font'] = _validate_fontdict
         mpl.rcParams.update({'scalebar.format.large': '%.0f',
                              'scalebar.format.small': '%.1f',
                              'scalebar.linewidth': 2,

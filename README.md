@@ -119,24 +119,8 @@ parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
 [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
 Many plottools define additional
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
-(right now in a separate ptParams dictionary), that also can be set by
-this function.
-
-TODO: here is how to add new parameters to rcParams:
-```
-import matplotlib as mpl
-import matplotlib.rcsetup as mrc
-mrc._validators['my.param'] = mrc.validate_float
-# now you can do:
-mpl.rcParams['my.param'] = 5
-mpl.rc('my', param=14)
-# remove with:
-mrc._validators.pop('align.autox', None)
-# how to remove from mpl.rcParams?
-```
-See `mpl.rcsetup` for available validators.
-To be done: spines.py.
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html),
+that also can be set by this function.
 
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from

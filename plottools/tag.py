@@ -34,7 +34,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.rcsetup as mrc
 import matplotlib.gridspec as gridspec
-from .rcsetup import install_rcsetup, uninstall_rcsetup
+from .rcsetup import _validate_fontdict
 
 
 def tag(fig=None, axes=None, xoffs=None, yoffs=None,
@@ -277,7 +277,7 @@ def install_tag():
         mrc._validators['figure.tags.yoffs'] = mrc.validate_tagoffs
         mrc._validators['figure.tags.label'] = mrc.validate_string
         mrc._validators['figure.tags.minorlabel'] = mrc.validate_string
-        mrc._validators['figure.tags.font'] = mrc.validate_fontdict
+        mrc._validators['figure.tags.font'] = _validate_fontdict
         mpl.rcParams.update({'figure.tags.xoffs': 'auto',
                              'figure.tags.yoffs': 'auto',
                              'figure.tags.label': '%A',
