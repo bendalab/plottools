@@ -23,7 +23,15 @@ def _validate_dict(s):
             return {}
         if s[0] != '{' or s[-1] != '}':
             raise ValueError('not a valid dictionary string: ' + s)
+        ss = []
         for i in s[1:-1].strip().split(','):
+            if ':' in i:
+                ss.append(i)
+            elif len(ss) > 0:
+                ss[-1] += ',' + i
+            else:
+                raise ValueError('invalid key-value pair for dict in ' + s)
+        for i in ss:
             kv = i.split(':')
             if len(kv) != 2:
                 raise ValueError('invalid key-value pair for dict in ' + s)

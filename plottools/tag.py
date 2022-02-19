@@ -324,7 +324,8 @@ def demo():
             ax.set_ylabel('ylabel')
         return fig, (ax1, ax2, ax3, ax4)
 
-    tag_params(xoffs='auto', yoffs='auto', label='%A', font=dict(fontweight='bold'))
+    tag_params(xoffs='auto', yoffs='auto', label='%A',
+               font=dict(fontweight='bold'))
     
     fig, axs = afigure()
     axs[0].text(0.5, 0.5, 'fig.tag()', transform=axs[0].transAxes, ha='center')
