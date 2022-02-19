@@ -319,15 +319,15 @@ def align_params(autox=None, autoy='same', overwritex=None, overwritey='same'):
     """
     if autoy == 'same':
         autoy = autox
-    if autox is not None:
+    if autox is not None and 'align.autox' in mrc._validators:
         mpl.rcParams['align.autox'] = autox
-    if autoy is not None:
+    if autoy is not None and 'align.autoy' in mrc._validators:
         mpl.rcParams['align.autoy'] = autoy
     if overwritey == 'same':
         overwritey = overwritex
-    if overwritex is not None:
+    if overwritex is not None and 'align.overwritex' in mrc._validators:
         mpl.rcParams['align.overwritex'] = overwritex
-    if overwritey is not None:
+    if overwritey is not None and 'align.overwritey' in mrc._validators:
         mpl.rcParams['align.overwritey'] = overwritey
 
         
@@ -454,37 +454,37 @@ def demo():
     x = np.linspace(0, 20, 200)
     y = np.sin(x)
 
-    axs[0, 0].plot(x, 4000*y)
-    axs[0, 0].set_ylim(-5000.0, 5000.0)
-    axs[0, 0].set_ylabel('Velocity\nin water [m/s]')
+    axs[0,0].plot(x, 4000*y)
+    axs[0,0].set_ylim(-5000.0, 5000.0)
+    axs[0,0].set_ylabel('Velocity\nin water [m/s]')
     
-    axs[0, 1].plot(x, y)
-    axs[0, 1].set_ylim(-1.0, 1.7)
-    axs[0, 1].set_ylabel('Accelaration [m/s^2]')
-    axs[0, 1].yaxis.set_ticks_position('right')
-    axs[0, 1].yaxis.set_label_position('right')
+    axs[0,1].plot(x, y)
+    axs[0,1].set_ylim(-1.0, 1.7)
+    axs[0,1].set_ylabel('Accelaration [m/s^2]')
+    axs[0,1].yaxis.set_ticks_position('right')
+    axs[0,1].yaxis.set_label_position('right')
     
-    axs[1, 0].plot(x, y)
-    axs[1, 0].set_ylim(-1.0, 1.0)
-    axs[1, 0].set_ylabel('Potential [mV]')
+    axs[1,0].plot(x, y)
+    axs[1,0].set_ylim(-1.0, 1.0)
+    axs[1,0].set_ylabel('Potential [mV]')
     
-    axs[1, 1].plot(x, 5000*y)
-    axs[1, 1].set_ylim(-10000.0, 10000.0)
-    axs[1, 1].set_ylabel('Potential [mV]')
-    axs[1, 1].yaxis.set_ticks_position('right')
-    axs[1, 1].yaxis.set_label_position('right')
+    axs[1,1].plot(x, 5000*y)
+    axs[1,1].set_ylim(-10000.0, 10000.0)
+    axs[1,1].set_ylabel('Potential [mV]')
+    axs[1,1].yaxis.set_ticks_position('right')
+    axs[1,1].yaxis.set_label_position('right')
     
-    axs[2, 0].plot(x, y)
-    axs[2, 0].set_ylim(-1.0, 1.7)
-    axs[2, 0].set_xlabel('time [ms]')
-    axs[2, 0].set_ylabel('Amplitude [Pa]')
+    axs[2,0].plot(x, y)
+    axs[2,0].set_ylim(-1.0, 1.7)
+    axs[2,0].set_xlabel('time [ms]')
+    axs[2,0].set_ylabel('Amplitude [Pa]')
     
-    axs[2, 1].plot(x, 1000*y)
-    axs[2, 1].set_ylim(-1000, 1700)
-    axs[2, 1].set_xlabel('Timepoints [ms]\nsince stimulus onset')
-    axs[2, 1].set_ylabel('Amplitude [Pa]')
-    axs[2, 1].yaxis.set_ticks_position('right')
-    axs[2, 1].yaxis.set_label_position('right')
+    axs[2,1].plot(x, 1000*y)
+    axs[2,1].set_ylim(-1000, 1700)
+    axs[2,1].set_xlabel('Timepoints [ms]\nsince stimulus onset')
+    axs[2,1].set_ylabel('Amplitude [Pa]')
+    axs[2,1].yaxis.set_ticks_position('right')
+    axs[2,1].yaxis.set_label_position('right')
 
     plt.show()
     

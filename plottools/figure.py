@@ -305,7 +305,7 @@ def latex_include_figures():
 
 def figure_params(color=None, format=None, counter=None, dpi=None,
                   compression=None, fonttype=None, stripfonts=None):
-    """ Set figure parameter.
+    """Set figure parameter.
                   
     Only parameters that are not `None` are updated.
 
@@ -321,22 +321,24 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
     dpi: int
         For pixel graphics the number of dots per inch.
     compression: int
-        Compression level of pdf file from 0 to 9. Sets rcParam `pdf.compression`.
+        Compression level of pdf file from 0 to 9.
+        Sets rcParam `pdf.compression`.
     fonttype: 3 or 42
         Type 3 (Type3) or Type 42 (TrueType) fonts.
         Sets rcParams `pdf.fonttype` and `ps.fonttype`.
         Type3 use less disk space but are less well editable,
-        Type42 use more disk space but are better editable in vector graphics software
-        (says the internet).
+        Type42 use more disk space but are better editable in vector
+        graphics software (says the internet).
     stripfonts: boolean
-        If output file format is pdf, then run ps2pdf on the generated pdf file to
-        strip it from embedded fonts. This might then look ugly as a standalone figure,
-        but results in nice plots within a latex documents at a fraction of the file size.
-        Sets rcParam `pdf.stripfonts`.
+        If output file format is pdf, then run ps2pdf on the generated
+        pdf file to strip it from embedded fonts. This might then look
+        ugly as a standalone figure, but results in nice plots within
+        a latex documents at a fraction of the file size.  Sets
+        rcParam `pdf.stripfonts`.
     """
-    if counter is not None:
+    if counter is not None and 'savefig.counter' in mrc._validators:
         mpl.rcParams['savefig.counter'] = counter
-    if stripfonts is not None:
+    if stripfonts is not None and 'pdf.stripfonts' in mrc._validators:
         mpl.rcParams['pdf.stripfonts'] = stripfonts
     if color is not None:
         mpl.rcParams['figure.facecolor'] = color
@@ -383,9 +385,8 @@ def install_figure():
     # add figure parameter to rc configuration:
     if 'savefig.counter' not in mpl.rcParams:
         mrc._validators['savefig.counter'] = mrc.ValidateInStrings('savefig.counter', ['A', 'a', '1'])
-        mpl.rcParams['savefig.counter'] = 'A'
-    if 'pdf.stripfonts' not in mpl.rcParams:
         mrc._validators['pdf.stripfonts'] = mrc.validate_bool
+        mpl.rcParams['savefig.counter'] = 'A'
         mpl.rcParams['pdf.stripfonts'] = False
 
 

@@ -49,9 +49,9 @@ import matplotlib.rcsetup as mrc
 from .rcsetup import _validate_fontdict
 
 
-def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
-              lw=None, color=None, capsize=None, clw=None, return_coords=False,
-              **kwargs):
+def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
+              va='bottom', lw=None, color=None, capsize=None,
+              clw=None, return_coords=False, **kwargs):
     """ Horizontal scale bar with label.
 
     The first two arguments set the anchor point
@@ -230,9 +230,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom',
         return artists
     
         
-def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom',
-              lw=None, color=None, capsize=None, clw=None, return_coords=False,
-              **kwargs):
+def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
+              va='bottom', lw=None, color=None, capsize=None,
+              clw=None, return_coords=False, **kwargs):
     """ Vertical scale bar with label.
 
     The first two arguments set the anchor point
@@ -537,8 +537,8 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     return artists
 
 
-def scalebar_params(format_large=None, format_small=None,
-                    lw=2, color=None, capsize=None, clw=None, font=None):
+def scalebar_params(format_large=None, format_small=None, lw=2,
+                    color=None, capsize=None, clw=None, font=None):
     """ Set rc settings for scalebars.
                   
     Only parameters that are not `None` are updated.
@@ -566,19 +566,19 @@ def scalebar_params(format_large=None, format_small=None,
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
          Set rcParam `scalebar.font`.
     """
-    if format_large is not None:
+    if format_large is not None and 'scalebar.format.large' in mrc._validators:
         mpl.rcParams['scalebar.format.large'] = format_large
-    if format_small is not None:
+    if format_small is not None and 'scalebar.format.small' in mrc._validators:
         mpl.rcParams['scalebar.format.small'] = format_small
-    if lw is not None:
+    if lw is not None and 'scalebar.linewidth' in mrc._validators:
         mpl.rcParams['scalebar.linewidth'] = lw
-    if color is not None:
+    if color is not None and 'scalebar.color' in mrc._validators:
         mpl.rcParams['scalebar.color'] = color
-    if capsize is not None:
+    if capsize is not None and 'scalebar.capsize' in mrc._validators:
         mpl.rcParams['scalebar.capsize'] = capsize
-    if clw is not None:
+    if clw is not None and 'scalebar.caplinewidth' in mrc._validators:
         mpl.rcParams['scalebar.caplinewidth'] = clw
-    if font is not None:
+    if font is not None and 'scalebar.font' in mrc._validators:
         mpl.rcParams.update({'scalebar.font': font})
 
 
@@ -649,8 +649,8 @@ def demo():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
 
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2, capsize=0, clw=0.5,
-                    font=dict(fontweight='bold'))
+    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2,
+                    capsize=0, clw=0.5, font=dict(fontweight='bold'))
     
     fig, ax = plt.subplots()
     fig.suptitle('plottools.scalebars')

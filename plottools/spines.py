@@ -921,41 +921,41 @@ def spines_params(spines=None, spines_offsets=None,
     linewidth: float
         Width of spines. Sets rcParam `axes.linewidth`.
     """
-    if spines is not None:
+    if spines is not None and 'axes.spines.show' in mrc._validators:
         mpl.rcParams['axes.spines.show'] = spines
-    if spines_offsets is not None:
+    if spines_offsets is not None and 'axes.spines.offsets' in mrc._validators:
         mpl.rcParams['axes.spines.offsets'] = spines_offsets
-    if spines_positions is not None:
+    if spines_positions is not None and 'axes.spines.positions' in mrc._validators:
         mpl.rcParams['axes.spines.positions'] = spines_positions
-    if spines_bounds is not None:
+    if spines_bounds is not None and 'axes.spines.bounds' in mrc._validators:
         mpl.rcParams['axes.spines.bounds'] = spines_bounds
-    if arrows is not None:
+    if arrows is not None and 'axes.spines.arrows' in mrc._validators:
         mpl.rcParams['axes.spines.arrows'] = arrows
-    if flushx is not None:
+    if flushx is not None and 'axes.spines.arrows.flushx' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.flushx'] = flushx
-    if extendx is not None:
+    if extendx is not None and 'axes.spines.arrows.extendx' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.extendx'] = extendx
-    if flushy is not None:
+    if flushy is not None and 'axes.spines.arrows.flushy' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.flushy'] = flushy
-    if extendy is not None:
+    if extendy is not None and 'axes.spines.arrows.extendy' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.extendy'] = extendy
-    if height is not None:
+    if height is not None and 'axes.spines.arrows.height' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.height'] = height
-    if ratio is not None:
+    if ratio is not None and 'axes.spines.arrows.ratio' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.ratio'] = ratio
-    if overhang is not None:
+    if overhang is not None and 'axes.spines.arrows.overhang' in mrc._validators:
         mpl.rcParams['axes.spines.arrows.overhang'] = overhang
-    if twinx_spines is not None:
+    if twinx_spines is not None and 'axes.spines.twinx' in mrc._validators:
         mpl.rcParams['axes.spines.twinx'] = twinx_spines
-    if twiny_spines is not None:
+    if twiny_spines is not None and 'axes.spines.twiny' in mrc._validators:
         mpl.rcParams['axes.spines.twiny'] = twiny_spines
-    if inset_spines is not None:
+    if inset_spines is not None and 'axes.spines.inset.show' in mrc._validators:
         mpl.rcParams['axes.spines.inset.show'] = inset_spines
-    if inset_spines_offsets is not None:
+    if inset_spines_offsets is not None and 'axes.spines.inset.offsets' in mrc._validators:
         mpl.rcParams['axes.spines.inset.offsets'] = inset_spines_offsets
-    if inset_spines_positions is not None:
+    if inset_spines_positions is not None and 'axes.spines.inset.positions' in mrc._validators:
         mpl.rcParams['axes.spines.inset.positions'] = inset_spines_positions
-    if inset_spines_bounds is not None:
+    if inset_spines_bounds is not None and 'axes.spines.inset.bounds' in mrc._validators:
         mpl.rcParams['axes.spines.inset.bounds'] = inset_spines_bounds
     if color is not None:
         mpl.rcParams['axes.edgecolor'] = color

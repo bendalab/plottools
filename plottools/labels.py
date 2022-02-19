@@ -107,15 +107,16 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
-def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='axes',
-                  labelpad=None, xlabellocation=None, ylabellocation=None):
+def labels_params(labelformat=None, labelsize=None, labelweight=None,
+                  labelcolor='axes', labelpad=None,
+                  xlabellocation=None, ylabellocation=None):
     """ Set parameters for axis labels.
                   
     Only parameters that are not `None` are updated.
     
     Parameters
     ----------
-    lformat: string
+    labelformat: string
         Set the string specifying how axes labels are formatted.
         In this string '{label}' is replaced by the axes' label,
         and '{unit}' is replaced by the axes' unit.
@@ -139,8 +140,8 @@ def labels_params(lformat=None, labelsize=None, labelweight=None, labelcolor='ax
     ylabellocation: {'center', 'bottom', 'top'}
         Location of ylabels. Sets rcParams `yaxis.labellocation`.
     """
-    if lformat is not None:
-        mpl.rcParams['axes.label.format'] = lformat
+    if labelformat is not None and 'axes.label.format' in mrc._validators:
+        mpl.rcParams['axes.label.format'] = labelformat
     if labelsize is not None:
         mpl.rcParams['axes.labelsize'] = labelsize
     if labelweight is not None:
@@ -229,7 +230,7 @@ def demo():
     axs[0].set_xlabel('Time', 'ms')
     axs[0].set_ylabel('Amplitude', 'Pa')
     
-    labels_params(lformat='{label} / {unit}')   # usually you would do this before any plotting!
+    labels_params(labelformat='{label} / {unit}')   # usually you would do this before any plotting!
     axs[1].plot(x, 1000*y)
     axs[1].set_ylim(-1000, 1700)
     axs[1].text(1.0, 1500, "labels_params('{label} / {unit}')")

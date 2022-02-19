@@ -237,15 +237,15 @@ def tag_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
         Updates rcParam `figure.tags.font`.
     """
-    if xoffs is not None:
+    if xoffs is not None and 'figure.tags.xoffs' in mrc._validators:
         mpl.rcParams['figure.tags.xoffs'] = xoffs
-    if yoffs is not None:
+    if yoffs is not None and 'figure.tags.yoffs' in mrc._validators:
         mpl.rcParams['figure.tags.yoffs'] = yoffs
-    if label is not None:
+    if label is not None and 'figure.tags.label' in mrc._validators:
         mpl.rcParams['figure.tags.label'] = label
-    if minor_label is not None:
+    if minor_label is not None and 'figure.tags.minorlabel' in mrc._validators:
         mpl.rcParams['figure.tags.minorlabel'] = minor_label
-    if font is not None:
+    if font is not None and 'figure.tags.font' in mrc._validators:
         mpl.rcParams['figure.tags.font'].update(**font)
 
             
