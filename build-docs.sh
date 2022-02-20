@@ -32,7 +32,7 @@ echo "Building API reference docs for $PACKAGE"
 echo
 
 cd "$PACKAGEROOT"
-pdoc3 --html --output-dir "$BUILDROOT/api-tmp" $PACKAGE
+pdoc3 --html --config sort_identifiers=False --output-dir "$BUILDROOT/api-tmp" $PACKAGE
 mkdir "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER"
 pwd
 cp "$APIIMAGES/"*.png "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER/"
