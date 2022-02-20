@@ -73,8 +73,8 @@ def screen_style(namespace=None):
     figure_params(color=ns.palette['gray'], format='png',
                   compression=6, fonttype=3, stripfonts=False)
     grid_params(grid=True, axis='both', which='major', **lsGrid)
-    labels_params(lformat='{label} [{unit}]', labelsize='medium', labelweight='normal',
-                  labelcolor='axes', labelpad=4,
+    labels_params(labelformat='{label} [{unit}]', labelsize='medium',
+                  labelweight='normal', labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
@@ -143,8 +143,8 @@ def paper_style(namespace=None):
     figure_params(color='none', format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     grid_params(grid=False, axis='both', which='major', **lsGrid)
-    labels_params(lformat='{label} [{unit}]', labelsize='small', labelweight='normal',
-                  labelcolor='axes', labelpad=4,
+    labels_params(labelformat='{label} [{unit}]', labelsize='small',
+                  labelweight='normal', labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
@@ -214,8 +214,8 @@ def sketch_style(namespace=None):
     figure_params(color=ns.palette['white'], format='pdf',
                   compression=6, fonttype=3, stripfonts=False)
     grid_params(grid=False, axis='both', which='major', **lsGrid)
-    labels_params(lformat='{label} ({unit})', labelsize='medium', labelweight='normal',
-                  labelcolor='axes', labelpad=4,
+    labels_params(labelformat='{label} ({unit})', labelsize='medium',
+                  labelweight='normal', labelcolor='axes', labelpad=4,
                   xlabellocation='center', ylabellocation='center')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
