@@ -16,7 +16,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          sudo apt install -y libblas-dev liblapack-dev gfortran libsndfile1 libsndfile1-dev libffi-dev libasound2-dev python3-dev python3-tk
+          sudo apt install -y libblas-dev liblapack-dev gfortran python3-dev python3-tk
           python -m pip install --upgrade pip
           pip install pdoc3
           pip install markdown-include
