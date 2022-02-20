@@ -7,10 +7,10 @@ plotting in python. It allows detailed control over every possible
 aspect of a plot. However, a lot of the provided functionality is
 combersome to use and impossible to remember. For specific use cases,
 however, a lot of this can be hidden in dedicated functions. The
-*plottools* package does this for scientific publications by adding a
+`plottools` package does this for scientific publications by adding a
 number of functions to matplotlib axes and figure classes.
 
-The second design goal of the plottools package is separation of
+The second design goal of the `plottools` package is separation of
 content and design. We know this from LaTeX documents. A good LaTeX
 document contains only the text and the logical structure. The actual
 layout (fonts, format of the sections, etc.) can then be entirely
@@ -20,12 +20,12 @@ and necessary annotation like axes labels. The design should be
 controllable by a single central function or module that is used by
 all the scripts generating the figures. matplotlib's rcParams are a
 big step in this direction but do not completely reach this goal. The
-plottools package expands on this.
+`plottools` package expands on this.
 
 
 ## Modules
 
-The following modules are provided by the plottools package:
+The following modules are provided by the `plottools` package:
 
 - [`align`](https://bendalab.github.io/plottools/api/align.html):
   align axes labels.
@@ -88,7 +88,7 @@ functions. Simply import the module of interest and you are all set.
 ## Importing plottool modules
 
 Each module can be imported separately. No other functionality of the
-plottools is then installed or executed. The only exception is the
+`plottools` is then installed or executed. The only exception is the
 [`params`](https://bendalab.github.io/plottools/api/params.html)
 module that imports all the other modules. For example, if you are
 only interested in the functions the
@@ -103,7 +103,7 @@ fig, ax = plt.subplots()
 ax.set_xticks_delta(1.0)
 ```
 
-For importing all plottools modules, simply import the module
+For importing all `plottools` modules, simply import the module
 
 - [`plottools`](https://bendalab.github.io/plottools/api/plottools.html):
   import all plottool modules and install their functions in matplotlib.
@@ -126,7 +126,7 @@ Each module also has a `<module>_params()` function for setting
 parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
 [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
-Many plottools define additional
+Many `plottools` define additional
 [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html),
 that also can be set by this function.
 
@@ -194,7 +194,7 @@ In any case, run
 ```py
 python -m plottools.version
 ```
-and paste the output (python, numpy, pandas, matplotlib and plottools
+and paste the output (python, numpy, pandas, matplotlib and `plottools`
 versions) into the issue.
 
 
