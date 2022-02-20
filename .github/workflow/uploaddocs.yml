@@ -1,0 +1,58 @@
+name: Build Documentation and Deploy
+on: [push]
+
+jobs:
+  build-doc:
+    if: github.repository == 'bendalab/plottools'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout plottools
+        uses: actions/checkout@v2
+        
+      - name: Setup python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          
+      - name: Install dependencies
+        run: |
+          sudo apt install -y libblas-dev liblapack-dev gfortran libsndfile1 libsndfile1-dev libffi-dev libasound2-dev python3-dev python3-tk
+          python -m pip install --upgrade pip
+          pip install pdoc3
+          pip install markdown-include
+          pip install mkdocs
+          pip install -r requirements.txt
+
+      - name: Build documentation
+        run: ./build-docs.sh
+        shell: bash
+        
+      - name: Commit generated files
+        run: |
+          cd site
+          git config --global init.defaultBranch main
+          git init
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m 'deploy'
+          
+      - name: Push to github pages
+        uses: ad-m/github-push-action@master
+        # https://github.com/ad-m/github-push-action
+        with:
+          github_token: ${{ secrets.PLOTTOOLS_DOCU }}
+          branch: gh-pages
+          force: true
+          directory: site
+          
+        # Personal Access Token (PAT):
+        # - Generate it on your user's
+        #   Settings->Developer settings->personal access tokens
+        #   Set 90 days, click repo.
+        # - Make it known on the repositories Settings->Secrets->Actions
+        #   under the name PLOTTOOLS_DOCU.
+        
+        # NOTE:
+        # the github.io/project page is the gh-pages branch of that project,
+        # NOT the gh-pages branch of the bendalab.github.io repository!!!
