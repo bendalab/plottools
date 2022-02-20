@@ -80,15 +80,20 @@ modules simply add a few new member functions
 (e.g. [`insets`](https://bendalab.github.io/plottools/api/insets.html))
 others modify existing functions
 (e.g. [`figure`](https://bendalab.github.io/plottools/api/figure.html)).
-A `uninstall_<module>()` function is provided to undo the patching.
+An `uninstall_<module>()` function is provided to undo the patching.
 So you usually do not need to care about the install/uninstall
 functions. Simply import the module of interest and you are all set.
 
+
+## Importing plottool modules
+
 Each module can be imported separately. No other functionality of the
 plottools is then installed or executed. The only exception is the
-`params` module that imports all the other modules. For example, if
-you are only interested in the functions the `ticks` module provides,
-then you can do
+[`params`](https://bendalab.github.io/plottools/api/params.html)
+module that imports all the other modules. For example, if you are
+only interested in the functions the
+[`ticks`](https://bendalab.github.io/plottools/api/ticks.html) module
+provides, then you can do
 ```py
 import matplotlib.pyplot as plt
 import plottools.ticks
@@ -114,6 +119,9 @@ directly in the `pt` namespace. For example:
 light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
 ```
 
+
+## Setting rcParams
+
 Each module also has a `<module>_params()` function for setting
 parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
@@ -132,6 +140,14 @@ from plottools.text import text_params
 text_params(font_size=12.0, font_family='sans-serif')
 # turn on LaTex mode:
 text_params(latex=True)
+```
+This is equivalent to
+```py
+import matplotlib as mpl
+
+mpl.rcParams['font.size'] = 12
+mpl.rcParams['font.family'] = 'sans-serif'
+mpl.rcParams['text.usetex'] = True
 ```
 
 
