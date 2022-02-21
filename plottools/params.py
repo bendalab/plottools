@@ -29,27 +29,30 @@ def screen_style(namespace=None):
 
     Call this function *before* you create any matplotlib figure
     to have the following features in effect:
+
     - modified rc settings.
     - figure sizes are to be specified in centimeter.
     - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - xlabel and ylabel with separately specified unit,
+      e.g. `set_xlabel('Time', 'ms')`.
     - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+    - a range of line, point, linepoint and fill styles defined in `namespace`,
+      called A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
 
     Parameters
     ----------
     namespace: dict
-        Namespace to which the generated line, point, linepoint and fill styles are added.
+        Namespace to which the generated line, point, linepoint and
+        fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
     ns = namespace
@@ -99,27 +102,30 @@ def paper_style(namespace=None):
 
     Call this function *before* you create any matplotlib figure
     to have the following features in effect:
+
     - modified rc settings.
     - figure sizes are to be specified in centimeter.
     - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - xlabel and ylabel with separately specified unit,
+      e.g. `set_xlabel('Time', 'ms')`.
     - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+    - a range of line, point, linepoint and fill styles defined in `namespace`,
+      called A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
 
     Parameters
     ----------
     namespace: dict
-        Namespace to which the generated line, point, linepoint and fill styles are added.
+        Namespace to which the generated line, point, linepoint and
+        fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
     ns = namespace
@@ -169,27 +175,30 @@ def sketch_style(namespace=None):
 
     Call this function *before* you create any matplotlib figure
     to have the following features in effect:
+
     - modified rc settings.
     - figure sizes are to be specified in centimeter.
     - detailed control over spine appearance.
-    - xlabel and ylabel with separately specified unit, e.g. `set_xlabel('Time', 'ms')`.
+    - xlabel and ylabel with separately specified unit,
+      e.g. `set_xlabel('Time', 'ms')`.
     - automatic alignment of x- and ylabels.
-    - a range of line, point, linepoint and fill styles defined in `namespace`, called
-      A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
-      ```py
-      ax.plot(x, y, **lsA1)   # major line only
-      ax.plot(x, y, **lsB2m)  # minor line only
-      ax.plot(x, y, **psA2)   # markers (points) only
-      ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
-      ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
-      ```
-      See `plot_styles()` for details. 
     - `lsSpine`, `lsGrid`, `lsMarker` line styles defined in `namespace`.
+    - a range of line, point, linepoint and fill styles defined in `namespace`,
+      called A1-A3, B1-B4, C1-C4, Male, Female, that can be used as follows:
+
+    ```py
+    ax.plot(x, y, **lsA1)   # major line only
+    ax.plot(x, y, **lsB2m)  # minor line only
+    ax.plot(x, y, **psA2)   # markers (points) only
+    ax.plot(x, y, **lpsC3)  # markers (points) with connecting lines
+    ax.fill_between(x, y0, y1, **fsA3a) # transparent fill
+    ```
 
     Parameters
     ----------
     namespace: dict
-        Namespace to which the generated line, point, linepoint and fill styles are added.
+        Namespace to which the generated line, point, linepoint and
+        fill styles are added.
         If None add styles to the global namespace of the __main__ module.
     """
     ns = namespace

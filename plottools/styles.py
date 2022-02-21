@@ -645,6 +645,7 @@ def plot_styles(names, colors, dashes, markers, lwthick=2.0, lwthin=1.0,
 
     For each color and name a variety of plot styles are generated
     (for the example, names is 'Female'):
+
     - Major line styles (prefix 'ls', no suffix, e.g. 'lsFemale')
       for normal lines without markers.
     - Minor line styles (prefix 'ls', suffix 'm', e.g. 'lsFemalem')
