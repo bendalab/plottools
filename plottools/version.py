@@ -1,7 +1,7 @@
 """
 ## Functions
 
-- `versions()`: print python, numpy, matplotlib and plottools versions.
+- `versions()`: print python, numpy, pandas, matplotlib and plottools versions.
 """
 
 import sys
@@ -18,15 +18,15 @@ __pdoc__ = {}
 __pdoc__['__version__'] = True
 __pdoc__['__year__'] = True
 
-__version__ = '0.9'
-""" Version of the plottools package. """
+__version__ = '1.0'
+"""Version of the plottools package. """
 
-__year__ = '2021'
-""" Year of last changes to the plottools package. """
+__year__ = '2022'
+"""Year of last changes to the plottools package. """
 
 
 def versions():
-    """ Print python, numpy, matplotlib and plottools versions.
+    """Print python, numpy, pandas, matplotlib, and plottools versions.
     """
     print('python     version: %d.%d.%d' % (sys.version_info[:3]))
     print('numpy      version:', np.__version__)
