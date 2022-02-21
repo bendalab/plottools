@@ -80,6 +80,12 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
         A `zorder` argument is also applied to the arrow.
+
+    See Also
+    --------
+    - `varrow()`
+    - `point_to()`
+    - `arrow_style()`
     """
     if transform is None:
         transform = ax.transData
@@ -213,6 +219,12 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
         A `zorder` argument is also applied to the arrow.
+
+    See Also
+    --------
+    - `harrow()`
+    - `point_to()`
+    - `arrow_style()`
     """
     if transform is None:
         transform = ax.transData
@@ -338,6 +350,12 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
         Length of arrow head in points.
     **kwargs: key-word arguments
         Formatting of the text, passed on to annotate().
+
+    See Also
+    --------
+    - `harrow()`
+    - `varrow()`
+    - `arrow_style()`
     """
     if style == '>>':
         arrowstyle = ArrowStyle.Fancy(head_length=0.09*head_length,
@@ -358,18 +376,22 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
                 annotation_clip=False, **kwargs)
 
 
-def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
-                head_width=15, head_length=15, namespace=None, **kwargs):
-    """ Generate an arrow style.
+def arrow_style(namespace, name, dist=3.0, style='>', shrink=0, lw=1,
+                color='k', head_width=15, head_length=15, **kwargs):
+    """Generate an arrow style.
 
     Add dictionary with name 'as'+name to `namespace` and to `ars`
 
     Parameters
     ----------
+    namespace: class or None
+        Namespace to which the generated arrow style is added.
+        If None add arrow style to the __main__ module.
     name: string
         The name of the arrow style, the prefix 'as' is prepended.
     dist: float
-        Distance of text annotation from arrow in points (for harrow() and varrow()).
+        Distance of text annotation from arrow in points (for harrow()
+        and varrow()).
     style: string
         Appearance of the arrow head:
         '>': line arrow, '|>': filled arrow, '>>': fancy arrow, '|': bar
@@ -385,9 +407,14 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
         Length of arrow head in points.
     **kwargs: key-word arguments
         Formatting of the annotation text, passed on to text().
-    namespace: dict or None
-        Namespace to which the generated arrow style is added.
-        If None add arrow style to the __main__ module.
+
+    See Also
+    --------
+    - `harrow()`
+    - `varrow()`
+    - `point_to()`
+    - `plot_arrow_styles()`
+    - `generic_arrow_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -399,7 +426,7 @@ def arrow_style(name, dist=3.0, style='>', shrink=0, lw=1, color='k',
     getattr(namespace, 'ars')[name] = ad
 
     
-def generic_arrow_styles(palette, scale=1, namespace=None):
+def generic_arrow_styles(namespace, palette, scale=1):
     """ Some generic arrow styles.
 
     - `asLine`: simple arrow
@@ -412,28 +439,39 @@ def generic_arrow_styles(palette, scale=1, namespace=None):
 
     Parameters
     ----------
+    namespace: class or None
+        Namespace to which the generated arrow style is added.
+        If None add arrow style to the __main__ module.
     palette: dict
         Color palette. Uses black for the arrow and white for text background.
     scale: float
         Scale factor for line width, head height and width.
+
+    See Also
+    --------
+    - `arrow_style()`
+    - `plot_arrow_styles()`
     """
-    arrow_style('Line', dist=3, style='>', shrink=0, lw=0.6*scale,
-                color=palette['black'], head_length=4*scale, head_width=4*scale,
-                namespace=namespace)
-    arrow_style('Filled', dist=3, style='>>', shrink=0, lw=0.6*scale,
-                color=palette['black'], head_length=8*scale, head_width=5*scale,
-                namespace=namespace)
-    arrow_style('Point', dist=3, style='>>', shrink=0, lw=1.2*scale,
-                color=palette['black'], head_length=8*scale, head_width=6*scale,
-                namespace=namespace)
-    arrow_style('PointSmall', dist=3, style='>>', shrink=0, lw=1*scale,
-                color=palette['black'], head_length=5*scale, head_width=5*scale,
-                namespace=namespace, fontsize='small')
-    arrow_style('Marker', dist=3, style='>>', shrink=0, lw=0.9*scale,
-                color=palette['black'], head_length=5*scale, head_width=5*scale,
-                fontsize='small', ha='center', va='center', namespace=namespace,
+    arrow_style(namespace, 'Line', dist=3, style='>', shrink=0,
+                lw=0.6*scale, color=palette['black'],
+                head_length=4*scale, head_width=4*scale )
+    arrow_style(namespace, 'Filled', dist=3, style='>>', shrink=0,
+                lw=0.6*scale, color=palette['black'],
+                head_length=8*scale, head_width=5*scale )
+    arrow_style(namespace, 'Point', dist=3, style='>>', shrink=0,
+                lw=1.2*scale, color=palette['black'],
+                head_length=8*scale, head_width=6*scale )
+    arrow_style(namespace, 'PointSmall', dist=3, style='>>', shrink=0,
+                lw=1*scale, color=palette['black'],
+                head_length=5*scale, head_width=5*scale,
+                fontsize='small')
+    arrow_style(namespace, 'Marker', dist=3, style='>>', shrink=0,
+                lw=0.9*scale, color=palette['black'],
+                head_length=5*scale, head_width=5*scale,
+                fontsize='small', ha='center', va='center',
                 bbox=dict(boxstyle='round, pad=0.1, rounding_size=0.4',
-                          facecolor=palette['white'], edgecolor='none', alpha=0.6))
+                          facecolor=palette['white'],
+                          edgecolor='none', alpha=0.6))
 
 
 def plot_arrowstyles(ax, namespace=None):
@@ -443,9 +481,14 @@ def plot_arrowstyles(ax, namespace=None):
     ----------
     ax: matplotlib axes
         Subplot to use for plotting the arrow styles.
-    namespace: dict or None
+    namespace: class or None
         Namespace on which styles are defined.
         If None take styles from the __main__ module.
+
+    See Also
+    --------
+    - `arrow_style()`
+    - `generic_arrow_styles()`
     """
     if namespace is None:
         namespace = __main__
