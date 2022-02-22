@@ -64,11 +64,11 @@ def screen_style(namespace=None):
     generic_styles(ns, colors='vivid', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=10.0, markersmall=6.5, mec=0.0, mew=1.5,
                    fillalpha=0.4)
-    make_linestyles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
-                    1.0, clip_on=False)
-    make_linestyles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.2)
-    make_linestyles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
-                    lwthick, clip_on=False)
+    make_line_styles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
+                     1.0, clip_on=False)
+    make_line_styles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.2)
+    make_line_styles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
+                     lwthick, clip_on=False)
     generic_arrow_styles(ns, ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()
@@ -142,11 +142,11 @@ def paper_style(namespace=None):
     generic_styles(ns, colors='muted', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4)
-    make_linestyles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
-                    0.8, clipon=False)
-    make_linestyles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
-    make_linestyles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
-                    lwthick, clipon=False)
+    make_line_styles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
+                     0.8, clipon=False)
+    make_line_styles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
+    make_line_styles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
+                     lwthick, clipon=False)
     generic_arrow_styles(ns, ns.palette, 1.0)
     # rc settings:
     mpl.rcdefaults()
@@ -227,11 +227,11 @@ def sketch_style(namespace=None):
     generic_styles(ns, colors='vivid', lwthick=lwthick, lwthin=lwthin,
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4)
-    make_linestyles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
-                    1.8, clipon=False)
-    make_linestyles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
-    make_linestyles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
-                    lwthick, clipon=False)
+    make_line_styles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
+                     1.8, clipon=False)
+    make_line_styles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
+    make_line_styles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
+                     lwthick, clipon=False)
     generic_arrow_styles(ns, ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()

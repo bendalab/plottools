@@ -17,7 +17,7 @@ Drawing arrows.
 
 ## Display
 
-- `plot_arrowstyles()`: plot names and arrows of all available arrow styles.
+- `plot_arrow_styles()`: plot names and arrows of all available arrow styles.
 
 
 ## Install/uninstall arrows functions
@@ -474,7 +474,7 @@ def generic_arrow_styles(namespace, palette, scale=1):
                           edgecolor='none', alpha=0.6))
 
 
-def plot_arrowstyles(ax, namespace=None):
+def plot_arrow_styles(ax, namespace=None):
     """ Plot names and arrows of all available arrow styles.
 
     Parameters

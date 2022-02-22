@@ -18,7 +18,7 @@ number of disadvantages:
    want to change any colors and line widths in your plots any more,
    which is sad.
 
-To address the first issue, you may put all the key-word arguments
+To address the first issue, you may put all the keyword arguments
 specifying the line style into a dictionary, like this:
 
 ```py
@@ -69,7 +69,7 @@ the data. And later on, when you are done, you then can easily improve
 the design of your plots.
 
 Plotting styles used in this way are a central element for separating
-content from design. Python's key-word arguments and namespaces
+content from design. Python's keyword arguments and namespaces
 provide nice mechanisms to achieve this.
 
 The `styles` module provides a few functions that help you with
@@ -93,20 +93,20 @@ respective `_params()` functions of the plottools modules.
 
 ## Generate plotting styles
 
-- `make_linestyles()`: generate line styles.
-- `make_pointstyles()`: generate point styles.
-- `make_linepointstyles()`: generate line styles, point styles, and line point styles.
-- `make_fillstyles()`: generate fill styles.
-- `plot_styles()`: generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
+- `make_line_styles()`: generate line styles.
+- `make_point_styles()`: generate point styles.
+- `make_linepoint_styles()`: generate line styles, point styles, and line point styles.
+- `make_fill_styles()`: generate fill styles.
+- `make_linepointfill_styles()`: generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
 - `generic_styles()`: generates some generic line, points, linepoints and fill styles.
 
 
 ## Display plotting styles
 
-- `plot_linestyles()`: plot names and lines of all available line styles.
-- `plot_pointstyles()`: plot names and markers of all available point styles.
-- `plot_linepointstyles()`: plot names, lines, and markers of all available linepoint styles.
-- `plot_fillstyles()`: plot names and patches of all available fill styles.
+- `plot_line_styles()`: plot names and lines of all available line styles.
+- `plot_point_styles()`: plot names and markers of all available point styles.
+- `plot_linepoint_styles()`: plot names, lines, and markers of all available linepoint styles.
+- `plot_fill_styles()`: plot names and patches of all available fill styles.
 """
 
 import __main__
@@ -314,17 +314,17 @@ def lighter_darker_styles(style, n):
     return [style]*n
 
 
-def make_linestyles(namespace, prefix, names, suffix, colors,
-                    dashes='-', lws=1, **kwargs):
+def make_line_styles(namespace, prefix, names, suffix, colors,
+                     dashes='-', lws=1, **kwargs):
     """Generate line styles.
 
     The generated dictionaries can be passed as keyword arguments to
     `ax.plot()` commands.  For each corresponding name, color, line
     style and line width a dictionary is generated holding these
-    attributes. The generated dictionaries are named `prefix + name +
-    suffix`, and are additionally added to the `prefix + suffix`
-    dictionary in the given namespace.  `name` is also added to the
-    `style_names` list in the namespace.
+    attributes. The generated dictionaries are named
+    `prefix + name + suffix`, and are additionally added to the
+    `prefix + suffix` dictionary in the given namespace. 
+    `name` is also added to the `style_names` list in the namespace.
 
     Parameters
     ----------
@@ -346,18 +346,18 @@ def make_linestyles(namespace, prefix, names, suffix, colors,
     lws: float or list of floats
         Widths of the connecting lines.
     kwargs: dict
-        Key-word arguments with further line properties, e.g. alpha, zorder.
+        Keyword arguments with further line properties, e.g. alpha, zorder.
 
     See Also
     --------
-    - `make_pointstyles()`
-    - `plot_linestyles()`
+    - `make_point_styles()`
+    - `plot_line_styles()`
 
     Examples
     --------
     ```py
     class s: pass
-    make_linestyles(s, 'ls', 'Male', '', 'blue', '-', 2)
+    make_line_styles(s, 'ls', 'Male', '', 'blue', '-', 2)
     ```
     generates a dictionary in the `s` namespace named `lsMale`
     defining a blue solid line, adds `Male` to the `style_names` list,
@@ -379,10 +379,11 @@ def make_linestyles(namespace, prefix, names, suffix, colors,
     This
     ```py
     class s: pass
-    make_linestyles(s, 'ls', ['Red', 'Green'], '', ['r', 'g'], ['-', '--'], 0.5)
+    make_line_styles(s, 'ls', ['Red', 'Green'], '', ['r', 'g'],
+                     ['-', '--'], 0.5)
     ```
-    adds two line styles `lsRed`, `lsGreen` to the `s` namespace with
-    the respective colors and a thin solid or dashed line,
+    adds two line styles `lsRed` and `lsGreen` to the `s` namespace
+    with the respective colors and a thin solid or dashed line,
     respectively.
     """
     # prepare dictionaries:
@@ -421,20 +422,20 @@ def make_linestyles(namespace, prefix, names, suffix, colors,
         getattr(namespace, prefix + sf)[name] = ld
 
 
-def make_pointstyles(namespace, prefix, names, suffix, colors,
-                     dashes='none', lws=0, markers=('o', 1.0),
-                     markersizes=5.0, markeredgecolors=0.0,
-                     markeredgewidths=1.0, **kwargs):
+def make_point_styles(namespace, prefix, names, suffix, colors,
+                      dashes='none', lws=0, markers=('o', 1.0),
+                      markersizes=5.0, markeredgecolors=0.0,
+                      markeredgewidths=1.0, **kwargs):
     """Generate point styles.
 
     The generated dictionaries can be passed as keyword arguments to
     `ax.plot()` commands.  For each corresponding name, color, line
     style, line width, marker, marker size, marker edge color, and
     marker edge width a dictionary is generated holding these
-    attributes.  The generated dictionaries are named `prefix + name +
-    suffix`, and are additionally added to the `prefix + suffix`
-    dictionary in the given namespace.  `name` is also added to the
-    `style_names` list in the namespace.
+    attributes.  The generated dictionaries are named
+    `prefix + name + suffix`, and are additionally added to the
+    `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
 
     Parameters
     ----------
@@ -472,18 +473,19 @@ def make_pointstyles(namespace, prefix, names, suffix, colors,
     markersizes: float, list of floats
         For each point style a marker edge width.
     kwargs: dict
-        Key-word arguments with further marker properties, e.g. alpha, zorder.
+        Keyword arguments with further marker properties, e.g. alpha, zorder.
 
     See Also
     --------
-    - `make_linestyles()`
-    - `plot_pointstyles()`
+    - `make_line_styles()`
+    - `plot_point_styles()`
     
     Examples
     --------
     ```py
     class s: pass
-    make_pointstyles(s, 'ps', 'Female', '', 'red', '-', 1, ('o', 1.0), 8, 0.5, 1, alpha=0.5)
+    make_point_styles(s, 'ps', 'Female', '', 'red', '-', 1, ('o', 1.0),
+                      8, 0.5, 1, alpha=0.5)
     ```
     generates a dictionary in the `s` namespace named `psFemale`
     defining transparent red filled markers with a lighter edge, adds
@@ -500,11 +502,12 @@ def make_pointstyles(namespace, prefix, names, suffix, colors,
     This
     ```py
     class s: pass
-    make_pointstyles(s, 'ps', 'Reds%d', 'c', ['red', 'orange', 'yellow'], 'none', 0, ('o', 1.0), 8, 1, 0)
+    make_point_styles(s, 'ps', 'Reds%d', 'c', ['red', 'orange', 'yellow'],
+                      'none', 0, ('o', 1.0), 8, 1, 0)
     ```
-    generates 'psReds1', 'psReds2', 'psReds3' in the `s` namespace for
-    plotting filled circles with colors red, orange, and yellow,
-    respectively.
+    generates the three point styles 'psReds1', 'psReds2', and
+    'psReds3' in the `s` namespace for plotting filled circles with
+    colors red, orange, and yellow, respectively.
     """
     # prepare dictionaries:
     if namespace is None:
@@ -555,14 +558,14 @@ def make_pointstyles(namespace, prefix, names, suffix, colors,
         getattr(namespace, prefix + sf)[name] = pd
 
 
-def make_linepointstyles(namespace, prefixes, names, suffix, colors,
-                         dashes, lws, markers, markersizes,
-                         markeredgecolors, markeredgewidths=1.0,
-                         **kwargs):
+def make_linepoint_styles(namespace, prefixes, names, suffix, colors,
+                          dashes, lws, markers, markersizes,
+                          markeredgecolors, markeredgewidths=1.0,
+                          **kwargs):
     """Generate line styles, point styles, and line point styles.
 
-    Passes the arguments on to `make_linestyles()` and twice to
-    `make_pointstyles()`, once with `dashes='none'` for non-connected
+    Passes the arguments on to `make_line_styles()` and twice to
+    `make_point_styles()`, once with `dashes='none'` for non-connected
     markers, and once with dashes and line widths for connecting
     lines.  See those functions for a detailed description.
 
@@ -574,52 +577,52 @@ def make_linepointstyles(namespace, prefixes, names, suffix, colors,
     prefixes: list of strings
 
         - If the first string in the list is not None, generate line
-          styles with this prefix using `make_linestyles()`.
+          styles with this prefix using `make_line_styles()`.
         - If the second string in the list is not None, generate point
-          styles with this prefix using `make_pointstyles()` with
+          styles with this prefix using `make_point_styles()` with
           `dashes` set to 'none'.
         - If the third string in the list is not None, generate
-          linepoint styles with this prefix using `make_pointstyles()`
+          linepoint styles with this prefix using `make_point_styles()`
           and the supplied `dashes`.
 
-    *args:
+    kwargs: dict
         All remaining arguments are explained in the
-        `make_linestyles()` and `make_pointstyles()` functions.
+        `make_line_styles()` and `make_point_styles()` functions.
 
     See Also
     --------
-    - `make_linestyles()`
-    - `make_pointstyles()`
-    - `plot_linepointstyles()`
-    - `plot_linestyles()`
-    - `plot_pointstyles()`
+    - `make_line_styles()`
+    - `make_point_styles()`
+    - `plot_linepoint_styles()`
+    - `plot_line_styles()`
+    - `plot_point_styles()`
     """
     if namespace is None:
         namespace = __main__
     if prefixes[0]:
-        make_linestyles(namespace, prefixes[0], names, suffix, colors,
-                        dashes, lws, **kwargs)
+        make_line_styles(namespace, prefixes[0], names, suffix,
+                         colors, dashes, lws, **kwargs)
     if prefixes[1]:
-        make_pointstyles(namespace, prefixes[1], names, suffix,
-                         colors, 'none', 0, markers, markersizes,
-                         markeredgecolors, markeredgewidths, **kwargs)
+        make_point_styles(namespace, prefixes[1], names, suffix,
+                          colors, 'none', 0, markers, markersizes,
+                          markeredgecolors, markeredgewidths, **kwargs)
     if prefixes[2]:
-        make_pointstyles(namespace, prefixes[2], names, suffix,
-                         colors, dashes, lws, markers, markersizes,
-                         markeredgecolors, markeredgewidths, **kwargs)
+        make_point_styles(namespace, prefixes[2], names, suffix,
+                          colors, dashes, lws, markers, markersizes,
+                          markeredgecolors, markeredgewidths, **kwargs)
 
 
-def make_fillstyles(namespace, prefix, names, suffixes, colors,
-                    edgecolors, edgewidths, fillalphas, **kwargs):
+def make_fill_styles(namespace, prefix, names, suffixes, colors,
+                     edgecolors, edgewidths, fillalphas, **kwargs):
     """Generate fill styles.
 
-    The generated dictionaries can be passed as key-word arguments to
+    The generated dictionaries can be passed as keyword arguments to
     `ax.fill_between()` commands.  For each corresponding name, color,
     edge color, edge width and alpha a dictionary is generated holding
-    these attributes.  The generated dictionaries are named `prefix +
-    name + suffix`, and are additionally added to the `prefix +
-    suffix` dictionary in the given namespace.  `name` is also added
-    to the `style_names` list in the namespace.
+    these attributes.  The generated dictionaries are named
+    `prefix + name + suffix`, and are additionally added to the
+    `prefix + suffix` dictionary in the given namespace.
+    `name` is also added to the `style_names` list in the namespace.
 
     Parameters
     ----------
@@ -650,17 +653,21 @@ def make_fillstyles(namespace, prefix, names, suffixes, colors,
     fillalphas: float or list of floats
         Alpha values for the transparent (third) fill style.
     kwargs: dict
-        Key-word arguments with further fill properties, e.g. zorder.
+        Keyword arguments with further fill properties, e.g. zorder.
 
     See Also
     --------
-    - `plot_fillstyles()`
+    - `plot_fill_styles()`
+    - `make_line_styles()`
+    - `make_point_styles()`
+    - `make_linepoint_styles()`
     
     Examples
     --------
     ```py
     class s: pass
-    make_fillstyles(s, 'fs', 'PSD', ['', 's', 'a'], [#00FF00], 2.0, 0.5, 0.4)
+    make_fill_styles(s, 'fs', 'PSD', ['', 's', 'a'],
+                     ['green'], 2.0, 0.5, 0.4)
     ```
     generates dictionaries in the `s` namespace named `fsPSD`,
     `fsPSDs`, `fsPSDa` defining a green fill color.  The first,
@@ -722,9 +729,10 @@ def make_fillstyles(namespace, prefix, names, suffixes, colors,
                 getattr(namespace, prefix + suffix)[name] = filldict
 
     
-def plot_styles(namespace, names, colors, dashes, markers,
-                lwthick=2.0, lwthin=1.0, markerlarge=7.5,
-                markersmall=5.5, mec=0.5, mew=1.0, fillalpha=0.4):
+def make_linepointfill_styles(namespace, names, colors, dashes,
+                              markers, lwthick=2.0, lwthin=1.0,
+                              markerlarge=7.5, markersmall=5.5,
+                              mec=0.5, mew=1.0, fillalpha=0.4):
     """Generate line styles, point styles, line point styles, and fill styles from names, dashes, colors, and markers.
 
     For each color and name a variety of plot styles are generated
@@ -791,32 +799,32 @@ def plot_styles(namespace, names, colors, dashes, markers,
 
     See Also
     --------
-    - `make_linepointstyles()`
-    - `make_fillstyles()`
+    - `make_linepoint_styles()`
+    - `make_fill_styles()`
     - `generic_styles()`
-    - `plot_linestyles()`
-    - `plot_pointstyles()`
-    - `plot_linepointstyles()`
-    - `plot_fillstyles()`
+    - `plot_line_styles()`
+    - `plot_point_styles()`
+    - `plot_linepoint_styles()`
+    - `plot_fill_styles()`
     """    
     if namespace is None:
         namespace = __main__
 
     # line, point and linepoint styles:
-    make_linepointstyles(namespace, ['ls', 'ps', 'lps'], names, '',
-                         colors, dashes, lwthick, markers,
-                         markerlarge, mec, mew)
+    make_linepoint_styles(namespace, ['ls', 'ps', 'lps'], names, '',
+                          colors, dashes, lwthick, markers,
+                          markerlarge, mec, mew)
     # circular point and linepoint styles:
-    make_linepointstyles(namespace, ['', 'ps', 'lps'], names, 'c',
-                         colors, dashes, lwthick, ('o', 1.0),
-                         markerlarge, mec, mew)
+    make_linepoint_styles(namespace, ['', 'ps', 'lps'], names, 'c',
+                          colors, dashes, lwthick, ('o', 1.0),
+                          markerlarge, mec, mew)
     # minor line, point and linepoint styles:
-    make_linepointstyles(namespace, ['ls', 'ps', 'lps'], names, 'm',
-                         colors, dashes, lwthin, ('o', 1.0),
-                         markersmall, mec, mew)
+    make_linepoint_styles(namespace, ['ls', 'ps', 'lps'], names, 'm',
+                          colors, dashes, lwthin, ('o', 1.0),
+                          markersmall, mec, mew)
     # fill styles:
-    make_fillstyles(namespace, 'fs', names, ['', 's', 'a'], colors,
-                    mec, mew, fillalpha)
+    make_fill_styles(namespace, 'fs', names, ['', 's', 'a'], colors,
+                     mec, mew, fillalpha)
 
     
 def generic_styles(namespace, colors='muted', lwthick=1.7, lwthin=0.8,
@@ -894,11 +902,11 @@ def generic_styles(namespace, colors='muted', lwthick=1.7, lwthin=0.8,
 
     See Also
     --------
-    - `plot_styles()`
-    - `plot_linestyles()`
-    - `plot_pointstyles()`
-    - `plot_linepointstyles()`
-    - `plot_fillstyles()`
+    - `make_linepointfill_styles()`
+    - `plot_line_styles()`
+    - `plot_point_styles()`
+    - `plot_linepoint_styles()`
+    - `plot_fill_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -913,13 +921,14 @@ def generic_styles(namespace, colors='muted', lwthick=1.7, lwthin=0.8,
     markers = [('o', 1.0), ('p', 1.1), ('h', 1.1),
                ((3, 1, 60), 1.25), ((3, 1, 0), 1.25), ((3, 1, 90), 1.25), ((3, 1, 30), 1.25), ((3, 1, 0), 1.25),
                ('s', 0.9), ('D', 0.85), ('*', 1.6), ((4, 1, 45), 1.4)]
-    plot_styles(namespace, names, colors, '-', markers,
-                lwthick=lwthick, lwthin=lwthin,
-                markerlarge=markerlarge, markersmall=markersmall,
-                mec=mec, mew=mew, fillalpha=fillalpha)
+    make_linepointfill_styles(namespace, names, colors, '-', markers,
+                              lwthick=lwthick, lwthin=lwthin,
+                              markerlarge=markerlarge,
+                              markersmall=markersmall, mec=mec,
+                              mew=mew, fillalpha=fillalpha)
 
     
-def plot_linestyles(ax, namespace=None):
+def plot_line_styles(ax, namespace=None):
     """Plot names and lines of all available line styles.
 
     Parameters
@@ -932,10 +941,10 @@ def plot_linestyles(ax, namespace=None):
 
     See Also
     --------
-    - `make_linestyles()`
-    - `plot_pointstyles()`
-    - `plot_linepointstyles()`
-    - `plot_fillstyles()`
+    - `make_line_styles()`
+    - `plot_point_styles()`
+    - `plot_linepoint_styles()`
+    - `plot_fill_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -957,7 +966,7 @@ def plot_linestyles(ax, namespace=None):
     ax.set_title('line styles')
         
 
-def plot_pointstyles(ax, namespace=None):
+def plot_point_styles(ax, namespace=None):
     """Plot names and markers of all available point styles.
 
     Parameters
@@ -970,10 +979,10 @@ def plot_pointstyles(ax, namespace=None):
 
     See Also
     --------
-    - `make_pointstyles()`
-    - `plot_linestyles()`
-    - `plot_linepointstyles()`
-    - `plot_fillstyles()`
+    - `make_point_styles()`
+    - `plot_line_styles()`
+    - `plot_linepoint_styles()`
+    - `plot_fill_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -1000,7 +1009,7 @@ def plot_pointstyles(ax, namespace=None):
     ax.set_title('point styles')
         
 
-def plot_linepointstyles(ax, namespace=None):
+def plot_linepoint_styles(ax, namespace=None):
     """Plot names, lines, and markers of all available linepoint styles.
 
     Parameters
@@ -1013,10 +1022,10 @@ def plot_linepointstyles(ax, namespace=None):
 
     See Also
     --------
-    - `make_linepointstyles()`
-    - `plot_linestyles()`
-    - `plot_pointstyles()`
-    - `plot_fillstyles()`
+    - `make_linepoint_styles()`
+    - `plot_line_styles()`
+    - `plot_point_styles()`
+    - `plot_fill_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -1043,7 +1052,7 @@ def plot_linepointstyles(ax, namespace=None):
     ax.set_title('linepoint styles')
         
 
-def plot_fillstyles(ax, namespace=None):
+def plot_fill_styles(ax, namespace=None):
     """Plot names and patches of all available fill styles.
 
     Parameters
@@ -1056,10 +1065,10 @@ def plot_fillstyles(ax, namespace=None):
 
     See Also
     --------
-    - `make_fillstyles()`
-    - `plot_linestyles()`
-    - `plot_pointstyles()`
-    - `plot_linepointstyles()`
+    - `make_fill_styles()`
+    - `plot_line_styles()`
+    - `plot_point_styles()`
+    - `plot_linepoint_styles()`
     """
     if namespace is None:
         namespace = __main__
@@ -1114,17 +1123,17 @@ def demo(mode='line'):
                    fillalpha=0.4)
     fig, ax = plt.subplots()
     if mode == 'lps' or 'linep' in mode:
-        plot_linepointstyles(ax)
+        plot_linepoint_styles(ax)
     elif mode == 'ls' or 'line' in mode:
-        plot_linestyles(ax)
+        plot_line_styles(ax)
     elif mode == 'ps' or 'point' in mode:
-        plot_pointstyles(ax)
+        plot_point_styles(ax)
     elif mode == 'fs' or 'fill' in mode:
-        plot_fillstyles(ax)
+        plot_fill_styles(ax)
     elif mode == 'ars' or mode == 'as' or 'arrow' in mode:
         from .arrows import generic_arrow_styles, plot_arrowstyles
         generic_arrow_styles(None, palettes['muted'], 3)
-        plot_arrowstyles(ax)
+        plot_arrow_styles(ax)
     else:
         print('unknown option %s!' % mode)
         print('possible options are: line, ls, point, ps, linep(oint), lps, fill, fs, arrow, as, ars')

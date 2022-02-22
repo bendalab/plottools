@@ -16,7 +16,7 @@ light_blue = pt.lighter(pt.palettes['muted']['blue'], 0.4)
 
 from .align import install_align, uninstall_align, align_params
 from .arrows import install_arrows, uninstall_arrows
-from .arrows import arrow_style, generic_arrow_styles, plot_arrowstyles
+from .arrows import arrow_style, generic_arrow_styles, plot_arrow_styles
 from .aspect import install_aspect, install_aspect, uninstall_aspect
 from .axes import axes_params
 from .colors import colors_params, palettes, lighter, darker, gradient, colormap
@@ -34,9 +34,9 @@ except ImportError:
 from .scalebars import scalebar_params, install_scalebars, uninstall_scalebars
 from .significance import install_significance, uninstall_significance
 from .styles import style, lighter_styles, darker_styles, lighter_darker_styles
-from .styles import make_linestyles, make_pointstyles, make_linepointstyles
-from .styles import make_fillstyles, plot_styles, generic_styles
-from .styles import plot_linestyles, plot_pointstyles, plot_linepointstyles, plot_fillstyles
+from .styles import make_line_styles, make_point_styles, make_linepoint_styles
+from .styles import make_fill_styles, make_linepointfill_styles, generic_styles
+from .styles import plot_line_styles, plot_point_styles, plot_linepoint_styles, plot_fill_styles
 from .spines import spines_params, install_spines, uninstall_spines
 from .subplots import install_subplots, uninstall_subplots
 from .tag import tag_params, install_tag, uninstall_tag
