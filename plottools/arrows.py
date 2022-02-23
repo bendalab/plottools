@@ -160,6 +160,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
         if '%' in text and text[-1] != '%':
             text = text % dx
         # ax dimensions:
+        ax.autoscale_view(False)
         ax.autoscale(False)
         pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
         ymin, ymax = ax.get_ylim()
@@ -299,6 +300,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         if '%' in text and text[-1] != '%':
             text = text % dy
         # ax dimensions:
+        ax.autoscale_view(False)
         ax.autoscale(False)
         pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
         xmin, xmax = ax.get_xlim()

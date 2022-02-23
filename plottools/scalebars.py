@@ -142,6 +142,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
     ![xscalebar](figures/scalebars-xscalebar.png)
     """
     artists = []
+    ax.autoscale_view(False)
     ax.autoscale(False)
     # ax dimensions:
     pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
@@ -325,6 +326,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
     ![yscalebar](figures/scalebars-yscalebar.png)
     """
     artists = []
+    ax.autoscale_view(False)
     ax.autoscale(False)
     # ax dimensions:
     pixelx = np.abs(np.diff(ax.get_window_extent().get_points()[:,0]))[0]
