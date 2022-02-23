@@ -613,7 +613,8 @@ def make_linepoint_styles(namespace, prefixes, names, suffix, colors,
 
 
 def make_fill_styles(namespace, prefix, names, suffixes, colors,
-                     edgecolors, edgewidths, fillalphas, **kwargs):
+                     edgecolors=1.0, edgewidths=0.0, fillalphas=1.0,
+                     **kwargs):
     """Generate fill styles.
 
     The generated dictionaries can be passed as keyword arguments to
@@ -635,11 +636,12 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
         Names of the line styles.
         If string and a '%' is contained, then formats like '%d' are replaced
         by the index of the line style plus one.
-    suffixes: list of strings or None
-        Sufffixes appended to all fill style names.  The first is for a
-        fill style with edge color, the second for a solid fill style
-        without edge, and the third for a transparent fill style without
-        edge. If `None` the corresponding style is not generated.
+    suffixes: string or list of strings or None
+        A single or multiple sufffixes appended to all fill style
+        names.  The first is for a fill style with edge color, the
+        second for a solid fill style without edge, and the third for
+        a transparent fill style without edge. If `None` the
+        corresponding style is not generated.
     colors: matplotlib color or list of matplotlib colors
         Fill colors.
     edgecolors: float or list of floats
@@ -684,12 +686,15 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
     ```py
     plt.plot(x, y, **s.fsa['PSD'])
     ```
+
     """
     # prepare dictionaries:
     if namespace is None:
         namespace = __main__
     if not hasattr(namespace, 'style_names'):
         namespace.style_names = []
+    if not isinstance(suffixes, (tuple, list)):
+        suffixes = [suffixes]
     for suffix in suffixes:
         if suffix is not None:
             ln = prefix + suffix 
