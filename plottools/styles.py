@@ -638,7 +638,10 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
         by the index of the line style plus one.
     suffixes: string or list of strings or None
         A single or multiple sufffixes appended to all fill style
-        names.  The first is for a fill style with edge color, the
+        names.  If a single suffix is specified (it can be empty)
+        then a fill style according to all arguments is generated.
+        In case of a list of suffixes, the following fill styles are generated:
+        The first is for a fill style with edge color, the
         second for a solid fill style without edge, and the third for
         a transparent fill style without edge. If `None` the
         corresponding style is not generated.
@@ -693,7 +696,8 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
         namespace = __main__
     if not hasattr(namespace, 'style_names'):
         namespace.style_names = []
-    if not isinstance(suffixes, (tuple, list)):
+    single_suffix = not isinstance(suffixes, (tuple, list))
+    if single_suffix:
         suffixes = [suffixes]
     for suffix in suffixes:
         if suffix is not None:
@@ -725,7 +729,10 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
                 fa = fillalphas[k] if isinstance(fillalphas, (tuple, list)) else fillalphas
                 filldict = dict(facecolor=c, **kwargs)
                 if j == 0:   # fill with edge:
-                    filldict.update(dict(edgecolor=lighter(c, ec), linewidth=ew))
+                    if single_suffix:
+                        filldict.update(dict(edgecolor=lighter(c, ec), linewidth=ew, alpha=fa))
+                    else:
+                        filldict.update(dict(edgecolor=lighter(c, ec), linewidth=ew))
                 elif j == 1: # fill without edge:
                     filldict.update(dict(edgecolor='none'))
                 elif j == 2: # fill without edge, with alpha:
