@@ -12,7 +12,7 @@ Labeled scale bars.
 
 ## Settings
 
-- `scalebar_params()`: set rc settings for scalebars.
+- `scalebars_params()`: set rc settings for scalebars.
 
 `matplotlib.rcParams` defined by the scalebar module:
 ```py
@@ -537,8 +537,8 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     return artists
 
 
-def scalebar_params(format_large=None, format_small=None, lw=2,
-                    color=None, capsize=None, clw=None, font=None):
+def scalebars_params(format_large=None, format_small=None, lw=2,
+                     color=None, capsize=None, clw=None, font=None):
     """ Set rc settings for scalebars.
                   
     Only parameters that are not `None` are updated.

@@ -27,11 +27,7 @@ from .insets import install_insets, uninstall_insets
 from .labels import labels_params, install_labels, uninstall_labels
 from .legend import legend_params, install_legend, uninstall_legend
 from .neurons import install_neurons, uninstall_neurons
-try:
-    from .params import plot_params, paper_style, sketch_style, screen_style
-except ImportError:
-    pass  # when imported from params module
-from .scalebars import scalebar_params, install_scalebars, uninstall_scalebars
+from .scalebars import scalebars_params, install_scalebars, uninstall_scalebars
 from .significance import install_significance, uninstall_significance
 from .styles import style, lighter_styles, darker_styles, lighter_darker_styles
 from .styles import make_line_styles, make_point_styles, make_linepoint_styles
@@ -43,3 +39,7 @@ from .tag import tag_params, install_tag, uninstall_tag
 from .text import text_params, install_text, uninstall_text
 from .ticks import ticks_params, install_ticks, uninstall_ticks
 from .version import __version__
+try:
+    from .params import paper_style, sketch_style, screen_style
+except ImportError:
+    pass  # when imported from params module

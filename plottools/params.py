@@ -85,8 +85,8 @@ def screen_style(namespace=None):
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f',
-                    lw=2, color=ns.palette['black'], capsize=0, clw=0.5)
+    scalebars_params(format_large='%.0f', format_small='%.1f',
+                     lw=2, color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0},
                   spines_bounds={'lrtb': 'full'},
                   color=ns.lsSpine['color'],
@@ -143,10 +143,10 @@ def paper_style(namespace=None):
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4)
     make_line_styles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
-                     0.8, clipon=False)
+                     0.8, clip_on=False)
     make_line_styles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
     make_line_styles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
-                     lwthick, clipon=False)
+                     lwthick, clip_on=False)
     generic_arrow_styles(ns, ns.palette, 1.0)
     # rc settings:
     mpl.rcdefaults()
@@ -164,8 +164,8 @@ def paper_style(namespace=None):
                   handlelength=1.5, handletextpad=0.5, numpoints=1,
                   scatterpoints=1, labelspacing=0.5,
                   columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2,
-                    color=ns.palette['black'], capsize=0, clw=0.5)
+    scalebars_params(format_large='%.0f', format_small='%.1f', lw=2,
+                     color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lbrt', spines_offsets={'lrtb': 0},
                   spines_bounds={'lrtb': 'full'},
                   color=ns.lsSpine['color'],
@@ -228,10 +228,10 @@ def sketch_style(namespace=None):
                    markerlarge=6.5, markersmall=4.0, mec=0.0, mew=0.8,
                    fillalpha=0.4)
     make_line_styles(ns, 'ls', 'Spine', '', ns.palette['black'], '-',
-                     1.8, clipon=False)
+                     1.8, clip_on=False)
     make_line_styles(ns, 'ls', 'Grid', '', ns.palette['gray'], '--', 0.5)
     make_line_styles(ns, 'ls', 'Marker', '', ns.palette['black'], '-',
-                     lwthick, clipon=False)
+                     lwthick, clip_on=False)
     generic_arrow_styles(ns, ns.palette, 1.3)
     # rc settings:
     mpl.rcdefaults()
@@ -250,8 +250,8 @@ def sketch_style(namespace=None):
                   handlelength=1.5, handletextpad=0.5, numpoints=1,
                   scatterpoints=1, labelspacing=0.5,
                   columnspacing=0.5)
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2,
-                    color=ns.palette['black'], capsize=0, clw=0.5)
+    scalebars_params(format_large='%.0f', format_small='%.1f', lw=2,
+                     color=ns.palette['black'], capsize=0, clw=0.5)
     spines_params(spines='lb', spines_offsets={'lrtb': 0},
                   spines_bounds={'lrtb': 'full'},
                   color=ns.lsSpine['color'],
