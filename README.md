@@ -1,26 +1,25 @@
 # plottools
 
-Simplify production of publication-quality figures based on matplotlib.
+Simplify production of publication-quality figures based on [matplotlib].
 
-[matplotlib](https://matplotlib.org/) is a powerful package for
-plotting in python. It allows detailed control over every possible
-aspect of a plot. However, a lot of the provided functionality is
-combersome to use and impossible to remember. For specific use cases,
-however, a lot of this can be hidden in dedicated functions. The
-`plottools` package does this for scientific publications by adding a
-number of functions to matplotlib axes and figure classes.
+[matplotlib] is a powerful package for plotting in [python]. It allows
+detailed control over every possible aspect of a plot. However, a lot
+of the provided functionality is cumbersome to use and impossible to
+remember. For specific use cases, however, a lot of this can be hidden
+in dedicated functions. The `plottools` package does this for
+scientific publications by adding a number of functions to
+[matplotlib] [Axes] and [Figure] classes.
 
 The second design goal of the `plottools` package is separation of
 content and design. We know this from LaTeX documents. A good LaTeX
 document contains only the text and the logical structure. The actual
 layout (fonts, format of the sections, etc.) can then be entirely
 controlled by the header without touching the text. Equivalently,
-python scripts generating various figures should only provide the data
+[python] scripts generating various figures should only provide the data
 and necessary annotation like axes labels. The design should be
 controllable by a single central function or module that is used by
-all the scripts generating the figures. matplotlib's
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
-are a big step in this direction but do not completely reach this
+all the scripts generating the figures. [matplotlib]'s [rcParams] are
+a big step in this direction but do not completely reach this
 goal. The `plottools` package expands on this.
 
 
@@ -32,9 +31,9 @@ See [API documentation](https://bendalab.github.io/plottools/api) of the
 modules for more infos.
 
 
-### Enhanced matplotlib functionality
+### Enhanced [matplotlib] functionality
 
-Most modules patch the matplotlib Figure and Axes classes to provide
+Most modules patch the [matplotlib] [Figure] and [Axes] classes to provide
 new functionality or some specialized interface:
 
 - [`align`](https://bendalab.github.io/plottools/api/align.html):
@@ -46,7 +45,7 @@ new functionality or some specialized interface:
 - [`common`](https://bendalab.github.io/plottools/api/common.html):
   reduce common axis labels.
 - [`figure`](https://bendalab.github.io/plottools/api/figure.html):
-  size and file names of a figure.
+  size and file names of a [figure].
 - [`insets`](https://bendalab.github.io/plottools/api/insets.html):
   insets made easy. [More...](docs/insets.md)
 - [`labels`](https://bendalab.github.io/plottools/api/labels.html):
@@ -84,7 +83,7 @@ functions. Simply import the module of interest and you are all set.
 
 ### Colors and styles
 
-These two modules do not patch matplotlib, but provide functions
+These two modules do not patch [matplotlib], but provide functions
 aiding the separation of content and design:
 
 - [`colors`](https://bendalab.github.io/plottools/api/colors.html):
@@ -128,7 +127,7 @@ ax.set_xticks_delta(1.0)
 For importing all `plottools` modules, simply import the module
 
 - [`plottools`](https://bendalab.github.io/plottools/api/plottools.html):
-  import all plottool modules and install their functions in matplotlib.
+  import all plottool modules and install their functions in [matplotlib].
 
 i.e.
 ```py
@@ -144,24 +143,21 @@ light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
 A special module is
 
 - [`params`](https://bendalab.github.io/plottools/api/params.html):
-  functions setting default
-  [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
-  settings for all modules.
+  functions setting default [rcParams] settings for all modules.
 
 which also imports and installs all other modules via the
 [`plottools`](https://bendalab.github.io/plottools/api/plottools.html). This
 module provides a few functions
 (e.g. [`paper_style()`](https://bendalab.github.io/plottools/api/params.html#plottools.params.paper_style))
-that set some default
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
-and add a number of plotting styles to a namespace.
+that set some default [rcParams] and add a number of plotting styles
+to a namespace.
 
 These functions can be used like this:
 ```py
 from plottools.params import paper_style
 
 class s: pass   # namespace for plotting styles
-paper_style(s)  # install all plottool functions in matplotlib and populate s with plotting styles
+paper_style(s)  # install all plottool functions in [matplotlib] and populate s with plotting styles
 fig, ax = plt.subplots(cmsize=(12, 8))  # new subplots() argument `cmsize`
 ax.plot(x, y, **s.lsB1)                 # plotting style
 ax.set_xticks_delta(0.5)      # new function for setting spacing of tick marks
@@ -174,22 +170,18 @@ module, but rahter copy one of its functions and adapt them to your
 own needs.
 
 
-## Setting rcParams
+## Setting [rcParams]
 
-Most modules have a `<module>_params()` function for setting
-rc parameters to default values. In many cases these functions are just
-an alternative way to set matplotlib's
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
-Many `plottools` define additional
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html),
-that also can be set by this function.
+Most modules have a `<module>_params()` function for setting rc
+parameters to default values. In many cases these functions are just
+an alternative way to set [matplotlib]'s [rcParams].  Many `plottools`
+define additional [rcParams], that also can be set by this function.
 
 These modules just provide such a function as an alternative interface
-for setting matplotlib
-[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html):
+for setting [matplotlib]'s [rcParams]:
 
 - [`axes`](https://bendalab.github.io/plottools/api/axes.html):
-  setting axes appearance.
+  setting [axes] appearance.
 - [`grid`](https://bendalab.github.io/plottools/api/git.html):
   setting grid appearance.
 
@@ -228,7 +220,7 @@ python -m plottools.spines
 
 ## Howtos
 
-- A quick introduction to matplotlib: [Getting started with
+- A quick introduction to [matplotlib]: [Getting started with
   matplotlib](docs/starter.md).
 - A general guidline for preparing figures for your next manuscript or
   presentation: [How to prepare figures](docs/guide.md).
@@ -239,7 +231,7 @@ python -m plottools.spines
 ## Bug reporting
 
 The `plottools` are still in a conceptual phase, interfaces might
-change without notice and tests on various python and matplotlib
+change without notice and tests on various [python] and [matplotlib]
 versions are not done yet. So getting an error is not unlikely.
 
 Providing a pull request that fixes the error is, of course, most
@@ -257,11 +249,20 @@ In any case, run
 ```py
 python -m plottools.version
 ```
-and paste the output (python, numpy, pandas, matplotlib and `plottools`
-versions) into the issue.
+and paste the output ([python], [numpy], [pandas], [matplotlib] and
+`plottools` versions) into the issue.
 
 
 ## Documentation
 
 The full [documentation](https://bendalab.github.io/plottools) is provided on 
 [github.io](https://bendalab.github.io/plottools).
+
+
+[matplotlib]: https://matplotlib.org/
+[axes]: https://matplotlib.org/stable/api/axes_api.html
+[figure]: https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure
+[rcParams]: https://matplotlib.org/stable/tutorials/introductory/customizing.html
+[python]: https://docs.python.org/3/
+[numpy]: https://numpy.org/
+[pandas]: https://pandas.pydata.org/
