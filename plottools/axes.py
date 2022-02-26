@@ -1,5 +1,5 @@
 """
-Appearance of axes.
+Setting axes appearance.
 
 
 ## Settings

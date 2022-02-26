@@ -18,14 +18,24 @@ controlled by the header without touching the text. Equivalently,
 python scripts generating various figures should only provide the data
 and necessary annotation like axes labels. The design should be
 controllable by a single central function or module that is used by
-all the scripts generating the figures. matplotlib's rcParams are a
-big step in this direction but do not completely reach this goal. The
-`plottools` package expands on this.
+all the scripts generating the figures. matplotlib's
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+are a big step in this direction but do not completely reach this
+goal. The `plottools` package expands on this.
 
 
 ## Modules
 
-The following modules are provided by the `plottools` package:
+The following modules are provided by the `plottools` package.
+
+See [API documentation](https://bendalab.github.io/plottools/api) of the
+modules for more infos.
+
+
+### Enhanced matplotlib functionality
+
+Most modules patch the matplotlib Figure and Axes classes to provide
+new functionality or some specialized interface:
 
 - [`align`](https://bendalab.github.io/plottools/api/align.html):
   align axes labels.
@@ -33,16 +43,10 @@ The following modules are provided by the `plottools` package:
   arrows.
 - [`aspect`](https://bendalab.github.io/plottools/api/aspect.html):
   adapting plots to aspect ratio of axes.
-- [`axes`](https://bendalab.github.io/plottools/api/axes.html):
-  appearance of axes.
-- [`colors`](https://bendalab.github.io/plottools/api/colors.html):
-  color palettes and tools for manipulating colors. [More...](docs/colors.md)
 - [`common`](https://bendalab.github.io/plottools/api/common.html):
   reduce common axis labels.
 - [`figure`](https://bendalab.github.io/plottools/api/figure.html):
   size and file names of a figure.
-- [`grid`](https://bendalab.github.io/plottools/api/git.html):
-  setting grid appearance.
 - [`insets`](https://bendalab.github.io/plottools/api/insets.html):
   insets made easy. [More...](docs/insets.md)
 - [`labels`](https://bendalab.github.io/plottools/api/labels.html):
@@ -51,16 +55,12 @@ The following modules are provided by the `plottools` package:
   enhance legend text.
 - [`neurons`](https://bendalab.github.io/plottools/api/neurons.html):
   draw sketches of neurons.
-- [`params`](https://bendalab.github.io/plottools/api/params.html):
-  default rc param settings for all modules.
 - [`scalebars`](https://bendalab.github.io/plottools/api/scalebars.html):
   labeled scale bars. [More...](docs/scalebars.md)
 - [`significance`](https://bendalab.github.io/plottools/api/significance.html):
   indicating statsitical significance.
 - [`spines`](https://bendalab.github.io/plottools/api/spines.html):
   modify the appearance of spines. [More...](docs/spines.md)
-- [`styles`](https://bendalab.github.io/plottools/api/styles.html):
-  plotting styles.
 - [`subplots`](https://bendalab.github.io/plottools/api/subplots.html):
   enhanced subplots with margins. [More...](docs/subplots.md)
 - [`tag`](https://bendalab.github.io/plottools/api/tag.html):
@@ -70,27 +70,49 @@ The following modules are provided by the `plottools` package:
 - [`ticks`](https://bendalab.github.io/plottools/api/ticks.html):
   setting tick locations and formats. [More...](docs/ticks.md)
 
-See [API documentation](https://bendalab.github.io/plottools/api) in the
-modules for more infos.
-
-Most modules patch the matplotlib Figure and Axes classes. The
-patching is done by each module's `install_<module>()` function. This
-function is called automatically upon importing the module. While some
-modules simply add a few new member functions
+The patching is done by each module's `install_<module>()`
+function. This function is called automatically upon importing the
+module. While some modules simply add a few new member functions
 (e.g. [`insets`](https://bendalab.github.io/plottools/api/insets.html))
 others modify existing functions
 (e.g. [`figure`](https://bendalab.github.io/plottools/api/figure.html)).
 An `uninstall_<module>()` function is provided to undo the patching.
-So you usually do not need to care about the install/uninstall
+
+You usually do not need to care about the install/uninstall
 functions. Simply import the module of interest and you are all set.
+
+
+### Colors and styles
+
+These two modules do not patch matplotlib, but provide functions
+aiding the separation of content and design:
+
+- [`colors`](https://bendalab.github.io/plottools/api/colors.html):
+  color palettes and tools for manipulating colors. [More...](docs/colors.md)
+- [`styles`](https://bendalab.github.io/plottools/api/styles.html):
+  plotting styles.
+
+
+### Helper modules
+
+These modules are used internally by other modules of the plottools
+package:
+
+- [`latex`](https://bendalab.github.io/plottools/api/latex.html):
+  translate LaTeX texts.
+- [`rcsetup`](https://bendalab.github.io/plottools/api/rcsetup.html):
+  additional validators for `matplotlib.rcsetup`. 
+- [`version`](https://bendalab.github.io/plottools/api/version.html):
+  version of plottools and other packages.
 
 
 ## Importing plottool modules
 
 Each module can be imported separately. No other functionality of the
-`plottools` is then installed or executed. The only exception is the
-[`params`](https://bendalab.github.io/plottools/api/params.html)
-module that imports all the other modules. For example, if you are
+`plottools` is then installed or executed. The only exception are the
+[`plottools`](https://bendalab.github.io/plottools/api/plottools.html)
+and [`params`](https://bendalab.github.io/plottools/api/params.html)
+modules that import all the other modules. For example, if you are
 only interested in the functions the
 [`ticks`](https://bendalab.github.io/plottools/api/ticks.html) module
 provides, then you can do
@@ -119,16 +141,57 @@ directly in the `pt` namespace. For example:
 light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
 ```
 
+A special module is
+
+- [`params`](https://bendalab.github.io/plottools/api/params.html):
+  functions setting default
+  [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+  settings for all modules.
+
+which also imports and installs all other modules via the
+[`plottools`](https://bendalab.github.io/plottools/api/plottools.html). This
+module provides a few functions
+(e.g. [`paper_style()`](https://bendalab.github.io/plottools/api/params.html#plottools.params.paper_style))
+that set some default
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+and add a number of plotting styles to a namespace.
+
+These functions can be used like this:
+```py
+from plottools.params import paper_style
+
+class s: pass   # namespace for plotting styles
+paper_style(s)  # install all plottool functions in matplotlib and populate s with plotting styles
+fig, ax = plt.subplots(cmsize=(12, 8))  # new subplots() argument `cmsize`
+ax.plot(x, y, **s.lsB1)                 # plotting style
+ax.set_xticks_delta(0.5)      # new function for setting spacing of tick marks
+fig.savefig()                 # use name of script as name for figure file
+```
+
+Usually you will not import the
+[`params`](https://bendalab.github.io/plottools/api/params.html)
+module, but rahter copy one of its functions and adapt them to your
+own needs.
+
 
 ## Setting rcParams
 
-Each module also has a `<module>_params()` function for setting
-parameters to default values. In many cases these functions are just
+Most modules have a `<module>_params()` function for setting
+rc parameters to default values. In many cases these functions are just
 an alternative way to set matplotlib's
 [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html).
 Many `plottools` define additional
 [`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html),
 that also can be set by this function.
+
+These modules just provide such a function as an alternative interface
+for setting matplotlib
+[`rcParams`](https://matplotlib.org/stable/tutorials/introductory/customizing.html):
+
+- [`axes`](https://bendalab.github.io/plottools/api/axes.html):
+  setting axes appearance.
+- [`grid`](https://bendalab.github.io/plottools/api/git.html):
+  setting grid appearance.
 
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from

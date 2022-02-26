@@ -1,5 +1,5 @@
 """
-Default rcParams settings for all modules.
+Functions setting default rcParams settings for all modules.
 
 
 You actually do not need to import this module. Rather use one of its

@@ -1,4 +1,5 @@
-"""
+"""Version of plottools and other packages.
+
 ## Functions
 
 - `versions()`: print python, numpy, pandas, matplotlib and plottools versions.
