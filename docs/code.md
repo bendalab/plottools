@@ -21,7 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 x = np.linspace(0, 10, 200)
-y = np.sin(2*np.pi*3*x)
+y = np.sin(2*np.pi*0.5*x)
 fig, (ax1, ax2) = plt.subplots(2, 1)
 ax1.plot(x, y)
 ax1.plot(x, 2*y)
@@ -36,6 +36,10 @@ ax2.set_ylabel('y')
 fig.savefig('plot.pdf')
 ```
 
+It produces a figure in whatever standard design used by matplotlib:
+
+![plain](figures/code-plain.png)
+
 
 ## Customize your plot
 
@@ -49,20 +53,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 x = np.linspace(0, 10, 200)
-y = np.sin(2*np.pi*3*x)
+y = np.sin(2*np.pi*0.5*x)
 fig, (ax1, ax2) = plt.subplots(2, 1)
 ax1.plot(x, y, color='tab:red', lw=2)
 ax1.plot(x, 2*y, color='tab:orange', lw=2)
-ax1.set_xlabel('x', fontsize=14)
-ax1.set_ylabel('y', fontsize=14)
+ax1.set_xlabel('x', fontsize=18)
+ax1.set_ylabel('y', fontsize=18)
 x = np.linspace(-5, 5, 200)
 y = np.exp(x)
 ax2.plot(x, y, color='tab:red', lw=2)
 ax2.plot(x, 2*y, color='tab:orange', lw=2)
-ax2.set_xlabel('x', fontsize=14)
-ax2.set_ylabel('y', fontsize=14)
+ax2.set_xlabel('x', fontsize=18)
+ax2.set_ylabel('y', fontsize=18)
 fig.savefig('plot.pdf')
 ```
+
+The figure now has larger labels and modified line styles:
+
+![plain](figures/code-params.png)
+
 
 ## Modularize your code
 
@@ -80,7 +89,7 @@ import matplotlib.pyplot as plt
 def sine_plot(ax, color1, color2, lw, fs):
     """Plots two sine waves with different amplitudes."""
     x = np.linspace(0, 10, 200)
-    y = np.sin(2*np.pi*3*x)
+    y = np.sin(2*np.pi*0.5*x)
     ax.plot(x, y, color=color1, lw=lw)
     ax.plot(x, 2*y, color=color2, lw=lw)
     ax.set_xlabel('x', fontsize=fs)
@@ -96,7 +105,7 @@ def exp_plot(ax, color1, color2, lw, fs):
     ax.set_ylabel('y', fontsize=fs)
 
 # global parameters defining plot appearance:
-fs = 14
+fs = 18
 color1 = 'tab:red'
 color2 = 'tab:orange'
 lw = 2
@@ -139,7 +148,7 @@ import matplotlib.pyplot as plt
 # no need to pass font size as a parameter:
 def sine_plot(ax, color1, color2, lw):
     x = np.linspace(0, 10, 200)
-    y = np.sin(2*np.pi*3*x)
+    y = np.sin(2*np.pi*0.5*x)
     ax.plot(x, y, color=color1, lw=lw)
     ax.plot(x, 2*y, color=color2, lw=lw)
     ax.set_xlabel('x')
@@ -154,7 +163,7 @@ def exp_plot(ax, color1, color2, lw):
     ax.set_ylabel('y')
 
 # use rcParams to set font size globally:
-plt.rcParams['font.size'] = 14
+plt.rcParams['font.size'] = 18
 color1 = 'tab:red'
 color2 = 'tab:orange'
 lw = 2
@@ -197,7 +206,7 @@ import matplotlib.pyplot as plt
 # pass for each line a whole line style dictionary:
 def sine_plot(ax, lsSmall, lsLarge):
     x = np.linspace(0, 10, 200)
-    y = np.sin(2*np.pi*3*x)
+    y = np.sin(2*np.pi*0.5*x)
     ax.plot(x, y, **lsSmall)  # key-word arguments provided by line style
     ax.plot(x, 2*y, **lsLarge)
     ax.set_xlabel('x')
@@ -211,7 +220,7 @@ def exp_plot(ax, lsSmall, lsLarge):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
 
-plt.rcParams['font.size'] = 14
+plt.rcParams['font.size'] = 18
 # define two line styles:
 lsSmall = dict(color='tab:red', lw=2)
 lsLarge = dict(color='tab:orange', lw=2)
@@ -246,7 +255,7 @@ import matplotlib.pyplot as plt
 # just pass a namespace holding plotting style:
 def sine_plot(ax, s):
     x = np.linspace(0, 10, 200)
-    y = np.sin(2*np.pi*3*x)
+    y = np.sin(2*np.pi*0.5*x)
     ax.plot(x, y, **s.lsSmall)  # key-word arguments provided by line style
     ax.plot(x, 2*y, **s.lsLarge)
     ax.set_xlabel('x')
@@ -260,7 +269,7 @@ def exp_plot(ax, s):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
 
-plt.rcParams['font.size'] = 14
+plt.rcParams['font.size'] = 18
 # namespace for plotting styles:
 class s: pass
 # define two line styles in the `s` namespace:
@@ -297,7 +306,10 @@ responses (e.g. `lsRespA`, `lsRespB`).
 As a last step we pull out the initial lines of the main script into a
 function that we place into a separate module.
 
-This is our `plotstyle.py` module:
+This is our `plotstyle.py` module, that defines a `plot_style()`
+function. This function returns a namespace with various plotting
+styles and sets
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html):
 
 ```py
 import matplotlib.pyplot as plt
@@ -308,7 +320,8 @@ def plot_style():
     s.lsSmall = dict(color='tab:red', lw=2)
     s.lsLarge = dict(color='tab:orange', lw=2)
     # global settings:
-    plt.rcParams['font.size'] = 14
+    plt.rcParams['font.size'] = 18
+    return s
 ```
 
 And this is how our script looks like:
@@ -320,7 +333,7 @@ from plotstyle import plot_style
 
 def sine_plot(ax, s):
     x = np.linspace(0, 10, 200)
-    y = np.sin(2*np.pi*3*x)
+    y = np.sin(2*np.pi*0.5*x)
     ax.plot(x, y, **s.lsSmall)  # key-word arguments provided by line style
     ax.plot(x, 2*y, **s.lsLarge)
     ax.set_xlabel('x')
@@ -346,7 +359,13 @@ A single line of code (the first on of the main script) defines all
 the global design of your plot. The remaining main script arranges the
 subplots. And the plot functions doing the actual plotting provide and
 plot the data and the content (e.g. axes labels, text, arrows),
-without influencing the design.
+without setting or influencing the design.
+
+The design of all the plots can be modified in a single place.
+
+Of course, the figure still looks the same:
+
+![plain](figures/code-plotstyle.png)
 
 
 ## How to structure your code
