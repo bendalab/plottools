@@ -70,7 +70,7 @@ fig.savefig('plot.pdf')
 
 The figure now has larger labels and modified line styles:
 
-![plain](figures/code-params.png)
+![params](figures/code-params.png)
 
 
 ## Modularize your code
@@ -173,6 +173,17 @@ sine_plot(ax1, color1, color2, lw)
 exp_plot(ax2, color1, color2, lw)
 fig.savefig('plot.pdf')
 ```
+
+The
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+`font.size` sets the size of all text:
+
+![rcparams](figures/code-rcparams.png)
+
+There are additional
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+that allow for a finer control of font sizes.
+ 
 
 This already removes quite some clutter from your plot functions and
 it also improves the main code, because the parameter lists get
@@ -320,7 +331,10 @@ def plot_style():
     s.lsSmall = dict(color='tab:red', lw=2)
     s.lsLarge = dict(color='tab:orange', lw=2)
     # global settings:
+    plt.rcParams['figure.constrained_layout.use'] = True
     plt.rcParams['font.size'] = 18
+    plt.rcParams['axes.xmargin'] = 0
+    plt.rcParams['axes.ymargin'] = 0
     return s
 ```
 
@@ -363,9 +377,11 @@ without setting or influencing the design.
 
 The design of all the plots can be modified in a single place.
 
-Of course, the figure still looks the same:
+Because we added a few more
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html),
+the figure looks a little bit different:
 
-![plain](figures/code-plotstyle.png)
+![plotstyle](figures/code-plotstyle.png)
 
 
 ## How to structure your code
