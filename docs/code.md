@@ -185,9 +185,10 @@ There are additional
 that allow for a finer control of font sizes.
  
 
-This already removes quite some clutter from your plot functions and
-it also improves the main code, because the parameter lists get
-shorter.
+Using
+ [rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+ already removes quite some clutter from your plot functions and it
+ also improves the main code, because the parameter lists get shorter.
 
 But there are still too many parameters for defining the appearances
 of the plotted lines (and points, and fill styles, ...).
@@ -214,7 +215,7 @@ And you can give them functional names. Not "red line style", but
 import numpy as np
 import matplotlib.pyplot as plt
 
-# pass for each line a whole line style dictionary:
+# pass for each line a line style dictionary:
 def sine_plot(ax, lsSmall, lsLarge):
     x = np.linspace(0, 10, 200)
     y = np.sin(2*np.pi*0.5*x)
@@ -267,7 +268,7 @@ import matplotlib.pyplot as plt
 def sine_plot(ax, s):
     x = np.linspace(0, 10, 200)
     y = np.sin(2*np.pi*0.5*x)
-    ax.plot(x, y, **s.lsSmall)  # key-word arguments provided by line style
+    ax.plot(x, y, **s.lsSmall)  # use line style from namespace
     ax.plot(x, 2*y, **s.lsLarge)
     ax.set_xlabel('x')
     ax.set_ylabel('y')
@@ -348,7 +349,7 @@ from plotstyle import plot_style
 def sine_plot(ax, s):
     x = np.linspace(0, 10, 200)
     y = np.sin(2*np.pi*0.5*x)
-    ax.plot(x, y, **s.lsSmall)  # key-word arguments provided by line style
+    ax.plot(x, y, **s.lsSmall)
     ax.plot(x, 2*y, **s.lsLarge)
     ax.set_xlabel('x')
     ax.set_ylabel('y')
@@ -361,7 +362,7 @@ def exp_plot(ax, s):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
 
-s = plot_style()
+s = plot_style()  # use global plot style
 # the figure:
 fig, (ax1, ax2) = plt.subplots(2, 1)
 sine_plot(ax1, s)
