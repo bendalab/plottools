@@ -65,6 +65,6 @@ it reduces the dependencies of the code on external packages needed
 for the computations. This also makes your figure code more easily to
 use later on.
 
-## How to structure your code
+## How to code a figure
 
-Continue reading with suggestions on [how to structure your code](structure.md). 
+Continue reading on [coding a figure](code.md).

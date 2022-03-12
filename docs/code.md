@@ -125,10 +125,12 @@ to figure out which color or text it will change. This parameter
 following gets even worse in case of nested functions.
 
 One solution to this problem is provided by matplotlib's
-rcParams. They allow you to change basic properties of your plots in a
-global manner. That way, you do not need to pass these parameters
-through function parameters. In our example, we set the font size via
-an rcParameter *before* we create the figure:
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html). They
+allow you to change basic properties of your plots in a global
+manner. That way, you do not need to pass these parameters through
+function parameters. In our example, we set the font size via
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+*before* we create the figure:
 
 ```py
 import numpy as np
@@ -231,9 +233,11 @@ We can do better.
 
 ## Namespace for plotting styles
 
-As the rc parameters control plotting in a global way, we could also
-summarize all our plotting styles in a namespace that we the provide
-to the functions creating the plots.
+The
+[rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
+control plotting in a global way. Similarly, we could summarize all
+our plotting styles in a namespace that we then provide to the
+functions creating the plots:
 
 ```py
 import numpy as np
@@ -343,3 +347,9 @@ the global design of your plot. The remaining main script arranges the
 subplots. And the plot functions doing the actual plotting provide and
 plot the data and the content (e.g. axes labels, text, arrows),
 without influencing the design.
+
+
+## How to structure your code
+
+Continue reading with suggestions on [how to structure your
+code](structure.md).

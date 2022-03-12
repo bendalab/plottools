@@ -18,6 +18,7 @@ nav:
     - 'Tutorial':
         - 'Getting started with matplotlib': 'starter.md'
         - 'Plotting guidelines': 'guide.md'
+        - 'Coding a figure': 'code.md'
         - 'How to structure your code': 'structure.md'
     - 'User Guide':
         - 'Colors': 'colors.md'

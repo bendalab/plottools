@@ -224,6 +224,8 @@ python -m plottools.spines
   matplotlib](docs/starter.md).
 - A general guidline for preparing figures for your next manuscript or
   presentation: [How to prepare figures](docs/guide.md).
+- From spaghetti code to a structured code generating a figure:
+  [Coding a figure](docs/code.md).
 - A suggestion for structuring code that generates plot figures:
   [How to structure your code](docs/structure.md).
 
