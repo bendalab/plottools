@@ -1,10 +1,12 @@
 # How to structure your code
 
-Here we provide some best-practice tips on how to structure your code
-for figures, such that:
+With our insights from [coding a figure](code.md) and from the [guide
+lines](docs/guide.md) we arrive on some best-practice tips on how to
+structure your code for figures, such that:
 
 - Others, including your future self, are able to modify your figures.
 - Plot appearance can be changed quickly from a central module.
+- Design and content are separated.
 - It makes fun to improve your plots.
 
 
