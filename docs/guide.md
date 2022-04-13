@@ -11,6 +11,10 @@ we suggest the following guidlines for preparing figures:
    *Do not use pickles* (`.pkl`) for storing data.
 6. No manual postprocessing by whatever graphics software.
 
+Note, this does not apply for the figures you make for visualization
+during your actual analysis and method development. The guidelines are
+only ment for the final figures that go into a manuscript or a
+presentation.
 
 ## Why?
 
@@ -19,7 +23,7 @@ There are a number of good reasons for these rules.
 ### Primary reason: *figures always change*.
 
 As long as you work on a manuscript you will always, or your
-supervisor wants you to, or journal regulations require you, to modify
+supervisor wants you to, or journal regulations require you to modify
 your figure. Modifying a figure is a hassle if
 
 - it takes some effort to find the spot where to edit the script,
@@ -36,8 +40,8 @@ through all your scripts and adapt these settings in every file. If
 instead a single module takes care about these general issues (4.),
 they can be modified in no
 time. [rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html)
-in matplotlib belong there. The modules provided by the `plottools`
-package aim at such a separation of content and design.
+in matplotlib belong there. See [coding a figure](code.md) for more about
+the separation of content and design.
 
 ### Second reason: *figures want to be used*.
 
@@ -45,10 +49,10 @@ Ideally, the figures you generate are not only used for that
 particular manuscript you are currently writing. You yourself, your
 college, your supervisor, or a collaborator might want to use your
 figures in a different context, like a poster, a talk, or another
-manuscript, a review paper, or a book chapter. Particularly for the
-latter, chances for your figure to be used are dramatically increased,
-if the figure can be easily modified. For this it is not sufficient to
-provide the pdf (or even worse, a pixel file) of the figure. Rather, a
+manuscript, a review paper, or a book chapter. Chances for your figure
+to be used are dramatically increased, if the figure can be easily
+modified. For this it is not sufficient to provide the pdf (or even
+worse, a pixel file like png or even jpg) of the figure. Rather, a
 simple dedicated script (1.) with all necessary data (3.) that are
 readable even ten years later (5.) producing the complete figure (6.)
 ensures that the figure can be easily adapted to another context as
@@ -62,8 +66,8 @@ the figure. So you need to store this data in files using formats that
 can be read by others on whatever platform (5.). Storing the processed
 data into files for direct plotting has the additional advantage that
 it reduces the dependencies of the code on external packages needed
-for the computations. This also makes your figure code more easily to
-use later on.
+for the computations. This also makes your figure code more likely to
+be work later on.
 
 ## How to code a figure
 

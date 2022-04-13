@@ -105,7 +105,7 @@ package:
   version of plottools and other packages.
 
 
-## Importing plottool modules
+## Importing plottools modules
 
 Each module can be imported separately. No other functionality of the
 `plottools` is then installed or executed. The only exception are the
@@ -118,7 +118,7 @@ provides, then you can do
 ```py
 import matplotlib.pyplot as plt
 import plottools.ticks
-# installs set_xticks_delta() (an others) on matplotlib Axes class
+# installs set_xticks_delta() (and other functions) on matplotlib Axes class
 
 fig, ax = plt.subplots()
 ax.set_xticks_delta(1.0)
@@ -146,8 +146,8 @@ A special module is
   functions setting default [rcParams] settings for all modules.
 
 which also imports and installs all other modules via the
-[`plottools`](https://bendalab.github.io/plottools/api/plottools.html). This
-module provides a few functions
+[`plottools`](https://bendalab.github.io/plottools/api/plottools.html)
+module. This module provides a few functions
 (e.g. [`paper_style()`](https://bendalab.github.io/plottools/api/params.html#plottools.params.paper_style))
 that set some default [rcParams] and add a number of plotting styles
 to a namespace.
@@ -175,10 +175,11 @@ own needs.
 Most modules have a `<module>_params()` function for setting rc
 parameters to default values. In many cases these functions are just
 an alternative way to set [matplotlib]'s [rcParams].  Many `plottools`
-define additional [rcParams], that also can be set by this function.
+modules define additional [rcParams], that also can be set by these
+functions.
 
-These modules just provide such a function as an alternative interface
-for setting [matplotlib]'s [rcParams]:
+The following modules just provide such a function as an alternative
+interface for setting [matplotlib]'s [rcParams]:
 
 - [`axes`](https://bendalab.github.io/plottools/api/axes.html):
   setting [axes] appearance.
@@ -236,8 +237,8 @@ The `plottools` are still in a conceptual phase, interfaces might
 change without notice and tests on various [python] and [matplotlib]
 versions are not done yet. So getting an error is not unlikely.
 
-Providing a pull request that fixes the error is, of course, most
-appreciated.
+Providing a pull request that fixes the error or provides new
+functionality is, of course, most appreciated.
 
 You can also open an issue, describing the error. Before doing so,
 check whether you get the error when you run the demo of the

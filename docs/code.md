@@ -12,10 +12,10 @@ maintainable and modifiable.
 
 ## Quick-and-dirty spaghetti code
 
-Let's create a figure with two panels side-by-side, showing two sine
-waves and two exponential functions. Of course, the two plots should
-be properly labeled. Quickly hacking this down results in something
-like this:
+Let's create a figure with two panels on top of each other, showing
+two sine waves and two exponential functions. Of course, the two plots
+should be properly labeled. Quickly hacking this down results in
+something like this:
 
 ```py
 import numpy as np
@@ -82,8 +82,8 @@ As intended, the resulting figure has larger labels and modified line styles:
 
 ## Modularize your code
 
-This manual and direct way in modifying the plot appearance has one
-severe disadvantage: if you want to change the design of your figures,
+This manual and direct way in modifying the plot appearance has
+severe disadvantages: if you want to change the design of your figures,
 you need to change colors, font sizes, etc. on every line you use
 them. Imaging you have many scripts for producing ten figures, each
 with many subplots. You do not want to change the hue of your red
@@ -145,6 +145,9 @@ tend to explode. And this then makes the functions cumbersome to use,
 because in the end one has to follow each parameter into the function
 to figure out which color or text it will change. This gets even worse
 in case of nested functions.
+
+
+## Use matplotlib's rcParams
 
 One solution to this problem is provided by matplotlib's
 [rcParams](https://matplotlib.org/stable/tutorials/introductory/customizing.html). They
