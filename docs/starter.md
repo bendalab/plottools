@@ -60,14 +60,15 @@ annotations.
 
 Here is a selection of often used plot commands:
 
-- [`plot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot): plot y versus x with markers and connected by lines. 
-- [`errorbar()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.errorbar.html#matplotlib.axes.Axes.errorbar): plot errorbars (both vertical and horizontal ones)
-- [`scatter()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html#matplotlib.axes.Axes.scatter): plot y versus x with varying marker size and color.
-- [`fill_between()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.fill_between.html#matplotlib.axes.Axes.fill_between): fill area between a curve and an axis (or another curve).
-- [`hist()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist): histogram (see also `np.histogram()` and `ax.bar()`).
-- [`boxplot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html#matplotlib.axes.Axes.boxplot): box-whisker plot.
-- [`contour()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contour.html#matplotlib.axes.Axes.contour): contour lines.
-- [`pcolormesh()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html#matplotlib.axes.Axes.pcolormesh): pseudocolor plot.
+- [`plot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html): plot y versus x with markers and connected by lines. 
+- [`errorbar()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.errorbar.html): plot errorbars (both vertical and horizontal ones)
+- [`scatter()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html): plot y versus x with varying marker size and color.
+- [`fill_between()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.fill_between.html): fill area between a curve and an axis (or another curve).
+- [`hist()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html): histogram (see also `np.histogram()` and `ax.bar()`).
+- [`boxplot()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html): box-whisker plot.
+- [`contour()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contour.html): contour lines.
+- [`pcolormesh()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html): pseudocolor plot of a mtrix with specified x- and y-axis ranges.
+- [`imshow()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html): plot an image - (almost) *never* use it for pseudocolor plots of matrices, use [`pcolormesh()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html) instead.
 
 
 ### Setting colors, lines, and markers
