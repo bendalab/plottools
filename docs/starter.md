@@ -104,6 +104,7 @@ Other:
 ### Logarithmic axis
 
 For a logarithmic x-axis use
+[`ax.set_xscale()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xscale.html):
 ```py
 ax.set_xlim(0.01, 1.0)
 ax.set_xscale('log')
@@ -209,10 +210,12 @@ The `width_ratios` and `height_ratios` give for each column/row a
 relative width/height.
 
 For more details on how to layout subplots you definitely want to read
-the [GridSpec
+the [Arranging multiple Axes in a
+Figure](https://matplotlib.org/stable/tutorials/intermediate/arranging_axes.html)
+tutorial and the [GridSpec
 tutorial](https://matplotlib.org/stable/tutorials/intermediate/gridspec.html).
-Also check out the note on [Figure and Axes
-creation/management](https://matplotlib.org/stable/users/whats_new.html#figure-and-axes-creation-management).
+Also check out the new
+[subplot_mosaic()](https://matplotlib.org/stable/tutorials/provisional/mosaic.html) function.
 
 
 ## Customizing figure layout
