@@ -1068,7 +1068,7 @@ def install_spines():
 
     See also
     --------
-    `uninstall_spines()`
+    uninstall_spines()
     """
     # make functions available as members:
     if not hasattr(mpl.axes.Axes, 'show_spines'):
@@ -1164,7 +1164,7 @@ def uninstall_spines():
 
     See also
     --------
-    `install_spines()`
+    install_spines()
     """
     # remove installed members:
     if hasattr(mpl.axes.Axes, 'show_spines'):

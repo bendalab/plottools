@@ -591,7 +591,7 @@ def install_scalebars():
 
     See also
     --------
-    `uninstall_scalebars()`
+    uninstall_scalebars()
     """
     if not hasattr(mpl.axes.Axes, 'xscalebar'):
         mpl.axes.Axes.xscalebar = xscalebar
@@ -624,7 +624,7 @@ def uninstall_scalebars():
 
     See also
     --------
-    `install_scalebars()`
+    install_scalebars()
     """
     if hasattr(mpl.axes.Axes, 'xscalebar'):
         delattr(mpl.axes.Axes, 'xscalebar')

@@ -132,7 +132,7 @@ def install_text():
 
     See also
     --------
-    `uninstall_text()`
+    uninstall_text()
     """
     if not hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.__text_orig_text = mpl.axes.Axes.text
@@ -146,7 +146,7 @@ def uninstall_text():
 
     See also
     --------
-    `install_text()`
+    install_text()
     """
     if hasattr(mpl.axes.Axes, '__text_orig_text'):
         mpl.axes.Axes.text = mpl.axes.Axes.__text_orig_text

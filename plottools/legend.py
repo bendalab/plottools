@@ -110,7 +110,7 @@ def install_legend():
 
     See also
     --------
-    `uninstall_legend()`
+    uninstall_legend()
     """
     if not hasattr(mpl.axes.Axes, '__legend_orig_legend'):
         mpl.axes.Axes.__legend_orig_legend = mpl.axes.Axes.legend
@@ -124,7 +124,7 @@ def uninstall_legend():
 
     See also
     --------
-    `install_legend()`
+    install_legend()
     """
     if hasattr(mpl.axes.Axes, '__legend_orig_legend'):
         mpl.axes.Axes.legend = mpl.axes.Axes.__legend_orig_legend

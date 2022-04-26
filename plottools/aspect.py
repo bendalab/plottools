@@ -69,8 +69,7 @@ def set_xlim_equal(ax, xmin_frac=0.0, xmax_frac=1.0):
 
     See Also
     --------
-    - `set_ylim_equal()`
-    - `aspect_ratio()`
+    set_ylim_equal(), aspect_ratio()
     """
     yrange = np.diff(ax.get_ylim())[0]
     xrange = yrange/(xmax_frac-xmin_frac)/ax.aspect_ratio()
@@ -105,8 +104,7 @@ def set_ylim_equal(ax, ymin_frac=0.0, ymax_frac=1.0):
 
     See Also
     --------
-    - `set_xlim_equal()`
-    - `aspect_ratio()`
+    set_xlim_equal(), aspect_ratio()
     """
     xrange = np.diff(ax.get_xlim())[0]
     yrange = ax.aspect_ratio()*xrange/(ymax_frac-ymin_frac)

@@ -176,7 +176,7 @@ def install_insets():
 
     See also
     --------
-    `uninstall_insets()`
+    uninstall_insets()
     """
     if not hasattr(mpl.axes.Axes, 'inset'):
         mpl.axes.Axes.inset = inset
@@ -191,7 +191,7 @@ def uninstall_insets():
 
     See also
     --------
-    `install_insets()`
+    install_insets()
     """
     if hasattr(mpl.axes.Axes, 'inset'):
         delattr(mpl.axes.Axes, 'inset')

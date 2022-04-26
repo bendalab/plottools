@@ -87,7 +87,7 @@ def set_yticks_delta(ax, delta):
 
     See also
     --------
-    `set_xticks_delta()`
+    set_xticks_delta()
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
 
@@ -126,7 +126,7 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
 
     See also
     --------
-    `set_xticks_log()`
+    set_xticks_log()
     """
     ax.set_yscale('log')
     ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
@@ -191,7 +191,7 @@ def set_yticks_fixed(ax, locs, labels='%g'):
 
     See also
     --------
-    `set_xticks_fixed()`
+    set_xticks_fixed()
     """
     ax.yaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
@@ -263,7 +263,7 @@ def set_yticks_prefix(ax):
 
     See also
     --------
-    `set_xticks_prefix()`
+    set_xticks_prefix()
     """
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(prefix_formatter))
 
@@ -368,7 +368,7 @@ def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
 
     See also
     --------
-    `set_xticks_fracs()`
+    set_xticks_fracs()
     """
     ax.yaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
@@ -418,7 +418,7 @@ def set_yticks_pifracs(ax, denominator, ontop=False):
 
     See also
     --------
-    `set_xticks_pifracs()`
+    set_xticks_pifracs()
     """
     ax.set_yticks_fracs(denominator, np.pi, '\\pi', ontop)
 
@@ -455,7 +455,7 @@ def set_yticks_format(ax, fs):
 
     See also
     --------
-    `set_xticks_format()`
+    set_xticks_format()
     """
     ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(fs))
 
@@ -470,7 +470,7 @@ def set_xticks_blank(ax):
 
     See also
     --------
-    `plottools.common.common_xlabels()`
+    plottools.common.common_xlabels()
 
     Examples
     --------
@@ -492,11 +492,8 @@ def set_yticks_blank(ax):
 
     See also
     --------
-    `plottools.common.common_ylabels()`
-
-    See also
-    --------
-    `set_xticks_blank()`
+    plottools.common.common_ylabels(),
+    set_xticks_blank()
     """
     ax.yaxis.set_major_formatter(ticker.NullFormatter())
 
@@ -529,7 +526,7 @@ def set_yticks_off(ax):
 
     See also
     --------
-    `set_xticks_off()`
+    set_xticks_off()
     """
     ax.yaxis.set_major_locator(ticker.NullLocator())
 
@@ -555,7 +552,7 @@ def set_minor_yticks_off(ax):
 
     See also
     --------
-    `set_minor_xticks_off()`
+    set_minor_xticks_off()
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
 
@@ -733,7 +730,7 @@ def install_ticks():
 
     See also
     --------
-    - `uninstall_ticks()`
+    uninstall_ticks()
     """
     if not hasattr(mpl.axes.Axes, 'set_xticks_delta'):
         mpl.axes.Axes.set_xticks_delta = set_xticks_delta
@@ -784,7 +781,7 @@ def uninstall_ticks():
 
     See also
     --------
-    - `install_ticks()`
+    install_ticks()
     """
     if hasattr(mpl.axes.Axes, 'set_xticks_delta'):
         delattr(mpl.axes.Axes, 'set_xticks_delta')

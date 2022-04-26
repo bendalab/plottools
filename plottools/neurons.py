@@ -175,7 +175,7 @@ def install_neurons():
 
     See also
     --------
-    `uninstall_neurons()`
+    uninstall_neurons()
     """
     if not hasattr(mpl.axes.Axes, 'neuron'):
         mpl.axes.Axes.neuron = neuron
@@ -188,7 +188,7 @@ def uninstall_neurons():
 
     See also
     --------
-    `install_neurons()`
+    install_neurons()
     """
     if hasattr(mpl.axes.Axes, 'neuron'):
         delattr(mpl.axes.Axes, 'neuron')

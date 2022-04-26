@@ -306,8 +306,7 @@ def merge(fig, axs, remove=True):
 
     See also
     --------
-    `subplots()`: subplots can be generated on a merged axes, and subplots
-    created with `subplots()` can be merged.
+    subplots()
     
     Example
     -------
@@ -377,8 +376,7 @@ def subplots(ax, nrows, ncols, **kwargs):
 
     See also
     --------
-    `merge()`: subplots can be created on a merged axes and subplots
-    returned from the `subplots()` function can be merged.
+    merge()
 
     Example
     -------

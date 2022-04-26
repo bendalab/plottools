@@ -136,9 +136,7 @@ def style(orig_style, **kwargs):
 
     See Also
     --------
-    - `lighter_styles()`
-    - `darker_styles()`
-    - `lighter_darker_styles()`
+    lighter_styles(), darker_styles(), lighter_darker_styles()
 
     Examples
     --------
@@ -174,9 +172,7 @@ def lighter_styles(style, n):
 
     See Also
     --------
-    - `style()`
-    - `darker_styles()`
-    - `lighter_darker_styles()`
+    style(), darker_styles(), lighter_darker_styles()
 
     Examples
     --------
@@ -227,9 +223,7 @@ def darker_styles(style, n):
 
     See Also
     --------
-    - `style()`
-    - `lighter_styles()`
-    - `lighter_darker_styles()`
+    style(), lighter_styles(), lighter_darker_styles()
 
     Examples
     --------
@@ -281,9 +275,7 @@ def lighter_darker_styles(style, n):
 
     See Also
     --------
-    - `style()`
-    - `lighter_styles()`
-    - `darker_styles()`
+    style(), lighter_styles(), darker_styles()
 
     Example
     -------
@@ -350,8 +342,7 @@ def make_line_styles(namespace, prefix, names, suffix, colors,
 
     See Also
     --------
-    - `make_point_styles()`
-    - `plot_line_styles()`
+    make_point_styles(), plot_line_styles()
 
     Examples
     --------
@@ -477,8 +468,7 @@ def make_point_styles(namespace, prefix, names, suffix, colors,
 
     See Also
     --------
-    - `make_line_styles()`
-    - `plot_point_styles()`
+    make_line_styles(), plot_point_styles()
     
     Examples
     --------
@@ -591,11 +581,8 @@ def make_linepoint_styles(namespace, prefixes, names, suffix, colors,
 
     See Also
     --------
-    - `make_line_styles()`
-    - `make_point_styles()`
-    - `plot_linepoint_styles()`
-    - `plot_line_styles()`
-    - `plot_point_styles()`
+    make_line_styles(), make_point_styles(), plot_linepoint_styles(),
+    plot_line_styles(), plot_point_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -662,10 +649,8 @@ def make_fill_styles(namespace, prefix, names, suffixes, colors,
 
     See Also
     --------
-    - `plot_fill_styles()`
-    - `make_line_styles()`
-    - `make_point_styles()`
-    - `make_linepoint_styles()`
+    plot_fill_styles(), make_line_styles(), make_point_styles(),
+    make_linepoint_styles()
     
     Examples
     --------
@@ -811,13 +796,9 @@ def make_linepointfill_styles(namespace, names, colors, dashes,
 
     See Also
     --------
-    - `make_linepoint_styles()`
-    - `make_fill_styles()`
-    - `generic_styles()`
-    - `plot_line_styles()`
-    - `plot_point_styles()`
-    - `plot_linepoint_styles()`
-    - `plot_fill_styles()`
+    make_linepoint_styles(), make_fill_styles(), generic_styles(),
+    plot_line_styles(), plot_point_styles(), plot_linepoint_styles(),
+    plot_fill_styles()
     """    
     if namespace is None:
         namespace = __main__
@@ -914,11 +895,8 @@ def generic_styles(namespace, colors='muted', lwthick=1.7, lwthin=0.8,
 
     See Also
     --------
-    - `make_linepointfill_styles()`
-    - `plot_line_styles()`
-    - `plot_point_styles()`
-    - `plot_linepoint_styles()`
-    - `plot_fill_styles()`
+    make_linepointfill_styles(), plot_line_styles(), plot_point_styles(),
+    plot_linepoint_styles(), plot_fill_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -953,10 +931,8 @@ def plot_line_styles(ax, namespace=None):
 
     See Also
     --------
-    - `make_line_styles()`
-    - `plot_point_styles()`
-    - `plot_linepoint_styles()`
-    - `plot_fill_styles()`
+    make_line_styles(), plot_point_styles(), plot_linepoint_styles(),
+    plot_fill_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -991,10 +967,8 @@ def plot_point_styles(ax, namespace=None):
 
     See Also
     --------
-    - `make_point_styles()`
-    - `plot_line_styles()`
-    - `plot_linepoint_styles()`
-    - `plot_fill_styles()`
+    make_point_styles(), plot_line_styles(), plot_linepoint_styles(),
+    plot_fill_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -1034,10 +1008,8 @@ def plot_linepoint_styles(ax, namespace=None):
 
     See Also
     --------
-    - `make_linepoint_styles()`
-    - `plot_line_styles()`
-    - `plot_point_styles()`
-    - `plot_fill_styles()`
+    make_linepoint_styles(), plot_line_styles(), plot_point_styles(),
+    plot_fill_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -1077,10 +1049,8 @@ def plot_fill_styles(ax, namespace=None):
 
     See Also
     --------
-    - `make_fill_styles()`
-    - `plot_line_styles()`
-    - `plot_point_styles()`
-    - `plot_linepoint_styles()`
+    make_fill_styles(), plot_line_styles(), plot_point_styles(),
+    plot_linepoint_styles()
     """
     if namespace is None:
         namespace = __main__

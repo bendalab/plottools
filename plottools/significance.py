@@ -82,7 +82,7 @@ def install_significance():
 
     See also
     --------
-    - `uninstall_significance()`
+    uninstall_significance()
     """
     if not hasattr(mpl.axes.Axes, 'significance_bar'):
         mpl.axes.Axes.significance_bar = significance_bar
@@ -95,7 +95,7 @@ def uninstall_significance():
 
     See also
     --------
-    - `install_significance()`
+    install_significance()
     """
     if hasattr(mpl.axes.Axes, 'significance_bar'):
         delattr(mpl.axes.Axes, 'significance_bar')

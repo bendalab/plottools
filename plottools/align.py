@@ -346,7 +346,7 @@ def install_align():
 
     See also
     --------
-    - `uninstall_align()`
+    uninstall_align()
     """
     if not hasattr(mpl.figure.Figure, 'set_align'):
         mpl.figure.Figure.set_align = set_align
@@ -395,8 +395,7 @@ def uninstall_align():
 
     See also
     --------
-    - `install_align_labels()`
-    - `uninstall_labels()`
+    install_align_labels(), uninstall_labels()
     """
     if hasattr(mpl.figure.Figure, 'set_align'):
         delattr(mpl.figure.Figure, 'set_align')

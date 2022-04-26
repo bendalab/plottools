@@ -170,8 +170,7 @@ def install_labels():
 
     See also
     --------
-    - `set_xlabel()`
-    - `uninstall_labels()`
+    set_xlabel(), uninstall_labels()
     """
     if not hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
         mpl.axes.Axes.__set_xlabel_labels = mpl.axes.Axes.set_xlabel
@@ -194,7 +193,7 @@ def uninstall_labels():
 
     See also
     --------
-    - `install_labels()`
+    install_labels()
     """
     if hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
         mpl.axes.Axes.set_xlabel = mpl.axes.Axes.__set_xlabel_labels

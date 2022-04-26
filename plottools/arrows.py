@@ -83,9 +83,7 @@ def harrow(ax, x, y, dx, heads='right', text=None, va='bottom', dist=3.0,
 
     See Also
     --------
-    - `varrow()`
-    - `point_to()`
-    - `arrow_style()`
+    varrow(), point_to(), arrow_style()
     """
     if transform is None:
         transform = ax.transData
@@ -223,9 +221,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
 
     See Also
     --------
-    - `harrow()`
-    - `point_to()`
-    - `arrow_style()`
+    harrow(), point_to(), arrow_style()
     """
     if transform is None:
         transform = ax.transData
@@ -355,9 +351,7 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
 
     See Also
     --------
-    - `harrow()`
-    - `varrow()`
-    - `arrow_style()`
+    harrow(), varrow(), arrow_style()
     """
     if style == '>>':
         arrowstyle = ArrowStyle.Fancy(head_length=0.09*head_length,
@@ -412,11 +406,7 @@ def arrow_style(namespace, name, dist=3.0, style='>', shrink=0, lw=1,
 
     See Also
     --------
-    - `harrow()`
-    - `varrow()`
-    - `point_to()`
-    - `plot_arrow_styles()`
-    - `generic_arrow_styles()`
+    harrow(), varrow(), point_to(), plot_arrow_styles(), generic_arrow_styles()
     """
     if namespace is None:
         namespace = __main__
@@ -451,8 +441,7 @@ def generic_arrow_styles(namespace, palette, scale=1):
 
     See Also
     --------
-    - `arrow_style()`
-    - `plot_arrow_styles()`
+    arrow_style(), plot_arrow_styles()
     """
     arrow_style(namespace, 'Line', dist=3, style='>', shrink=0,
                 lw=0.6*scale, color=palette['black'],
@@ -489,8 +478,7 @@ def plot_arrow_styles(ax, namespace=None):
 
     See Also
     --------
-    - `arrow_style()`
-    - `generic_arrow_styles()`
+    arrow_style(), generic_arrow_styles()
     """
     if namespace is None:
         namespace = __main__
