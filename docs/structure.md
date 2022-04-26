@@ -234,7 +234,7 @@ somewhere else.
 
 ### Complexity/simplicity of the plot function
 
-Most of the desing of the plots is handled by the central
+Most of the design of the plots is handled by the central
 `plot_style()` function as described above. Then the plot function
 anly needs to provide content and usually gets quite simple. What is
 left to specify simply is:

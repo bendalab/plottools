@@ -1,4 +1,4 @@
-# How to prepare figures
+# Figure guidelines
 
 Based on our year-long experience in preparing scientific publications
 we suggest the following guidlines for preparing figures:

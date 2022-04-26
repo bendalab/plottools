@@ -157,7 +157,7 @@ These functions can be used like this:
 from plottools.params import paper_style
 
 class s: pass   # namespace for plotting styles
-paper_style(s)  # install all plottool functions in [matplotlib] and populate s with plotting styles
+paper_style(s)  # install all plottool functions in matplotlib and populate s with plotting styles
 fig, ax = plt.subplots(cmsize=(12, 8))  # new subplots() argument `cmsize`
 ax.plot(x, y, **s.lsB1)                 # plotting style
 ax.set_xticks_delta(0.5)      # new function for setting spacing of tick marks
@@ -224,7 +224,7 @@ python -m plottools.spines
 - A quick introduction to [matplotlib]: [Getting started with
   matplotlib](docs/starter.md).
 - A general guidline for preparing figures for your next manuscript or
-  presentation: [How to prepare figures](docs/guide.md).
+  presentation: [Figure guidelines](docs/guide.md).
 - From spaghetti code to a structured code generating a figure:
   [Coding a figure](docs/code.md).
 - A suggestion for structuring code that generates plot figures:

@@ -28,9 +28,9 @@ ax2.show_spines('tr')
 
 The length of the spine can span
 
-- the full length of the axis as set by the axis's limits ('full'),
-- the extend of the data ('data'),
-- the range between the minimum and maximum tick location ('ticks').
+- the full length of the axis as set by the axis's limits (`'full'`),
+- the extend of the data (`'data'`),
+- the range between the minimum and maximum tick location (`'ticks'`).
 - or any other range on the corresponding axis.
 
 ![bounds](figures/spines-bounds.png)

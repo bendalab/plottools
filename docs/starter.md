@@ -23,16 +23,20 @@ plt.plot(t, x)
 plt.show()
 ```
 Do not forget the
-[`show()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html)
-- this command displays the plot in a new window and let you interact
+[`show()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html)!
+
+This command displays the plot in a new window and let you interact
 with it (zooming and panning). By the way, these features have short
 keys: press `o` for zooming or `p` for panning. `backspace` brings you
 back. `f` is fullscreen mode.
 
 This is great for quickly checking data in your code. For properly
 annotating a plot and for producing nice figures we use the
-object-oriented interface of matplotlib. This is described in the
-following:
+object-oriented interface of matplotlib (see the [object-oriented
+API](https://matplotlib.org/stable/api/index.html#the-object-oriented-api)
+and [the lifecycle of a
+plot](https://matplotlib.org/stable/tutorials/introductory/lifecycle.html#a-note-on-the-object-oriented-api-vs-pyplot)). This
+is described in the following:
 
 
 ## Single plot in a figure
@@ -69,7 +73,7 @@ Here is a selection of often used plot commands:
 - [`hist(x, bins)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html): histogram (see also `np.histogram()` and `ax.bar()`).
 - [`boxplot(x)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html): box-whisker plot.
 - [`contour(x, y, z)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contour.html): contour lines.
-- [`pcolormesh(x, y, z)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html): pseudocolor plot of a mtrix with specified x- and y-axis ranges.
+- [`pcolormesh(x, y, z)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html): pseudocolor plot of a matrix with specified x- and y-axis ranges.
 - [`imshow(z)`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html): plot an image - (almost) *never* use it for pseudocolor plots of matrices, use [`pcolormesh()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html) instead.
 
 
@@ -134,7 +138,7 @@ You can place some text somewhere in (or outside) your plot using the
 [`text()`](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html)
 function:
 ```py
-ax.text(0.1, 0.9, 'a note')
+ax.text(12.7, 8.2, 'a note')
 ```
 The first two arguments are the x- and y-coordinate of the text in data coordinates.
 
@@ -214,7 +218,7 @@ the [Arranging multiple Axes in a
 Figure](https://matplotlib.org/stable/tutorials/intermediate/arranging_axes.html)
 tutorial and the [GridSpec
 tutorial](https://matplotlib.org/stable/tutorials/intermediate/gridspec.html).
-Also check out the new
+Also check out the
 [subplot_mosaic()](https://matplotlib.org/stable/tutorials/provisional/mosaic.html) function.
 
 
@@ -279,12 +283,12 @@ before you create any figures and axes.
 - A gallery of various plots with [example](https://matplotlib.org/stable/plot_types/index.html) code.
 
 - matplotlib provides some nice [cheat
-  sheets](https://github.com/matplotlib/cheatsheets/blob/master/cheatsheets.pdf)
+  sheets](https://github.com/matplotlib/cheatsheets/blob/master/cheatsheets.pdf).
 
-- and there are a number of
+- And there are a number of
   [tutorials](https://matplotlib.org/stable/tutorials/index.html).
 
 
-## How to prepare figures
+## Figure guidelines
 
-Continue reading with suggestions on [how to prepare figures](guide.md). 
+Continue reading with some [figure guidelines](guide.md). 

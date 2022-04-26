@@ -22,7 +22,7 @@ fig = plt.figure(cmsize=(12, 8))  # in centimeters
 ```
 or
 ```
-fig = plt.subplots(3, 2, cmsize=(12, 8))  # in centimeters
+fig, axs = plt.subplots(3, 2, cmsize=(12, 8))  # in centimeters
 ```
 A `set_size_cm()` function is also provided:
 ```
@@ -43,7 +43,7 @@ called without argument.
 
 If you have a python script `myplot.py` producing a figure and saving it like this:
 ```
-fig, ax = plt.subplots(2, 3)
+fig, axs = plt.subplots(2, 3)
 # some fancy plots ...
 fig.savefig()
 ```
