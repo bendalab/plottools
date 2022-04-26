@@ -59,15 +59,19 @@ and come up with something like this:
 import numpy as np
 import matplotlib.pyplot as plt
 
+fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
+# some data:
 x = np.linspace(0, 10, 200)
 y = np.sin(2*np.pi*0.5*x)
-fig, (ax1, ax2) = plt.subplots(2, 1, constrained_layout=True)
+# first plot:
 ax1.plot(x, y, color='tab:red', lw=2)
 ax1.plot(x, 2*y, color='tab:orange', lw=2)
 ax1.set_xlabel('x', fontsize=18)
 ax1.set_ylabel('y', fontsize=18)
+# more data:
 x = np.linspace(-5, 5, 200)
 y = np.exp(x)
+# second plot:
 ax2.plot(x, y, color='tab:red', lw=2)
 ax2.plot(x, 2*y, color='tab:orange', lw=2)
 ax2.set_xlabel('x', fontsize=18)
