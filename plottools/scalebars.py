@@ -49,8 +49,9 @@ import matplotlib.rcsetup as mrc
 from .rcsetup import _validate_fontdict
 
 
-def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
-              va='bottom', lw=None, color=None, capsize=None,
+def xscalebar(ax, x, y, width, wunit=None, wformat=None,
+              ha='left', va='bottom', hat='center',
+              lw=None, color=None, capsize=None,
               clw=None, return_coords=False, **kwargs):
     """ Horizontal scale bar with label.
 
@@ -100,6 +101,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
         Scale bar aligned left, right, or centered to (x, y)
     va: 'top' or 'bottom'
         Label of the scale bar either above or below the scale bar.
+    hat: 'left', 'right', or 'center'
+        Horizontal alignment of text:
+        text aligned on left, right or center of scale bar.
     lw: int, float, None
         Line width of the scale bar. If None take value from rcSetting `scalebar.linewidth`.
     color: matplotlib color
@@ -211,19 +215,24 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
     for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['scalebar.font'][k]
+    xt = 0.5*(x0+x1)
+    if hat == 'left':
+        xt = x0
+    elif hat == 'right':
+        xt = x1
     if va == 'top':
-        th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
-                     ha='center', va='bottom', **kwargs)
+        th = ax.text(xt, y, ls, clip_on=False,
+                     ha=hat, va='bottom', **kwargs)
         # get y coordinate of text bottom in figure pixel coordinates:
         ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
         dty = ly+0.5*lw + 2.0 - ty
     else:
-        th = ax.text(0.5*(x0+x1), y, ls, clip_on=False,
-                     ha='center', va='top', **kwargs)
+        th = ax.text(xt, y, ls, clip_on=False,
+                     ha=hat, va='top', **kwargs)
         # get y coordinate of text bottom in figure pixel coordinates:
         ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,1]
         dty = ly-0.5*lw - 2.0 - ty
-    th.set_position((0.5*(x0+x1), y+dyu*dty))
+    th.set_position((xt, y+dyu*dty))
     artists.append(th)
     if return_coords:
         return artists, x0, x1, y
@@ -231,8 +240,9 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None, ha='left',
         return artists
     
         
-def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
-              va='bottom', lw=None, color=None, capsize=None,
+def yscalebar(ax, x, y, height, hunit=None, hformat=None,
+              ha='left', va='bottom', vat='center',
+              lw=None, color=None, capsize=None,
               clw=None, return_coords=False, **kwargs):
     """ Vertical scale bar with label.
 
@@ -283,7 +293,10 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
         Label of the scale bar either to the left or to the right
         of the scale bar.
     va: 'top', 'bottom', or 'center'
-        Scale bar aligned above, below, or centered on (x, y).
+        Scale bar aligned below, above, or centered on (x, y).
+    vat: 'top', 'bottom', or 'center'
+        Vertical alignment of text:
+        text aligned on top, bottom or center of scale bar.
     lw: int, float, None
         Line width of the scale bar. If None take value from rcParams `scalebar.linewidth`.
     color: matplotlib color
@@ -395,19 +408,24 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
     for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['scalebar.font'][k]
+    yt = 0.5*(y0+y1)
+    if vat == 'top':
+        yt = y1
+    elif vat == 'bottom':
+        yt = y0
     if ha == 'right':
-        th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
-                     ha='left', va='center', **kwargs)
+        th = ax.text(x, yt, ls, clip_on=False, rotation=90.0,
+                     ha='left', va=vat, **kwargs)
         # get x coordinate of text bottom in figure pixel coordinates:
         tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
         dtx = lx+0.5*lw + 2.0 - tx
     else:
-        th = ax.text(x, 0.5*(y0+y1), ls, clip_on=False, rotation=90.0,
-                     ha='right', va='center', **kwargs)
+        th = ax.text(x, yt, ls, clip_on=False, rotation=90.0,
+                     ha='right', va=vat, **kwargs)
         # get x coordinate of text bottom in figure pixel coordinates:
         tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,0]
         dtx = lx-0.5*lw - 1.0 - tx
-    th.set_position((x+dxu*dtx, 0.5*(y0+y1)))
+    th.set_position((x+dxu*dtx, yt))
     artists.append(th)
     if return_coords:
         return artists, x, y0, y1
@@ -417,6 +435,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None, ha='left',
 
 def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
               wformat=None, hformat=None, ha='left', va='bottom',
+              hat='center', vat='center',
               lw=None, color=None, **kwargs):
     """ Horizontal and vertical scale bars with labels.
 
@@ -474,7 +493,13 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
         Vertical scale bar left or right.
     va: 'top' or 'bottom'
         Scale bars aligned above or below (x, y).
-        Horizontal scale bar on top or a the bottom.
+        Horizontal scale bar on top or at the bottom.
+    hat: 'left', 'right', or 'center'
+        Horizontal alignment of text:
+        text aligned on left, right or center of scale bar.
+    vat: 'top', 'bottom', or 'center'
+        Vertical alignment of text:
+        text aligned on top, bottom or center of scale bar.
     lw: int, float, None
         Line width of the scale bar. If None take value from rcParams `scalebar.linewidth`.
     color: matplotlib color
@@ -513,11 +538,11 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     # color:
     if color is None:
         color = mpl.rcParams['scalebar.color']
-    a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
+    a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va, hat,
                               lw, color, 0.0, 1, return_coords=True, **kwargs)
     artists.extend(a)
     ax.lines.pop()
-    a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va,
+    a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va, vat,
                               lw, color, 0.0, 1, return_coords=True, **kwargs)
     artists.extend(a)
     ax.lines.pop()
@@ -651,8 +676,8 @@ def demo():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes)
 
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=2,
-                    capsize=0, clw=0.5, font=dict(fontweight='bold'))
+    scalebars_params(format_large='%.0f', format_small='%.1f', lw=2,
+                     capsize=0, clw=0.5, font=dict(fontweight='bold'))
     
     fig, ax = plt.subplots()
     fig.suptitle('plottools.scalebars')
@@ -676,9 +701,10 @@ def demo():
     ax.yscalebar(0.7, 0.35, 0.3, '', ha='right', va='top', capsize=4, clw=1)
 
     draw_anchor(ax, 0.1, 0.1)
-    ax.scalebars(0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom')
+    ax.scalebars(0.1, 0.1, 1.2, 0.5, 's', '', '%.1f', ha='left', va='bottom', hat='left', vat='bottom')
     draw_anchor(ax, 0.9, 0.1)
-    ax.scalebars(0.9, 0.1, 0.8, 0.7, 's', '', ha='right', va='bottom')
+    ax.scalebars(0.9, 0.1, 0.8, 0.7, 's', '', ha='right', va='bottom',
+                 hat='left', vat='top')
     draw_anchor(ax, 0.1, 0.9)
     ax.scalebars(0.1, 0.9, 1.5, 0.5, 's', '', ha='left', va='top', lw=4)
     draw_anchor(ax, 0.95, 0.9)
