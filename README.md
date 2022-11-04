@@ -21,8 +21,8 @@ controllable by a single central function or module that is used by
 all the scripts generating the figures. [matplotlib]'s [rcParams] are
 a big step in this direction but do not completely reach this
 goal. The `plottools` package expands on this, by providing additional
-[rcParams], and by introducing the concept of [`plot
-styles`](https://bendalab.github.io/plottools/api/styles.html).
+[rcParams], and by introducing the concept of [plot
+styles](https://bendalab.github.io/plottools/api/styles.html).
 
 
 ## Modules
