@@ -4,7 +4,7 @@ import plottoolspath
 import plottools.figure
 import plottools.subplots
 import plottools.spines
-from plottools.scalebars import scalebar_params
+from plottools.scalebars import scalebars_params
 
     
 def scalebars_figures():
@@ -37,7 +37,7 @@ def scalebars_figures():
     def draw_anchor(ax, x, y):
         ax.plot(x, y, '.r', ms=20, transform=ax.transAxes, clip_on=False)
     
-    scalebar_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
+    scalebars_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
     
     fig, ax = draw_sine()
     ax.scalebars(1.05, 0.0, 2, 1, 's', 'mV', ha='right', va='bottom')
@@ -59,33 +59,43 @@ def scalebars_figures():
     save_fig(fig, 'styles')
 
     fig, ax = new_figure(10, 3)
-    draw_anchor(ax, 0.0, 0.8)
-    ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='top', lw=4)
-    draw_anchor(ax, 0.5, 0.8)
-    ax.xscalebar(0.5, 0.8, 2, 's', ha='center', va='top', lw=4)
-    draw_anchor(ax, 1.0, 0.8)
-    ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='top', lw=4)
-    draw_anchor(ax, 0.0, 0.3)
-    ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom', lw=4)
-    draw_anchor(ax, 0.5, 0.3)
-    ax.xscalebar(0.5, 0.3, 2, 's', ha='center', va='bottom', lw=4)
-    draw_anchor(ax, 1.0, 0.3)
-    ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom', lw=4)
+    draw_anchor(ax, 0.0, 0.9)
+    ax.xscalebar(0.0, 0.9, 2, 's', ha='left', va='top', lw=4)
+    draw_anchor(ax, 0.5, 0.9)
+    ax.xscalebar(0.5, 0.9, 2, 's', ha='center', va='top', lw=4)
+    draw_anchor(ax, 1.0, 0.9)
+    ax.xscalebar(1.0, 0.9, 2, 's', ha='right', va='top', lw=4)
+    
+    draw_anchor(ax, 0.0, 0.5)
+    ax.xscalebar(0.0, 0.5, 2, 's', ha='left', va='bottom', lw=4)
+    draw_anchor(ax, 0.5, 0.5)
+    ax.xscalebar(0.5, 0.5, 2, 's', ha='center', va='bottom', lw=4)
+    draw_anchor(ax, 1.0, 0.5)
+    ax.xscalebar(1.0, 0.5, 2, 's', ha='right', va='bottom', lw=4)
+    
+    ax.xscalebar(0.0, 0.1, 2, 's', ha='left', va='bottom', hat='left', lw=4)
+    ax.xscalebar(0.5, 0.1, 2, 's', ha='center', va='bottom', hat='center', lw=4)
+    ax.xscalebar(1.0, 0.1, 2, 's', ha='right', va='bottom', hat='right', lw=4)
     save_fig(fig, 'xpos')
 
     fig, ax = new_figure(5, 8)
-    draw_anchor(ax, 0.3, 1.0)
-    ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top', lw=4)
-    draw_anchor(ax, 0.3, 0.5)
-    ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center', lw=4)
-    draw_anchor(ax, 0.3, 0.0)
-    ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom', lw=4)
-    draw_anchor(ax, 0.7, 1.0)
-    ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top', lw=4)
-    draw_anchor(ax, 0.7, 0.5)
-    ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center', lw=4)
-    draw_anchor(ax, 0.7, 0.0)
-    ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom', lw=4)
+    draw_anchor(ax, 0.2, 1.0)
+    ax.yscalebar(0.2, 1.0, 1, 'mV', ha='left', va='top', lw=4)
+    draw_anchor(ax, 0.2, 0.5)
+    ax.yscalebar(0.2, 0.5, 1, 'mV', ha='left', va='center', lw=4)
+    draw_anchor(ax, 0.2, 0.0)
+    ax.yscalebar(0.2, 0.0, 1, 'mV', ha='left', va='bottom', lw=4)
+    
+    draw_anchor(ax, 0.5, 1.0)
+    ax.yscalebar(0.5, 1.0, 1, 'mV', ha='right', va='top', lw=4)
+    draw_anchor(ax, 0.5, 0.5)
+    ax.yscalebar(0.5, 0.5, 1, 'mV', ha='right', va='center', lw=4)
+    draw_anchor(ax, 0.5, 0.0)
+    ax.yscalebar(0.5, 0.0, 1, 'mV', ha='right', va='bottom', lw=4)
+    
+    ax.yscalebar(0.8, 1.0, 1, 'mV', ha='right', va='top', vat='top', lw=4)
+    ax.yscalebar(0.8, 0.5, 1, 'mV', ha='right', va='center', vat='center', lw=4)
+    ax.yscalebar(0.8, 0.0, 1, 'mV', ha='right', va='bottom', vat='bottom', lw=4)
     save_fig(fig, 'ypos')
 
     fig, ax = new_figure(10, 7)
