@@ -15,12 +15,14 @@ content and design. We know this from LaTeX documents. A good LaTeX
 document contains only the text and the logical structure. The actual
 layout (fonts, format of the sections, etc.) can then be entirely
 controlled by the header without touching the text. Equivalently,
-[python] scripts generating various figures should only provide the data
-and necessary annotation like axes labels. The design should be
+[python] scripts generating various figures should only provide the
+data and necessary annotation like axes labels. The design should be
 controllable by a single central function or module that is used by
 all the scripts generating the figures. [matplotlib]'s [rcParams] are
 a big step in this direction but do not completely reach this
-goal. The `plottools` package expands on this.
+goal. The `plottools` package expands on this, by providing additional
+[rcParams], and by introducing the concept of [`plot
+styles`](https://bendalab.github.io/plottools/api/styles.html).
 
 
 ## Modules
