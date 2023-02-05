@@ -19,6 +19,7 @@ from .arrows import install_arrows, uninstall_arrows
 from .arrows import arrow_style, generic_arrow_styles, plot_arrow_styles
 from .aspect import install_aspect, install_aspect, uninstall_aspect
 from .axes import axes_params
+from .circuits import circuits_params, install_circuits, uninstall_circuits, Pos
 from .colors import colors_params, palettes, lighter, darker, gradient, colormap
 from .common import install_common, uninstall_common
 from .figure import figure_params, latex_include_figures, install_figure, uninstall_figure

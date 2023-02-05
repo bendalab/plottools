@@ -44,6 +44,8 @@ new functionality or some specialized interface:
   arrows.
 - [`aspect`](https://bendalab.github.io/plottools/api/aspect.html):
   adapting plots to aspect ratio of axes.
+- [`circuits`](https://bendalab.github.io/plottools/api/circuits.html):
+  electrical circuits.
 - [`common`](https://bendalab.github.io/plottools/api/common.html):
   reduce common axis labels.
 - [`figure`](https://bendalab.github.io/plottools/api/figure.html):
