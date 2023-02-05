@@ -83,7 +83,7 @@ class Pos(tuple):
         """
         return self[1]
 
-    def up(self, delta):
+    def up(self, delta=1):
         """ Increment y coordinate of position of circuit element.
 
         Parameters
@@ -98,7 +98,7 @@ class Pos(tuple):
         """
         return Pos(self[0], self[1] + delta)
 
-    def down(self, delta):
+    def down(self, delta=1):
         """ Decrement y coordinate of position of circuit element.
 
         Parameters
@@ -113,7 +113,7 @@ class Pos(tuple):
         """
         return Pos(self[0], self[1] - delta)
 
-    def left(self, delta):
+    def left(self, delta=1):
         """ Decrement x coordinate of position of circuit element.
 
         Parameters
@@ -128,7 +128,7 @@ class Pos(tuple):
         """
         return Pos(self[0] - delta, self[1])
 
-    def right(self, delta):
+    def right(self, delta=1):
         """ Increment x coordinate of position of circuit element.
 
         Parameters
@@ -143,7 +143,7 @@ class Pos(tuple):
         """
         return Pos(self[0] + delta, self[1])
 
-    def ups(self, delta):
+    def ups(self, delta=1):
         """ Increment y coordinate of position of circuit element.
 
         Parameters
@@ -158,7 +158,7 @@ class Pos(tuple):
         """
         return Pos(self[0], self[1] + delta*mpl.rcParams['circuits.scale'])
 
-    def downs(self, delta):
+    def downs(self, delta=1):
         """ Decrement y coordinate of position of circuit element.
 
         Parameters
@@ -173,7 +173,7 @@ class Pos(tuple):
         """
         return Pos(self[0], self[1] - delta*mpl.rcParams['circuits.scale'])
 
-    def lefts(self, delta):
+    def lefts(self, delta=1):
         """ Decrement x coordinate of position of circuit element.
 
         Parameters
@@ -188,7 +188,7 @@ class Pos(tuple):
         """
         return Pos(self[0] - delta*mpl.rcParams['circuits.scale'], self[1])
 
-    def rights(self, delta):
+    def rights(self, delta=1):
         """ Increment x coordinate of position of circuit element.
 
         Parameters
@@ -875,18 +875,20 @@ def circuits_params(scale=None, connectwidth=None, linewidth=None,
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
          Set rcParam `circuits.font`.
     """
-    if format_large is not None and 'circuits.format.large' in mrc._validators:
-        mpl.rcParams['circuits.format.large'] = format_large
-    if format_small is not None and 'circuits.format.small' in mrc._validators:
-        mpl.rcParams['circuits.format.small'] = format_small
-    if lw is not None and 'circuits.linewidth' in mrc._validators:
-        mpl.rcParams['circuits.linewidth'] = lw
+    if scale is not None and 'circuits.scale' in mrc._validators:
+        mpl.rcParams['circuits.scale'] = scale
+    if connectwidth is not None and 'circuits.connectwidth' in mrc._validators:
+        mpl.rcParams['circuits.connectwidth'] = connectwidth
+    if linewidth is not None and 'circuits.linewidth' in mrc._validators:
+        mpl.rcParams['circuits.linewidth'] = linewidth
     if color is not None and 'circuits.color' in mrc._validators:
         mpl.rcParams['circuits.color'] = color
-    if capsize is not None and 'circuits.capsize' in mrc._validators:
-        mpl.rcParams['circuits.capsize'] = capsize
-    if clw is not None and 'circuits.caplinewidth' in mrc._validators:
-        mpl.rcParams['circuits.caplinewidth'] = clw
+    if facecolor is not None and 'circuits.facecolor' in mrc._validators:
+        mpl.rcParams['circuits.facecolor'] = facecolor
+    if alpha is not None and 'circuits.alpha' in mrc._validators:
+        mpl.rcParams['circuits.alpha'] = alpha
+    if zorder is not None and 'circuits.zorder' in mrc._validators:
+        mpl.rcParams['circuits.zorder'] = zorder
     if font is not None and 'circuits.font' in mrc._validators:
         mpl.rcParams.update({'circuits.font': font})
 
