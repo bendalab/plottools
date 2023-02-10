@@ -5,6 +5,7 @@ Electrical circuits.
 
 - `resistance_h()`: draw a horizontal resistance.
 - `resistance_v()`: draw a vertical resistance.
+- `resistance()`: draw an arbitrarily rotated resistance.
 - `capacitance_h()`: draw a horizontal capacitance.
 - `capacitance_v()`: draw a vertical capacitance.
 - `battery_h()`: draw a horizontal battery (voltage source).
@@ -13,7 +14,8 @@ Electrical circuits.
 - `opamp_l()`: draw an operational amplifier with inputs on the left.
 - `opamp_l()`: draw an operational amplifier with inputs on the right.
 - `node()`: draw a node connecting lines.
-- `connect()`: draw lines connecting circuit elements.
+- `connect()`: draw lines directly connecting circuit elements.
+- `connect_straight()`: draw straight lines connecting circuit elements.
 
 
 ## Classes
@@ -50,6 +52,7 @@ module, `install_circuits()` is called automatically.
 
 import numpy as np
 import matplotlib as mpl
+import matplotlib.transforms as mpt
 import matplotlib.rcsetup as mrc
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Circle, Polygon
@@ -333,6 +336,81 @@ def resistance_v(ax, pos, label='', lw=None, color=None,
         ax.text(x + 0.7*w, y, label, ha='left', va='center',
                 zorder=zorder+1, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
+
+
+def resistance(ax, pos, angle=0, label='', lw=None, color=None,
+               facecolor=None, alpha=None, zorder=None, **kwargs):
+    """ Draw an arbitrarily rotated resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance bar.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    angle: float
+        Rotation angle in degrees.
+    label: string
+        Optional label for the resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the resistance.
+    posr: Pos
+        Coordinates of the right end of the resistance.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.linewidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if facecolor is None:
+        facecolor = mpl.rcParams['circuits.facecolor']
+    if alpha is None:
+        alpha = mpl.rcParams['circuits.alpha']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    w = mpl.rcParams['circuits.scale']
+    h = 0.5*mpl.rcParams['circuits.scale']
+    x, y = pos
+    transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder, edgecolor='none',
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor='none', lw=lw))
+    if label:
+        pos = np.array(((0, 0.8*h),))
+        pos = transform.transform(pos)
+        ax.text(pos[0,0], pos[0,1], label, ha='center',
+                zorder=zorder+1, **kwargs)
+    nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
+    nodes = transform.transform(nodes)
+    return Pos(*nodes[0,:]),  Pos(*nodes[1,:])
 
 
 def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
@@ -784,7 +862,7 @@ def node(ax, pos, color=None, zorder=None):
 
 
 def connect(ax, nodes, lw=None, color=None, zorder=None):
-    """ Draw lines connecting circuit elements.
+    """ Draw horizontal and vertical lines connecting circuit elements.
 
     Parameters
     ----------
@@ -836,6 +914,46 @@ def connect(ax, nodes, lw=None, color=None, zorder=None):
                     ys.extend((y, y))
             px = x
             py = y
+    ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)
+
+
+def connect_straight(ax, nodes, lw=None, color=None, zorder=None):
+    """ Draw straight lines connecting circuit elements.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the connections.
+    nodes: list of Pos or 2-tuple of floats
+        x and y-coordinates of positions that should be connected.
+        If an element is `None` then leave a gap between the neighboring nodes.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.connectwidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    xs = []
+    ys = []
+    for n in nodes:
+        if n is None:
+            xs.append(np.nan)
+            ys.append(np.nan)
+        else:
+            x = n[0]
+            y = n[1]
+            xs.append(x)
+            ys.append(y)
     ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)
 
 
@@ -906,6 +1024,8 @@ def install_circuits():
         mpl.axes.Axes.resistance_h = resistance_h
     if not hasattr(mpl.axes.Axes, 'resistance_v'):
         mpl.axes.Axes.resistance_v = resistance_v
+    if not hasattr(mpl.axes.Axes, 'resistance'):
+        mpl.axes.Axes.resistance = resistance
     if not hasattr(mpl.axes.Axes, 'capacitance_h'):
         mpl.axes.Axes.capacitance_h = capacitance_h
     if not hasattr(mpl.axes.Axes, 'capacitance_v'):
@@ -924,6 +1044,8 @@ def install_circuits():
         mpl.axes.Axes.node = node
     if not hasattr(mpl.axes.Axes, 'connect'):
         mpl.axes.Axes.connect = connect
+    if not hasattr(mpl.axes.Axes, 'connect_straight'):
+        mpl.axes.Axes.connect_straight = connect_straight
     # add circuits parameter to rc configuration:
     if 'circuits.scale' not in mpl.rcParams:
         mrc._validators['circuits.scale'] = mrc.validate_float
@@ -957,6 +1079,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'resistance_h')
     if hasattr(mpl.axes.Axes, 'resistance_v'):
         delattr(mpl.axes.Axes, 'resistance_v')
+    if hasattr(mpl.axes.Axes, 'resistance'):
+        delattr(mpl.axes.Axes, 'resistance')
     if hasattr(mpl.axes.Axes, 'capacitance_h'):
         delattr(mpl.axes.Axes, 'capacitance_h')
     if hasattr(mpl.axes.Axes, 'capacitance_v'):
@@ -975,6 +1099,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'node')
     if hasattr(mpl.axes.Axes, 'connect'):
         delattr(mpl.axes.Axes, 'connect')
+    if hasattr(mpl.axes.Axes, 'connect_straight'):
+        delattr(mpl.axes.Axes, 'connect_straight')
     mrc._validators.pop('circuits.scale', None)
     mrc._validators.pop('circuits.connectwidth', None)
     mrc._validators.pop('circuits.linewidth', None)
