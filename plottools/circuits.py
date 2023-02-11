@@ -277,11 +277,11 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
                            facecolor='none', lw=lw))
     if label:
         if align == 'above':
-            yy = 0.8*h
+            yy = 0.7*h
             if not 'va' in kwargs and not 'verticalalignment' in kwargs:
                 kwargs['va'] = 'bottom'
         elif align == 'below':
-            yy = -0.8*h
+            yy = -0.7*h
             if not 'va' in kwargs and not 'verticalalignment' in kwargs:
                 kwargs['va'] = 'top'
         elif align == 'center':
@@ -459,17 +459,39 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
+        if angle < 0:
+            angle += 360
+        ha = 'center'
+        va = 'center'
         if align == 'above':
             pos = np.array(((0, 0.8*h),))
+            if angle > 45 and angle < 45 + 90:
+                ha = 'right'
+            elif angle > 45 + 180 and angle < 45 + 270:
+                ha = 'left'
+            if angle > 45 + 270 and angle < 45:
+                va = 'bottom'
+            elif angle > 45 + 90 and angle < 45 + 180:
+                va = 'top'
         elif align == 'below':
             pos = np.array(((0, -0.8*h),))
+            if angle > 45 and angle < 45 + 90:
+                ha = 'left'
+            elif angle > 45 + 180 and angle < 45 + 270:
+                ha = 'right'
+            if angle > 45 + 270 and angle < 45:
+                va = 'top'
+            elif angle > 45 + 90 and angle < 45 + 180:
+                va = 'bottom'
         elif align == 'center':
             pos = np.array(((0, 0),))
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         pos = transform.transform(pos)
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'center'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(pos[0,0], pos[0,1], label, zorder=zorder+1, **kwargs)
     nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
     nodes = transform.transform(nodes)
