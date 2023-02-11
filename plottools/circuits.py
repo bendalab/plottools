@@ -942,9 +942,9 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder+1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x - 0.8*r, y + 0.18*a, '$+$', ha='left', va='center',
+    ax.text(x - 0.8*r, y + 0.21*a, '$+$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x - 0.8*r, y - 0.25*a, '$-$', ha='left', va='center',
+    ax.text(x - 0.8*r, y - 0.19*a, '$-$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
         ha = 'left'
@@ -1039,9 +1039,9 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder+1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x + 0.8*r, y + 0.18*a, '$+$', ha='right', va='center',
+    ax.text(x + 0.8*r, y + 0.21*a, '$+$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x + 0.8*r, y - 0.25*a, '$-$', ha='right', va='center',
+    ax.text(x + 0.8*r, y - 0.19*a, '$-$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
         ha = 'right'
@@ -1064,7 +1064,8 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r)
 
 
-def node(ax, pos, color=None, zorder=None):
+def node(ax, pos, label='', align='northeast', color=None,
+         zorder=None, **kwargs):
     """ Draw a node connecting lines.
 
     Parameters
@@ -1073,12 +1074,19 @@ def node(ax, pos, color=None, zorder=None):
         Axes where to draw the node.
     pos: Pos or 2-tuple of floats
         x and y-coordinate of position of the center of the node.
+    label: string
+        Optional label for the node.
+    align: 'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'
+        Position of the label relative to the node.
     color matplotlib color
         Color of the node.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
         zorder for the node.
         Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
 
     Returns
     -------
@@ -1089,9 +1097,34 @@ def node(ax, pos, color=None, zorder=None):
         color = mpl.rcParams['circuits.color']
     if zorder is None:
         zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
     r = mpl.rcParams['circuits.scale']*0.25/3
     ax.add_patch(Circle(pos, r, zorder=zorder, edgecolor='none',
                         facecolor=color))
+    if label:
+        xx = 0
+        yy = 0
+        ha = 'center'
+        va = 'center'
+        if align == 'right' or 'east' in align:
+            xx = 2*r
+            ha = 'left'
+        elif align == 'left' or 'west' in align:
+            xx = -2*r
+            ha = 'right'
+        if align == 'above' or 'north' in align:
+            yy = 2*r
+            va = 'bottom'
+        elif align == 'below' or 'south' in align:
+            yy = -2*r
+            va = 'top'
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
     return Pos(pos[0], pos[1])
 
 
