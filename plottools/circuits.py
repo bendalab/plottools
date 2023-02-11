@@ -276,22 +276,22 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
+        ha = 'center'
+        va = 'center'
         if align == 'above':
             yy = 0.7*h
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'bottom'
+            va = 'bottom'
         elif align == 'below':
             yy = -0.7*h
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'top'
+            va = 'top'
         elif align == 'center':
             yy = 0
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'center'
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'center'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)
 
@@ -364,22 +364,22 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
+        ha = 'center'
+        va = 'center'
         if align == 'right':
             xx = 0.7*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'left'
+            ha = 'left'
         elif align == 'left':
             xx = -0.7*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'right'
+            ha = 'right'
         elif align == 'center':
             xx = 0
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'center'
         else:
             raise ValueError('align must be one of "left", "right", or "center"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-            kwargs['va'] = 'center'
+            kwargs['va'] = va
         ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
@@ -555,18 +555,20 @@ def capacitance_h(ax, pos, label='', align='above', lw=None,
             zorder=zorder, lw=lw, color=color)
     if label:
         yy = 0
+        ha = 'center'
+        va = 'center'
         if align == 'above':
             yy = 0.6*w
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'bottom'
+            va = 'bottom'
         elif align == 'below':
             yy = -0.6*w
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'top'
+            va = 'top'
         else:
             raise ValueError('align must be one of "above" or "bottom"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'center'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
@@ -627,18 +629,20 @@ def capacitance_v(ax, pos, label='', align='right', lw=None,
     ax.plot([x - 0.5*w, x + 0.5*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
+        ha = 'center'
+        va = 'center'
         if align == 'right':
             xx = 0.6*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'left'
+            ha = 'left'
         elif align == 'left':
             xx = -0.6*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'right'
+            ha = 'right'
         else:
             raise ValueError('align must be one of "left" or "right"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-            kwargs['va'] = 'center'
+            kwargs['va'] = va
         ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
@@ -700,18 +704,20 @@ def battery_h(ax, pos, label='', align='above', lw=None, color=None,
             zorder=zorder, lw=lw, color=color)
     if label:
         yy = 0
+        ha = 'center'
+        va = 'center'
         if align == 'above':
             yy = 0.6*w
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'bottom'
+            va = 'bottom'
         elif align == 'below':
             yy = -0.6*w
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'top'
+            va = 'top'
         else:
             raise ValueError('align must be one of "above" or "bottom"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'center'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
@@ -772,18 +778,20 @@ def battery_v(ax, pos, label='', align='right', lw=None, color=None,
     ax.plot([x - 0.25*w, x + 0.25*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
+        ha = 'center'
+        va = 'center'
         if align == 'right':
             xx = 0.6*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'left'
+            ha = 'left'
         elif align == 'left':
             xx = -0.6*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'right'
+            ha = 'right'
         else:
             raise ValueError('align must be one of "left" or "right"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-            kwargs['va'] = 'center'
+            kwargs['va'] = va
         ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
@@ -844,18 +852,20 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
     ax.plot([x - 0.06*w, x + 0.06*w], [y - h, y - h],
             zorder=zorder, lw=lw, color=color)
     if label:
+        ha = 'center'
+        va = 'center'
         if align == 'right':
             xx = 0.7*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'left'
+            ha = 'left'
         elif align == 'left':
             xx = -0.7*w
-            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-                kwargs['ha'] = 'right'
+            ha = 'right'
         else:
             raise ValueError('align must be one of "left" or "right"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-            kwargs['va'] = 'center'
+            kwargs['va'] = va
         ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y + h)
 
@@ -937,22 +947,22 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     ax.text(x - 0.8*r, y - 0.25*a, '$-$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        ha = 'left'
+        va = 'center'
         if align == 'above':
             yy = 1.4*r
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'bottom'
+            va = 'bottom'
         elif align == 'below':
             yy = -1.4*r
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'top'
+            va = 'top'
         elif align == 'center':
             yy = 0
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'center'
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'left'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r)
 
@@ -1034,22 +1044,22 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     ax.text(x + 0.8*r, y - 0.25*a, '$-$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        ha = 'right'
+        va = 'center'
         if align == 'above':
             yy = 1.4*r
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'bottom'
+            va = 'bottom'
         elif align == 'below':
             yy = -1.4*r
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'top'
+            va = 'top'
         elif align == 'center':
             yy = 0
-            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
-                kwargs['va'] = 'center'
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'right'
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r)
 
