@@ -268,7 +268,9 @@ def resistance_h(ax, pos, label='', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
-        ax.text(x, y + 0.8*h, label, ha='center', zorder=zorder+1, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'center'
+        ax.text(x, y + 0.8*h, label, zorder=zorder+1, **kwargs)
     return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)
 
 
@@ -333,8 +335,11 @@ def resistance_v(ax, pos, label='', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
-        ax.text(x + 0.7*w, y, label, ha='left', va='center',
-                zorder=zorder+1, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'left'
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = 'center'
+        ax.text(x + 0.7*w, y, label, zorder=zorder+1, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
@@ -406,8 +411,9 @@ def resistance(ax, pos, angle=0, label='', lw=None, color=None,
     if label:
         pos = np.array(((0, 0.8*h),))
         pos = transform.transform(pos)
-        ax.text(pos[0,0], pos[0,1], label, ha='center',
-                zorder=zorder+1, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'center'
+        ax.text(pos[0,0], pos[0,1], label, zorder=zorder+1, **kwargs)
     nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
     nodes = transform.transform(nodes)
     return Pos(*nodes[0,:]),  Pos(*nodes[1,:])
@@ -462,8 +468,9 @@ def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
     ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.5*w, y + 0.5*w],
             zorder=zorder, lw=lw, color=color)
     if label:
-        ax.text(x, y + 0.6*w, label, ha='center', zorder=zorder,
-                **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'center'
+        ax.text(x, y + 0.6*w, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
 
@@ -516,8 +523,11 @@ def capacitance_v(ax, pos, label='', lw=None, color=None, zorder=None,
     ax.plot([x - 0.5*w, x + 0.5*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        ax.text(x + 0.6*w, y, label, ha='left', va='center',
-                zorder=zorder, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'left'
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = 'center'
+        ax.text(x + 0.6*w, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
@@ -569,8 +579,9 @@ def battery_h(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.25*w, y + 0.25*w],
             zorder=zorder, lw=lw, color=color)
     if label:
-        ax.text(x, y + 0.6*w, label, ha='center', zorder=zorder,
-                **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'center'
+        ax.text(x, y + 0.6*w, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
 
@@ -622,8 +633,11 @@ def battery_v(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x - 0.25*w, x + 0.25*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        ax.text(x + 0.6*w, y, label, ha='left', va='center',
-                zorder=zorder, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'left'
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = 'center'
+        ax.text(x + 0.6*w, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
@@ -675,8 +689,11 @@ def ground(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x - 0.06*w, x + 0.06*w], [y - h, y - h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        ax.text(x + 0.7*w, y, label, ha='left', va='center',
-                zorder=zorder, **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'left'
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = 'center'
+        ax.text(x + 0.7*w, y, label, zorder=zorder, **kwargs)
     return Pos(x, y + h)
 
 
@@ -750,8 +767,9 @@ def opamp_l(ax, pos, label='', lw=None, color=None,
     ax.text(x - 0.8*r, y - 0.25*a, '$-$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
-        ax.text(x, y + 1.4*r, label, ha='left', zorder=zorder+1,
-                **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'left'
+        ax.text(x, y + 1.4*r, label, zorder=zorder+1, **kwargs)
     return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r)
 
 
@@ -825,8 +843,9 @@ def opamp_r(ax, pos, label='', lw=None, color=None,
     ax.text(x + 0.8*r, y - 0.25*a, '$-$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
-        ax.text(x, y + 1.4*r, label, ha='right', zorder=zorder+1,
-                **kwargs)
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = 'right'
+        ax.text(x, y + 1.4*r, label, zorder=zorder+1, **kwargs)
     return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r)
 
 
