@@ -207,8 +207,9 @@ class Pos(tuple):
         return Pos(self[0] + delta*mpl.rcParams['circuits.scale'], self[1])
 
 
-def resistance_h(ax, pos, label='', lw=None, color=None,
-                 facecolor=None, alpha=None, zorder=None, **kwargs):
+def resistance_h(ax, pos, label='', align='above', lw=None,
+                 color=None, facecolor=None, alpha=None, zorder=None,
+                 **kwargs):
     """ Draw a horizontal resistance.
 
     Parameters
@@ -219,6 +220,8 @@ def resistance_h(ax, pos, label='', lw=None, color=None,
         x and y-coordinate of position of the center of the resistance.
     label: string
         Optional label for the resistance.
+    align: 'above', 'below', 'center'
+        Position the label above, below or in the center of the resistance.
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -244,6 +247,11 @@ def resistance_h(ax, pos, label='', lw=None, color=None,
         Coordinates of the left end of the resistance.
     posr: Pos
         Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -268,13 +276,27 @@ def resistance_h(ax, pos, label='', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
+        if align == 'above':
+            yy = 0.8*h
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'bottom'
+        elif align == 'below':
+            yy = -0.8*h
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'top'
+        elif align == 'center':
+            yy = 0
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'center'
+        else:
+            raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'center'
-        ax.text(x, y + 0.8*h, label, zorder=zorder+1, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)
 
 
-def resistance_v(ax, pos, label='', lw=None, color=None,
+def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
                  facecolor=None, alpha=None, zorder=None, **kwargs):
     """ Draw a vertical resistance.
 
@@ -286,6 +308,8 @@ def resistance_v(ax, pos, label='', lw=None, color=None,
         x and y-coordinate of position of the center of the resistance.
     label: string
         Optional label for the resistance.
+    align: 'left', 'right', 'center'
+        Position the label to th left, right or in the center of the resistance.
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -311,6 +335,11 @@ def resistance_v(ax, pos, label='', lw=None, color=None,
         Coordinates of the bottom end of the resistance.
     post: Pos
         Coordinates of the top end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -335,17 +364,30 @@ def resistance_v(ax, pos, label='', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
-        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'left'
+        if align == 'right':
+            xx = 0.7*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'left'
+        elif align == 'left':
+            xx = -0.7*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'right'
+        elif align == 'center':
+            xx = 0
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'center'
+        else:
+            raise ValueError('align must be one of "left", "right", or "center"')
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = 'center'
-        ax.text(x + 0.7*w, y, label, zorder=zorder+1, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
-def resistance(ax, pos, angle=0, label='', lw=None, color=None,
-               facecolor=None, alpha=None, zorder=None, **kwargs):
-    """ Draw an arbitrarily rotated resistance.
+def resistance(ax, pos, angle=0, label='', align='above', lw=None,
+               color=None, facecolor=None, alpha=None, zorder=None,
+               **kwargs):
+    """Draw an arbitrarily rotated resistance.
 
     Parameters
     ----------
@@ -357,6 +399,9 @@ def resistance(ax, pos, angle=0, label='', lw=None, color=None,
         Rotation angle in degrees.
     label: string
         Optional label for the resistance.
+    align: 'above', 'below', 'center'
+        Position the label above, below or in the center of the
+        non-rotated resistance.
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -382,6 +427,11 @@ def resistance(ax, pos, angle=0, label='', lw=None, color=None,
         Coordinates of the left end of the resistance.
     posr: Pos
         Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -409,7 +459,14 @@ def resistance(ax, pos, angle=0, label='', lw=None, color=None,
                            zorder=zorder+1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
-        pos = np.array(((0, 0.8*h),))
+        if align == 'above':
+            pos = np.array(((0, 0.8*h),))
+        elif align == 'below':
+            pos = np.array(((0, -0.8*h),))
+        elif align == 'center':
+            pos = np.array(((0, 0),))
+        else:
+            raise ValueError('align must be one of "above", "bottom", or "center"')
         pos = transform.transform(pos)
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'center'
@@ -419,8 +476,8 @@ def resistance(ax, pos, angle=0, label='', lw=None, color=None,
     return Pos(*nodes[0,:]),  Pos(*nodes[1,:])
 
 
-def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
-                  **kwargs):
+def capacitance_h(ax, pos, label='', align='above', lw=None,
+                  color=None, zorder=None, **kwargs):
     """ Draw a horizontal capacitance.
 
     Parameters
@@ -431,6 +488,8 @@ def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
         x and y-coordinate of position of the center of the capacitance.
     label: string
         Optional label for the capacitance.
+    align: 'above', 'below'
+        Position the label above or below the capacitance.
     lw: float, int
         Linewidth for drawing the outline of the capacitance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -450,6 +509,11 @@ def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
         Coordinates of the left end of the capacitance.
     posr: Pos
         Coordinates of the right end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -468,14 +532,25 @@ def capacitance_h(ax, pos, label='', lw=None, color=None, zorder=None,
     ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.5*w, y + 0.5*w],
             zorder=zorder, lw=lw, color=color)
     if label:
+        yy = 0
+        if align == 'above':
+            yy = 0.6*w
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'bottom'
+        elif align == 'below':
+            yy = -0.6*w
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'top'
+        else:
+            raise ValueError('align must be one of "above" or "bottom"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'center'
-        ax.text(x, y + 0.6*w, label, zorder=zorder, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
 
-def capacitance_v(ax, pos, label='', lw=None, color=None, zorder=None,
-                  **kwargs):
+def capacitance_v(ax, pos, label='', align='right', lw=None,
+                  color=None, zorder=None, **kwargs):
     """ Draw a vertical capacitance.
 
     Parameters
@@ -486,6 +561,8 @@ def capacitance_v(ax, pos, label='', lw=None, color=None, zorder=None,
         x and y-coordinate of position of the center of the capacitance.
     label: string
         Optional label for the capacitance.
+    align: 'left', 'right'
+        Position the label to the left or to the right of the capacitance.
     lw: float, int
         Linewidth for drawing the outline of the capacitance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -505,6 +582,11 @@ def capacitance_v(ax, pos, label='', lw=None, color=None, zorder=None,
         Coordinates of the bottom end of the capacitance.
     post: Pos
         Coordinates of the top end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -523,15 +605,24 @@ def capacitance_v(ax, pos, label='', lw=None, color=None, zorder=None,
     ax.plot([x - 0.5*w, x + 0.5*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'left'
+        if align == 'right':
+            xx = 0.6*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'left'
+        elif align == 'left':
+            xx = -0.6*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'right'
+        else:
+            raise ValueError('align must be one of "left" or "right"')
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = 'center'
-        ax.text(x + 0.6*w, y, label, zorder=zorder, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
-def battery_h(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
+def battery_h(ax, pos, label='', align='above', lw=None, color=None,
+              zorder=None, **kwargs):
     """ Draw a horizontal battery (voltage source).
 
     Parameters
@@ -542,6 +633,8 @@ def battery_h(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
         x and y-coordinate of position of the center of the battery.
     label: string
         Optional label for the battery.
+    align: 'above', 'below'
+        Position the label above or below the battery.
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -561,6 +654,11 @@ def battery_h(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
         Coordinates of the left end of the battery.
     posr: Pos
         Coordinates of the right end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -579,13 +677,25 @@ def battery_h(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.25*w, y + 0.25*w],
             zorder=zorder, lw=lw, color=color)
     if label:
+        yy = 0
+        if align == 'above':
+            yy = 0.6*w
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'bottom'
+        elif align == 'below':
+            yy = -0.6*w
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'top'
+        else:
+            raise ValueError('align must be one of "above" or "bottom"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'center'
-        ax.text(x, y + 0.6*w, label, zorder=zorder, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
     return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
 
 
-def battery_v(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
+def battery_v(ax, pos, label='', align='right', lw=None, color=None,
+              zorder=None, **kwargs):
     """ Draw a vertical battery (voltage source).
 
     Parameters
@@ -596,6 +706,8 @@ def battery_v(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
         x and y-coordinate of position of the center of the battery.
     label: string
         Optional label for the battery.
+    align: 'left', 'right'
+        Position the label to the left or to the right of the battery.
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -615,6 +727,11 @@ def battery_v(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
         Coordinates of the bottom end of the battery.
     post: Pos
         Coordinates of the top end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -633,15 +750,24 @@ def battery_v(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x - 0.25*w, x + 0.25*w], [y - 0.5*h, y - 0.5*h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'left'
+        if align == 'right':
+            xx = 0.6*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'left'
+        elif align == 'left':
+            xx = -0.6*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'right'
+        else:
+            raise ValueError('align must be one of "left" or "right"')
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = 'center'
-        ax.text(x + 0.6*w, y, label, zorder=zorder, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
-def ground(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
+def ground(ax, pos, label='', align='right', lw=None, color=None,
+           zorder=None, **kwargs):
     """ Draw ground.
 
     Parameters
@@ -652,6 +778,8 @@ def ground(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
         x and y-coordinate of position of the center of the battery.
     label: string
         Optional label for the battery.
+    align: 'left', 'right'
+        Position the label to the left or to the right of the ground.
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -669,6 +797,11 @@ def ground(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     -------
     pos: Pos
         Coordinates of the top end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -689,15 +822,23 @@ def ground(ax, pos, label='', lw=None, color=None, zorder=None, **kwargs):
     ax.plot([x - 0.06*w, x + 0.06*w], [y - h, y - h],
             zorder=zorder, lw=lw, color=color)
     if label:
-        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
-            kwargs['ha'] = 'left'
+        if align == 'right':
+            xx = 0.7*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'left'
+        elif align == 'left':
+            xx = -0.7*w
+            if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+                kwargs['ha'] = 'right'
+        else:
+            raise ValueError('align must be one of "left" or "right"')
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = 'center'
-        ax.text(x + 0.7*w, y, label, zorder=zorder, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y + h)
 
 
-def opamp_l(ax, pos, label='', lw=None, color=None,
+def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
             facecolor=None, alpha=None, zorder=None, **kwargs):
     """ Draw an operational amplifier with inputs on the left.
 
@@ -709,6 +850,8 @@ def opamp_l(ax, pos, label='', lw=None, color=None,
         x and y-coordinate of position of the center of the opamp.
     label: string
         Optional label for the opamp.
+    align: 'above', 'below', 'center'
+        Position the label above, below or in the center of the opamp.
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -738,6 +881,11 @@ def opamp_l(ax, pos, label='', lw=None, color=None,
         Coordinates of the output of the opamp.
     posgnd: Pos
         Coordinates of the ground supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -767,13 +915,27 @@ def opamp_l(ax, pos, label='', lw=None, color=None,
     ax.text(x - 0.8*r, y - 0.25*a, '$-$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        if align == 'above':
+            yy = 1.4*r
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'bottom'
+        elif align == 'below':
+            yy = -1.4*r
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'top'
+        elif align == 'center':
+            yy = 0
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'center'
+        else:
+            raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'left'
-        ax.text(x, y + 1.4*r, label, zorder=zorder+1, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r)
 
 
-def opamp_r(ax, pos, label='', lw=None, color=None,
+def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
             facecolor=None, alpha=None, zorder=None, **kwargs):
     """ Draw an operational amplifier with inputs on the right.
 
@@ -785,6 +947,8 @@ def opamp_r(ax, pos, label='', lw=None, color=None,
         x and y-coordinate of position of the center of the opamp.
     label: string
         Optional label for the opamp.
+    align: 'above', 'below', 'center'
+        Position the label above, below or in the center of the opamp.
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -814,6 +978,11 @@ def opamp_r(ax, pos, label='', lw=None, color=None,
         Coordinates of the output of the opamp.
     posgnd: Pos
         Coordinates of the ground supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -843,9 +1012,23 @@ def opamp_r(ax, pos, label='', lw=None, color=None,
     ax.text(x + 0.8*r, y - 0.25*a, '$-$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        if align == 'above':
+            yy = 1.4*r
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'bottom'
+        elif align == 'below':
+            yy = -1.4*r
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'top'
+        elif align == 'center':
+            yy = 0
+            if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+                kwargs['va'] = 'center'
+        else:
+            raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = 'right'
-        ax.text(x, y + 1.4*r, label, zorder=zorder+1, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
     return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r)
 
 
@@ -1140,16 +1323,16 @@ def demo():
     c1b, c1t = ax.capacitance_v((-2, 2), r'$C_1$')
     ax.connect((e1t, r1b, None, r1t, r1t.ups(0.5), c1t, None,
                 c1b, e1b.downs(0.5), e1b))
-    e2l, e2r = ax.battery_h((0, -1), r'$E_2$')
-    r2l, r2r = ax.resistance_h((-2, e2l.y()), r'$R_2$')
-    c2l, c2r = ax.capacitance_h((-1, -3), r'$C_2$')
+    e2l, e2r = ax.battery_h((0, -1), r'$E_2$', 'below')
+    r2l, r2r = ax.resistance_h((-2, e2l.y()), r'$R_2$', 'below')
+    c2l, c2r = ax.capacitance_h((-1, -3), r'$C_2$', 'below')
     ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
                 c2r, e2r.rights(0.5), e2r))
     op1n, op1p, op1o, op1g = ax.opamp_l((4, 2), r'$OP1$')
     n1n = ax.node(op1n.lefts(2))
     n1p = ax.node(op1p.lefts(2))
     n1o = ax.node(op1o.rights(1))
-    gnd1 = ax.ground(op1g.downs(1))
+    gnd1 = ax.ground(op1g.downs(1), r'$GND_1$')
     ax.connect((op1n, n1n))
     ax.connect((op1p, n1p))
     ax.connect((op1o, n1o))
@@ -1158,7 +1341,7 @@ def demo():
     n2n = ax.node(op2n.rights(1))
     n2p = ax.node(op2p.rights(1))
     n2o = ax.node(op2o.lefts(2))
-    gnd2 = ax.ground(op2g.downs(1))
+    gnd2 = ax.ground(op2g.downs(1), r'$GND_2$', 'left')
     ax.connect((op2n, n2n))
     ax.connect((op2p, n2p))
     ax.connect((op2o, n2o))
