@@ -50,7 +50,8 @@ jobs:
         # - Generate it on your user's
         #   Settings->Developer settings->personal access tokens
         #   Set 90 days, click repo.
-        # - Make it known on the repositories Settings->Secrets->Actions
+        # - Make it known on the repositories
+        #   Settings->Secrets and variables->Actions->Repository secrets
         #   under the name PLOTTOOLS_DOCU.
         
         # NOTE:
