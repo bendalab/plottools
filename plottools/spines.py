@@ -126,6 +126,10 @@ def show_spines(ax, spines='lrtb'):
     if not isinstance(axs, (list, tuple)):
         axs = [axs]
     for ax in axs:
+        # non-cartesian projections are not handled yet:
+        if not 'top' in ax.spines or not 'bottom' in ax.spines or \
+           not 'left' in ax.spines or not 'right' in ax.spines:
+            continue
         # hide spines:
         ax.spines['top'].set_visible('top' in xspines)
         ax.spines['bottom'].set_visible('bottom' in xspines)
@@ -240,6 +244,10 @@ def set_spines_outward(ax, spines, offset=0):
     if 'r' in spines:
         spines_list.append('right')
     for ax in axs:
+        # non-cartesian projections are not handled yet:
+        if not 'top' in ax.spines or not 'bottom' in ax.spines or \
+           not 'left' in ax.spines or not 'right' in ax.spines:
+            continue
         for sp in spines_list:
             visible = ax.spines[sp].get_visible()
             if sp in ['left', 'right']:
@@ -414,6 +422,10 @@ def set_spines_bounds(ax, spines, bounds='full'):
         if 'r' in spines:
             spines_list.append('right')
         for ax in axs:
+            # non-cartesian projections are not handled yet:
+            if not 'top' in ax.spines or not 'bottom' in ax.spines or \
+               not 'left' in ax.spines or not 'right' in ax.spines:
+                continue
             for sp in spines_list:
                 ax.spines[sp].bounds_style = (lower_bound, upper_bound)
 
@@ -521,6 +533,8 @@ def __update_spines(fig):
     """
     for ax in fig.get_axes():
         for spn in ['left', 'right', 'top', 'bottom']:
+            if not spn in ax.spines:
+                continue
             sp = ax.spines[spn]
             if hasattr(sp, 'bounds_style'):
                 # get view range, data range and ticks:
