@@ -119,6 +119,7 @@ modules that import all the other modules. For example, if you are
 only interested in the functions the
 [`ticks`](https://bendalab.github.io/plottools/api/ticks.html) module
 provides, then you can do
+
 ```py
 import matplotlib.pyplot as plt
 import plottools.ticks
@@ -134,12 +135,14 @@ For importing all `plottools` modules, simply import the module
   import all plottool modules and install their functions in [matplotlib].
 
 i.e.
+
 ```py
 import plottools.plottools as pt 
 ```
 
 This also imports all the functions of the modules such they can be used
 directly in the `pt` namespace. For example:
+
 ```py
 light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
 ```
@@ -157,6 +160,7 @@ that set some default [rcParams] and add a number of plotting styles
 to a namespace.
 
 These functions can be used like this:
+
 ```py
 from plottools.params import paper_style
 
@@ -193,6 +197,7 @@ interface for setting [matplotlib]'s [rcParams]:
 Usually, the `<module>_params()` have many arguments that by default
 are set to `None`. Only the arguments that you provide and differ from
 `None` are actually set, the other ones stay untouched. For example:
+
 ```py
 from plottools.text import text_params
 
@@ -202,6 +207,7 @@ text_params(font_size=12.0, font_family='sans-serif')
 text_params(latex=True)
 ```
 This is equivalent to
+
 ```py
 import matplotlib as mpl
 
@@ -214,11 +220,14 @@ mpl.rcParams['text.usetex'] = True
 ## Demos
 
 For a demonstration of the functionality of all modules run
+
 ```py
 python demos.py
 ```
+
 For demos of the individual modules in `plottools/`, 
 run, for example,
+
 ```py
 python -m plottools.spines
 ```
@@ -247,15 +256,19 @@ functionality is, of course, most appreciated.
 You can also open an issue, describing the error. Before doing so,
 check whether you get the error when you run the demo of the
 respective module. E.g.
+
 ```py
 python -m plottools.figures
 ```
+
 Mention the outcome in the issue.
 
 In any case, run
+
 ```py
 python -m plottools.version
 ```
+
 and paste the output ([python], [numpy], [pandas], [matplotlib] and
 `plottools` versions) into the issue.
 
