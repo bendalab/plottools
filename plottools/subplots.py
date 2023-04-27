@@ -9,14 +9,15 @@ Patches matplotlib to provide the following features:
 
 Subplot positions can be adjusted by margins given in multiples of the current font size:
 ```
-fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize margins!
+fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize units!
 gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
 gs.update(leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
 ```
-That is, `leftm` specifies the distance of the leftmost axes from the left margin of the figure,
-`bottomm` specifies the distance of the bottom axes from the bottom margin of the figure,
-`rightm` specifies the distance of the rightmost axes from the right margin of the figure, and
-`topm` specifies the distance of the top axes from the top margin of the figure,
+That is,
+- `leftm` specifies the distance of the leftmost axes from the left margin of the figure,
+- `bottomm` specifies the distance of the bottom axes from the bottom margin of the figure,
+- `rightm` specifies the distance of the rightmost axes from the right margin of the figure, and
+- `topm` specifies the distance of the top axes from the top margin of the figure,
 all as multiples of the font size.
 
 This way, margins do not need to be adjusted when changing the size of a figure!
@@ -42,10 +43,15 @@ To replace an axes by subplots, call `ax.subplots()`.
 `fig.merge()` and `ax.subplots()` can be arbitrarily combined.
 
 
+## Axes member functions
+
+- `subplots()`: replace axes by subplots.
+- `make_polar()`: turn an axes into one with polar projection.
+
+
 ## Figure member functions
 
-- `merge()`: add axis merging several axes.
-- `subplots()`: replace axes by subplots.
+- `merge()`: merge several axes into a single one.
 
 
 ## Install/uninstall subplots functions
@@ -254,7 +260,7 @@ def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
         fig = plt.figure(**figkwargs)
         gs = fig.add_gridspec(nrows, ncols, **gskwargs)
         gs.update(**upkwargs)
-        axs = np.zeros((nrows, ncols), np.object)
+        axs = np.zeros((nrows, ncols), object)
         for r in range(nrows):
             for c in range(ncols):
                 axs[r,c] = fig.add_subplot(gs[r,c], **kwargs)
@@ -284,10 +290,10 @@ def __fig_figure(*args, **kwargs):
 
 
 def merge(fig, axs, remove=True):
-    """ Add axis merging several axes.
+    """ Merge several axes into a single one.
 
-    Add a new axis to the figure at the position and size of the common
-    bounding box of all axis in `axs`. All axis in `axs` are then
+    Add new axes to the figure at the position and size of the common
+    bounding box of all axes in `axs`. All axes in `axs` are then
     removed. This way you do not need to use `gridspec` explicitly.
 
     Parameters
@@ -295,14 +301,14 @@ def merge(fig, axs, remove=True):
     fig: matplotlib.figure
         The figure that contains the axes.
     axs: array of axis objects
-        The axis that should be combined.
+        The axes that should be combined.
     remove: bool
         If `True` remove the orignal axes `axs`.
 
     Returns
     -------
-    ax: axis object
-        A single axis covering the area of all the axis objects in `axs`.
+    ax: axes object
+        A single axes covering the area of all the axes objects in `axs`.
 
     See also
     --------
@@ -323,7 +329,7 @@ def merge(fig, axs, remove=True):
     ```
     with merge() this simplifies to
     ```
-    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axis objects
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
     ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
     ax2 = axs[0,0]                    # first in top row
     ax3 = axs[0,1]                    # second in top row
@@ -393,7 +399,7 @@ def subplots(ax, nrows, ncols, **kwargs):
     As usual, this requires a lot of calls to `fig.add_subplot()`.
     With subplots() this simplifies to
     ```py
-    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axis objects
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
     subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
     ```
     and you can use the axes in `axs` and `subaxs` right away.
@@ -419,6 +425,37 @@ def subplots(ax, nrows, ncols, **kwargs):
     return axs.squeeze()
 
 
+def make_polar(ax):
+    """ Turn an axes into one with polar projection.
+
+    Creates a new axes with polar projection at the position 
+    of the given axes.
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection .
+
+    Returns
+    -------
+    ax: axes object
+        An axes with polar projection at the position of the given axes.
+    
+    Example
+    -------
+    ```
+    fig, axs = plt.subplots(2, 3)
+    axp = axs[1, 2].make_polar()
+    axp.plot(theta, r)   # this is a polar plot!
+    ```
+    """
+    fig = ax.get_figure()
+    pos = ax.get_position()
+    ax.remove()
+    ax = fig.add_axes(pos, projection='polar')
+    return ax
+
+
 def install_subplots():
     """ Install functions of the subplots module in matplotlib.
 
@@ -435,6 +472,8 @@ def install_subplots():
         mpl.axes.Axes.subplots = subplots
     if not hasattr(mpl.figure.Figure, 'merge'):
         mpl.figure.Figure.merge = merge
+    if not hasattr(mpl.axes.Axes, 'make_polar'):
+        mpl.axes.Axes.make_polar = make_polar
     if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
         mpl.figure.Figure.__subplots_adjust_orig_subplots = mpl.figure.Figure.subplots_adjust
         mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust
@@ -466,6 +505,8 @@ def uninstall_subplots():
         delattr(mpl.axes.Axes, 'subplots')
     if hasattr(mpl.figure.Figure, 'merge'):
         delattr(mpl.figure.Figure, 'merge')
+    if hasattr(mpl.axes.Axes, 'make_polar'):
+        delattr(mpl.axes.Axes, 'make_polar')
     if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
         mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_subplots
         delattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots')
@@ -503,9 +544,11 @@ def demo():
     subaxs[0].text(0.05, 0.7, 'subaxs = axs[0,2].subplots(2, 1)', transform=subaxs[0].transAxes)
     subaxs[0].text(0.05, 0.3, 'subaxs[0]', transform=subaxs[0].transAxes)
     subaxs[1].text(0.05, 0.3, 'subaxs[1]', transform=subaxs[1].transAxes)
-    for k in range(2):
-        axs[0,k].plot(x, np.sin(2.0*np.pi*x+k))
-        axs[0,k].text(0.1, 0.8, 'axs[0,%d]' % k, transform=axs[0,k].transAxes)
+    axs[0,0].plot(x, np.sin(2.0*np.pi*x))
+    axs[0,0].text(0.1, 0.8, 'axs[0,0]', transform=axs[0,0].transAxes)
+    axp = axs[0,1].make_polar()
+    axp.plot(np.pi*x, 1+np.sin(2.0*np.pi*x))
+    axp.text(-0.2, 1, 'axp = axs[0,1].make_polar()', transform=axp.transAxes)
     for k in range(1, 3):
         axs[k,2].plot(x, np.sin(2.0*np.pi*x-k))
         axs[k,2].text(0.1, 0.8, 'axs[%d,2]' % k, transform=axs[k,-1].transAxes)
