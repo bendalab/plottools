@@ -340,13 +340,17 @@ def set_xticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
     ```
     ![fracs](figures/ticks-fracs.png)
     """
-    ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(fraction_formatter(denominator, factor, fstring, ontop)))
-    pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
-    for label in ax.get_xticklabels():
-        fs = label.get_fontsize()
-        label.set_verticalalignment('center')
-        label.set_y(label.get_position()[1]-1.05*fs/pixely)
+    if ax.name == 'polar':
+        # do not mark 2pi !
+        ax.xaxis.set_major_locator(ticker.FixedLocator(np.arange(0, 1.99*np.pi, factor/denominator)))
+    else:
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(factor/denominator))
+        pixely = np.abs(np.diff(ax.get_window_extent().get_points()[:,1]))[0]
+        for label in ax.get_xticklabels():
+            fs = label.get_fontsize()
+            label.set_verticalalignment('center')
+            label.set_y(label.get_position()[1]-1.05*fs/pixely)
 
     
 def set_yticks_fracs(ax, denominator, factor=1, fstring='', ontop=False):
