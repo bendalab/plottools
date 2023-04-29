@@ -425,7 +425,7 @@ def subplots(ax, nrows, ncols, **kwargs):
     return axs.squeeze()
 
 
-def make_polar(ax):
+def make_polar(ax, shiftx=0, shifty=0):
     """ Turn an axes into one with polar projection.
 
     Creates a new axes with polar projection at the position 
@@ -435,6 +435,10 @@ def make_polar(ax):
     ----------
     ax: Axes object
         The axes to be turned into polar projection .
+    shiftx: float
+        Horizontally shift the axes relative to `ax` figure coordinates.
+    shifty: float
+        Vertically shift the axes relative to `ax` in figure coordinates.
 
     Returns
     -------
@@ -451,8 +455,10 @@ def make_polar(ax):
     """
     fig = ax.get_figure()
     pos = ax.get_position()
+    new_pos = [pos.xmin + shiftx, pos.ymin + shifty,
+               pos.width, pos.height]
     ax.remove()
-    ax = fig.add_axes(pos, projection='polar')
+    ax = fig.add_axes(new_pos, projection='polar')
     return ax
 
 
