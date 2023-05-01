@@ -45,13 +45,17 @@ def common_xlabels(fig, axes=None):
     if isinstance(axes, np.ndarray):
         axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
     maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[1] > miny + 1e-6:
+        first = ax.get_position().y0 < miny + 1e-6 if pos == 'bottom' else \
+            ax.get_position().y1 > maxy - 1e-6
+        if not first:
             ax.xaxis.label.set_visible(False)
         elif done:
             ax.xaxis.label.set_visible(False)
@@ -82,12 +86,16 @@ def common_ylabels(fig, axes=None):
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     # center common ylabel:
     minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[0] > minx + 1e-6:
+        first = ax.get_position().x0 < minx + 1e-6 if pos == 'left' else \
+            ax.get_position().x1 > maxx - 1e-6
+        if not first:
             ax.yaxis.label.set_visible(False)
         elif done:
             ax.yaxis.label.set_visible(False)
@@ -116,13 +124,17 @@ def common_xticks(fig, axes=None):
     if isinstance(axes, np.ndarray):
         axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
     maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[1] > miny + 1e-6:
+        first = ax.get_position().y0 < miny + 1e-6 if pos == 'bottom' else \
+            ax.get_position().y1 > maxy - 1e-6
+        if not first:
             ax.xaxis.label.set_visible(False)
             ax.xaxis.set_major_formatter(ticker.NullFormatter())
         elif done:
@@ -153,12 +165,16 @@ def common_yticks(fig, axes=None):
         axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[0] > minx + 1e-6:
+        first = ax.get_position().x0 < minx + 1e-6 if pos == 'left' else \
+            ax.get_position().x1 > maxx - 1e-6
+        if not first:
             ax.yaxis.label.set_visible(False)
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
         elif done:
@@ -188,13 +204,17 @@ def common_xspines(fig, axes=None):
     if isinstance(axes, np.ndarray):
         axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
-    miny = np.min(coords[:,1])
     minx = np.min(coords[:,0])
     maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[1] > miny + 1e-6:
+        first = ax.get_position().y0 < miny + 1e-6 if pos == 'bottom' else \
+            ax.get_position().y1 > maxy - 1e-6
+        if not first:
             ax.xaxis.label.set_visible(False)
             ax.xaxis.set_major_locator(ticker.NullLocator())
             ax.spines['bottom'].set_visible(False)
@@ -226,15 +246,19 @@ def common_yspines(fig, axes=None):
         axes = axes.ravel()
     coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
     minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
-        if ax.get_position().p0[0] > minx + 1e-6:
+        first = ax.get_position().x0 < minx + 1e-6 if pos == 'left' else \
+            ax.get_position().x1 > maxx - 1e-6
+        if not first:
             ax.yaxis.label.set_visible(False)
             ax.yaxis.set_major_locator(ticker.NullLocator())
-            ax.spines['left'].set_visible(False)
+            ax.spines[pos].set_visible(False)
         elif done:
             ax.yaxis.label.set_visible(False)
         else:
