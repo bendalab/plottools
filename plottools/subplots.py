@@ -418,6 +418,8 @@ def subplots(ax, nrows, ncols, **kwargs):
         sgs = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gsi, **kwargs)
     axs = np.array([ax.get_figure().add_subplot(sgs[r,c])
                     for r in range(nrows) for c in range(ncols)])
+    if nrows > 1 and ncols > 1:
+        axs = axs.reshape(nrows, ncols)
     try:
         ax.remove()
     except NotImplementedError:
