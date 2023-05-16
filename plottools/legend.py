@@ -38,6 +38,14 @@ def legend(ax, *args, **kwargs):
     Same as `mpl.axes.Axes.legend()`.
     """
     handles, labels = ax.get_legend_handles_labels()
+    if len(args) > 0:
+        handles = args.pop(0)
+    if len(args) > 0:
+        labels = args.pop(0)
+    if 'handles' in kwargs:
+        handles = kwargs.pop('handles')
+    if 'labels' in kwargs:
+        labels = kwargs.pop('labels')
     for k in range(len(labels)):
         labels[k], newkwargs = translate_latex_text(labels[k], **kwargs)
     lgd = ax.__legend_orig_legend(handles, labels, *args, **newkwargs)
