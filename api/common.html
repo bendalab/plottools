@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>plottools.common API documentation</title>
+<meta name="description" content="Reduce common axis labels …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.common</code></h1>
+</header>
+<section id="section-intro">
+<p>Reduce common axis labels.</p>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<ul>
+<li><code><a title="plottools.common.common_xlabels" href="#plottools.common.common_xlabels">common_xlabels()</a></code>: reduce common xlabels.</li>
+<li><code><a title="plottools.common.common_ylabels" href="#plottools.common.common_ylabels">common_ylabels()</a></code>: reduce common ylabels.</li>
+<li><code><a title="plottools.common.common_xticks" href="#plottools.common.common_xticks">common_xticks()</a></code>: reduce common xtick labels and xlabels.</li>
+<li><code><a title="plottools.common.common_yticks" href="#plottools.common.common_yticks">common_yticks()</a></code>: reduce common ytick labels and ylabels.</li>
+<li><code><a title="plottools.common.common_xspines" href="#plottools.common.common_xspines">common_xspines()</a></code>: reduce common x-spines, xtick labels, and xlabels.</li>
+<li><code><a title="plottools.common.common_yspines" href="#plottools.common.common_yspines">common_yspines()</a></code>: reduce common y-spines, ytick labels, and ylabels.</li>
+</ul>
+<h2 id="installuninstall-common-functions">Install/uninstall common functions</h2>
+<p>You usually do not need to call these functions. Upon loading the common
+module, <code><a title="plottools.common.install_common" href="#plottools.common.install_common">install_common()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.common.install_common" href="#plottools.common.install_common">install_common()</a></code>: install functions of the common module in matplotlib.</li>
+<li><code><a title="plottools.common.uninstall_common" href="#plottools.common.uninstall_common">uninstall_common()</a></code>: uninstall all code of the common module from matplotlib.</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Reduce common axis labels.
+
+
+## Figure member functions
+
+- `common_xlabels()`: reduce common xlabels.
+- `common_ylabels()`: reduce common ylabels.
+- `common_xticks()`: reduce common xtick labels and xlabels.
+- `common_yticks()`: reduce common ytick labels and ylabels.
+- `common_xspines()`: reduce common x-spines, xtick labels, and xlabels.
+- `common_yspines()`: reduce common y-spines, ytick labels, and ylabels.
+
+
+## Install/uninstall common functions
+
+You usually do not need to call these functions. Upon loading the common
+module, `install_common()` is called automatically.
+
+- `install_common()`: install functions of the common module in matplotlib.
+- `uninstall_common()`: uninstall all code of the common module from matplotlib.
+&#34;&#34;&#34;
+
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+
+
+def common_xlabels(fig, axes=None):
+    &#34;&#34;&#34; Reduce common xlabels.
+
+    Remove all xlabels except for one that is centered at the bottommost axes.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xlabels should be merged.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_ylabels(fig, axes=None):
+    &#34;&#34;&#34; Reduce common ylabels.
+
+    Remove all ylabels except for one that is centered at the leftmost axes.
+    
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose ylabels should be merged.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    # center common ylabel:
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_xticks(fig, axes=None):
+    &#34;&#34;&#34; Reduce common xtick labels and xlabels.
+    
+    Keep xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+            ax.xaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_yticks(fig, axes=None):
+    &#34;&#34;&#34; Reduce common ytick labels and ylabels.
+    
+    Keep ytick labels only at the leftmost axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+            ax.yaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_xspines(fig, axes=None):
+    &#34;&#34;&#34; Reduce common x-spines, xtick labels, and xlabels.
+    
+    Keep spine and xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+            ax.xaxis.set_major_locator(ticker.NullLocator())
+            ax.spines[&#39;bottom&#39;].set_visible(False)
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True
+
+
+def common_yspines(fig, axes=None):
+    &#34;&#34;&#34; Reduce common y-spines, ytick labels, and ylabels.
+    
+    Keep spine and ytick labels only at the lowest axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+            ax.yaxis.set_major_locator(ticker.NullLocator())
+            ax.spines[pos].set_visible(False)
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True
+
+
+def install_common():
+    &#34;&#34;&#34; Install functions of the common module in matplotlib.
+
+    See also
+    --------
+    uninstall_common()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.figure.Figure, &#39;common_xlabels&#39;):
+        mpl.figure.Figure.common_xlabels = common_xlabels
+    if not hasattr(mpl.figure.Figure, &#39;common_ylabels&#39;):
+        mpl.figure.Figure.common_ylabels = common_ylabels
+    if not hasattr(mpl.figure.Figure, &#39;common_xticks&#39;):
+        mpl.figure.Figure.common_xticks = common_xticks
+    if not hasattr(mpl.figure.Figure, &#39;common_yticks&#39;):
+        mpl.figure.Figure.common_yticks = common_yticks
+    if not hasattr(mpl.figure.Figure, &#39;common_xspines&#39;):
+        mpl.figure.Figure.common_xspines = common_xspines
+    if not hasattr(mpl.figure.Figure, &#39;common_yspines&#39;):
+        mpl.figure.Figure.common_yspines = common_yspines
+
+
+def uninstall_common():
+    &#34;&#34;&#34; Uninstall all code of the common module from matplotlib.
+
+    See also
+    --------
+    install_common()
+    &#34;&#34;&#34;
+    if hasattr(mpl.figure.Figure, &#39;common_xlabels&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xlabels&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_ylabels&#39;):
+        delattr(mpl.figure.Figure, &#39;common_ylabels&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_xticks&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xticks&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_yticks&#39;):
+        delattr(mpl.figure.Figure, &#39;common_yticks&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_xspines&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xspines&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_yspines&#39;):
+        delattr(mpl.figure.Figure, &#39;common_yspines&#39;)
+
+
+install_common()
+
+
+def demo():
+    &#34;&#34;&#34; Run a demonstration of the common module.
+    &#34;&#34;&#34;
+    fig, axs = plt.subplots(4, 4, figsize=(13,7))
+    fig.subplots_adjust(left=0.05, right=0.98, bottom=0.08, wspace=0.3, hspace=0.5)
+    fig.suptitle(&#39;plottools.common&#39;)
+    for ax in axs.ravel():
+        ax.set_xlabel(&#39;xlabel&#39;)
+        ax.set_ylabel(&#39;ylabel&#39;)
+    
+    axs[0,2].text(0.5, 0.7, &#39;fig.common_xlabels(axs[0:2,2:4])&#39;,
+                  transform=axs[0,2].transAxes, ha=&#39;center&#39;)
+    axs[0,2].text(0.5, 0.5, &#39;fig.common_ylabels(axs[0:2,2:4])&#39;,
+                  transform=axs[0,2].transAxes, ha=&#39;center&#39;)
+    fig.common_xlabels(axs[0:2,2:4]) 
+    fig.common_ylabels(axs[0:2,2:4])
+
+    axs[2,0].text(0.5, 0.7, &#39;fig.common_xticks(axs[2:4,0:2])&#39;,
+                  transform=axs[2,0].transAxes, ha=&#39;center&#39;)
+    axs[2,0].text(0.5, 0.5, &#39;fig.common_yticks(axs[2:4,0:2])&#39;,
+                  transform=axs[2,0].transAxes, ha=&#39;center&#39;)
+    fig.common_xticks(axs[2:4,0:2]) 
+    fig.common_yticks(axs[2:4,0:2])
+
+    axs[2,2].text(0.5, 0.7, &#39;fig.common_xspines(axs[2:4,2:4])&#39;,
+                  transform=axs[2,2].transAxes, ha=&#39;center&#39;)
+    axs[2,2].text(0.5, 0.5, &#39;fig.common_yspines(axs[2:4,2:4])&#39;,
+                  transform=axs[2,2].transAxes, ha=&#39;center&#39;)
+    fig.common_xspines(axs[2:4,2:4]) 
+    fig.common_yspines(axs[2:4,2:4])
+    
+    plt.show()
+        
+
+if __name__ == &#34;__main__&#34;:
+    demo()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.common.common_xlabels"><code class="name flex">
+<span>def <span class="ident">common_xlabels</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common xlabels.</p>
+<p>Remove all xlabels except for one that is centered at the bottommost axes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose xlabels should be merged.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_xlabels(fig, axes=None):
+    &#34;&#34;&#34; Reduce common xlabels.
+
+    Remove all xlabels except for one that is centered at the bottommost axes.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xlabels should be merged.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.common_ylabels"><code class="name flex">
+<span>def <span class="ident">common_ylabels</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common ylabels.</p>
+<p>Remove all ylabels except for one that is centered at the leftmost axes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose ylabels should be merged.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_ylabels(fig, axes=None):
+    &#34;&#34;&#34; Reduce common ylabels.
+
+    Remove all ylabels except for one that is centered at the leftmost axes.
+    
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose ylabels should be merged.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    # center common ylabel:
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.common_xticks"><code class="name flex">
+<span>def <span class="ident">common_xticks</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common xtick labels and xlabels.</p>
+<p>Keep xtick labels only at the lowest axes and center the common xlabel.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose xticks should be combined.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_xticks(fig, axes=None):
+    &#34;&#34;&#34; Reduce common xtick labels and xlabels.
+    
+    Keep xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+            ax.xaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.common_yticks"><code class="name flex">
+<span>def <span class="ident">common_yticks</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common ytick labels and ylabels.</p>
+<p>Keep ytick labels only at the leftmost axes and center the common ylabel.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose yticks should be combined.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_yticks(fig, axes=None):
+    &#34;&#34;&#34; Reduce common ytick labels and ylabels.
+    
+    Keep ytick labels only at the leftmost axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+            ax.yaxis.set_major_formatter(ticker.NullFormatter())
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.common_xspines"><code class="name flex">
+<span>def <span class="ident">common_xspines</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common x-spines, xtick labels, and xlabels.</p>
+<p>Keep spine and xtick labels only at the lowest axes and center the common xlabel.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose xticks should be combined.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_xspines(fig, axes=None):
+    &#34;&#34;&#34; Reduce common x-spines, xtick labels, and xlabels.
+    
+    Keep spine and xtick labels only at the lowest axes and center the common xlabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose xticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.min(coords[:,3])
+    xl = 0.5*(minx+maxx)
+    pos = axes[0].xaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().y0 &lt; miny + 1e-6 if pos == &#39;bottom&#39; else \
+            ax.get_position().y1 &gt; maxy - 1e-6
+        if not first:
+            ax.xaxis.label.set_visible(False)
+            ax.xaxis.set_major_locator(ticker.NullLocator())
+            ax.spines[&#39;bottom&#39;].set_visible(False)
+        elif done:
+            ax.xaxis.label.set_visible(False)
+        else:
+            x, y = ax.xaxis.get_label().get_position()
+            x = ax.transAxes.inverted().transform(fig.transFigure.transform((xl, 0)))[0]
+            ax.xaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.common_yspines"><code class="name flex">
+<span>def <span class="ident">common_yspines</span></span>(<span>fig, axes=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Reduce common y-spines, ytick labels, and ylabels.</p>
+<p>Keep spine and ytick labels only at the lowest axes and center the common ylabel.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure containing the axes.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>sequence</code> of <code>matplotlib axes</code></dt>
+<dd>Axes whose yticks should be combined.
+If None take all axes of the figure.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def common_yspines(fig, axes=None):
+    &#34;&#34;&#34; Reduce common y-spines, ytick labels, and ylabels.
+    
+    Keep spine and ytick labels only at the lowest axes and center the common ylabel.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+        The figure containing the axes.
+    axes: None or sequence of matplotlib axes
+        Axes whose yticks should be combined.
+        If None take all axes of the figure.
+    &#34;&#34;&#34;
+    if axes is None:
+        axes = fig.get_axes()
+    if isinstance(axes, np.ndarray):
+        axes = axes.ravel()
+    coords = np.array([ax.get_position().get_points().ravel() for ax in axes])
+    minx = np.min(coords[:,0])
+    maxx = np.max(coords[:,2])
+    miny = np.min(coords[:,1])
+    maxy = np.max(coords[:,3])
+    yl = 0.5*(miny+maxy)
+    pos = axes[0].yaxis.get_label_position()
+    done = False
+    for ax in axes:
+        first = ax.get_position().x0 &lt; minx + 1e-6 if pos == &#39;left&#39; else \
+            ax.get_position().x1 &gt; maxx - 1e-6
+        if not first:
+            ax.yaxis.label.set_visible(False)
+            ax.yaxis.set_major_locator(ticker.NullLocator())
+            ax.spines[pos].set_visible(False)
+        elif done:
+            ax.yaxis.label.set_visible(False)
+        else:
+            x, y = ax.yaxis.get_label().get_position()
+            y = ax.transAxes.inverted().transform(fig.transFigure.transform((0, yl)))[1]
+            ax.yaxis.get_label().set_position((x, y))
+            done = True</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.install_common"><code class="name flex">
+<span>def <span class="ident">install_common</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the common module in matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.common.uninstall_common" href="#plottools.common.uninstall_common">uninstall_common()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def install_common():
+    &#34;&#34;&#34; Install functions of the common module in matplotlib.
+
+    See also
+    --------
+    uninstall_common()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.figure.Figure, &#39;common_xlabels&#39;):
+        mpl.figure.Figure.common_xlabels = common_xlabels
+    if not hasattr(mpl.figure.Figure, &#39;common_ylabels&#39;):
+        mpl.figure.Figure.common_ylabels = common_ylabels
+    if not hasattr(mpl.figure.Figure, &#39;common_xticks&#39;):
+        mpl.figure.Figure.common_xticks = common_xticks
+    if not hasattr(mpl.figure.Figure, &#39;common_yticks&#39;):
+        mpl.figure.Figure.common_yticks = common_yticks
+    if not hasattr(mpl.figure.Figure, &#39;common_xspines&#39;):
+        mpl.figure.Figure.common_xspines = common_xspines
+    if not hasattr(mpl.figure.Figure, &#39;common_yspines&#39;):
+        mpl.figure.Figure.common_yspines = common_yspines</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.uninstall_common"><code class="name flex">
+<span>def <span class="ident">uninstall_common</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the common module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.common.install_common" href="#plottools.common.install_common">install_common()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def uninstall_common():
+    &#34;&#34;&#34; Uninstall all code of the common module from matplotlib.
+
+    See also
+    --------
+    install_common()
+    &#34;&#34;&#34;
+    if hasattr(mpl.figure.Figure, &#39;common_xlabels&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xlabels&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_ylabels&#39;):
+        delattr(mpl.figure.Figure, &#39;common_ylabels&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_xticks&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xticks&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_yticks&#39;):
+        delattr(mpl.figure.Figure, &#39;common_yticks&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_xspines&#39;):
+        delattr(mpl.figure.Figure, &#39;common_xspines&#39;)
+    if hasattr(mpl.figure.Figure, &#39;common_yspines&#39;):
+        delattr(mpl.figure.Figure, &#39;common_yspines&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.common.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the common module.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def demo():
+    &#34;&#34;&#34; Run a demonstration of the common module.
+    &#34;&#34;&#34;
+    fig, axs = plt.subplots(4, 4, figsize=(13,7))
+    fig.subplots_adjust(left=0.05, right=0.98, bottom=0.08, wspace=0.3, hspace=0.5)
+    fig.suptitle(&#39;plottools.common&#39;)
+    for ax in axs.ravel():
+        ax.set_xlabel(&#39;xlabel&#39;)
+        ax.set_ylabel(&#39;ylabel&#39;)
+    
+    axs[0,2].text(0.5, 0.7, &#39;fig.common_xlabels(axs[0:2,2:4])&#39;,
+                  transform=axs[0,2].transAxes, ha=&#39;center&#39;)
+    axs[0,2].text(0.5, 0.5, &#39;fig.common_ylabels(axs[0:2,2:4])&#39;,
+                  transform=axs[0,2].transAxes, ha=&#39;center&#39;)
+    fig.common_xlabels(axs[0:2,2:4]) 
+    fig.common_ylabels(axs[0:2,2:4])
+
+    axs[2,0].text(0.5, 0.7, &#39;fig.common_xticks(axs[2:4,0:2])&#39;,
+                  transform=axs[2,0].transAxes, ha=&#39;center&#39;)
+    axs[2,0].text(0.5, 0.5, &#39;fig.common_yticks(axs[2:4,0:2])&#39;,
+                  transform=axs[2,0].transAxes, ha=&#39;center&#39;)
+    fig.common_xticks(axs[2:4,0:2]) 
+    fig.common_yticks(axs[2:4,0:2])
+
+    axs[2,2].text(0.5, 0.7, &#39;fig.common_xspines(axs[2:4,2:4])&#39;,
+                  transform=axs[2,2].transAxes, ha=&#39;center&#39;)
+    axs[2,2].text(0.5, 0.5, &#39;fig.common_yspines(axs[2:4,2:4])&#39;,
+                  transform=axs[2,2].transAxes, ha=&#39;center&#39;)
+    fig.common_xspines(axs[2:4,2:4]) 
+    fig.common_yspines(axs[2:4,2:4])
+    
+    plt.show()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#installuninstall-common-functions">Install/uninstall common functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.common.common_xlabels" href="#plottools.common.common_xlabels">common_xlabels</a></code></li>
+<li><code><a title="plottools.common.common_ylabels" href="#plottools.common.common_ylabels">common_ylabels</a></code></li>
+<li><code><a title="plottools.common.common_xticks" href="#plottools.common.common_xticks">common_xticks</a></code></li>
+<li><code><a title="plottools.common.common_yticks" href="#plottools.common.common_yticks">common_yticks</a></code></li>
+<li><code><a title="plottools.common.common_xspines" href="#plottools.common.common_xspines">common_xspines</a></code></li>
+<li><code><a title="plottools.common.common_yspines" href="#plottools.common.common_yspines">common_yspines</a></code></li>
+<li><code><a title="plottools.common.install_common" href="#plottools.common.install_common">install_common</a></code></li>
+<li><code><a title="plottools.common.uninstall_common" href="#plottools.common.uninstall_common">uninstall_common</a></code></li>
+<li><code><a title="plottools.common.demo" href="#plottools.common.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

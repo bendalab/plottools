@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>plottools.subplots API documentation</title>
+<meta name="description" content="Enhanced subplots with margins …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.subplots</code></h1>
+</header>
+<section id="section-intro">
+<p>Enhanced subplots with margins.</p>
+<p>Patches matplotlib to provide the following features:</p>
+<h2 id="figure-margins">Figure margins</h2>
+<p>Subplot positions can be adjusted by margins given in multiples of the current font size:</p>
+<pre><code>fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize units!
+gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs.update(leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+</code></pre>
+<p>That is,
+- <code>leftm</code> specifies the distance of the leftmost axes from the left margin of the figure,
+- <code>bottomm</code> specifies the distance of the bottom axes from the bottom margin of the figure,
+- <code>rightm</code> specifies the distance of the rightmost axes from the right margin of the figure, and
+- <code>topm</code> specifies the distance of the top axes from the top margin of the figure,
+all as multiples of the font size.</p>
+<p>This way, margins do not need to be adjusted when changing the size of a figure!</p>
+<p>For figures without any margins you can use the <code>nomargins</code> keyword:</p>
+<pre><code>fig.subplots_adjust(nomargins=True)
+</code></pre>
+<p>This sets all margins to zero.</p>
+<h2 id="grid-specs">Grid specs</h2>
+<p><code>plt.subplots()</code> can be called with <code>width_ratios</code> and <code>height_ratios</code>.</p>
+<p>Further, <code>figure.add_gridspec()</code> is made available for older
+matplotlib versions that do not have this function yet.</p>
+<p>To merge several subplots into a single axes, call <code>fig.merge()</code>.</p>
+<p>To replace an axes by subplots, call <code>ax.subplots()</code>.</p>
+<p><code>fig.merge()</code> and <code>ax.subplots()</code> can be arbitrarily combined.</p>
+<p>To expand, shrink or move an axes, use <code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand()</a></code>.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots()</a></code>: replace axes by subplots.</li>
+<li><code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand()</a></code>: expand size and modify position of Axes.</li>
+<li><code><a title="plottools.subplots.make_polar" href="#plottools.subplots.make_polar">make_polar()</a></code>: turn an axes into one with polar projection.</li>
+</ul>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<ul>
+<li><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge()</a></code>: merge several axes into a single one.</li>
+</ul>
+<h2 id="installuninstall-subplots-functions">Install/uninstall subplots functions</h2>
+<p>You usually do not need to call these functions. Upon loading the subplots
+module, <code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code>: install functions of the subplots module in matplotlib.</li>
+<li><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots()</a></code>: uninstall all code of the subplots module from matplotlib.</li>
+</ul>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>default figure margins</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Enhanced subplots with margins.
+
+
+Patches matplotlib to provide the following features:
+
+
+## Figure margins
+
+Subplot positions can be adjusted by margins given in multiples of the current font size:
+```
+fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize units!
+gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs.update(leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+```
+That is,
+- `leftm` specifies the distance of the leftmost axes from the left margin of the figure,
+- `bottomm` specifies the distance of the bottom axes from the bottom margin of the figure,
+- `rightm` specifies the distance of the rightmost axes from the right margin of the figure, and
+- `topm` specifies the distance of the top axes from the top margin of the figure,
+all as multiples of the font size.
+
+This way, margins do not need to be adjusted when changing the size of a figure!
+
+For figures without any margins you can use the `nomargins` keyword:
+```
+fig.subplots_adjust(nomargins=True)
+```
+This sets all margins to zero.
+
+
+## Grid specs
+
+`plt.subplots()` can be called with `width_ratios` and `height_ratios`.
+
+Further, `figure.add_gridspec()` is made available for older
+matplotlib versions that do not have this function yet.
+
+To merge several subplots into a single axes, call `fig.merge()`.
+
+To replace an axes by subplots, call `ax.subplots()`.
+
+`fig.merge()` and `ax.subplots()` can be arbitrarily combined.
+
+To expand, shrink or move an axes, use `expand()`.
+
+
+## Axes member functions
+
+- `subplots()`: replace axes by subplots.
+- `expand()`: expand size and modify position of Axes.
+- `make_polar()`: turn an axes into one with polar projection.
+
+
+## Figure member functions
+
+- `merge()`: merge several axes into a single one.
+
+
+## Install/uninstall subplots functions
+
+You usually do not need to call these functions. Upon loading the subplots
+module, `install_subplots()` is called automatically.
+
+- `install_subplots()`: install functions of the subplots module in matplotlib.
+- `uninstall_subplots()`: uninstall all code of the subplots module from matplotlib.
+
+
+## Todo
+
+- default figure margins
+&#34;&#34;&#34;
+
+import __main__
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+
+def __adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
+                leftm=None, bottomm=None, rightm=None, topm=None,
+                nomargins=False, **kwargs):
+    &#34;&#34;&#34; Compute plot margins from multiples of the current font size.
+
+    Subplots margins can be either specified by the usual parameters
+    `left`, `right`, `top`, and `bottom` as fractions of the figure size,
+    or alternatively via `leftm`, `rightm`, `topm`, and `bottomm`.
+    The latter specify margins measured from the figure borders in multiples
+    of the current font size.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure or None
+        The figure from which the figure size is taken. If None use the current figure.
+    left: float
+        The usual position of the left side of the axes as a fraction of the full figure.
+    bottom: float
+        The usual position of the bottom side of the axes as a fraction of the full figure.
+    right: float
+        The usual position of the right side of the axes as a fraction of the full figure.
+    top: float
+        The usual position of the top side of the axes as a fraction of the full figure.
+    leftm: float
+        The left margin of the plots given in multiples of the width of a character
+        (simply 60% of the current font size).
+    bottomm: float
+        The bottom margin of the plots given in multiples of the height of a character
+        (the current font size).
+    rightm: float
+        The right margin of the plots given in multiples of the width of a character
+        (in fact, simply 60% of the current font size).
+        *Note:* in contrast to the matplotlib `right` parameters, this specifies the
+        width of the right margin, not its position relative to the origin.
+    topm: float
+        The right margin of the plots given in multiples of the height of a character
+        (the current font size).
+        *Note:* in contrast to the matplotlib `top` parameters, this specifies the
+        width of the top margin, not its position relative to the origin.
+    nomargins: bool
+        If `True` set all margins to zero.
+    kwargs: dict
+        Any further key-word arguments that are simply passed on.
+
+    Returns
+    -------
+    kwargs: dict
+        The margins and the kwargs combined.
+
+    Example
+    -------
+    ```
+    fig, axs = plt.subplots(2, 2, figsize=(10, 5))
+    fig.subplots_adjust(**__adjust_fs(fig, leftm=4.5))   # no matter what the figsize is!
+    ```
+    &#34;&#34;&#34;
+    if fig is None:
+        fig = plt.gcf()
+    w, h = fig.get_window_extent().bounds[2:]
+    ppi = 72.0 # points per inch:
+    fs = plt.rcParams[&#39;font.size&#39;]*fig.dpi/ppi
+    if nomargins:
+        left = 0.0
+        bottom = 0.0
+        right = 1.0
+        top = 1.0
+    margins = {}
+    if left is not None or leftm is not None:
+        margins[&#39;left&#39;] = left if left is not None else leftm*0.6*fs/w
+    if bottom is not None or bottomm is not None:
+        margins[&#39;bottom&#39;] = bottom if bottom is not None else bottomm*fs/h
+    if right is not None or rightm is not None:
+        margins[&#39;right&#39;] = right if right is not None else 1.0 - rightm*0.6*fs/w
+    if top is not None or topm is not None:
+        margins[&#39;top&#39;] = top if top is not None else 1.0 - topm*fs/h
+    margins.update(kwargs)
+    return margins
+
+
+def __fig_subplots_adjust(fig, *args, **kwargs):
+    &#34;&#34;&#34; figure.subplots_adjust() with margins in multiples of the current font size.
+    &#34;&#34;&#34;
+    if hasattr(fig, &#39;__gridspecs&#39;):
+        for gs in fig.__gridspecs:
+            gs.update(**kwargs)
+    else:
+        fig.__subplots_margins = {}
+        if kwargs.get(&#39;nomargins&#39;, False):
+            fig.__subplots_margins[&#39;leftm&#39;] = 0.0
+            fig.__subplots_margins[&#39;rightm&#39;] = 0.0
+            fig.__subplots_margins[&#39;topm&#39;] = 0.0
+            fig.__subplots_margins[&#39;bottomm&#39;] = 0.0
+        else:
+            if &#39;leftm&#39; in kwargs:
+                fig.__subplots_margins[&#39;leftm&#39;] = kwargs[&#39;leftm&#39;]
+            if &#39;bottomm&#39; in kwargs:
+                fig.__subplots_margins[&#39;bottomm&#39;] = kwargs[&#39;bottomm&#39;]
+            if &#39;rightm&#39; in kwargs:
+                fig.__subplots_margins[&#39;rightm&#39;] = kwargs[&#39;rightm&#39;]
+            if &#39;topm&#39; in kwargs:
+                fig.__subplots_margins[&#39;topm&#39;] = kwargs[&#39;topm&#39;]
+        fig.__subplots_adjust_orig_subplots(**__adjust_fs(fig, *args, **kwargs))
+
+    
+def __gridspec_update(gridspec, **kwargs):
+    &#34;&#34;&#34; gridspec.update() with margins in multiples of the current font size.
+    &#34;&#34;&#34;
+    figure = None
+    if hasattr(gridspec, &#39;figure&#39;):
+        figure = gridspec.figure
+        gridspec.__subplots_margins = {}
+        if kwargs.get(&#39;nomargins&#39;, False):
+            gridspec.__subplots_margins[&#39;leftm&#39;] = 0.0
+            gridspec.__subplots_margins[&#39;rightm&#39;] = 0.0
+            gridspec.__subplots_margins[&#39;topm&#39;] = 0.0
+            gridspec.__subplots_margins[&#39;bottomm&#39;] = 0.0
+        else:
+            if &#39;leftm&#39; in kwargs:
+                gridspec.__subplots_margins[&#39;leftm&#39;] = kwargs[&#39;leftm&#39;]
+            if &#39;bottomm&#39; in kwargs:
+                gridspec.__subplots_margins[&#39;bottomm&#39;] = kwargs[&#39;bottomm&#39;]
+            if &#39;rightm&#39; in kwargs:
+                gridspec.__subplots_margins[&#39;rightm&#39;] = kwargs[&#39;rightm&#39;]
+            if &#39;topm&#39; in kwargs:
+                gridspec.__subplots_margins[&#39;topm&#39;] = kwargs[&#39;topm&#39;]
+    gridspec.__update_orig_subplots(**__adjust_fs(figure, **kwargs))
+
+
+def __fig_add_gridspec(fig, nrows=1, ncols=1, **kwargs):
+    &#34;&#34;&#34; This emulates more current versions of matplotlib.
+    &#34;&#34;&#34;
+    if fig.__add_gridspec_orig_subplots:
+        gs = fig.__add_gridspec_orig_subplots(nrows=nrows, ncols=ncols,
+                                              **__adjust_fs(fig, **kwargs))
+    else:
+        _ = kwargs.pop(&#39;figure&#39;, None)  # pop in case user has added this...
+        gs = gridspec.GridSpec(nrows=nrows, ncols=ncols, **__adjust_fs(fig, **kwargs))
+    if not hasattr(fig, &#39;__gridspecs&#39;):
+        fig.__gridspecs = []
+    fig.__gridspecs.append(gs)    
+    gs.__subplots_margins = {}
+    if kwargs.get(&#39;nomargins&#39;, False):
+        gs.__subplots_margins[&#39;leftm&#39;] = 0.0
+        gs.__subplots_margins[&#39;rightm&#39;] = 0.0
+        gs.__subplots_margins[&#39;topm&#39;] = 0.0
+        gs.__subplots_margins[&#39;bottomm&#39;] = 0.0
+    else:
+        if &#39;leftm&#39; in kwargs:
+            gs.__subplots_margins[&#39;leftm&#39;] = kwargs[&#39;leftm&#39;]
+        if &#39;bottomm&#39; in kwargs:
+            gs.__subplots_margins[&#39;bottomm&#39;] = kwargs[&#39;bottomm&#39;]
+        if &#39;rightm&#39; in kwargs:
+            gs.__subplots_margins[&#39;rightm&#39;] = kwargs[&#39;rightm&#39;]
+        if &#39;topm&#39; in kwargs:
+            gs.__subplots_margins[&#39;topm&#39;] = kwargs[&#39;topm&#39;]
+    gs.figure = fig
+    return gs
+
+
+def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
+    &#34;&#34;&#34; plt.subplots() with width_ratios and height_ratios.
+    
+    Missing: sharex, sharey support together with width_ratios, height_ratios!
+    &#34;&#34;&#34;
+    gskwargs = {}
+    for k in [&#39;width_ratios&#39;, &#39;height_ratios&#39;]:
+        if k in kwargs:
+            gskwargs[k] = kwargs.pop(k)
+    if len(gskwargs) &gt; 0:
+        figkwargs = {}
+        for k in [&#39;num&#39;, &#39;cmsize&#39;, &#39;figsize&#39;, &#39;dpi&#39;, &#39;facecolor&#39;, &#39;edgecolor&#39;,
+                  &#39;frameon&#39;, &#39;clear&#39;]:
+            if k in kwargs:
+                figkwargs[k] = kwargs.pop(k)
+        upkwargs = {}
+        for k in [&#39;leftm&#39;, &#39;rightm&#39;, &#39;topm&#39;, &#39;bottomm&#39;, &#39;nomargins&#39;,
+                  &#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;hspace&#39;, &#39;wspace&#39;]:
+            if k in kwargs:
+                upkwargs[k] = kwargs.pop(k)
+        squeeze = True
+        if &#39;squeeze&#39; in kwargs:
+            squeeze = kwargs.pop(&#39;squeeze&#39;)
+        fig = plt.figure(**figkwargs)
+        gs = fig.add_gridspec(nrows, ncols, **gskwargs)
+        gs.update(**upkwargs)
+        axs = np.zeros((nrows, ncols), object)
+        for r in range(nrows):
+            for c in range(ncols):
+                axs[r,c] = fig.add_subplot(gs[r,c], **kwargs)
+        return fig, np.squeeze(axs) if squeeze else axs
+    else:
+        return plt.__subplots_orig_subplots(nrows, ncols, *args, **kwargs)
+
+
+def __resize(event):
+    &#34;&#34;&#34; Resize event updating subplot margins.
+    &#34;&#34;&#34;
+    fig = event.canvas.figure
+    if hasattr(fig, &#39;__subplots_margins&#39;):
+        fig.subplots_adjust(**fig.__subplots_margins)
+    if hasattr(fig, &#39;__gridspecs&#39;):
+        for gs in fig.__gridspecs:
+            if hasattr(gs, &#39;__subplots_margins&#39;):
+                gs.update(**gs.__subplots_margins)
+
+    
+def __fig_figure(*args, **kwargs):
+    &#34;&#34;&#34; Install resize event handler to keep margins.
+    &#34;&#34;&#34;
+    fig = plt.__figure_orig_subplots(*args, **kwargs)
+    fig.canvas.mpl_connect(&#39;resize_event&#39;, __resize)
+    return fig
+
+
+def merge(fig, axs, remove=True):
+    &#34;&#34;&#34; Merge several axes into a single one.
+
+    Add new axes to the figure at the position and size of the common
+    bounding box of all axes in `axs`. All axes in `axs` are then
+    removed. This way you do not need to use `gridspec` explicitly.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure
+        The figure that contains the axes.
+    axs: array of axis objects
+        The axes that should be combined.
+    remove: bool
+        If `True` remove the orignal axes `axs`.
+
+    Returns
+    -------
+    ax: axes object
+        A single axes covering the area of all the axes objects in `axs`.
+
+    See also
+    --------
+    subplots()
+    
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    ax1 = fig.add_subplot(gs[1:,:2])  # merge 2x2 bottom left subplots
+    ax2 = fig.add_subplot(gs[0,0])    # first in top row
+    ax3 = fig.add_subplot(gs[0,1])    # second in top row
+    ax4 = fig.add_subplot(gs[0,2])    # third in top row
+    ax5 = fig.add_subplot(gs[1,2])    # last in second row
+    ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
+    ```
+    with merge() this simplifies to
+    ```
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+    ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
+    ax2 = axs[0,0]                    # first in top row
+    ax3 = axs[0,1]                    # second in top row
+    # ...
+    ```
+    &#34;&#34;&#34;
+    axs = np.asarray(axs).ravel()
+    rows = []
+    cols = []
+    for ax in axs:
+        sps = ax.get_subplotspec()
+        gs = sps.get_gridspec()
+        nrows, ncols, idx0, idx1 = sps.get_geometry()
+        if idx1 is None:
+            idx1 = idx0
+        rows.extend((idx0//ncols, idx1//ncols))
+        cols.extend((idx0%ncols, idx1%ncols))
+        if remove:
+            try:
+                ax.remove()
+            except NotImplementedError:
+                ax.set_visible(False)
+    ax = fig.add_subplot(gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1])
+    sps = ax.get_subplotspec()
+    return ax
+
+
+def subplots(ax, nrows, ncols, **kwargs):
+    &#34;&#34;&#34; Replace axes by subplots.
+    
+    Replace axes by all plots of a subgridspec at that axes. This way
+    you do not need to use `subgridspec()` explicitly.
+
+    Parameters
+    ----------
+    ax: matplotlib.axes
+        Axes that should be replaced by subplots.
+    nrows: int
+        Number of rows of the new subgrid.
+    ncols: int
+        Number of columns of the new subgrid.
+    kwargs: dict
+        Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
+        e.g. `wspace`, `hspace`, `height_ratios`, `width_ratios`.
+
+    Returns
+    -------
+    axs: array of matplotlib axes
+        Axes of the new subgrid.
+
+    See also
+    --------
+    merge()
+
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    sgs = gs[0,2].subgridspec(2, 1)
+    ax1 = fig.add_subplot(gs[0,0])
+    # ... 8 more for all the subplots on gs
+    subax1 = fig.add_subplot(sgs[0])
+    subax2 = fig.add_subplot(sgs[1])
+    ```
+    As usual, this requires a lot of calls to `fig.add_subplot()`.
+    With subplots() this simplifies to
+    ```py
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+    subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
+    ```
+    and you can use the axes in `axs` and `subaxs` right away.
+    &#34;&#34;&#34;
+    sps = ax.get_subplotspec()
+    gs = sps.get_gridspec()
+    nr, nc, idx0, idx1 = sps.get_geometry()
+    if idx1 is None:
+        idx1 = idx0
+    rows = (idx0//nc, idx1//nc)
+    cols = (idx0%nc, idx1%nc)
+    gsi = gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1]
+    try:
+        sgs = gsi.subgridspec(nrows, ncols, **kwargs)
+    except AttributeError:
+        sgs = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gsi, **kwargs)
+    axs = np.array([ax.get_figure().add_subplot(sgs[r,c])
+                    for r in range(nrows) for c in range(ncols)])
+    if nrows &gt; 1 and ncols &gt; 1:
+        axs = axs.reshape(nrows, ncols)
+    try:
+        ax.remove()
+    except NotImplementedError:
+        ax.set_visible(False)
+    return axs.squeeze()
+
+
+def expand(ax, left=None, right=None, bottom=None, top=None):
+    &#34;&#34;&#34; Expand size and modify position of Axes.
+
+    Note: only works with savefig(), not with plt show()!
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection.
+    left: float
+        Move left edge of Axes to the left
+        (in figure coordinates, can be negative for right shift).
+    right: float
+        Move right edge of Axes to the right
+        (in figure coordinates, can be negative for left shift).
+    bottom: float
+        Move bottom edge of Axes downwards
+        (in figure coordinates, can be negative for upward shift).
+    top: float
+        Move top edge of Axes to upwards
+        (in figure coordinates, can be negative for downward shift).
+    &#34;&#34;&#34;
+    pos = ax.get_position()
+    x0 = pos.xmin
+    y0 = pos.ymin
+    w = pos.width
+    h = pos.height
+    print(x0, y0, w, h)
+    if not left is None:
+        x0 -= left
+        w += left
+    if not right is None:
+        w += right
+    if not bottom is None:
+        y0 -= bottom
+        h += bottom
+    if not top is None:
+        h += top
+    print(x0, y0, w, h)
+    ax.set_position((x0, y0, w, h))
+
+
+def make_polar(ax, shiftx=0, shifty=0):
+    &#34;&#34;&#34; Turn an axes into one with polar projection.
+
+    Creates a new axes with polar projection at the position 
+    of the given axes.
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection.
+    shiftx: float
+        Horizontally shift the axes relative to `ax` figure coordinates.
+    shifty: float
+        Vertically shift the axes relative to `ax` in figure coordinates.
+
+    Returns
+    -------
+    ax: axes object
+        An axes with polar projection at the position of the given axes.
+    
+    Example
+    -------
+    ```
+    fig, axs = plt.subplots(2, 3)
+    axp = axs[1, 2].make_polar()
+    axp.plot(theta, r)   # this is a polar plot!
+    ```
+    &#34;&#34;&#34;
+    fig = ax.get_figure()
+    pos = ax.get_position()
+    new_pos = [pos.xmin + shiftx, pos.ymin + shifty,
+               pos.width, pos.height]
+    ax.remove()
+    ax = fig.add_axes(new_pos, projection=&#39;polar&#39;)
+    return ax
+
+
+def install_subplots():
+    &#34;&#34;&#34; Install functions of the subplots module in matplotlib.
+
+    Patches a few matplotlib functions (`plt.figure()`,
+    `plt.subplots()`, `figure.add_gridspec()`, `gridspec.update()`).
+    Each figure gets an resize event handler installed, that applies the
+    supplied margins whenever a figure is resized.
+    
+    See also
+    --------
+    uninstall_subplots()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.axes.Axes, &#39;subplots&#39;):
+        mpl.axes.Axes.subplots = subplots
+    if not hasattr(mpl.figure.Figure, &#39;merge&#39;):
+        mpl.figure.Figure.merge = merge
+    if not hasattr(mpl.axes.Axes, &#39;expand&#39;):
+        mpl.axes.Axes.expand = expand
+    if not hasattr(mpl.axes.Axes, &#39;make_polar&#39;):
+        mpl.axes.Axes.make_polar = make_polar
+    if not hasattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;):
+        mpl.figure.Figure.__subplots_adjust_orig_subplots = mpl.figure.Figure.subplots_adjust
+        mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust
+    if not hasattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;):
+        mpl.gridspec.GridSpec.__update_orig_subplots = mpl.gridspec.GridSpec.update
+        mpl.gridspec.GridSpec.update = __gridspec_update
+    if not hasattr(mpl.figure.Figure, &#39;add_gridspec&#39;):
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
+        mpl.figure.Figure.__add_gridspec_orig_subplots = None
+    if not hasattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;):
+        mpl.figure.Figure.__add_gridspec_orig_subplots = mpl.figure.Figure.add_gridspec
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
+    if not hasattr(plt, &#39;__subplots_orig_subplots&#39;):
+        plt.__subplots_orig_subplots = plt.subplots
+        plt.subplots = __plt_subplots
+    if not hasattr(plt, &#39;__figure_orig_subplots&#39;):
+        plt.__figure_orig_subplots = plt.figure
+        plt.figure = __fig_figure
+
+
+def uninstall_subplots():
+    &#34;&#34;&#34; Uninstall all code of the subplots module from matplotlib.
+
+    See also
+    --------
+    install_subplots()
+    &#34;&#34;&#34;
+    if hasattr(mpl.axes.Axes, &#39;subplots&#39;):
+        delattr(mpl.axes.Axes, &#39;subplots&#39;)
+    if hasattr(mpl.figure.Figure, &#39;merge&#39;):
+        delattr(mpl.figure.Figure, &#39;merge&#39;)
+    if hasattr(mpl.axes.Axes, &#39;expand&#39;):
+        delattr(mpl.axes.Axes, &#39;expand&#39;)
+    if hasattr(mpl.axes.Axes, &#39;make_polar&#39;):
+        delattr(mpl.axes.Axes, &#39;make_polar&#39;)
+    if hasattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;):
+        mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_subplots
+        delattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;)
+    if hasattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;):
+        mpl.gridspec.GridSpec.update = mpl.gridspec.GridSpec.__update_orig_subplots
+        delattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;)
+    if hasattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;):
+        if mpl.figure.Figure.__add_gridspec_orig_subplots is None:
+            delattr(mpl.figure.Figure, &#39;add_gridspec&#39;)
+        else:
+            mpl.figure.Figure.add_gridspec = mpl.figure.Figure.__add_gridspec_orig_subplots
+            delattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;)
+    if hasattr(plt, &#39;__subplots_orig_subplots&#39;):
+        plt.subplots = plt.__subplots_orig_subplots
+        delattr(plt, &#39;__subplots_orig_subplots&#39;)
+    if hasattr(plt, &#39;__figure_orig_subplots&#39;):
+        plt.figure = plt.__figure_orig_subplots
+        delattr(plt, &#39;__figure_orig_subplots&#39;)
+
+
+install_subplots()
+
+        
+def demo():
+    &#34;&#34;&#34; Run a demonstration of the subplots module.
+    &#34;&#34;&#34;
+    fig, axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])
+    fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
+    fig.suptitle(&#39;axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)&#39;)
+    x = np.linspace(0.0, 2.0, 200)
+    ax = fig.merge(axs[1:3,0:2])
+    ax.plot(x, np.sin(2.0*np.pi*x))
+    ax.text(0.05, 0.1, &#39;ax = fig.merge(axs[1:3,0:2])&#39;, transform=ax.transAxes)
+    subaxs = axs[0,2].subplots(2, 1)
+    subaxs[0].text(0.05, 0.7, &#39;subaxs = axs[0,2].subplots(2, 1)&#39;, transform=subaxs[0].transAxes)
+    subaxs[0].text(0.05, 0.3, &#39;subaxs[0]&#39;, transform=subaxs[0].transAxes)
+    subaxs[1].text(0.05, 0.3, &#39;subaxs[1]&#39;, transform=subaxs[1].transAxes)
+    axs[0,0].plot(x, np.sin(2.0*np.pi*x))
+    axs[0,0].text(0.1, 0.8, &#39;axs[0,0]&#39;, transform=axs[0,0].transAxes)
+    axp = axs[0,1].make_polar()
+    axp.plot(np.pi*x, 1+np.sin(2.0*np.pi*x))
+    axp.text(-0.2, 1, &#39;axp = axs[0,1].make_polar()&#39;, transform=axp.transAxes)
+    axs[2,2].expand(left=-0.1)
+    axs[2,2].text(0.1, 0.6, &#39;axs[2,2].expand(left=-0.1)&#39;, transform=axs[2,2].transAxes)
+    for k in range(1, 3):
+        axs[k,2].plot(x, np.sin(2.0*np.pi*x-k))
+        axs[k,2].text(0.1, 0.8, &#39;axs[%d,2]&#39; % k, transform=axs[k,2].transAxes)
+
+    plt.show()
+
+
+if __name__ == &#34;__main__&#34;:
+    demo()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.subplots.merge"><code class="name flex">
+<span>def <span class="ident">merge</span></span>(<span>fig, axs, remove=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Merge several axes into a single one.</p>
+<p>Add new axes to the figure at the position and size of the common
+bounding box of all axes in <code>axs</code>. All axes in <code>axs</code> are then
+removed. This way you do not need to use <code>gridspec</code> explicitly.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib.figure</code></dt>
+<dd>The figure that contains the axes.</dd>
+<dt><strong><code>axs</code></strong> :&ensp;<code>array</code> of <code>axis objects</code></dt>
+<dd>The axes that should be combined.</dd>
+<dt><strong><code>remove</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If <code>True</code> remove the orignal axes <code>axs</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>axes object</code></dt>
+<dd>A single axes covering the area of all the axes objects in <code>axs</code>.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots()</a></code></p>
+<h2 id="example">Example</h2>
+<p>With gridspec you would do</p>
+<pre><code>fig = plt.figure()
+gs = fig.add_gridspec(3, 3)
+ax1 = fig.add_subplot(gs[1:,:2])  # merge 2x2 bottom left subplots
+ax2 = fig.add_subplot(gs[0,0])    # first in top row
+ax3 = fig.add_subplot(gs[0,1])    # second in top row
+ax4 = fig.add_subplot(gs[0,2])    # third in top row
+ax5 = fig.add_subplot(gs[1,2])    # last in second row
+ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
+</code></pre>
+<p>with merge() this simplifies to</p>
+<pre><code>fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
+ax2 = axs[0,0]                    # first in top row
+ax3 = axs[0,1]                    # second in top row
+# ...
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def merge(fig, axs, remove=True):
+    &#34;&#34;&#34; Merge several axes into a single one.
+
+    Add new axes to the figure at the position and size of the common
+    bounding box of all axes in `axs`. All axes in `axs` are then
+    removed. This way you do not need to use `gridspec` explicitly.
+
+    Parameters
+    ----------
+    fig: matplotlib.figure
+        The figure that contains the axes.
+    axs: array of axis objects
+        The axes that should be combined.
+    remove: bool
+        If `True` remove the orignal axes `axs`.
+
+    Returns
+    -------
+    ax: axes object
+        A single axes covering the area of all the axes objects in `axs`.
+
+    See also
+    --------
+    subplots()
+    
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    ax1 = fig.add_subplot(gs[1:,:2])  # merge 2x2 bottom left subplots
+    ax2 = fig.add_subplot(gs[0,0])    # first in top row
+    ax3 = fig.add_subplot(gs[0,1])    # second in top row
+    ax4 = fig.add_subplot(gs[0,2])    # third in top row
+    ax5 = fig.add_subplot(gs[1,2])    # last in second row
+    ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
+    ```
+    with merge() this simplifies to
+    ```
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+    ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
+    ax2 = axs[0,0]                    # first in top row
+    ax3 = axs[0,1]                    # second in top row
+    # ...
+    ```
+    &#34;&#34;&#34;
+    axs = np.asarray(axs).ravel()
+    rows = []
+    cols = []
+    for ax in axs:
+        sps = ax.get_subplotspec()
+        gs = sps.get_gridspec()
+        nrows, ncols, idx0, idx1 = sps.get_geometry()
+        if idx1 is None:
+            idx1 = idx0
+        rows.extend((idx0//ncols, idx1//ncols))
+        cols.extend((idx0%ncols, idx1%ncols))
+        if remove:
+            try:
+                ax.remove()
+            except NotImplementedError:
+                ax.set_visible(False)
+    ax = fig.add_subplot(gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1])
+    sps = ax.get_subplotspec()
+    return ax</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.subplots"><code class="name flex">
+<span>def <span class="ident">subplots</span></span>(<span>ax, nrows, ncols, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Replace axes by subplots.</p>
+<p>Replace axes by all plots of a subgridspec at that axes. This way
+you do not need to use <code>subgridspec()</code> explicitly.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib.axes</code></dt>
+<dd>Axes that should be replaced by subplots.</dd>
+<dt><strong><code>nrows</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of rows of the new subgrid.</dd>
+<dt><strong><code>ncols</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of columns of the new subgrid.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
+e.g. <code>wspace</code>, <code>hspace</code>, <code>height_ratios</code>, <code>width_ratios</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>axs</code></strong> :&ensp;<code>array</code> of <code>matplotlib axes</code></dt>
+<dd>Axes of the new subgrid.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge()</a></code></p>
+<h2 id="example">Example</h2>
+<p>With gridspec you would do</p>
+<pre><code>fig = plt.figure()
+gs = fig.add_gridspec(3, 3)
+sgs = gs[0,2].subgridspec(2, 1)
+ax1 = fig.add_subplot(gs[0,0])
+# ... 8 more for all the subplots on gs
+subax1 = fig.add_subplot(sgs[0])
+subax2 = fig.add_subplot(sgs[1])
+</code></pre>
+<p>As usual, this requires a lot of calls to <code>fig.add_subplot()</code>.
+With subplots() this simplifies to</p>
+<pre><code class="language-py">fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
+</code></pre>
+<p>and you can use the axes in <code>axs</code> and <code>subaxs</code> right away.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def subplots(ax, nrows, ncols, **kwargs):
+    &#34;&#34;&#34; Replace axes by subplots.
+    
+    Replace axes by all plots of a subgridspec at that axes. This way
+    you do not need to use `subgridspec()` explicitly.
+
+    Parameters
+    ----------
+    ax: matplotlib.axes
+        Axes that should be replaced by subplots.
+    nrows: int
+        Number of rows of the new subgrid.
+    ncols: int
+        Number of columns of the new subgrid.
+    kwargs: dict
+        Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
+        e.g. `wspace`, `hspace`, `height_ratios`, `width_ratios`.
+
+    Returns
+    -------
+    axs: array of matplotlib axes
+        Axes of the new subgrid.
+
+    See also
+    --------
+    merge()
+
+    Example
+    -------
+    With gridspec you would do
+    ```
+    fig = plt.figure()
+    gs = fig.add_gridspec(3, 3)
+    sgs = gs[0,2].subgridspec(2, 1)
+    ax1 = fig.add_subplot(gs[0,0])
+    # ... 8 more for all the subplots on gs
+    subax1 = fig.add_subplot(sgs[0])
+    subax2 = fig.add_subplot(sgs[1])
+    ```
+    As usual, this requires a lot of calls to `fig.add_subplot()`.
+    With subplots() this simplifies to
+    ```py
+    fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+    subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
+    ```
+    and you can use the axes in `axs` and `subaxs` right away.
+    &#34;&#34;&#34;
+    sps = ax.get_subplotspec()
+    gs = sps.get_gridspec()
+    nr, nc, idx0, idx1 = sps.get_geometry()
+    if idx1 is None:
+        idx1 = idx0
+    rows = (idx0//nc, idx1//nc)
+    cols = (idx0%nc, idx1%nc)
+    gsi = gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1]
+    try:
+        sgs = gsi.subgridspec(nrows, ncols, **kwargs)
+    except AttributeError:
+        sgs = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gsi, **kwargs)
+    axs = np.array([ax.get_figure().add_subplot(sgs[r,c])
+                    for r in range(nrows) for c in range(ncols)])
+    if nrows &gt; 1 and ncols &gt; 1:
+        axs = axs.reshape(nrows, ncols)
+    try:
+        ax.remove()
+    except NotImplementedError:
+        ax.set_visible(False)
+    return axs.squeeze()</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.expand"><code class="name flex">
+<span>def <span class="ident">expand</span></span>(<span>ax, left=None, right=None, bottom=None, top=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Expand size and modify position of Axes.</p>
+<p>Note: only works with savefig(), not with plt show()!</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>Axes object</code></dt>
+<dd>The axes to be turned into polar projection.</dd>
+<dt><strong><code>left</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move left edge of Axes to the left
+(in figure coordinates, can be negative for right shift).</dd>
+<dt><strong><code>right</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move right edge of Axes to the right
+(in figure coordinates, can be negative for left shift).</dd>
+<dt><strong><code>bottom</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move bottom edge of Axes downwards
+(in figure coordinates, can be negative for upward shift).</dd>
+<dt><strong><code>top</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move top edge of Axes to upwards
+(in figure coordinates, can be negative for downward shift).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def expand(ax, left=None, right=None, bottom=None, top=None):
+    &#34;&#34;&#34; Expand size and modify position of Axes.
+
+    Note: only works with savefig(), not with plt show()!
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection.
+    left: float
+        Move left edge of Axes to the left
+        (in figure coordinates, can be negative for right shift).
+    right: float
+        Move right edge of Axes to the right
+        (in figure coordinates, can be negative for left shift).
+    bottom: float
+        Move bottom edge of Axes downwards
+        (in figure coordinates, can be negative for upward shift).
+    top: float
+        Move top edge of Axes to upwards
+        (in figure coordinates, can be negative for downward shift).
+    &#34;&#34;&#34;
+    pos = ax.get_position()
+    x0 = pos.xmin
+    y0 = pos.ymin
+    w = pos.width
+    h = pos.height
+    print(x0, y0, w, h)
+    if not left is None:
+        x0 -= left
+        w += left
+    if not right is None:
+        w += right
+    if not bottom is None:
+        y0 -= bottom
+        h += bottom
+    if not top is None:
+        h += top
+    print(x0, y0, w, h)
+    ax.set_position((x0, y0, w, h))</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.make_polar"><code class="name flex">
+<span>def <span class="ident">make_polar</span></span>(<span>ax, shiftx=0, shifty=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Turn an axes into one with polar projection.</p>
+<p>Creates a new axes with polar projection at the position
+of the given axes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>Axes object</code></dt>
+<dd>The axes to be turned into polar projection.</dd>
+<dt><strong><code>shiftx</code></strong> :&ensp;<code>float</code></dt>
+<dd>Horizontally shift the axes relative to <code>ax</code> figure coordinates.</dd>
+<dt><strong><code>shifty</code></strong> :&ensp;<code>float</code></dt>
+<dd>Vertically shift the axes relative to <code>ax</code> in figure coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>axes object</code></dt>
+<dd>An axes with polar projection at the position of the given axes.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code>fig, axs = plt.subplots(2, 3)
+axp = axs[1, 2].make_polar()
+axp.plot(theta, r)   # this is a polar plot!
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def make_polar(ax, shiftx=0, shifty=0):
+    &#34;&#34;&#34; Turn an axes into one with polar projection.
+
+    Creates a new axes with polar projection at the position 
+    of the given axes.
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection.
+    shiftx: float
+        Horizontally shift the axes relative to `ax` figure coordinates.
+    shifty: float
+        Vertically shift the axes relative to `ax` in figure coordinates.
+
+    Returns
+    -------
+    ax: axes object
+        An axes with polar projection at the position of the given axes.
+    
+    Example
+    -------
+    ```
+    fig, axs = plt.subplots(2, 3)
+    axp = axs[1, 2].make_polar()
+    axp.plot(theta, r)   # this is a polar plot!
+    ```
+    &#34;&#34;&#34;
+    fig = ax.get_figure()
+    pos = ax.get_position()
+    new_pos = [pos.xmin + shiftx, pos.ymin + shifty,
+               pos.width, pos.height]
+    ax.remove()
+    ax = fig.add_axes(new_pos, projection=&#39;polar&#39;)
+    return ax</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.install_subplots"><code class="name flex">
+<span>def <span class="ident">install_subplots</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the subplots module in matplotlib.</p>
+<p>Patches a few matplotlib functions (<code>plt.figure()</code>,
+<code>plt.subplots()</code>, <code>figure.add_gridspec()</code>, <code>gridspec.update()</code>).
+Each figure gets an resize event handler installed, that applies the
+supplied margins whenever a figure is resized.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def install_subplots():
+    &#34;&#34;&#34; Install functions of the subplots module in matplotlib.
+
+    Patches a few matplotlib functions (`plt.figure()`,
+    `plt.subplots()`, `figure.add_gridspec()`, `gridspec.update()`).
+    Each figure gets an resize event handler installed, that applies the
+    supplied margins whenever a figure is resized.
+    
+    See also
+    --------
+    uninstall_subplots()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.axes.Axes, &#39;subplots&#39;):
+        mpl.axes.Axes.subplots = subplots
+    if not hasattr(mpl.figure.Figure, &#39;merge&#39;):
+        mpl.figure.Figure.merge = merge
+    if not hasattr(mpl.axes.Axes, &#39;expand&#39;):
+        mpl.axes.Axes.expand = expand
+    if not hasattr(mpl.axes.Axes, &#39;make_polar&#39;):
+        mpl.axes.Axes.make_polar = make_polar
+    if not hasattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;):
+        mpl.figure.Figure.__subplots_adjust_orig_subplots = mpl.figure.Figure.subplots_adjust
+        mpl.figure.Figure.subplots_adjust = __fig_subplots_adjust
+    if not hasattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;):
+        mpl.gridspec.GridSpec.__update_orig_subplots = mpl.gridspec.GridSpec.update
+        mpl.gridspec.GridSpec.update = __gridspec_update
+    if not hasattr(mpl.figure.Figure, &#39;add_gridspec&#39;):
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
+        mpl.figure.Figure.__add_gridspec_orig_subplots = None
+    if not hasattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;):
+        mpl.figure.Figure.__add_gridspec_orig_subplots = mpl.figure.Figure.add_gridspec
+        mpl.figure.Figure.add_gridspec = __fig_add_gridspec
+    if not hasattr(plt, &#39;__subplots_orig_subplots&#39;):
+        plt.__subplots_orig_subplots = plt.subplots
+        plt.subplots = __plt_subplots
+    if not hasattr(plt, &#39;__figure_orig_subplots&#39;):
+        plt.__figure_orig_subplots = plt.figure
+        plt.figure = __fig_figure</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.uninstall_subplots"><code class="name flex">
+<span>def <span class="ident">uninstall_subplots</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the subplots module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def uninstall_subplots():
+    &#34;&#34;&#34; Uninstall all code of the subplots module from matplotlib.
+
+    See also
+    --------
+    install_subplots()
+    &#34;&#34;&#34;
+    if hasattr(mpl.axes.Axes, &#39;subplots&#39;):
+        delattr(mpl.axes.Axes, &#39;subplots&#39;)
+    if hasattr(mpl.figure.Figure, &#39;merge&#39;):
+        delattr(mpl.figure.Figure, &#39;merge&#39;)
+    if hasattr(mpl.axes.Axes, &#39;expand&#39;):
+        delattr(mpl.axes.Axes, &#39;expand&#39;)
+    if hasattr(mpl.axes.Axes, &#39;make_polar&#39;):
+        delattr(mpl.axes.Axes, &#39;make_polar&#39;)
+    if hasattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;):
+        mpl.figure.Figure.subplots_adjust = mpl.figure.Figure.__subplots_adjust_orig_subplots
+        delattr(mpl.figure.Figure, &#39;__subplots_adjust_orig_subplots&#39;)
+    if hasattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;):
+        mpl.gridspec.GridSpec.update = mpl.gridspec.GridSpec.__update_orig_subplots
+        delattr(mpl.gridspec.GridSpec, &#39;__update_orig_subplots&#39;)
+    if hasattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;):
+        if mpl.figure.Figure.__add_gridspec_orig_subplots is None:
+            delattr(mpl.figure.Figure, &#39;add_gridspec&#39;)
+        else:
+            mpl.figure.Figure.add_gridspec = mpl.figure.Figure.__add_gridspec_orig_subplots
+            delattr(mpl.figure.Figure, &#39;__add_gridspec_orig_subplots&#39;)
+    if hasattr(plt, &#39;__subplots_orig_subplots&#39;):
+        plt.subplots = plt.__subplots_orig_subplots
+        delattr(plt, &#39;__subplots_orig_subplots&#39;)
+    if hasattr(plt, &#39;__figure_orig_subplots&#39;):
+        plt.figure = plt.__figure_orig_subplots
+        delattr(plt, &#39;__figure_orig_subplots&#39;)</code></pre>
+</details>
+</dd>
+<dt id="plottools.subplots.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the subplots module.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def demo():
+    &#34;&#34;&#34; Run a demonstration of the subplots module.
+    &#34;&#34;&#34;
+    fig, axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])
+    fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
+    fig.suptitle(&#39;axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)&#39;)
+    x = np.linspace(0.0, 2.0, 200)
+    ax = fig.merge(axs[1:3,0:2])
+    ax.plot(x, np.sin(2.0*np.pi*x))
+    ax.text(0.05, 0.1, &#39;ax = fig.merge(axs[1:3,0:2])&#39;, transform=ax.transAxes)
+    subaxs = axs[0,2].subplots(2, 1)
+    subaxs[0].text(0.05, 0.7, &#39;subaxs = axs[0,2].subplots(2, 1)&#39;, transform=subaxs[0].transAxes)
+    subaxs[0].text(0.05, 0.3, &#39;subaxs[0]&#39;, transform=subaxs[0].transAxes)
+    subaxs[1].text(0.05, 0.3, &#39;subaxs[1]&#39;, transform=subaxs[1].transAxes)
+    axs[0,0].plot(x, np.sin(2.0*np.pi*x))
+    axs[0,0].text(0.1, 0.8, &#39;axs[0,0]&#39;, transform=axs[0,0].transAxes)
+    axp = axs[0,1].make_polar()
+    axp.plot(np.pi*x, 1+np.sin(2.0*np.pi*x))
+    axp.text(-0.2, 1, &#39;axp = axs[0,1].make_polar()&#39;, transform=axp.transAxes)
+    axs[2,2].expand(left=-0.1)
+    axs[2,2].text(0.1, 0.6, &#39;axs[2,2].expand(left=-0.1)&#39;, transform=axs[2,2].transAxes)
+    for k in range(1, 3):
+        axs[k,2].plot(x, np.sin(2.0*np.pi*x-k))
+        axs[k,2].text(0.1, 0.8, &#39;axs[%d,2]&#39; % k, transform=axs[k,2].transAxes)
+
+    plt.show()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#figure-margins">Figure margins</a></li>
+<li><a href="#grid-specs">Grid specs</a></li>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#installuninstall-subplots-functions">Install/uninstall subplots functions</a></li>
+<li><a href="#todo">Todo</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge</a></code></li>
+<li><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots</a></code></li>
+<li><code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand</a></code></li>
+<li><code><a title="plottools.subplots.make_polar" href="#plottools.subplots.make_polar">make_polar</a></code></li>
+<li><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots</a></code></li>
+<li><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots</a></code></li>
+<li><code><a title="plottools.subplots.demo" href="#plottools.subplots.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
