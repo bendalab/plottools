@@ -457,7 +457,6 @@ def expand(ax, left=None, right=None, bottom=None, top=None):
     y0 = pos.ymin
     w = pos.width
     h = pos.height
-    print(x0, y0, w, h)
     if not left is None:
         x0 -= left
         w += left
@@ -468,7 +467,6 @@ def expand(ax, left=None, right=None, bottom=None, top=None):
         h += bottom
     if not top is None:
         h += top
-    print(x0, y0, w, h)
     ax.set_position((x0, y0, w, h))
 
 
