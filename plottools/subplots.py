@@ -42,10 +42,13 @@ To replace an axes by subplots, call `ax.subplots()`.
 
 `fig.merge()` and `ax.subplots()` can be arbitrarily combined.
 
+To expand, shrink or move an axes, use `expand()`.
+
 
 ## Axes member functions
 
 - `subplots()`: replace axes by subplots.
+- `expand()`: expand size and modify position of Axes.
 - `make_polar()`: turn an axes into one with polar projection.
 
 
@@ -427,6 +430,48 @@ def subplots(ax, nrows, ncols, **kwargs):
     return axs.squeeze()
 
 
+def expand(ax, left=None, right=None, bottom=None, top=None):
+    """ Expand size and modify position of Axes.
+
+    Note: only works with savefig(), not with plt show()!
+
+    Parameters
+    ----------
+    ax: Axes object
+        The axes to be turned into polar projection.
+    left: float
+        Move left edge of Axes to the left
+        (in figure coordinates, can be negative for right shift).
+    right: float
+        Move right edge of Axes to the right
+        (in figure coordinates, can be negative for left shift).
+    bottom: float
+        Move bottom edge of Axes downwards
+        (in figure coordinates, can be negative for upward shift).
+    top: float
+        Move top edge of Axes to upwards
+        (in figure coordinates, can be negative for downward shift).
+    """
+    pos = ax.get_position()
+    x0 = pos.xmin
+    y0 = pos.ymin
+    w = pos.width
+    h = pos.height
+    print(x0, y0, w, h)
+    if not left is None:
+        x0 -= left
+        w += left
+    if not right is None:
+        w += right
+    if not bottom is None:
+        y0 -= bottom
+        h += bottom
+    if not top is None:
+        h += top
+    print(x0, y0, w, h)
+    ax.set_position((x0, y0, w, h))
+
+
 def make_polar(ax, shiftx=0, shifty=0):
     """ Turn an axes into one with polar projection.
 
@@ -436,7 +481,7 @@ def make_polar(ax, shiftx=0, shifty=0):
     Parameters
     ----------
     ax: Axes object
-        The axes to be turned into polar projection .
+        The axes to be turned into polar projection.
     shiftx: float
         Horizontally shift the axes relative to `ax` figure coordinates.
     shifty: float
@@ -480,6 +525,8 @@ def install_subplots():
         mpl.axes.Axes.subplots = subplots
     if not hasattr(mpl.figure.Figure, 'merge'):
         mpl.figure.Figure.merge = merge
+    if not hasattr(mpl.axes.Axes, 'expand'):
+        mpl.axes.Axes.expand = expand
     if not hasattr(mpl.axes.Axes, 'make_polar'):
         mpl.axes.Axes.make_polar = make_polar
     if not hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
@@ -513,6 +560,8 @@ def uninstall_subplots():
         delattr(mpl.axes.Axes, 'subplots')
     if hasattr(mpl.figure.Figure, 'merge'):
         delattr(mpl.figure.Figure, 'merge')
+    if hasattr(mpl.axes.Axes, 'expand'):
+        delattr(mpl.axes.Axes, 'expand')
     if hasattr(mpl.axes.Axes, 'make_polar'):
         delattr(mpl.axes.Axes, 'make_polar')
     if hasattr(mpl.figure.Figure, '__subplots_adjust_orig_subplots'):
@@ -557,10 +606,12 @@ def demo():
     axp = axs[0,1].make_polar()
     axp.plot(np.pi*x, 1+np.sin(2.0*np.pi*x))
     axp.text(-0.2, 1, 'axp = axs[0,1].make_polar()', transform=axp.transAxes)
+    axs[2,2].expand(left=-0.1)
+    axs[2,2].text(0.1, 0.6, 'axs[2,2].expand(left=-0.1)', transform=axs[2,2].transAxes)
     for k in range(1, 3):
         axs[k,2].plot(x, np.sin(2.0*np.pi*x-k))
-        axs[k,2].text(0.1, 0.8, 'axs[%d,2]' % k, transform=axs[k,-1].transAxes)
-            
+        axs[k,2].text(0.1, 0.8, 'axs[%d,2]' % k, transform=axs[k,2].transAxes)
+
     plt.show()
 
 
