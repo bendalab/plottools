@@ -913,6 +913,8 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
         Coordinates of the output of the opamp.
     posgnd: Pos
         Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
 
     Raises
     ------
@@ -963,8 +965,8 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
-    return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r)
+        ax.text(x+0.1*r, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
 
 
 def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
@@ -1010,6 +1012,8 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
         Coordinates of the output of the opamp.
     posgnd: Pos
         Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
 
     Raises
     ------
@@ -1061,7 +1065,7 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
         ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
-    return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r)
+    return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
 
 
 def node(ax, pos, label='', align='northeast', color=None,
