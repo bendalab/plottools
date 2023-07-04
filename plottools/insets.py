@@ -24,7 +24,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def inset(ax, pos):
+def inset(ax, *pos):
     """
     Add an inset in relative axes coordinates.
 
@@ -33,8 +33,8 @@ def inset(ax, pos):
     ax: matplotlib axes
         Axes to which the inset is added.
     pos: sequence of floats
-        Position of the inset in axes coordinates (x0, y0, x1, y1)
-        each ranging between 0 and 1.
+        Position of the inset in axes coordinates (x0, y0, x1, y1),
+        each ranging between 0 and 1 for position inside `ax`.
 
     Returns
     -------
@@ -56,7 +56,7 @@ def inset(ax, pos):
     ax.set_ylim(-1.5, 4.5)
     ax.set_ylabel('Voltage [mV]')
 
-    axi = ax.inset((0.2, 0.6, 0.9, 0.95))
+    axi = ax.inset(0.2, 0.6, 0.9, 0.95)
     x = np.linspace(0, 1, 50)
     axi.plot(x, x**2, 'r')
     plt.show()
@@ -65,6 +65,8 @@ def inset(ax, pos):
     """
     # inset:
     x0, y0, width, height = ax.get_position().bounds
+    if len(pos) == 1:
+        pos = pos[0]
     axi = ax.get_figure().add_axes([x0+pos[0]*width, y0+pos[1]*height,
                                     (pos[2]-pos[0])*width,
                                     (pos[3]-pos[1])*height])
@@ -86,8 +88,8 @@ def zoomed_inset(ax, pos, box, lines=None, **kwargs):
     ax: matplotlib axes
         Axes to which the inset is added.
     pos: sequence of floats
-        Position of the inset in axes coordinates (x0, y0, x1, y1)
-        each ranging between 0 and 1.
+        Position of the inset in axes coordinates (x0, y0, x1, y1),
+        each ranging between 0 and 1 for position inside `ax`.
     box: sequence of floats
         Zoomed in region in data coordinates (x0, y0, x1, y1)
         used for drawing a frame and setting the limits of the inset.
