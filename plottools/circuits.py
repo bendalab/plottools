@@ -11,6 +11,7 @@ Electrical circuits.
 - `battery_h()`: draw a horizontal battery (voltage source).
 - `battery_v()`: draw a vertical battery (voltage source).
 - `ground()`: draw ground.
+- `ground_u()`: draw ground upwards.
 - `opamp_l()`: draw an operational amplifier with inputs on the left.
 - `opamp_l()`: draw an operational amplifier with inputs on the right.
 - `node()`: draw a node connecting lines.
@@ -278,10 +279,10 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
     if label:
         ha = 'center'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             yy = 0.7*h
             va = 'bottom'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             yy = -0.7*h
             va = 'top'
         elif align == 'center':
@@ -463,7 +464,7 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
             angle += 360
         ha = 'center'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             pos = np.array(((0, 0.8*h),))
             if angle > 45 and angle < 45 + 90:
                 ha = 'right'
@@ -473,7 +474,7 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
                 va = 'bottom'
             elif angle > 45 + 90 and angle < 45 + 180:
                 va = 'top'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             pos = np.array(((0, -0.8*h),))
             if angle > 45 and angle < 45 + 90:
                 ha = 'left'
@@ -557,10 +558,10 @@ def capacitance_h(ax, pos, label='', align='above', lw=None,
         yy = 0
         ha = 'center'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             yy = 0.6*w
             va = 'bottom'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             yy = -0.6*w
             va = 'top'
         else:
@@ -706,10 +707,10 @@ def battery_h(ax, pos, label='', align='above', lw=None, color=None,
         yy = 0
         ha = 'center'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             yy = 0.6*w
             va = 'bottom'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             yy = -0.6*w
             va = 'top'
         else:
@@ -805,7 +806,7 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
     ax: matplotlib axes
         Axes where to draw the battery.
     pos: Pos or 2-tuple of floats
-        x and y-coordinate of position of the center of the battery.
+        x and y-coordinate of position of the center of ground.
     label: string
         Optional label for the battery.
     align: 'left', 'right'
@@ -844,6 +845,8 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
             kwargs[k] = mpl.rcParams['circuits.font'][k]
     w = mpl.rcParams['circuits.scale']*0.8
     h = mpl.rcParams['circuits.scale']*0.17
+    w *= 0.5
+    h *= 0.5
     x, y = pos
     ax.plot([x - 0.5*w, x + 0.5*w], [y + h, y + h],
             zorder=zorder, lw=lw, color=color)
@@ -868,6 +871,82 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
             kwargs['va'] = va
         ax.text(x + xx, y, label, zorder=zorder, **kwargs)
     return Pos(x, y + h)
+
+
+def ground_u(ax, pos, label='', align='right', lw=None, color=None,
+             zorder=None, **kwargs):
+    """ Draw ground upwards.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of ground.
+    label: string
+        Optional label for the battery.
+    align: 'left', 'right'
+        Position the label to the left or to the right of the ground.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the bottom end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.linewidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    w = mpl.rcParams['circuits.scale']*0.8
+    h = mpl.rcParams['circuits.scale']*0.17
+    w *= 0.5
+    h *= 0.5
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y - h, y - h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.06*w, x + 0.06*w], [y + h, y + h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = 'center'
+        va = 'center'
+        if align == 'right':
+            xx = 0.7*w
+            ha = 'left'
+        elif align == 'left':
+            xx = -0.7*w
+            ha = 'right'
+        else:
+            raise ValueError('align must be one of "left" or "right"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - h)
 
 
 def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
@@ -951,10 +1030,10 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     if label:
         ha = 'left'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             yy = 1.4*r
             va = 'bottom'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             yy = -1.4*r
             va = 'top'
         elif align == 'center':
@@ -1050,10 +1129,10 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     if label:
         ha = 'right'
         va = 'center'
-        if align == 'above':
+        if align == 'above' or align == 'top':
             yy = 1.4*r
             va = 'bottom'
-        elif align == 'below':
+        elif align == 'below' or align == 'bottom':
             yy = -1.4*r
             va = 'top'
         elif align == 'center':
@@ -1118,10 +1197,10 @@ def node(ax, pos, label='', align='northeast', color=None,
         elif align == 'left' or 'west' in align:
             xx = -2*r
             ha = 'right'
-        if align == 'above' or 'north' in align:
+        if align == 'above' or align == 'top' or 'north' in align:
             yy = 2*r
             va = 'bottom'
-        elif align == 'below' or 'south' in align:
+        elif align == 'below' or align == 'bottom' or 'south' in align:
             yy = -2*r
             va = 'top'
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
@@ -1307,6 +1386,8 @@ def install_circuits():
         mpl.axes.Axes.battery_v = battery_v
     if not hasattr(mpl.axes.Axes, 'ground'):
         mpl.axes.Axes.ground = ground
+    if not hasattr(mpl.axes.Axes, 'ground_u'):
+        mpl.axes.Axes.ground_u = ground_u
     if not hasattr(mpl.axes.Axes, 'opamp_l'):
         mpl.axes.Axes.opamp_l = opamp_l
     if not hasattr(mpl.axes.Axes, 'opamp_r'):
@@ -1362,6 +1443,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'battery_v')
     if hasattr(mpl.axes.Axes, 'ground'):
         delattr(mpl.axes.Axes, 'ground')
+    if hasattr(mpl.axes.Axes, 'ground_u'):
+        delattr(mpl.axes.Axes, 'ground_u')
     if hasattr(mpl.axes.Axes, 'opamp_l'):
         delattr(mpl.axes.Axes, 'opamp_l')
     if hasattr(mpl.axes.Axes, 'opamp_r'):
