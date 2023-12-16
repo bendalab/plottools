@@ -313,7 +313,8 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
     Parameters
     ----------
     color: matplotlib color specification or 'none'
-        Background color for the whole figure. Sets rcParam `figure.facecolor`.
+        Background color for the whole figure.
+        Sets rcParam `figure.facecolor` and `savefig.facecolor`.
     format: 'png', 'ps', 'pdf', 'svg'
         File format of the saved figure. Sets rcParam `savefig.format`.
     counter: 'A', 'a', or '1'
@@ -345,6 +346,7 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
         mpl.rcParams['pdf.stripfonts'] = stripfonts
     if color is not None:
         mpl.rcParams['figure.facecolor'] = color
+        mpl.rcParams['savefig.facecolor'] = color
     if format is not None:
         mpl.rcParams['savefig.format'] = format
     if dpi is not None:
@@ -358,7 +360,7 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
     mpl.rcParams['pdf.use14corefonts'] = False
     mpl.rcParams['pdf.inheritcolor'] = False
     if cmsize is not None:
-        mpl.rcParams['figure.figsize'] = cm_size(cmsize)
+        mpl.rcParams['figure.figsize'] = cm_size(*cmsize)
 
 
 def install_figure():
