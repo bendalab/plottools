@@ -304,7 +304,8 @@ def latex_include_figures():
     
 
 def figure_params(color=None, format=None, counter=None, dpi=None,
-                  compression=None, fonttype=None, stripfonts=None):
+                  compression=None, fonttype=None, stripfonts=None,
+                  cmsize=None):
     """Set figure parameter.
                   
     Only parameters that are not `None` are updated.
@@ -335,6 +336,8 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
         ugly as a standalone figure, but results in nice plots within
         a latex documents at a fraction of the file size.  Sets
         rcParam `pdf.stripfonts`.
+    cmsize: tuple of floats
+        Default width and height of a figure in centimeters.
     """
     if counter is not None and 'savefig.counter' in mrc._validators:
         mpl.rcParams['savefig.counter'] = counter
@@ -354,6 +357,8 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
         mpl.rcParams['ps.fonttype'] = fonttype
     mpl.rcParams['pdf.use14corefonts'] = False
     mpl.rcParams['pdf.inheritcolor'] = False
+    if cmsize is not None:
+        mpl.rcParams['figure.figsize'] = cm_size(cmsize)
 
 
 def install_figure():
