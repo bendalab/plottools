@@ -229,7 +229,7 @@ For demos of the individual modules in `plottools/`,
 run, for example,
 
 ```py
-python -m plottools.spines
+python -m src.plottools.spines
 ```
 
 ## Howtos
@@ -258,7 +258,7 @@ check whether you get the error when you run the demo of the
 respective module. E.g.
 
 ```py
-python -m plottools.figures
+python -m src.plottools.figures
 ```
 
 Mention the outcome in the issue.
@@ -266,7 +266,7 @@ Mention the outcome in the issue.
 In any case, run
 
 ```py
-python -m plottools.version
+python -m src.plottools.version
 ```
 
 and paste the output ([python], [numpy], [pandas], [matplotlib] and
