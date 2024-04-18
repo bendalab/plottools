@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plottools"
+dynamic = ["version"]
+dependencies = [
+  "numpy",
+  "matplotlib"
+]
+requires-python = ">=3"
+authors = [
+  {name = "Jan Benda", email = "jan.benda@uni-tuebingen.de"}
+]
+maintainers = [
+  {name = "Jan Benda", email = "jan.benda@uni-tuebingen.de"}
+]
+description = "Simplify production of publication-quality figures based on matplotlib."
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.urls]
+Repository    = "https://github.com/bendalab/plottools"
+Documentation = "https://bendalab.github.io/plottools"
+
+[tool.setuptools.dynamic]
+version = {attr = "plottools.version.__version__"}
