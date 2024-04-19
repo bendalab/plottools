@@ -1,28 +1,27 @@
-import __main__
-from plottools.align import demo as align_demo
-from plottools.arrows import demo as arrows_demo
-from plottools.aspect import demo as aspect_demo
-from plottools.axes import demo as axes_demo
-from plottools.circuits import demo as circuits_demo
-from plottools.colors import demo as colors_demo
-from plottools.common import demo as common_demo
-from plottools.figure import demo as figure_demo
-from plottools.grid import demo as grid_demo
-from plottools.insets import demo as insets_demo
-from plottools.labels import demo as labels_demo
-from plottools.legend import demo as legend_demo
-from plottools.neurons import demo as neurons_demo
-from plottools.params import demo as params_demo
-from plottools.scalebars import demo as scalebars_demo
-from plottools.significance import demo as significance_demo
-from plottools.spines import demo as spines_demo
-from plottools.spines import install_spines, uninstall_spines
-from plottools.styles import demo as styles_demo
-from plottools.subplots import demo as subplots_demo
-from plottools.tag import demo as tag_demo
-from plottools.text import demo as text_demo
-from plottools.ticks import demo as ticks_demo
-from plottools.version import __version__, versions
+from src.plottools.align import demo as align_demo
+from src.plottools.arrows import demo as arrows_demo
+from src.plottools.aspect import demo as aspect_demo
+from src.plottools.axes import demo as axes_demo
+from src.plottools.circuits import demo as circuits_demo
+from src.plottools.colors import demo as colors_demo
+from src.plottools.common import demo as common_demo
+from src.plottools.figure import demo as figure_demo
+from src.plottools.grid import demo as grid_demo
+from src.plottools.insets import demo as insets_demo
+from src.plottools.labels import demo as labels_demo
+from src.plottools.legend import demo as legend_demo
+from src.plottools.neurons import demo as neurons_demo
+from src.plottools.params import demo as params_demo
+from src.plottools.scalebars import demo as scalebars_demo
+from src.plottools.significance import demo as significance_demo
+from src.plottools.spines import demo as spines_demo
+from src.plottools.spines import install_spines, uninstall_spines
+from src.plottools.styles import demo as styles_demo
+from src.plottools.subplots import demo as subplots_demo
+from src.plottools.tag import demo as tag_demo
+from src.plottools.text import demo as text_demo
+from src.plottools.ticks import demo as ticks_demo
+from src.plottools.version import __version__, versions
 
 
 if __name__ == "__main__":

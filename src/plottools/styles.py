@@ -114,7 +114,7 @@ import sys
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from plottools.colors import palettes, lighter, darker
+from .colors import palettes, lighter, darker
 
 
 def style(orig_style, **kwargs):
