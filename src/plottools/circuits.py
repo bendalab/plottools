@@ -1480,7 +1480,7 @@ def demo():
     c2l, c2r = ax.capacitance_h((-1, -3), r'$C_2$', 'below')
     ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
                 c2r, e2r.rights(0.5), e2r))
-    op1n, op1p, op1o, op1g, op1p = ax.opamp_l((4, 2), r'$OP1$')
+    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((4, 2), r'$OP1$')
     n1n = ax.node(op1n.lefts(2))
     n1p = ax.node(op1p.lefts(2))
     n1o = ax.node(op1o.rights(1))
@@ -1489,7 +1489,7 @@ def demo():
     ax.connect((op1p, n1p))
     ax.connect((op1o, n1o))
     ax.connect((op1g, gnd1))
-    op2n, op2p, op2o, op2g, op2p = ax.opamp_r((4, -2), r'$OP2$')
+    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((4, -2), r'$OP2$')
     n2n = ax.node(op2n.rights(1))
     n2p = ax.node(op2p.rights(1))
     n2o = ax.node(op2o.lefts(2))
