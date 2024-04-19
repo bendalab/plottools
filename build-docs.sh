@@ -8,6 +8,7 @@ for cmd in pdoc3; do
 done
 
 PACKAGE="plottools"
+PACKAGESRC="src/$PACKAGE"
 PACKAGEROOT="$(dirname "$(realpath "$0")")"
 BUILDROOT="$PACKAGEROOT/site"
 APIIMAGEFOLDER='figures'
@@ -32,7 +33,7 @@ echo "Building API reference docs for $PACKAGE"
 echo
 
 cd "$PACKAGEROOT"
-pdoc3 --html --config sort_identifiers=False --output-dir "$BUILDROOT/api-tmp" $PACKAGE
+pdoc3 --html --config sort_identifiers=False --output-dir "$BUILDROOT/api-tmp" $PACKAGESRC
 mkdir "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER"
 cp "$APIIMAGES/"*.png "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER/"
 mv "$BUILDROOT/api-tmp/$PACKAGE" "$BUILDROOT/api"
