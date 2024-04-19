@@ -34,7 +34,6 @@ echo
 cd "$PACKAGEROOT"
 pdoc3 --html --config sort_identifiers=False --output-dir "$BUILDROOT/api-tmp" $PACKAGE
 mkdir "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER"
-pwd
 cp "$APIIMAGES/"*.png "$BUILDROOT/api-tmp/$PACKAGE/$APIIMAGEFOLDER/"
 mv "$BUILDROOT/api-tmp/$PACKAGE" "$BUILDROOT/api"
 rmdir "$BUILDROOT/api-tmp"
