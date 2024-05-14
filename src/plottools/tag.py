@@ -121,53 +121,62 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if minor_index is None:
             minor_index = 0
         label_list = []
-        for k, axs in enumerate(axes):
+        k = 0
+        for axs in axes:
             if isinstance(axs, (list, tuple, np.ndarray)):
-                for j in range(len(axs)):
-                    mlabel = str(minor_label) if minor_label else str(lables)
-                    mlabel = mlabel.replace('%a', chr(ord('a') + major_index + k))
-                    mlabel = mlabel.replace('%A', chr(ord('A') + major_index + k))
-                    mlabel = mlabel.replace('%1', chr(ord('1') + major_index + k))
-                    mlabel = mlabel.replace('%i', romans_lower[major_index + k])
-                    mlabel = mlabel.replace('%I', romans_upper[major_index + k]) 
-                    mlabel = mlabel.replace('%ma', chr(ord('a') + minor_index + j))
-                    mlabel = mlabel.replace('%mA', chr(ord('A') + minor_index + j))
-                    mlabel = mlabel.replace('%m1', chr(ord('1') + minor_index + j))
-                    mlabel = mlabel.replace('%mi', romans_lower[minor_index + j])
-                    mlabel = mlabel.replace('%mI', romans_upper[minor_index + j]) 
-                    label_list.append(mlabel)
-                minor_index = 0
-            else:
+                j = 0
+                for ax in axs:
+                    if ax.get_visible():
+                        mlabel = str(minor_label) if minor_label else str(lables)
+                        mlabel = mlabel.replace('%a', chr(ord('a') + major_index + k))
+                        mlabel = mlabel.replace('%A', chr(ord('A') + major_index + k))
+                        mlabel = mlabel.replace('%1', chr(ord('1') + major_index + k))
+                        mlabel = mlabel.replace('%i', romans_lower[major_index + k])
+                        mlabel = mlabel.replace('%I', romans_upper[major_index + k]) 
+                        mlabel = mlabel.replace('%ma', chr(ord('a') + minor_index + j))
+                        mlabel = mlabel.replace('%mA', chr(ord('A') + minor_index + j))
+                        mlabel = mlabel.replace('%m1', chr(ord('1') + minor_index + j))
+                        mlabel = mlabel.replace('%mi', romans_lower[minor_index + j])
+                        mlabel = mlabel.replace('%mI', romans_upper[minor_index + j]) 
+                        label_list.append(mlabel)
+                        j += 1
+                if j > 0:
+                    minor_index = 0
+                    k += 1
+            elif axs.get_visible():
                 label = labels.replace('%a', chr(ord('a') + major_index + k))
                 label = label.replace('%A', chr(ord('A') + major_index + k))
                 label = label.replace('%1', chr(ord('1') + major_index + k))
                 label = label.replace('%i', romans_lower[major_index + k])
                 label = label.replace('%I', romans_upper[major_index + k]) 
                 label_list.append(label)
-        fig.tags_major_index = major_index + len(axes)
+                k += 1
+        fig.tags_major_index = major_index + k
     else:
         label_list = labels
     # flatten axes:
     axes_list = []
     for axs in axes:
         if isinstance(axs, (list, tuple, np.ndarray)):
-            axes_list.extend(axs)
-        else:
+            for ax in axs:
+                if ax.get_visible():
+                    axes_list.append(ax)
+        elif axs.get_visible():
             axes_list.append(axs)
     # font settings:
     fkwargs = dict(**mpl.rcParams['figure.tags.font'])
     fkwargs.update(**kwargs)
     # get axes offsets:
     xo = -1.0
-    yo = 1.0
+    yo = +1.0
     for ax, l in zip(axes_list, label_list):
         if isinstance(ax, int):
             ax = fig.get_axes()[ax]
         x0, y0, width, height = ax.get_position(original=True).bounds
         if x0 <= -xo:
             xo = -x0
-        if 1.0-y0-height < yo:
-            yo = 1.0-y0-height
+        if 1.0 - y0 - height < yo:
+            yo = 1.0 - y0 - height
     # get figure size in pixel:
     w, h = fig.get_window_extent().bounds[2:]
     ppi = 72.0 # points per inch:
