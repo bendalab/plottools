@@ -1,0 +1,4108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>plottools.circuits API documentation</title>
+<meta name="description" content="Electrical circuits …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.circuits</code></h1>
+</header>
+<section id="section-intro">
+<p>Electrical circuits.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.circuits.resistance_h" href="#plottools.circuits.resistance_h">resistance_h()</a></code>: draw a horizontal resistance.</li>
+<li><code><a title="plottools.circuits.resistance_v" href="#plottools.circuits.resistance_v">resistance_v()</a></code>: draw a vertical resistance.</li>
+<li><code><a title="plottools.circuits.resistance" href="#plottools.circuits.resistance">resistance()</a></code>: draw an arbitrarily rotated resistance.</li>
+<li><code><a title="plottools.circuits.capacitance_h" href="#plottools.circuits.capacitance_h">capacitance_h()</a></code>: draw a horizontal capacitance.</li>
+<li><code><a title="plottools.circuits.capacitance_v" href="#plottools.circuits.capacitance_v">capacitance_v()</a></code>: draw a vertical capacitance.</li>
+<li><code><a title="plottools.circuits.battery_h" href="#plottools.circuits.battery_h">battery_h()</a></code>: draw a horizontal battery (voltage source).</li>
+<li><code><a title="plottools.circuits.battery_v" href="#plottools.circuits.battery_v">battery_v()</a></code>: draw a vertical battery (voltage source).</li>
+<li><code><a title="plottools.circuits.ground" href="#plottools.circuits.ground">ground()</a></code>: draw ground.</li>
+<li><code><a title="plottools.circuits.ground_u" href="#plottools.circuits.ground_u">ground_u()</a></code>: draw ground upwards.</li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l()</a></code>: draw an operational amplifier with inputs on the left.</li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l()</a></code>: draw an operational amplifier with inputs on the right.</li>
+<li><code><a title="plottools.circuits.node" href="#plottools.circuits.node">node()</a></code>: draw a node connecting lines.</li>
+<li><code><a title="plottools.circuits.connect" href="#plottools.circuits.connect">connect()</a></code>: draw lines directly connecting circuit elements.</li>
+<li><code><a title="plottools.circuits.connect_straight" href="#plottools.circuits.connect_straight">connect_straight()</a></code>: draw straight lines connecting circuit elements.</li>
+</ul>
+<h2 id="classes">Classes</h2>
+<ul>
+<li><code>class <a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code>: x and y coordinate of a circuit element.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.circuits.circuits_params" href="#plottools.circuits.circuits_params">circuits_params()</a></code>: set rc settings for circuits.</li>
+</ul>
+<p><code>matplotlib.rcParams</code> defined by the circuits module:</p>
+<pre><code class="language-py">circuits.scale: 1
+circuits.connectwidth: 1
+circuits.linewidth: 2
+circuits.color: 'black'
+circuits.facecolor: 'white'
+circuits.alpha: 1
+circuits.zorder: 100
+circuits.font: dict()
+</code></pre>
+<h2 id="installuninstall-circuits-functions">Install/uninstall circuits functions</h2>
+<p>You usually do not need to call these functions. Upon loading the circuits
+module, <code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code>: install functions of the circuits module in matplotlib.</li>
+<li><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits()</a></code>: uninstall all code of the circuits module from matplotlib.</li>
+</ul>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Electrical circuits.
+
+## Axes member functions
+
+- `resistance_h()`: draw a horizontal resistance.
+- `resistance_v()`: draw a vertical resistance.
+- `resistance()`: draw an arbitrarily rotated resistance.
+- `capacitance_h()`: draw a horizontal capacitance.
+- `capacitance_v()`: draw a vertical capacitance.
+- `battery_h()`: draw a horizontal battery (voltage source).
+- `battery_v()`: draw a vertical battery (voltage source).
+- `ground()`: draw ground.
+- `ground_u()`: draw ground upwards.
+- `opamp_l()`: draw an operational amplifier with inputs on the left.
+- `opamp_l()`: draw an operational amplifier with inputs on the right.
+- `node()`: draw a node connecting lines.
+- `connect()`: draw lines directly connecting circuit elements.
+- `connect_straight()`: draw straight lines connecting circuit elements.
+
+
+## Classes
+
+- `class Pos`: x and y coordinate of a circuit element.
+
+
+## Settings
+
+- `circuits_params()`: set rc settings for circuits.
+
+`matplotlib.rcParams` defined by the circuits module:
+```py
+circuits.scale: 1
+circuits.connectwidth: 1
+circuits.linewidth: 2
+circuits.color: &#39;black&#39;
+circuits.facecolor: &#39;white&#39;
+circuits.alpha: 1
+circuits.zorder: 100
+circuits.font: dict()
+```
+
+
+## Install/uninstall circuits functions
+
+You usually do not need to call these functions. Upon loading the circuits
+module, `install_circuits()` is called automatically.
+
+- `install_circuits()`: install functions of the circuits module in matplotlib.
+- `uninstall_circuits()`: uninstall all code of the circuits module from matplotlib.
+
+&#34;&#34;&#34;
+
+import numpy as np
+import matplotlib as mpl
+import matplotlib.transforms as mpt
+import matplotlib.rcsetup as mrc
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle, Circle, Polygon
+from .rcsetup import _validate_fontdict
+
+
+class Pos(tuple):
+    &#34;&#34;&#34; x and y coordinate of a circuit element.
+    &#34;&#34;&#34;
+
+    def __new__(cls, x, y):
+        return tuple.__new__(cls, (x, y))
+
+    def x(self):
+        &#34;&#34;&#34; x coordinate of the circuit element.
+
+        Returns
+        -------
+        x: float
+            x-coordinate
+        &#34;&#34;&#34;
+        return self[0]
+
+    def y(self):
+        &#34;&#34;&#34; y coordinate of the circuit element.
+
+        Returns
+        -------
+        y: float
+            y-coordinate
+        &#34;&#34;&#34;
+        return self[1]
+
+    def up(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta)
+
+    def down(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta)
+
+    def left(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta, self[1])
+
+    def right(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta, self[1])
+
+    def ups(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def downs(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def lefts(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])
+
+    def rights(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])
+
+
+def resistance_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+                 color=None, facecolor=None, alpha=None, zorder=None,
+                 **kwargs):
+    &#34;&#34;&#34; Draw a horizontal resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance bar.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    label: string
+        Optional label for the resistance.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the resistance.
+    posr: Pos
+        Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.7*h
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.7*h
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)
+
+
+def resistance_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+                 facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    label: string
+        Optional label for the resistance.
+    align: &#39;left&#39;, &#39;right&#39;, &#39;center&#39;
+        Position the label to th left, right or in the center of the resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the resistance.
+    post: Pos
+        Coordinates of the top end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        elif align == &#39;center&#39;:
+            xx = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34;, &#34;right&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
+
+
+def resistance(ax, pos, angle=0, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+               color=None, facecolor=None, alpha=None, zorder=None,
+               **kwargs):
+    &#34;&#34;&#34;Draw an arbitrarily rotated resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance bar.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    angle: float
+        Rotation angle in degrees.
+    label: string
+        Optional label for the resistance.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the
+        non-rotated resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the resistance.
+    posr: Pos
+        Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        if angle &lt; 0:
+            angle += 360
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            pos = np.array(((0, 0.8*h),))
+            if angle &gt; 45 and angle &lt; 45 + 90:
+                ha = &#39;right&#39;
+            elif angle &gt; 45 + 180 and angle &lt; 45 + 270:
+                ha = &#39;left&#39;
+            if angle &gt; 45 + 270 and angle &lt; 45:
+                va = &#39;bottom&#39;
+            elif angle &gt; 45 + 90 and angle &lt; 45 + 180:
+                va = &#39;top&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            pos = np.array(((0, -0.8*h),))
+            if angle &gt; 45 and angle &lt; 45 + 90:
+                ha = &#39;left&#39;
+            elif angle &gt; 45 + 180 and angle &lt; 45 + 270:
+                ha = &#39;right&#39;
+            if angle &gt; 45 + 270 and angle &lt; 45:
+                va = &#39;top&#39;
+            elif angle &gt; 45 + 90 and angle &lt; 45 + 180:
+                va = &#39;bottom&#39;
+        elif align == &#39;center&#39;:
+            pos = np.array(((0, 0),))
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        pos = transform.transform(pos)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(pos[0,0], pos[0,1], label, zorder=zorder+1, **kwargs)
+    nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
+    nodes = transform.transform(nodes)
+    return Pos(*nodes[0,:]),  Pos(*nodes[1,:])
+
+
+def capacitance_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+                  color=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a horizontal capacitance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the capacitance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the capacitance.
+    label: string
+        Optional label for the capacitance.
+    align: &#39;above&#39;, &#39;below&#39;
+        Position the label above or below the capacitance.
+    lw: float, int
+        Linewidth for drawing the outline of the capacitance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the capacitance.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the capacitance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the capacitance.
+    posr: Pos
+        Coordinates of the right end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.6*w
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.6*w
+            va = &#39;top&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34; or &#34;bottom&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
+    return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
+
+
+def capacitance_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None,
+                  color=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical capacitance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the capacitance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the capacitance.
+    label: string
+        Optional label for the capacitance.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the capacitance.
+    lw: float, int
+        Linewidth for drawing the outline of the capacitance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the capacitance.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the capacitance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the capacitance.
+    post: Pos
+        Coordinates of the top end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.5*w, x + 0.5*w], [y - 0.5*h, y - 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.6*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.6*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
+
+
+def battery_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+              zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a horizontal battery (voltage source).
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the battery.
+    label: string
+        Optional label for the battery.
+    align: &#39;above&#39;, &#39;below&#39;
+        Position the label above or below the battery.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the battery.
+    posr: Pos
+        Coordinates of the right end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*4/3
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.25*w, y + 0.25*w],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.6*w
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.6*w
+            va = &#39;top&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34; or &#34;bottom&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
+    return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)
+
+
+def battery_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+              zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical battery (voltage source).
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the battery.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the battery.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the battery.
+    post: Pos
+        Coordinates of the top end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*4/3
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.25*w, x + 0.25*w], [y - 0.5*h, y - 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.6*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.6*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
+
+
+def ground(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+           zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw ground.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of ground.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the ground.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the top end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*0.8
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.17
+    w *= 0.5
+    h *= 0.5
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + h, y + h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.06*w, x + 0.06*w], [y - h, y - h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y + h)
+
+
+def ground_u(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+             zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw ground upwards.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of ground.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the ground.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the bottom end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*0.8
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.17
+    w *= 0.5
+    h *= 0.5
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y - h, y - h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.06*w, x + 0.06*w], [y + h, y + h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - h)
+
+
+def opamp_l(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+            facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw an operational amplifier with inputs on the left.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the opamp.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the opamp.
+    label: string
+        Optional label for the opamp.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the opamp.
+    lw: float, int
+        Linewidth for drawing the outline of the opamp.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the opamp.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the opamp.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the opamp and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pospos: Pos
+        Coordinates of the positive (upper) input of the opamp.
+    posneg: Pos
+        Coordinates of the negative (lower) input of the opamp.
+    posout: Pos
+        Coordinates of the output of the opamp.
+    posgnd: Pos
+        Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    a = mpl.rcParams[&#39;circuits.scale&#39;]*5/3
+    r = a/2/np.sqrt(3)
+    x, y = pos
+    xy = np.array([[x - r, y - 0.5*a], [x - r, y + 0.5*a], [x + 2*r, y]])
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder, edgecolor=&#39;none&#39;,
+                         facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder+1, edgecolor=color,
+                         facecolor=&#39;none&#39;, lw=lw))
+    ax.text(x - 0.8*r, y + 0.21*a, &#39;$+$&#39;, ha=&#39;left&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    ax.text(x - 0.8*r, y - 0.19*a, &#39;$-$&#39;, ha=&#39;left&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    if label:
+        ha = &#39;left&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 1.4*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -1.4*r
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x+0.1*r, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
+
+
+def opamp_r(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+            facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw an operational amplifier with inputs on the right.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the opamp.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the opamp.
+    label: string
+        Optional label for the opamp.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the opamp.
+    lw: float, int
+        Linewidth for drawing the outline of the opamp.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the opamp.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the opamp.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the opamp and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pospos: Pos
+        Coordinates of the positive (upper) input of the opamp.
+    posneg: Pos
+        Coordinates of the negative (lower) input of the opamp.
+    posout: Pos
+        Coordinates of the output of the opamp.
+    posgnd: Pos
+        Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    a = mpl.rcParams[&#39;circuits.scale&#39;]*5/3
+    r = a/2/np.sqrt(3)
+    x, y = pos
+    xy = np.array([[x + r, y - 0.5*a], [x + r, y + 0.5*a], [x - 2*r, y]])
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder, edgecolor=&#39;none&#39;,
+                         facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder+1, edgecolor=color,
+                         facecolor=&#39;none&#39;, lw=lw))
+    ax.text(x + 0.8*r, y + 0.21*a, &#39;$+$&#39;, ha=&#39;right&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    ax.text(x + 0.8*r, y - 0.19*a, &#39;$-$&#39;, ha=&#39;right&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    if label:
+        ha = &#39;right&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 1.4*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -1.4*r
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
+
+
+def node(ax, pos, label=&#39;&#39;, align=&#39;northeast&#39;, color=None,
+         zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a node connecting lines.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the node.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the node.
+    label: string
+        Optional label for the node.
+    align: &#39;left&#39;, &#39;right&#39;, &#39;above&#39;, &#39;below&#39;, &#39;north&#39;, &#39;south&#39;, &#39;west&#39;, &#39;east&#39;, &#39;northwest&#39;, &#39;northeast&#39;, &#39;southwest&#39;, &#39;southeast&#39;
+        Position of the label relative to the node.
+    color matplotlib color
+        Color of the node.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the node.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the node.
+    &#34;&#34;&#34;
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    r = mpl.rcParams[&#39;circuits.scale&#39;]*0.25/3
+    ax.add_patch(Circle(pos, r, zorder=zorder, edgecolor=&#39;none&#39;,
+                        facecolor=color))
+    if label:
+        xx = 0
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39; or &#39;east&#39; in align:
+            xx = 2*r
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39; or &#39;west&#39; in align:
+            xx = -2*r
+            ha = &#39;right&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39; or &#39;north&#39; in align:
+            yy = 2*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39; or &#39;south&#39; in align:
+            yy = -2*r
+            va = &#39;top&#39;
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(pos[0], pos[1])
+
+
+def connect(ax, nodes, lw=None, color=None, zorder=None):
+    &#34;&#34;&#34; Draw horizontal and vertical lines connecting circuit elements.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the connections.
+    nodes: list of Pos or 2-tuple of floats
+        x and y-coordinates of positions that should be connected.
+        If an element is `None` then leave a gap between the neighboring nodes.
+        Makes only horizontal and vertical connection lines in
+        counter-clockwise direction.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.connectwidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    xs = []
+    ys = []
+    px = None
+    py = None
+    for n in nodes:
+        if n is None:
+            xs.append(np.nan)
+            ys.append(np.nan)
+            px = None
+            py = None
+        else:
+            x = n[0]
+            y = n[1]
+            if px is None or x == px or y == py:
+                xs.append(x)
+                ys.append(y)
+            else:
+                if (x - px)*(y - py) &gt; 0:
+                    xs.extend((x, x))
+                    ys.extend((py, y))
+                else:
+                    xs.extend((px, x))
+                    ys.extend((y, y))
+            px = x
+            py = y
+    ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)
+
+
+def connect_straight(ax, nodes, lw=None, color=None, zorder=None):
+    &#34;&#34;&#34; Draw straight lines connecting circuit elements.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the connections.
+    nodes: list of Pos or 2-tuple of floats
+        x and y-coordinates of positions that should be connected.
+        If an element is `None` then leave a gap between the neighboring nodes.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.connectwidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    xs = []
+    ys = []
+    for n in nodes:
+        if n is None:
+            xs.append(np.nan)
+            ys.append(np.nan)
+        else:
+            x = n[0]
+            y = n[1]
+            xs.append(x)
+            ys.append(y)
+    ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)
+
+
+def circuits_params(scale=None, connectwidth=None, linewidth=None,
+                    color=None, facecolor=None, alpha=None,
+                    zorder=None, font=None):
+    &#34;&#34;&#34;Set rc settings for circuits.
+                  
+    Only parameters that are not `None` are updated.
+
+    Parameters
+    ----------
+    scale: float
+        Size of circuit elements as the height of a vertical resistance
+        in x/y coordinate units.
+    connectwidth: int, float
+        Line width of lines connecting circuit elements.
+        Set rcParam `circuits.connectwidth`.
+    linewidth: int, float
+        Line width used for drawing circuit elements.
+        Set rcParam `circuits.linewidth`.
+    color: matplotlib color
+        Color of the connections and circuit elements.
+        Set rcParam `circuits.color`.
+    facecolor: matplotlib color
+        Face color for closed circuit elements like resistances or opamps.
+        Set rcParam `circuits.facecolor`.
+    alpha: float
+        Alpha value for face color for closed circuit elements like
+        resistances or opamps.
+        Set rcParam `circuits.alpha`.
+    zorder: int
+        Zorder for all circuit elements drawn.
+        Set rcParam `circuits.zorder`.
+    font: dict
+        Dictionary with font settings used for labeling circuit elements
+        (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+         Set rcParam `circuits.font`.
+    &#34;&#34;&#34;
+    if scale is not None and &#39;circuits.scale&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.scale&#39;] = scale
+    if connectwidth is not None and &#39;circuits.connectwidth&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.connectwidth&#39;] = connectwidth
+    if linewidth is not None and &#39;circuits.linewidth&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.linewidth&#39;] = linewidth
+    if color is not None and &#39;circuits.color&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.color&#39;] = color
+    if facecolor is not None and &#39;circuits.facecolor&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.facecolor&#39;] = facecolor
+    if alpha is not None and &#39;circuits.alpha&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.alpha&#39;] = alpha
+    if zorder is not None and &#39;circuits.zorder&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.zorder&#39;] = zorder
+    if font is not None and &#39;circuits.font&#39; in mrc._validators:
+        mpl.rcParams.update({&#39;circuits.font&#39;: font})
+
+
+def install_circuits():
+    &#34;&#34;&#34; Install circuits functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    uninstall_circuits()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.axes.Axes, &#39;resistance_h&#39;):
+        mpl.axes.Axes.resistance_h = resistance_h
+    if not hasattr(mpl.axes.Axes, &#39;resistance_v&#39;):
+        mpl.axes.Axes.resistance_v = resistance_v
+    if not hasattr(mpl.axes.Axes, &#39;resistance&#39;):
+        mpl.axes.Axes.resistance = resistance
+    if not hasattr(mpl.axes.Axes, &#39;capacitance_h&#39;):
+        mpl.axes.Axes.capacitance_h = capacitance_h
+    if not hasattr(mpl.axes.Axes, &#39;capacitance_v&#39;):
+        mpl.axes.Axes.capacitance_v = capacitance_v
+    if not hasattr(mpl.axes.Axes, &#39;battery_h&#39;):
+        mpl.axes.Axes.battery_h = battery_h
+    if not hasattr(mpl.axes.Axes, &#39;battery_v&#39;):
+        mpl.axes.Axes.battery_v = battery_v
+    if not hasattr(mpl.axes.Axes, &#39;ground&#39;):
+        mpl.axes.Axes.ground = ground
+    if not hasattr(mpl.axes.Axes, &#39;ground_u&#39;):
+        mpl.axes.Axes.ground_u = ground_u
+    if not hasattr(mpl.axes.Axes, &#39;opamp_l&#39;):
+        mpl.axes.Axes.opamp_l = opamp_l
+    if not hasattr(mpl.axes.Axes, &#39;opamp_r&#39;):
+        mpl.axes.Axes.opamp_r = opamp_r
+    if not hasattr(mpl.axes.Axes, &#39;node&#39;):
+        mpl.axes.Axes.node = node
+    if not hasattr(mpl.axes.Axes, &#39;connect&#39;):
+        mpl.axes.Axes.connect = connect
+    if not hasattr(mpl.axes.Axes, &#39;connect_straight&#39;):
+        mpl.axes.Axes.connect_straight = connect_straight
+    # add circuits parameter to rc configuration:
+    if &#39;circuits.scale&#39; not in mpl.rcParams:
+        mrc._validators[&#39;circuits.scale&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.connectwidth&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.linewidth&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.color&#39;] = mrc.validate_string
+        mrc._validators[&#39;circuits.facecolor&#39;] = mrc.validate_string
+        mrc._validators[&#39;circuits.alpha&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.zorder&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.font&#39;] = _validate_fontdict
+        mpl.rcParams.update({&#39;circuits.scale&#39;: 1,
+                             &#39;circuits.connectwidth&#39;: 1,
+                             &#39;circuits.linewidth&#39;: 2,
+                             &#39;circuits.color&#39;: &#39;black&#39;,
+                             &#39;circuits.facecolor&#39;: &#39;white&#39;,
+                             &#39;circuits.alpha&#39;: 1,
+                             &#39;circuits.zorder&#39;: 100,
+                             &#39;circuits.font&#39;: dict()})
+
+        
+def uninstall_circuits():
+    &#34;&#34;&#34; Uninstall circuits functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_circuits()`.
+
+    See also
+    --------
+    install_circuits()
+    &#34;&#34;&#34;
+    if hasattr(mpl.axes.Axes, &#39;resistance_h&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;resistance_v&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;resistance&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance&#39;)
+    if hasattr(mpl.axes.Axes, &#39;capacitance_h&#39;):
+        delattr(mpl.axes.Axes, &#39;capacitance_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;capacitance_v&#39;):
+        delattr(mpl.axes.Axes, &#39;capacitance_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;battery_h&#39;):
+        delattr(mpl.axes.Axes, &#39;battery_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;battery_v&#39;):
+        delattr(mpl.axes.Axes, &#39;battery_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;ground&#39;):
+        delattr(mpl.axes.Axes, &#39;ground&#39;)
+    if hasattr(mpl.axes.Axes, &#39;ground_u&#39;):
+        delattr(mpl.axes.Axes, &#39;ground_u&#39;)
+    if hasattr(mpl.axes.Axes, &#39;opamp_l&#39;):
+        delattr(mpl.axes.Axes, &#39;opamp_l&#39;)
+    if hasattr(mpl.axes.Axes, &#39;opamp_r&#39;):
+        delattr(mpl.axes.Axes, &#39;opamp_r&#39;)
+    if hasattr(mpl.axes.Axes, &#39;node&#39;):
+        delattr(mpl.axes.Axes, &#39;node&#39;)
+    if hasattr(mpl.axes.Axes, &#39;connect&#39;):
+        delattr(mpl.axes.Axes, &#39;connect&#39;)
+    if hasattr(mpl.axes.Axes, &#39;connect_straight&#39;):
+        delattr(mpl.axes.Axes, &#39;connect_straight&#39;)
+    mrc._validators.pop(&#39;circuits.scale&#39;, None)
+    mrc._validators.pop(&#39;circuits.connectwidth&#39;, None)
+    mrc._validators.pop(&#39;circuits.linewidth&#39;, None)
+    mrc._validators.pop(&#39;circuits.color&#39;, None)
+    mrc._validators.pop(&#39;circuits.facecolor&#39;, None)
+    mrc._validators.pop(&#39;circuits.alpha&#39;, None)
+    mrc._validators.pop(&#39;circuits.zorder&#39;, None)
+    mrc._validators.pop(&#39;circuits.font&#39;, None)
+
+
+install_circuits()
+            
+    
+def demo():
+    fig, ax = plt.subplots()
+    e1b, e1t = ax.battery_v((0, 1), r&#39;$E_1$&#39;)
+    r1b, r1t = ax.resistance_v((e1t[0], 3), r&#39;$R_1$&#39;)
+    c1b, c1t = ax.capacitance_v((-2, 2), r&#39;$C_1$&#39;)
+    ax.connect((e1t, r1b, None, r1t, r1t.ups(0.5), c1t, None,
+                c1b, e1b.downs(0.5), e1b))
+    e2l, e2r = ax.battery_h((0, -1), r&#39;$E_2$&#39;, &#39;below&#39;)
+    r2l, r2r = ax.resistance_h((-2, e2l.y()), r&#39;$R_2$&#39;, &#39;below&#39;)
+    c2l, c2r = ax.capacitance_h((-1, -3), r&#39;$C_2$&#39;, &#39;below&#39;)
+    ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
+                c2r, e2r.rights(0.5), e2r))
+    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((4, 2), r&#39;$OP1$&#39;)
+    n1n = ax.node(op1n.lefts(2))
+    n1p = ax.node(op1p.lefts(2))
+    n1o = ax.node(op1o.rights(1))
+    gnd1 = ax.ground(op1g.downs(1), r&#39;$GND_1$&#39;)
+    ax.connect((op1n, n1n))
+    ax.connect((op1p, n1p))
+    ax.connect((op1o, n1o))
+    ax.connect((op1g, gnd1))
+    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((4, -2), r&#39;$OP2$&#39;)
+    n2n = ax.node(op2n.rights(1))
+    n2p = ax.node(op2p.rights(1))
+    n2o = ax.node(op2o.lefts(2))
+    gnd2 = ax.ground(op2g.downs(1), r&#39;$GND_2$&#39;, &#39;left&#39;)
+    ax.connect((op2n, n2n))
+    ax.connect((op2p, n2p))
+    ax.connect((op2o, n2o))
+    ax.connect((op2g, gnd2))
+    ax.set_aspect(&#39;equal&#39;)
+    plt.show()
+
+
+if __name__ == &#34;__main__&#34;:
+    demo()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.circuits.resistance_h"><code class="name flex">
+<span>def <span class="ident">resistance_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance bar.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the resistance.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt>facecolor matplotlib color</dt>
+<dt>Color for filling the resistance.</dt>
+<dt>Defaults to <code>circuits.facecolor</code> rcParams settings.</dt>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the resistance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resistance_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+                 color=None, facecolor=None, alpha=None, zorder=None,
+                 **kwargs):
+    &#34;&#34;&#34; Draw a horizontal resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance bar.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    label: string
+        Optional label for the resistance.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the resistance.
+    posr: Pos
+        Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.7*h
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.7*h
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.resistance_v"><code class="name flex">
+<span>def <span class="ident">resistance_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right', 'center'</code></dt>
+<dd>Position the label to th left, right or in the center of the resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the resistance.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt>facecolor matplotlib color</dt>
+<dt>Color for filling the resistance.</dt>
+<dt>Defaults to <code>circuits.facecolor</code> rcParams settings.</dt>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the resistance.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resistance_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+                 facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    label: string
+        Optional label for the resistance.
+    align: &#39;left&#39;, &#39;right&#39;, &#39;center&#39;
+        Position the label to th left, right or in the center of the resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the resistance.
+    post: Pos
+        Coordinates of the top end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        elif align == &#39;center&#39;:
+            xx = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34;, &#34;right&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.resistance"><code class="name flex">
+<span>def <span class="ident">resistance</span></span>(<span>ax, pos, angle=0, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an arbitrarily rotated resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance bar.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>angle</code></strong> :&ensp;<code>float</code></dt>
+<dd>Rotation angle in degrees.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the
+non-rotated resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the resistance.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt>facecolor matplotlib color</dt>
+<dt>Color for filling the resistance.</dt>
+<dt>Defaults to <code>circuits.facecolor</code> rcParams settings.</dt>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the resistance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resistance(ax, pos, angle=0, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+               color=None, facecolor=None, alpha=None, zorder=None,
+               **kwargs):
+    &#34;&#34;&#34;Draw an arbitrarily rotated resistance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the resistance bar.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the resistance.
+    angle: float
+        Rotation angle in degrees.
+    label: string
+        Optional label for the resistance.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the
+        non-rotated resistance.
+    lw: float, int
+        Linewidth for drawing the outline of the resistance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the resistance.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the resistance.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the resistance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the resistance.
+    posr: Pos
+        Coordinates of the right end of the resistance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = 0.5*mpl.rcParams[&#39;circuits.scale&#39;]
+    x, y = pos
+    transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder, edgecolor=&#39;none&#39;,
+                           facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
+                           transform=transform + ax.transData,
+                           zorder=zorder+1, edgecolor=color,
+                           facecolor=&#39;none&#39;, lw=lw))
+    if label:
+        if angle &lt; 0:
+            angle += 360
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            pos = np.array(((0, 0.8*h),))
+            if angle &gt; 45 and angle &lt; 45 + 90:
+                ha = &#39;right&#39;
+            elif angle &gt; 45 + 180 and angle &lt; 45 + 270:
+                ha = &#39;left&#39;
+            if angle &gt; 45 + 270 and angle &lt; 45:
+                va = &#39;bottom&#39;
+            elif angle &gt; 45 + 90 and angle &lt; 45 + 180:
+                va = &#39;top&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            pos = np.array(((0, -0.8*h),))
+            if angle &gt; 45 and angle &lt; 45 + 90:
+                ha = &#39;left&#39;
+            elif angle &gt; 45 + 180 and angle &lt; 45 + 270:
+                ha = &#39;right&#39;
+            if angle &gt; 45 + 270 and angle &lt; 45:
+                va = &#39;top&#39;
+            elif angle &gt; 45 + 90 and angle &lt; 45 + 180:
+                va = &#39;bottom&#39;
+        elif align == &#39;center&#39;:
+            pos = np.array(((0, 0),))
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        pos = transform.transform(pos)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(pos[0,0], pos[0,1], label, zorder=zorder+1, **kwargs)
+    nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
+    nodes = transform.transform(nodes)
+    return Pos(*nodes[0,:]),  Pos(*nodes[1,:])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.capacitance_h"><code class="name flex">
+<span>def <span class="ident">capacitance_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal capacitance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the capacitance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the capacitance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the capacitance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below'</code></dt>
+<dd>Position the label above or below the capacitance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the capacitance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the capacitance.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the capacitance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the capacitance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the capacitance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capacitance_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None,
+                  color=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a horizontal capacitance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the capacitance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the capacitance.
+    label: string
+        Optional label for the capacitance.
+    align: &#39;above&#39;, &#39;below&#39;
+        Position the label above or below the capacitance.
+    lw: float, int
+        Linewidth for drawing the outline of the capacitance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the capacitance.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the capacitance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the capacitance.
+    posr: Pos
+        Coordinates of the right end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.6*w
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.6*w
+            va = &#39;top&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34; or &#34;bottom&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
+    return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.capacitance_v"><code class="name flex">
+<span>def <span class="ident">capacitance_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical capacitance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the capacitance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the capacitance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the capacitance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the capacitance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the capacitance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the capacitance.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the capacitance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the capacitance.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the capacitance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def capacitance_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None,
+                  color=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical capacitance.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the capacitance.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the capacitance.
+    label: string
+        Optional label for the capacitance.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the capacitance.
+    lw: float, int
+        Linewidth for drawing the outline of the capacitance.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the capacitance.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the capacitance and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the capacitance.
+    post: Pos
+        Coordinates of the top end of the capacitance.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.5*w, x + 0.5*w], [y - 0.5*h, y - 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.6*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.6*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.battery_h"><code class="name flex">
+<span>def <span class="ident">battery_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal battery (voltage source).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the battery.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below'</code></dt>
+<dd>Position the label above or below the battery.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the battery.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the battery.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the battery.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def battery_h(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+              zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a horizontal battery (voltage source).
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the battery.
+    label: string
+        Optional label for the battery.
+    align: &#39;above&#39;, &#39;below&#39;
+        Position the label above or below the battery.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the battery.
+    posr: Pos
+        Coordinates of the right end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*4/3
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x + 0.5*h, x + 0.5*h], [y - 0.25*w, y + 0.25*w],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 0.6*w
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -0.6*w
+            va = &#39;top&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34; or &#34;bottom&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder, **kwargs)
+    return Pos(x - 0.5*h, y), Pos(x + 0.5*h, y)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.battery_v"><code class="name flex">
+<span>def <span class="ident">battery_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical battery (voltage source).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the battery.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the battery.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the battery.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the battery.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the battery.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def battery_v(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+              zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a vertical battery (voltage source).
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the battery.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the battery.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the battery.
+    post: Pos
+        Coordinates of the top end of the battery.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*4/3
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.8/3
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.25*w, x + 0.25*w], [y - 0.5*h, y - 0.5*h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.6*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.6*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.ground"><code class="name flex">
+<span>def <span class="ident">ground</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw ground.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of ground.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the ground.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the battery.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of ground.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ground(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+           zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw ground.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of ground.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the ground.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the top end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*0.8
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.17
+    w *= 0.5
+    h *= 0.5
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y + h, y + h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.06*w, x + 0.06*w], [y - h, y - h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y + h)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.ground_u"><code class="name flex">
+<span>def <span class="ident">ground_u</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw ground upwards.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of ground.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the ground.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the battery.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of ground.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ground_u(ax, pos, label=&#39;&#39;, align=&#39;right&#39;, lw=None, color=None,
+             zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw ground upwards.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the battery.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of ground.
+    label: string
+        Optional label for the battery.
+    align: &#39;left&#39;, &#39;right&#39;
+        Position the label to the left or to the right of the ground.
+    lw: float, int
+        Linewidth for drawing the outline of the battery.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the battery.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the battery and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the bottom end of ground.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    w = mpl.rcParams[&#39;circuits.scale&#39;]*0.8
+    h = mpl.rcParams[&#39;circuits.scale&#39;]*0.17
+    w *= 0.5
+    h *= 0.5
+    x, y = pos
+    ax.plot([x - 0.5*w, x + 0.5*w], [y - h, y - h],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y],
+            zorder=zorder, lw=lw, color=color)
+    ax.plot([x - 0.06*w, x + 0.06*w], [y + h, y + h],
+            zorder=zorder, lw=lw, color=color)
+    if label:
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39;:
+            xx = 0.7*w
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39;:
+            xx = -0.7*w
+            ha = &#39;right&#39;
+        else:
+            raise ValueError(&#39;align must be one of &#34;left&#34; or &#34;right&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x + xx, y, label, zorder=zorder, **kwargs)
+    return Pos(x, y - h)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.opamp_l"><code class="name flex">
+<span>def <span class="ident">opamp_l</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an operational amplifier with inputs on the left.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the opamp.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the opamp.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the opamp.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the opamp.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the opamp.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the opamp.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt>facecolor matplotlib color</dt>
+<dt>Color for filling the opamp.</dt>
+<dt>Defaults to <code>circuits.facecolor</code> rcParams settings.</dt>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the opamp and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pospos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the positive (upper) input of the opamp.</dd>
+<dt><strong><code>posneg</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the negative (lower) input of the opamp.</dd>
+<dt><strong><code>posout</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the output of the opamp.</dd>
+<dt><strong><code>posgnd</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the ground supply of the opamp.</dd>
+<dt><strong><code>pospwr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the power supply of the opamp.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def opamp_l(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+            facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw an operational amplifier with inputs on the left.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the opamp.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the opamp.
+    label: string
+        Optional label for the opamp.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the opamp.
+    lw: float, int
+        Linewidth for drawing the outline of the opamp.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the opamp.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the opamp.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the opamp and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pospos: Pos
+        Coordinates of the positive (upper) input of the opamp.
+    posneg: Pos
+        Coordinates of the negative (lower) input of the opamp.
+    posout: Pos
+        Coordinates of the output of the opamp.
+    posgnd: Pos
+        Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    a = mpl.rcParams[&#39;circuits.scale&#39;]*5/3
+    r = a/2/np.sqrt(3)
+    x, y = pos
+    xy = np.array([[x - r, y - 0.5*a], [x - r, y + 0.5*a], [x + 2*r, y]])
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder, edgecolor=&#39;none&#39;,
+                         facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder+1, edgecolor=color,
+                         facecolor=&#39;none&#39;, lw=lw))
+    ax.text(x - 0.8*r, y + 0.21*a, &#39;$+$&#39;, ha=&#39;left&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    ax.text(x - 0.8*r, y - 0.19*a, &#39;$-$&#39;, ha=&#39;left&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    if label:
+        ha = &#39;left&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 1.4*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -1.4*r
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x+0.1*r, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.opamp_r"><code class="name flex">
+<span>def <span class="ident">opamp_r</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an operational amplifier with inputs on the right.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the opamp.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the opamp.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the opamp.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the opamp.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the opamp.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color for the outline of the opamp.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt>facecolor matplotlib color</dt>
+<dt>Color for filling the opamp.</dt>
+<dt>Defaults to <code>circuits.facecolor</code> rcParams settings.</dt>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the opamp and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pospos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the positive (upper) input of the opamp.</dd>
+<dt><strong><code>posneg</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the negative (lower) input of the opamp.</dd>
+<dt><strong><code>posout</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the output of the opamp.</dd>
+<dt><strong><code>posgnd</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the ground supply of the opamp.</dd>
+<dt><strong><code>pospwr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the power supply of the opamp.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def opamp_r(ax, pos, label=&#39;&#39;, align=&#39;above&#39;, lw=None, color=None,
+            facecolor=None, alpha=None, zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw an operational amplifier with inputs on the right.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the opamp.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the opamp.
+    label: string
+        Optional label for the opamp.
+    align: &#39;above&#39;, &#39;below&#39;, &#39;center&#39;
+        Position the label above, below or in the center of the opamp.
+    lw: float, int
+        Linewidth for drawing the outline of the opamp.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color for the outline of the opamp.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor matplotlib color
+        Color for filling the opamp.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the opamp and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pospos: Pos
+        Coordinates of the positive (upper) input of the opamp.
+    posneg: Pos
+        Coordinates of the negative (lower) input of the opamp.
+    posout: Pos
+        Coordinates of the output of the opamp.
+    posgnd: Pos
+        Coordinates of the ground supply of the opamp.
+    pospwr: Pos
+        Coordinates of the power supply of the opamp.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.linewidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if facecolor is None:
+        facecolor = mpl.rcParams[&#39;circuits.facecolor&#39;]
+    if alpha is None:
+        alpha = mpl.rcParams[&#39;circuits.alpha&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    a = mpl.rcParams[&#39;circuits.scale&#39;]*5/3
+    r = a/2/np.sqrt(3)
+    x, y = pos
+    xy = np.array([[x + r, y - 0.5*a], [x + r, y + 0.5*a], [x - 2*r, y]])
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder, edgecolor=&#39;none&#39;,
+                         facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Polygon(xy, closed=True,
+                         zorder=zorder+1, edgecolor=color,
+                         facecolor=&#39;none&#39;, lw=lw))
+    ax.text(x + 0.8*r, y + 0.21*a, &#39;$+$&#39;, ha=&#39;right&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    ax.text(x + 0.8*r, y - 0.19*a, &#39;$-$&#39;, ha=&#39;right&#39;, va=&#39;center&#39;,
+            fontsize=&#39;x-small&#39;, color=color, zorder=zorder+1)
+    if label:
+        ha = &#39;right&#39;
+        va = &#39;center&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39;:
+            yy = 1.4*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39;:
+            yy = -1.4*r
+            va = &#39;top&#39;
+        elif align == &#39;center&#39;:
+            yy = 0
+        else:
+            raise ValueError(&#39;align must be one of &#34;above&#34;, &#34;bottom&#34;, or &#34;center&#34;&#39;)
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.node"><code class="name flex">
+<span>def <span class="ident">node</span></span>(<span>ax, pos, label='', align='northeast', color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a node connecting lines.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the node.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the node.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the node.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'</code></dt>
+<dd>Position of the label relative to the node.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color of the node.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the node.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the node.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def node(ax, pos, label=&#39;&#39;, align=&#39;northeast&#39;, color=None,
+         zorder=None, **kwargs):
+    &#34;&#34;&#34; Draw a node connecting lines.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the node.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the node.
+    label: string
+        Optional label for the node.
+    align: &#39;left&#39;, &#39;right&#39;, &#39;above&#39;, &#39;below&#39;, &#39;north&#39;, &#39;south&#39;, &#39;west&#39;, &#39;east&#39;, &#39;northwest&#39;, &#39;northeast&#39;, &#39;southwest&#39;, &#39;southeast&#39;
+        Position of the label relative to the node.
+    color matplotlib color
+        Color of the node.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the node.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the node.
+    &#34;&#34;&#34;
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    for k in mpl.rcParams[&#39;circuits.font&#39;]:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams[&#39;circuits.font&#39;][k]
+    r = mpl.rcParams[&#39;circuits.scale&#39;]*0.25/3
+    ax.add_patch(Circle(pos, r, zorder=zorder, edgecolor=&#39;none&#39;,
+                        facecolor=color))
+    if label:
+        xx = 0
+        yy = 0
+        ha = &#39;center&#39;
+        va = &#39;center&#39;
+        if align == &#39;right&#39; or &#39;east&#39; in align:
+            xx = 2*r
+            ha = &#39;left&#39;
+        elif align == &#39;left&#39; or &#39;west&#39; in align:
+            xx = -2*r
+            ha = &#39;right&#39;
+        if align == &#39;above&#39; or align == &#39;top&#39; or &#39;north&#39; in align:
+            yy = 2*r
+            va = &#39;bottom&#39;
+        elif align == &#39;below&#39; or align == &#39;bottom&#39; or &#39;south&#39; in align:
+            yy = -2*r
+            va = &#39;top&#39;
+        if not &#39;ha&#39; in kwargs and not &#39;horizontalalignment&#39; in kwargs:
+            kwargs[&#39;ha&#39;] = ha
+        if not &#39;va&#39; in kwargs and not &#39;verticalalignment&#39; in kwargs:
+            kwargs[&#39;va&#39;] = va
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(pos[0], pos[1])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>ax, nodes, lw=None, color=None, zorder=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw horizontal and vertical lines connecting circuit elements.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the connections.</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> of <code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinates of positions that should be connected.
+If an element is <code>None</code> then leave a gap between the neighboring nodes.
+Makes only horizontal and vertical connection lines in
+counter-clockwise direction.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the connection lines.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color of the connection lines.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the connection lines.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect(ax, nodes, lw=None, color=None, zorder=None):
+    &#34;&#34;&#34; Draw horizontal and vertical lines connecting circuit elements.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the connections.
+    nodes: list of Pos or 2-tuple of floats
+        x and y-coordinates of positions that should be connected.
+        If an element is `None` then leave a gap between the neighboring nodes.
+        Makes only horizontal and vertical connection lines in
+        counter-clockwise direction.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.connectwidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    xs = []
+    ys = []
+    px = None
+    py = None
+    for n in nodes:
+        if n is None:
+            xs.append(np.nan)
+            ys.append(np.nan)
+            px = None
+            py = None
+        else:
+            x = n[0]
+            y = n[1]
+            if px is None or x == px or y == py:
+                xs.append(x)
+                ys.append(y)
+            else:
+                if (x - px)*(y - py) &gt; 0:
+                    xs.extend((x, x))
+                    ys.extend((py, y))
+                else:
+                    xs.extend((px, x))
+                    ys.extend((y, y))
+            px = x
+            py = y
+    ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.connect_straight"><code class="name flex">
+<span>def <span class="ident">connect_straight</span></span>(<span>ax, nodes, lw=None, color=None, zorder=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw straight lines connecting circuit elements.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the connections.</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> of <code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinates of positions that should be connected.
+If an element is <code>None</code> then leave a gap between the neighboring nodes.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the connection lines.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt>color matplotlib color</dt>
+<dt>Color of the connection lines.</dt>
+<dt>Defaults to <code>circuits.color</code> rcParams settings.</dt>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the connection lines.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect_straight(ax, nodes, lw=None, color=None, zorder=None):
+    &#34;&#34;&#34; Draw straight lines connecting circuit elements.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the connections.
+    nodes: list of Pos or 2-tuple of floats
+        x and y-coordinates of positions that should be connected.
+        If an element is `None` then leave a gap between the neighboring nodes.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+    &#34;&#34;&#34;
+    if lw is None:
+        lw = mpl.rcParams[&#39;circuits.connectwidth&#39;]
+    if color is None:
+        color = mpl.rcParams[&#39;circuits.color&#39;]
+    if zorder is None:
+        zorder = mpl.rcParams[&#39;circuits.zorder&#39;]
+    xs = []
+    ys = []
+    for n in nodes:
+        if n is None:
+            xs.append(np.nan)
+            ys.append(np.nan)
+        else:
+            x = n[0]
+            y = n[1]
+            xs.append(x)
+            ys.append(y)
+    ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.circuits_params"><code class="name flex">
+<span>def <span class="ident">circuits_params</span></span>(<span>scale=None, connectwidth=None, linewidth=None, color=None, facecolor=None, alpha=None, zorder=None, font=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set rc settings for circuits.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>scale</code></strong> :&ensp;<code>float</code></dt>
+<dd>Size of circuit elements as the height of a vertical resistance
+in x/y coordinate units.</dd>
+<dt><strong><code>connectwidth</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width of lines connecting circuit elements.
+Set rcParam <code>circuits.connectwidth</code>.</dd>
+<dt><strong><code>linewidth</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width used for drawing circuit elements.
+Set rcParam <code>circuits.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the connections and circuit elements.
+Set rcParam <code>circuits.color</code>.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Face color for closed circuit elements like resistances or opamps.
+Set rcParam <code>circuits.facecolor</code>.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for face color for closed circuit elements like
+resistances or opamps.
+Set rcParam <code>circuits.alpha</code>.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>Zorder for all circuit elements drawn.
+Set rcParam <code>circuits.zorder</code>.</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary with font settings used for labeling circuit elements
+(e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, &hellip;).
+Set rcParam <code>circuits.font</code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def circuits_params(scale=None, connectwidth=None, linewidth=None,
+                    color=None, facecolor=None, alpha=None,
+                    zorder=None, font=None):
+    &#34;&#34;&#34;Set rc settings for circuits.
+                  
+    Only parameters that are not `None` are updated.
+
+    Parameters
+    ----------
+    scale: float
+        Size of circuit elements as the height of a vertical resistance
+        in x/y coordinate units.
+    connectwidth: int, float
+        Line width of lines connecting circuit elements.
+        Set rcParam `circuits.connectwidth`.
+    linewidth: int, float
+        Line width used for drawing circuit elements.
+        Set rcParam `circuits.linewidth`.
+    color: matplotlib color
+        Color of the connections and circuit elements.
+        Set rcParam `circuits.color`.
+    facecolor: matplotlib color
+        Face color for closed circuit elements like resistances or opamps.
+        Set rcParam `circuits.facecolor`.
+    alpha: float
+        Alpha value for face color for closed circuit elements like
+        resistances or opamps.
+        Set rcParam `circuits.alpha`.
+    zorder: int
+        Zorder for all circuit elements drawn.
+        Set rcParam `circuits.zorder`.
+    font: dict
+        Dictionary with font settings used for labeling circuit elements
+        (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
+         Set rcParam `circuits.font`.
+    &#34;&#34;&#34;
+    if scale is not None and &#39;circuits.scale&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.scale&#39;] = scale
+    if connectwidth is not None and &#39;circuits.connectwidth&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.connectwidth&#39;] = connectwidth
+    if linewidth is not None and &#39;circuits.linewidth&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.linewidth&#39;] = linewidth
+    if color is not None and &#39;circuits.color&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.color&#39;] = color
+    if facecolor is not None and &#39;circuits.facecolor&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.facecolor&#39;] = facecolor
+    if alpha is not None and &#39;circuits.alpha&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.alpha&#39;] = alpha
+    if zorder is not None and &#39;circuits.zorder&#39; in mrc._validators:
+        mpl.rcParams[&#39;circuits.zorder&#39;] = zorder
+    if font is not None and &#39;circuits.font&#39; in mrc._validators:
+        mpl.rcParams.update({&#39;circuits.font&#39;: font})</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.install_circuits"><code class="name flex">
+<span>def <span class="ident">install_circuits</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install circuits functions on matplotlib axes.</p>
+<p>This function is also called automatically upon importing the module.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def install_circuits():
+    &#34;&#34;&#34; Install circuits functions on matplotlib axes.
+
+    This function is also called automatically upon importing the module.
+
+    See also
+    --------
+    uninstall_circuits()
+    &#34;&#34;&#34;
+    if not hasattr(mpl.axes.Axes, &#39;resistance_h&#39;):
+        mpl.axes.Axes.resistance_h = resistance_h
+    if not hasattr(mpl.axes.Axes, &#39;resistance_v&#39;):
+        mpl.axes.Axes.resistance_v = resistance_v
+    if not hasattr(mpl.axes.Axes, &#39;resistance&#39;):
+        mpl.axes.Axes.resistance = resistance
+    if not hasattr(mpl.axes.Axes, &#39;capacitance_h&#39;):
+        mpl.axes.Axes.capacitance_h = capacitance_h
+    if not hasattr(mpl.axes.Axes, &#39;capacitance_v&#39;):
+        mpl.axes.Axes.capacitance_v = capacitance_v
+    if not hasattr(mpl.axes.Axes, &#39;battery_h&#39;):
+        mpl.axes.Axes.battery_h = battery_h
+    if not hasattr(mpl.axes.Axes, &#39;battery_v&#39;):
+        mpl.axes.Axes.battery_v = battery_v
+    if not hasattr(mpl.axes.Axes, &#39;ground&#39;):
+        mpl.axes.Axes.ground = ground
+    if not hasattr(mpl.axes.Axes, &#39;ground_u&#39;):
+        mpl.axes.Axes.ground_u = ground_u
+    if not hasattr(mpl.axes.Axes, &#39;opamp_l&#39;):
+        mpl.axes.Axes.opamp_l = opamp_l
+    if not hasattr(mpl.axes.Axes, &#39;opamp_r&#39;):
+        mpl.axes.Axes.opamp_r = opamp_r
+    if not hasattr(mpl.axes.Axes, &#39;node&#39;):
+        mpl.axes.Axes.node = node
+    if not hasattr(mpl.axes.Axes, &#39;connect&#39;):
+        mpl.axes.Axes.connect = connect
+    if not hasattr(mpl.axes.Axes, &#39;connect_straight&#39;):
+        mpl.axes.Axes.connect_straight = connect_straight
+    # add circuits parameter to rc configuration:
+    if &#39;circuits.scale&#39; not in mpl.rcParams:
+        mrc._validators[&#39;circuits.scale&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.connectwidth&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.linewidth&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.color&#39;] = mrc.validate_string
+        mrc._validators[&#39;circuits.facecolor&#39;] = mrc.validate_string
+        mrc._validators[&#39;circuits.alpha&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.zorder&#39;] = mrc.validate_float
+        mrc._validators[&#39;circuits.font&#39;] = _validate_fontdict
+        mpl.rcParams.update({&#39;circuits.scale&#39;: 1,
+                             &#39;circuits.connectwidth&#39;: 1,
+                             &#39;circuits.linewidth&#39;: 2,
+                             &#39;circuits.color&#39;: &#39;black&#39;,
+                             &#39;circuits.facecolor&#39;: &#39;white&#39;,
+                             &#39;circuits.alpha&#39;: 1,
+                             &#39;circuits.zorder&#39;: 100,
+                             &#39;circuits.font&#39;: dict()})</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.uninstall_circuits"><code class="name flex">
+<span>def <span class="ident">uninstall_circuits</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall circuits functions from matplotlib axes.</p>
+<p>Call this code to disable anything that was installed by <code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code>.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def uninstall_circuits():
+    &#34;&#34;&#34; Uninstall circuits functions from matplotlib axes.
+
+    Call this code to disable anything that was installed by `install_circuits()`.
+
+    See also
+    --------
+    install_circuits()
+    &#34;&#34;&#34;
+    if hasattr(mpl.axes.Axes, &#39;resistance_h&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;resistance_v&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;resistance&#39;):
+        delattr(mpl.axes.Axes, &#39;resistance&#39;)
+    if hasattr(mpl.axes.Axes, &#39;capacitance_h&#39;):
+        delattr(mpl.axes.Axes, &#39;capacitance_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;capacitance_v&#39;):
+        delattr(mpl.axes.Axes, &#39;capacitance_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;battery_h&#39;):
+        delattr(mpl.axes.Axes, &#39;battery_h&#39;)
+    if hasattr(mpl.axes.Axes, &#39;battery_v&#39;):
+        delattr(mpl.axes.Axes, &#39;battery_v&#39;)
+    if hasattr(mpl.axes.Axes, &#39;ground&#39;):
+        delattr(mpl.axes.Axes, &#39;ground&#39;)
+    if hasattr(mpl.axes.Axes, &#39;ground_u&#39;):
+        delattr(mpl.axes.Axes, &#39;ground_u&#39;)
+    if hasattr(mpl.axes.Axes, &#39;opamp_l&#39;):
+        delattr(mpl.axes.Axes, &#39;opamp_l&#39;)
+    if hasattr(mpl.axes.Axes, &#39;opamp_r&#39;):
+        delattr(mpl.axes.Axes, &#39;opamp_r&#39;)
+    if hasattr(mpl.axes.Axes, &#39;node&#39;):
+        delattr(mpl.axes.Axes, &#39;node&#39;)
+    if hasattr(mpl.axes.Axes, &#39;connect&#39;):
+        delattr(mpl.axes.Axes, &#39;connect&#39;)
+    if hasattr(mpl.axes.Axes, &#39;connect_straight&#39;):
+        delattr(mpl.axes.Axes, &#39;connect_straight&#39;)
+    mrc._validators.pop(&#39;circuits.scale&#39;, None)
+    mrc._validators.pop(&#39;circuits.connectwidth&#39;, None)
+    mrc._validators.pop(&#39;circuits.linewidth&#39;, None)
+    mrc._validators.pop(&#39;circuits.color&#39;, None)
+    mrc._validators.pop(&#39;circuits.facecolor&#39;, None)
+    mrc._validators.pop(&#39;circuits.alpha&#39;, None)
+    mrc._validators.pop(&#39;circuits.zorder&#39;, None)
+    mrc._validators.pop(&#39;circuits.font&#39;, None)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def demo():
+    fig, ax = plt.subplots()
+    e1b, e1t = ax.battery_v((0, 1), r&#39;$E_1$&#39;)
+    r1b, r1t = ax.resistance_v((e1t[0], 3), r&#39;$R_1$&#39;)
+    c1b, c1t = ax.capacitance_v((-2, 2), r&#39;$C_1$&#39;)
+    ax.connect((e1t, r1b, None, r1t, r1t.ups(0.5), c1t, None,
+                c1b, e1b.downs(0.5), e1b))
+    e2l, e2r = ax.battery_h((0, -1), r&#39;$E_2$&#39;, &#39;below&#39;)
+    r2l, r2r = ax.resistance_h((-2, e2l.y()), r&#39;$R_2$&#39;, &#39;below&#39;)
+    c2l, c2r = ax.capacitance_h((-1, -3), r&#39;$C_2$&#39;, &#39;below&#39;)
+    ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
+                c2r, e2r.rights(0.5), e2r))
+    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((4, 2), r&#39;$OP1$&#39;)
+    n1n = ax.node(op1n.lefts(2))
+    n1p = ax.node(op1p.lefts(2))
+    n1o = ax.node(op1o.rights(1))
+    gnd1 = ax.ground(op1g.downs(1), r&#39;$GND_1$&#39;)
+    ax.connect((op1n, n1n))
+    ax.connect((op1p, n1p))
+    ax.connect((op1o, n1o))
+    ax.connect((op1g, gnd1))
+    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((4, -2), r&#39;$OP2$&#39;)
+    n2n = ax.node(op2n.rights(1))
+    n2p = ax.node(op2p.rights(1))
+    n2o = ax.node(op2o.lefts(2))
+    gnd2 = ax.ground(op2g.downs(1), r&#39;$GND_2$&#39;, &#39;left&#39;)
+    ax.connect((op2n, n2n))
+    ax.connect((op2p, n2p))
+    ax.connect((op2o, n2o))
+    ax.connect((op2g, gnd2))
+    ax.set_aspect(&#39;equal&#39;)
+    plt.show()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="plottools.circuits.Pos"><code class="flex name class">
+<span>class <span class="ident">Pos</span></span>
+<span>(</span><span>x, y)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>x and y coordinate of a circuit element.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Pos(tuple):
+    &#34;&#34;&#34; x and y coordinate of a circuit element.
+    &#34;&#34;&#34;
+
+    def __new__(cls, x, y):
+        return tuple.__new__(cls, (x, y))
+
+    def x(self):
+        &#34;&#34;&#34; x coordinate of the circuit element.
+
+        Returns
+        -------
+        x: float
+            x-coordinate
+        &#34;&#34;&#34;
+        return self[0]
+
+    def y(self):
+        &#34;&#34;&#34; y coordinate of the circuit element.
+
+        Returns
+        -------
+        y: float
+            y-coordinate
+        &#34;&#34;&#34;
+        return self[1]
+
+    def up(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta)
+
+    def down(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta)
+
+    def left(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta, self[1])
+
+    def right(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta, self[1])
+
+    def ups(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def downs(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def lefts(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])
+
+    def rights(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="plottools.circuits.Pos.x"><code class="name flex">
+<span>def <span class="ident">x</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>x coordinate of the circuit element.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code></dt>
+<dd>x-coordinate</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def x(self):
+    &#34;&#34;&#34; x coordinate of the circuit element.
+
+    Returns
+    -------
+    x: float
+        x-coordinate
+    &#34;&#34;&#34;
+    return self[0]</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.y"><code class="name flex">
+<span>def <span class="ident">y</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>y coordinate of the circuit element.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>y-coordinate</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def y(self):
+    &#34;&#34;&#34; y coordinate of the circuit element.
+
+    Returns
+    -------
+    y: float
+        y-coordinate
+    &#34;&#34;&#34;
+    return self[1]</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.up"><code class="name flex">
+<span>def <span class="ident">up</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def up(self, delta=1):
+    &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Increment in data coordinates.
+
+    Returns
+    -------
+    pos: Pos
+        Incremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0], self[1] + delta)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.down"><code class="name flex">
+<span>def <span class="ident">down</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def down(self, delta=1):
+    &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Decrement in data coordinates.
+
+    Returns
+    -------
+    pos: Pos
+        Decremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0], self[1] - delta)</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.left"><code class="name flex">
+<span>def <span class="ident">left</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def left(self, delta=1):
+    &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Decrement in data coordinates.
+
+    Returns
+    -------
+    pos: Pos
+        Decremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0] - delta, self[1])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.right"><code class="name flex">
+<span>def <span class="ident">right</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def right(self, delta=1):
+    &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Increment in data coordinates.
+
+    Returns
+    -------
+    pos: Pos
+        Incremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0] + delta, self[1])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.ups"><code class="name flex">
+<span>def <span class="ident">ups</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ups(self, delta=1):
+    &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+    Returns
+    -------
+    pos: Pos
+        Incremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0], self[1] + delta*mpl.rcParams[&#39;circuits.scale&#39;])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.downs"><code class="name flex">
+<span>def <span class="ident">downs</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def downs(self, delta=1):
+    &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+    Returns
+    -------
+    pos: Pos
+        Decremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0], self[1] - delta*mpl.rcParams[&#39;circuits.scale&#39;])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.lefts"><code class="name flex">
+<span>def <span class="ident">lefts</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def lefts(self, delta=1):
+    &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+    Returns
+    -------
+    pos: Pos
+        Decremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0] - delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])</code></pre>
+</details>
+</dd>
+<dt id="plottools.circuits.Pos.rights"><code class="name flex">
+<span>def <span class="ident">rights</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rights(self, delta=1):
+    &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+    Parameters
+    ----------
+    delta: float
+        Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+    Returns
+    -------
+    pos: Pos
+        Incremented copy of position of circuit element.
+    &#34;&#34;&#34;
+    return Pos(self[0] + delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#classes">Classes</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-circuits-functions">Install/uninstall circuits functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.circuits.resistance_h" href="#plottools.circuits.resistance_h">resistance_h</a></code></li>
+<li><code><a title="plottools.circuits.resistance_v" href="#plottools.circuits.resistance_v">resistance_v</a></code></li>
+<li><code><a title="plottools.circuits.resistance" href="#plottools.circuits.resistance">resistance</a></code></li>
+<li><code><a title="plottools.circuits.capacitance_h" href="#plottools.circuits.capacitance_h">capacitance_h</a></code></li>
+<li><code><a title="plottools.circuits.capacitance_v" href="#plottools.circuits.capacitance_v">capacitance_v</a></code></li>
+<li><code><a title="plottools.circuits.battery_h" href="#plottools.circuits.battery_h">battery_h</a></code></li>
+<li><code><a title="plottools.circuits.battery_v" href="#plottools.circuits.battery_v">battery_v</a></code></li>
+<li><code><a title="plottools.circuits.ground" href="#plottools.circuits.ground">ground</a></code></li>
+<li><code><a title="plottools.circuits.ground_u" href="#plottools.circuits.ground_u">ground_u</a></code></li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l</a></code></li>
+<li><code><a title="plottools.circuits.opamp_r" href="#plottools.circuits.opamp_r">opamp_r</a></code></li>
+<li><code><a title="plottools.circuits.node" href="#plottools.circuits.node">node</a></code></li>
+<li><code><a title="plottools.circuits.connect" href="#plottools.circuits.connect">connect</a></code></li>
+<li><code><a title="plottools.circuits.connect_straight" href="#plottools.circuits.connect_straight">connect_straight</a></code></li>
+<li><code><a title="plottools.circuits.circuits_params" href="#plottools.circuits.circuits_params">circuits_params</a></code></li>
+<li><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits</a></code></li>
+<li><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits</a></code></li>
+<li><code><a title="plottools.circuits.demo" href="#plottools.circuits.demo">demo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></h4>
+<ul class="two-column">
+<li><code><a title="plottools.circuits.Pos.x" href="#plottools.circuits.Pos.x">x</a></code></li>
+<li><code><a title="plottools.circuits.Pos.y" href="#plottools.circuits.Pos.y">y</a></code></li>
+<li><code><a title="plottools.circuits.Pos.up" href="#plottools.circuits.Pos.up">up</a></code></li>
+<li><code><a title="plottools.circuits.Pos.down" href="#plottools.circuits.Pos.down">down</a></code></li>
+<li><code><a title="plottools.circuits.Pos.left" href="#plottools.circuits.Pos.left">left</a></code></li>
+<li><code><a title="plottools.circuits.Pos.right" href="#plottools.circuits.Pos.right">right</a></code></li>
+<li><code><a title="plottools.circuits.Pos.ups" href="#plottools.circuits.Pos.ups">ups</a></code></li>
+<li><code><a title="plottools.circuits.Pos.downs" href="#plottools.circuits.Pos.downs">downs</a></code></li>
+<li><code><a title="plottools.circuits.Pos.lefts" href="#plottools.circuits.Pos.lefts">lefts</a></code></li>
+<li><code><a title="plottools.circuits.Pos.rights" href="#plottools.circuits.Pos.rights">rights</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
