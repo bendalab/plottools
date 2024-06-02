@@ -563,10 +563,12 @@ def set_minor_yticks_off(ax):
 
 def ticks_params(xtick_minor=None, ytick_minor='same',
                  xtick_dir=None, ytick_dir='same',
-                 xtick_size=None, ytick_size='same', minor_tick_frac=0.6,
+                 xtick_size=None, ytick_size='same',
+                 minor_tick_frac=0.6,
                  xtick_major_width=None, ytick_major_width='same',
                  xtick_minor_width=None, ytick_minor_width='same',
                  xtick_major_pad=None, ytick_major_pad='same',
+                 xtick_minor_pad=None, ytick_minor_pad='same',
                  xtick_alignment=None, ytick_alignment=None,
                  xtick_color='axes', ytick_color='same',
                  xtick_labelcolor='ticks', ytick_labelcolor='same',
@@ -625,6 +627,14 @@ def ticks_params(xtick_minor=None, ytick_minor='same',
         Distance of major ytick labels from major yticks in points.
         If 'same' set to the value of `xtick_major_pad`.
         Sets rcParams `ytick.major.pad`.
+    xtick_minor_pad: float or 'same'
+        Distance of minor xtick labels from minor xticks in points.
+        If 'same' set to the value of `xtick_major_pad`.
+        Sets rcParams `xtick.minor.pad`.
+    ytick_minor_pad: float or 'same'
+        Distance of minor ytick labels from minor yticks in points.
+        If 'same' set to the value of `xtick_minor_pad`.
+        Sets rcParams `ytick.minor.pad`.
     xtick_alignment: {'center', 'left', 'right'}
         Alignment of xtick labels relative to xticks.
         Sets rcParams `xtick.alignment`.
@@ -689,6 +699,14 @@ def ticks_params(xtick_minor=None, ytick_minor='same',
         mpl.rcParams['xtick.major.pad'] = xtick_major_pad
     if ytick_major_pad is not None:
         mpl.rcParams['ytick.major.pad'] = ytick_major_pad
+    if xtick_minor_pad == 'same':
+        xtick_minor_pad = xtick_major_pad
+    if ytick_minor_pad == 'same':
+        ytick_minor_pad = xtick_minor_pad
+    if xtick_minor_pad is not None:
+        mpl.rcParams['xtick.minor.pad'] = xtick_minor_pad
+    if ytick_minor_pad is not None:
+        mpl.rcParams['ytick.minor.pad'] = ytick_minor_pad
     if 'xtick.alignment' in mpl.rcParams and xtick_alignment is not None:
         mpl.rcParams['xtick.alignment'] = xtick_alignment
     if 'ytick.alignment' in mpl.rcParams and ytick_alignment is not None:
