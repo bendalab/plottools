@@ -64,7 +64,11 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.cm import register_cmap, get_cmap
+try:
+    from matplotlib.cm import get_cmap, register_cmap
+    new_cm = False
+except ImportError:
+    new_cm = True
 try:
     from matplotlib.colors import colorConverter as cc
 except ImportError:
@@ -523,7 +527,7 @@ def colormap(name, colors, values=None):
     """ Generate and register a color map.
 
     This is a simple shortcut to the cumbersome names and imports needed for
-    `matplotlib.colors.LinearSegmentedColormap` and `matplotlib.cm import register_cmap`.
+    `matplotlib.colors.LinearSegmentedColormap` and `matplotlib.cm.register_cmap`.
 
     Parameters
     ----------
@@ -568,7 +572,10 @@ def colormap(name, colors, values=None):
     if values is not None:
         colors = list(zip(values, colors))
     cmap = LinearSegmentedColormap.from_list(name, colors)
-    register_cmap(cmap=cmap)
+    if new_cm:
+        mpl.colormaps.register(cmap)
+    else:
+        register_cmap(cmap=cmap)
     return cmap
 
 
@@ -598,7 +605,10 @@ def cmap_color(cmap, x, alpha=None):
     ```
     """
     if not isinstance(cmap, mpl.colors.Colormap):
-        cmap = get_cmap(cmap)
+        if new_cm:
+            cmap = mpl.colormaps[cmap]
+        else:
+            cmap = get_cmap(cmap)
     return cmap(x, alpha)
 
 

@@ -31,7 +31,11 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.rcsetup as mrc
-from mpl_toolkits.mplot3d import Axes3D
+try:
+    from mpl_toolkits.mplot3d import Axes3D
+    has_zlabel = True
+except ImportError:
+    has_zlabel = False
 
 
 def __axis_label(label, unit=None):
@@ -178,7 +182,7 @@ def install_labels():
     if not hasattr(mpl.axes.Axes, '__set_ylabel_labels'):
         mpl.axes.Axes.__set_ylabel_labels = mpl.axes.Axes.set_ylabel
         mpl.axes.Axes.set_ylabel = set_ylabel
-    if not hasattr(Axes3D, '__set_zlabel_labels'):
+    if has_zlabel and not hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
         Axes3D.set_zlabel = set_zlabel
     # add labels parameter to rc configuration:
@@ -201,7 +205,7 @@ def uninstall_labels():
     if hasattr(mpl.axes.Axes, '__set_ylabel_labels'):
         mpl.axes.Axes.set_ylabel = mpl.axes.Axes.__set_ylabel_labels
         delattr(mpl.axes.Axes, '__set_ylabel_labels')
-    if hasattr(Axes3D, '__set_zlabel_labels'):
+    if has_zlabel and hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
         delattr(Axes3D, '__set_zlabel_labels')
     # remove labels parameter from mpl.ptParams:

@@ -41,6 +41,22 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.rcsetup as mrc
+import matplotlib.transforms as mtransforms
+
+
+def get_ticklabel_extend(axis, pos, height, renderer):
+    ticks_to_draw = axis._update_ticks()
+    try:
+        ticklabel_boxes = axis._get_ticklabel_bboxes(ticks_to_draw,
+                                                     renderer)[pos]
+    except AttributeError:
+        ticklabel_boxes = axis._get_tick_bboxes(ticks_to_draw,
+                                                renderer)[pos]
+    if len(ticklabel_boxes):
+        bbox = mtransforms.Bbox.union(ticklabel_boxes)
+    else:
+        bbox = mtransforms.Bbox.from_extents(0, 0, 0, 0)
+    return np.abs(np.diff(bbox.get_points()[:, height]))[0]
 
 
 def align_xlabels(fig, axs=None):
@@ -81,7 +97,8 @@ def align_xlabels(fig, axs=None):
             ax_bbox = ax.get_window_extent().get_points()
             pixely = np.abs(np.diff(ax_bbox[:,1]))[0]
             pos = xax.get_label_position() == 'top'
-            tlh = np.abs(np.diff(xax.get_ticklabel_extents(renderer)[pos].get_points()[:,1]))[0]
+            #tlh = np.abs(np.diff(xax.get_ticklabel_extents(renderer)[pos].get_points()[:,1]))[0]
+            tlh = get_ticklabel_extend(xax, pos, 1, renderer)
             tlh += xdist
             if pos:
                 tlh += 0.5*xax.get_label().get_fontsize()
@@ -142,7 +159,8 @@ def align_ylabels(fig, axs=None):
             ax_bbox = ax.get_window_extent().get_points()
             pixelx = np.abs(np.diff(ax_bbox[:,0]))[0]
             pos = yax.get_label_position() == 'right'
-            tlw = np.abs(np.diff(yax.get_ticklabel_extents(renderer)[pos].get_points()[:,0]))[0]
+            #tlw = np.abs(np.diff(yax.get_ticklabel_extents(renderer)[pos].get_points()[:,0]))[0]
+            tlw = get_ticklabel_extend(yax, pos, 0, renderer)
             tlw += ydist
             if pos:
                 tlw += 0.7*yax.get_label().get_fontsize()
