@@ -17,6 +17,7 @@ Electrical circuits.
 - `switch_h()`: draw a horizontal switch.
 - `switch_v()`: draw a vertical switch.
 - `node()`: draw a node connecting lines.
+- `pin()`: draw a pin hole.
 - `connect()`: draw lines directly connecting circuit elements.
 - `connect_straight()`: draw straight lines connecting circuit elements.
 
@@ -228,10 +229,10 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the resistance.
         Defaults to `circuits.color` rcParams settings.
-    facecolor matplotlib color
+    facecolor: matplotlib color
         Color for filling the resistance.
         Defaults to `circuits.facecolor` rcParams settings.
     alpha: float
@@ -316,10 +317,10 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the resistance.
         Defaults to `circuits.color` rcParams settings.
-    facecolor matplotlib color
+    facecolor: matplotlib color
         Color for filling the resistance.
         Defaults to `circuits.facecolor` rcParams settings.
     alpha: float
@@ -408,10 +409,10 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the resistance.
         Defaults to `circuits.color` rcParams settings.
-    facecolor matplotlib color
+    facecolor: matplotlib color
         Color for filling the resistance.
         Defaults to `circuits.facecolor` rcParams settings.
     alpha: float
@@ -518,7 +519,7 @@ def capacitance_h(ax, pos, label='', align='above', lw=None,
     lw: float, int
         Linewidth for drawing the outline of the capacitance.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the capacitance.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -593,7 +594,7 @@ def capacitance_v(ax, pos, label='', align='right', lw=None,
     lw: float, int
         Linewidth for drawing the outline of the capacitance.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the capacitance.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -667,7 +668,7 @@ def battery_h(ax, pos, label='', align='above', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the battery.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -742,7 +743,7 @@ def battery_v(ax, pos, label='', align='right', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the battery.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -816,7 +817,7 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the battery.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -892,7 +893,7 @@ def ground_u(ax, pos, label='', align='right', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the battery.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the battery.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -968,10 +969,10 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the opamp.
         Defaults to `circuits.color` rcParams settings.
-    facecolor matplotlib color
+    facecolor: matplotlib color
         Color for filling the opamp.
         Defaults to `circuits.facecolor` rcParams settings.
     alpha: float
@@ -1067,10 +1068,10 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the outline of the opamp.
         Defaults to `circuits.color` rcParams settings.
-    facecolor matplotlib color
+    facecolor: matplotlib color
         Color for filling the opamp.
         Defaults to `circuits.facecolor` rcParams settings.
     alpha: float
@@ -1166,7 +1167,7 @@ def switch_h(ax, pos, label='', align='above', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the wire of the switch.
         Defaults to `circuits.connectwidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the wire of the switch.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -1238,7 +1239,7 @@ def switch_v(ax, pos, label='', align='right', lw=None, color=None,
     lw: float, int
         Linewidth for drawing the wire of the switch.
         Defaults to `circuits.connectwidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color for the wire of the switch.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -1306,7 +1307,7 @@ def node(ax, pos, label='', align='northeast', color=None,
         Optional label for the node.
     align: 'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'
         Position of the label relative to the node.
-    color matplotlib color
+    color: matplotlib color
         Color of the node.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -1356,6 +1357,87 @@ def node(ax, pos, label='', align='northeast', color=None,
     return Pos(pos[0], pos[1])
 
 
+def pin(ax, pos, label='', align='northeast', lw=None, color=None,
+        facecolor=None, alpha=None, zorder=None, **kwargs):
+    """ Draw a pin hole.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the pin hole.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the pin hole.
+    label: string
+        Optional label for the pin hole.
+    align: 'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'
+        Position of the label relative to the pin hole.
+    lw: float, int
+        Linewidth for drawing the outline of the pin hole.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color: matplotlib color
+        Color for the outline of the pin hole.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor: matplotlib color
+        Color for filling the pin hole.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the node.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the pin hole.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.linewidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if facecolor is None:
+        facecolor = mpl.rcParams['circuits.facecolor']
+    if alpha is None:
+        alpha = mpl.rcParams['circuits.alpha']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder'] + 1
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    r = mpl.rcParams['circuits.scale']*0.25/2
+    ax.add_patch(Circle(pos, r, zorder=zorder, edgecolor='none',
+                        facecolor=facecolor, alpha=alpha))
+    ax.add_patch(Circle(pos, r, zorder=zorder+1, edgecolor=color,
+                        facecolor='none', lw=lw))
+    if label:
+        xx = 0
+        yy = 0
+        ha = 'center'
+        va = 'center'
+        if align == 'right' or 'east' in align:
+            xx = 2*r
+            ha = 'left'
+        elif align == 'left' or 'west' in align:
+            xx = -2*r
+            ha = 'right'
+        if align == 'above' or align == 'top' or 'north' in align:
+            yy = 2*r
+            va = 'bottom'
+        elif align == 'below' or align == 'bottom' or 'south' in align:
+            yy = -2*r
+            va = 'top'
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(pos[0], pos[1])
+
+
 def connect(ax, nodes, lw=None, color=None, zorder=None):
     """ Draw horizontal and vertical lines connecting circuit elements.
 
@@ -1371,7 +1453,7 @@ def connect(ax, nodes, lw=None, color=None, zorder=None):
     lw: float, int
         Linewidth for drawing the connection lines.
         Defaults to `circuits.connectwidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color of the connection lines.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -1425,7 +1507,7 @@ def connect_straight(ax, nodes, lw=None, color=None, zorder=None):
     lw: float, int
         Linewidth for drawing the connection lines.
         Defaults to `circuits.linewidth` rcParams settings.
-    color matplotlib color
+    color: matplotlib color
         Color of the connection lines.
         Defaults to `circuits.color` rcParams settings.
     zorder: int
@@ -1543,6 +1625,8 @@ def install_circuits():
         mpl.axes.Axes.switch_v = switch_v
     if not hasattr(mpl.axes.Axes, 'node'):
         mpl.axes.Axes.node = node
+    if not hasattr(mpl.axes.Axes, 'pin'):
+        mpl.axes.Axes.pin = pin
     if not hasattr(mpl.axes.Axes, 'connect'):
         mpl.axes.Axes.connect = connect
     if not hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -1604,6 +1688,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'switch_v')
     if hasattr(mpl.axes.Axes, 'node'):
         delattr(mpl.axes.Axes, 'node')
+    if hasattr(mpl.axes.Axes, 'pin'):
+        delattr(mpl.axes.Axes, 'pin')
     if hasattr(mpl.axes.Axes, 'connect'):
         delattr(mpl.axes.Axes, 'connect')
     if hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -1649,8 +1735,8 @@ def demo():
     
     op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((6, -2), r'$OP2$')
     s2l, s2r = ax.switch_h(op2o.lefts(1), r'$S2$', 'below')
-    n2n = ax.node(op2n.rights(1))
-    n2p = ax.node(op2p.rights(1))
+    n2p = ax.pin(op2p.rights(1), r'$P_1$', 'east')
+    n2n = ax.pin(op2n.rights(1), r'$P_2$', 'east')
     n2o = ax.node(s2l.lefts(1))
     gnd2 = ax.ground(op2g.downs(1), r'$GND_2$', 'left')
     ax.connect((op2n, n2n))
