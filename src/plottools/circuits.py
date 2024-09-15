@@ -14,6 +14,8 @@ Electrical circuits.
 - `ground_u()`: draw ground upwards.
 - `opamp_l()`: draw an operational amplifier with inputs on the left.
 - `opamp_l()`: draw an operational amplifier with inputs on the right.
+- `switch_h()`: draw a horizontal switch.
+- `switch_v()`: draw a vertical switch.
 - `node()`: draw a node connecting lines.
 - `connect()`: draw lines directly connecting circuit elements.
 - `connect_straight()`: draw straight lines connecting circuit elements.
@@ -310,7 +312,7 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
     label: string
         Optional label for the resistance.
     align: 'left', 'right', 'center'
-        Position the label to th left, right or in the center of the resistance.
+        Position the label to the left, right or in the center of the resistance.
     lw: float, int
         Linewidth for drawing the outline of the resistance.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -1147,6 +1149,149 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
 
 
+def switch_h(ax, pos, label='', align='above', lw=None, color=None,
+             zorder=None, **kwargs):
+    """ Draw a horizontal switch.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the switch.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the switch.
+    label: string
+        Optional label for the switch.
+    align: 'above', 'below'
+        Position the label above or below the switch.
+    lw: float, int
+        Linewidth for drawing the wire of the switch.
+        Defaults to `circuits.connectwidth` rcParams settings.
+    color matplotlib color
+        Color for the wire of the switch.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the switch and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the switch.
+    posr: Pos
+        Coordinates of the right end of the switch.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.connectwidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    w = mpl.rcParams['circuits.scale']
+    h = 0.5*mpl.rcParams['circuits.scale']
+    x, y = pos
+    ax.plot([x - 0.3*w, x + 0.3*w], [y, y + 0.5*h],
+            color=color, lw=lw)
+    if label:
+        ha = 'center'
+        va = 'center'
+        if align == 'above' or align == 'top':
+            yy = 0.7*h
+            va = 'bottom'
+        elif align == 'below' or align == 'bottom':
+            yy = -0.3*h
+            va = 'top'
+        else:
+            raise ValueError('align must be "above" or "bottom"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
+        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+    return Pos(x - 0.3*w, y), Pos(x + 0.3*w, y)
+
+
+def switch_v(ax, pos, label='', align='right', lw=None, color=None,
+             zorder=None, **kwargs):
+    """ Draw a vertical switch.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the switch.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the switch.
+    label: string
+        Optional label for the switch.
+    align: 'left', 'right'
+        Position the label to the left or right of the switch.
+    lw: float, int
+        Linewidth for drawing the wire of the switch.
+        Defaults to `circuits.connectwidth` rcParams settings.
+    color matplotlib color
+        Color for the wire of the switch.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the switch and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the switch.
+    post: Pos
+        Coordinates of the top end of the switch.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.connectwidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    w = 0.5*mpl.rcParams['circuits.scale']
+    h = mpl.rcParams['circuits.scale']
+    x, y = pos
+    ax.plot([x, x + 0.5*w], [y + 0.3*h, y - 0.3*h], color=color, lw=lw)
+    if label:
+        ha = 'center'
+        va = 'center'
+        if align == 'right':
+            xx = 0.7*w
+            ha = 'left'
+        elif align == 'left':
+            xx = -0.3*w
+            ha = 'right'
+        else:
+            raise ValueError('align must be "left" or "right"')
+        if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
+            kwargs['ha'] = ha
+        if not 'va' in kwargs and not 'verticalalignment' in kwargs:
+            kwargs['va'] = va
+        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
+    return Pos(x, y - 0.3*h), Pos(x, y + 0.3*h)
+
+
 def node(ax, pos, label='', align='northeast', color=None,
          zorder=None, **kwargs):
     """ Draw a node connecting lines.
@@ -1225,7 +1370,7 @@ def connect(ax, nodes, lw=None, color=None, zorder=None):
         counter-clockwise direction.
     lw: float, int
         Linewidth for drawing the connection lines.
-        Defaults to `circuits.linewidth` rcParams settings.
+        Defaults to `circuits.connectwidth` rcParams settings.
     color matplotlib color
         Color of the connection lines.
         Defaults to `circuits.color` rcParams settings.
@@ -1392,6 +1537,10 @@ def install_circuits():
         mpl.axes.Axes.opamp_l = opamp_l
     if not hasattr(mpl.axes.Axes, 'opamp_r'):
         mpl.axes.Axes.opamp_r = opamp_r
+    if not hasattr(mpl.axes.Axes, 'switch_h'):
+        mpl.axes.Axes.switch_h = switch_h
+    if not hasattr(mpl.axes.Axes, 'switch_v'):
+        mpl.axes.Axes.switch_v = switch_v
     if not hasattr(mpl.axes.Axes, 'node'):
         mpl.axes.Axes.node = node
     if not hasattr(mpl.axes.Axes, 'connect'):
@@ -1449,6 +1598,10 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'opamp_l')
     if hasattr(mpl.axes.Axes, 'opamp_r'):
         delattr(mpl.axes.Axes, 'opamp_r')
+    if hasattr(mpl.axes.Axes, 'switch_h'):
+        delattr(mpl.axes.Axes, 'switch_h')
+    if hasattr(mpl.axes.Axes, 'switch_v'):
+        delattr(mpl.axes.Axes, 'switch_v')
     if hasattr(mpl.axes.Axes, 'node'):
         delattr(mpl.axes.Axes, 'node')
     if hasattr(mpl.axes.Axes, 'connect'):
@@ -1470,34 +1623,41 @@ install_circuits()
     
 def demo():
     fig, ax = plt.subplots()
+    
     e1b, e1t = ax.battery_v((0, 1), r'$E_1$')
     r1b, r1t = ax.resistance_v((e1t[0], 3), r'$R_1$')
     c1b, c1t = ax.capacitance_v((-2, 2), r'$C_1$')
     ax.connect((e1t, r1b, None, r1t, r1t.ups(0.5), c1t, None,
                 c1b, e1b.downs(0.5), e1b))
+    
     e2l, e2r = ax.battery_h((0, -1), r'$E_2$', 'below')
     r2l, r2r = ax.resistance_h((-2, e2l.y()), r'$R_2$', 'below')
     c2l, c2r = ax.capacitance_h((-1, -3), r'$C_2$', 'below')
     ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
                 c2r, e2r.rights(0.5), e2r))
-    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((4, 2), r'$OP1$')
+    
+    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((5, 3), r'$OP1$')
+    s1b, s1t = ax.switch_v(op1g.downs(1), r'$S1$', 'left')
     n1n = ax.node(op1n.lefts(2))
     n1p = ax.node(op1p.lefts(2))
     n1o = ax.node(op1o.rights(1))
-    gnd1 = ax.ground(op1g.downs(1), r'$GND_1$')
+    gnd1 = ax.ground(s1b.downs(1), r'$GND_1$')
     ax.connect((op1n, n1n))
     ax.connect((op1p, n1p))
     ax.connect((op1o, n1o))
-    ax.connect((op1g, gnd1))
-    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((4, -2), r'$OP2$')
+    ax.connect((op1g, s1t, None, s1b, gnd1))
+    
+    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((6, -2), r'$OP2$')
+    s2l, s2r = ax.switch_h(op2o.lefts(1), r'$S2$', 'below')
     n2n = ax.node(op2n.rights(1))
     n2p = ax.node(op2p.rights(1))
-    n2o = ax.node(op2o.lefts(2))
+    n2o = ax.node(s2l.lefts(1))
     gnd2 = ax.ground(op2g.downs(1), r'$GND_2$', 'left')
     ax.connect((op2n, n2n))
     ax.connect((op2p, n2p))
-    ax.connect((op2o, n2o))
+    ax.connect((op2o, s2r, None, s2l, n2o))
     ax.connect((op2g, gnd2))
+    
     ax.set_aspect('equal')
     plt.show()
 
