@@ -48,6 +48,7 @@ def legend(ax, *args, **kwargs):
     if 'labels' in kwargs:
         labels = kwargs.pop('labels')
     labels = list(labels)
+    newkwargs = dict()
     for k in range(len(labels)):
         labels[k], newkwargs = translate_latex_text(labels[k], **kwargs)
     lgd = ax.__legend_orig_legend(handles, labels, *args, **newkwargs)
