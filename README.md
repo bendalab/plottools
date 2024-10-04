@@ -72,6 +72,8 @@ new functionality or some specialized interface:
   enhance textual annotations.
 - [`ticks`](https://bendalab.github.io/plottools/api/ticks.html):
   setting tick locations and formats. [More...](docs/ticks.md)
+- [`title`](https://bendalab.github.io/plottools/api/title/html):
+  enhance title text.
 
 The patching is done by each module's `install_<module>()`
 function. This function is called automatically upon importing the

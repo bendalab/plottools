@@ -39,6 +39,7 @@ from .subplots import install_subplots, uninstall_subplots
 from .tag import tag_params, install_tag, uninstall_tag
 from .text import text_params, install_text, uninstall_text
 from .ticks import ticks_params, install_ticks, uninstall_ticks
+from .title import title_params, install_title, uninstall_title
 from .version import __version__
 try:
     from .params import paper_style, sketch_style, screen_style
