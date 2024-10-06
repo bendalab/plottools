@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.colors API documentation</title>
+<meta name="description" content="Color palettes and tools for manipulating colors …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.colors</code></h1>
+</header>
+<section id="section-intro">
+<p>Color palettes and tools for manipulating colors.</p>
+<h2 id="dictionaries-with-colors">Dictionaries with colors</h2>
+<ul>
+<li><code>colors_plain</code>: plain rgb colors. <img alt="plain" src="figures/colors-plain.png"></li>
+<li><code>colors_vivid</code>: vivid colors. <img alt="vivid" src="figures/colors-vivid.png"></li>
+<li><code>colors_muted</code>: muted colors. <img alt="muted" src="figures/colors-muted.png"></li>
+<li><code>colors_tableau</code>: matplotlib's tableau (tab10) colors.
+<img alt="tableau" src="figures/colors-tableau.png"></li>
+<li><code>colors_henninger</code>: colors by Joerg Henninger upond which the muted colors are build.
+<img alt="henninger" src="figures/colors-henninger.png"></li>
+<li><code>colors_scicomp</code>: colors from the scientific computing script.
+<img alt="scicomp" src="figures/colors-scicomp.png"></li>
+<li><code>colors_unituebingen</code>: colors of the corporate design of the University of Tuebingen.
+<img alt="unituebingen" src="figures/colors-unituebingen.png"></li>
+<li><code>colors_itten</code>: Farbkreis by Johannes Itten, 1961. <img alt="itten" src="figures/colors-itten.png"></li>
+<li><code>colors_solarized</code>: Ethan Schoonover's color palette, solarized.
+<img alt="solarized" src="figures/colors-solarized.png"></li>
+<li>
+<p><code>colors_material</code>: Google's material color palette.
+<img alt="material" src="figures/colors-material.png"></p>
+</li>
+<li>
+<p><code>palettes</code>: a dictionary with all defined color dictionaries.</p>
+</li>
+</ul>
+<h2 id="manipulating-colors">Manipulating colors</h2>
+<ul>
+<li><code><a title="plottools.colors.lighter" href="#plottools.colors.lighter">lighter()</a></code>: make a color lighter. <img alt="lighter" src="figures/colors-lighter.png"></li>
+<li><code><a title="plottools.colors.darker" href="#plottools.colors.darker">darker()</a></code>: make a color darker. <img alt="darker" src="figures/colors-darker.png"></li>
+<li><code><a title="plottools.colors.gradient" href="#plottools.colors.gradient">gradient()</a></code>: interpolate between two colors. <img alt="gradient" src="figures/colors-gradient.png"></li>
+</ul>
+<h2 id="exporting-colors">Exporting colors</h2>
+<ul>
+<li><code><a title="plottools.colors.latex_colors" href="#plottools.colors.latex_colors">latex_colors()</a></code>: print <code>\definecolor</code> commands for LaTeX.</li>
+</ul>
+<h2 id="color-maps">Color maps</h2>
+<ul>
+<li><code><a title="plottools.colors.colormap" href="#plottools.colors.colormap">colormap()</a></code>: generate and register a color map. <img alt="colormap" src="figures/colors-colormap.png"></li>
+<li><code><a title="plottools.colors.cmap_color" href="#plottools.colors.cmap_color">cmap_color()</a></code>: retrieve color from a color map.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.colors.colors_params" href="#plottools.colors.colors_params">colors_params()</a></code>: set colors for the matplotlib color cycler.</li>
+</ul>
+<h2 id="plot-colors">Plot colors</h2>
+<ul>
+<li><code><a title="plottools.colors.plot_colors" href="#plottools.colors.plot_colors">plot_colors()</a></code>: plot all colors of a palette and optionally some lighter and darker variants.
+<img alt="plotcolors" src="figures/colors-plotcolors.png"></li>
+<li><code><a title="plottools.colors.plot_complementary_colors" href="#plottools.colors.plot_complementary_colors">plot_complementary_colors()</a></code>: plot complementary colors of a palette on top of each other.
+<img alt="plotcomplementary" src="figures/colors-plotcomplementary.png"></li>
+<li><code><a title="plottools.colors.plot_color_comparison" href="#plottools.colors.plot_color_comparison">plot_color_comparison()</a></code>: plot matching colors of severals palettes on top of each other.
+<img alt="plotcomparison" src="figures/colors-plotcomparison.png"></li>
+<li><code><a title="plottools.colors.plot_colormap" href="#plottools.colors.plot_colormap">plot_colormap()</a></code>: plot a color map and its luminance.
+<img alt="plotcolormap" src="figures/colors-plotcolormap.png"></li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.colors.lighter"><code class="name flex">
+<span>def <span class="ident">lighter</span></span>(<span>color, lightness)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a color lighter.</p>
+<p><img alt="lighter" src="figures/colors-lighter.png"></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>dict</code> or <code>matplotlib color spec</code></dt>
+<dd>A matplotlib color (hex string, name color string, rgb tuple)
+or a dictionary with an 'color' or 'facecolor' key.</dd>
+<dt><strong><code>lightness</code></strong> :&ensp;<code>float</code></dt>
+<dd>The smaller the lightness, the lighter the returned color.
+A lightness of 0 returns white.
+A lightness of 1 leaves the color untouched.
+A lightness of 2 returns black.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>string</code> or <code>dict</code></dt>
+<dd>The lighter color as a hexadecimal RGB string (e.g. '#rrggbb').
+If <code>color</code> is a dictionary, a copy of the dictionary is returned
+with the value of 'color' or 'facecolor' set to the lighter color.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>For 40% lightness of blue do</p>
+<pre><code class="language-py">import plottools.colors as c
+colors = c.palettes['muted']
+lightblue = c.lighter(colors['blue'], 0.4)
+</code></pre></div>
+</dd>
+<dt id="plottools.colors.darker"><code class="name flex">
+<span>def <span class="ident">darker</span></span>(<span>color, saturation)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a color darker.</p>
+<p><img alt="darker" src="figures/colors-darker.png"></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>dict</code> or <code>matplotlib color spec</code></dt>
+<dd>A matplotlib color (hex string, name color string, rgb tuple)
+or a dictionary with an 'color' or 'facecolor' key.</dd>
+<dt><strong><code>saturation</code></strong> :&ensp;<code>float</code></dt>
+<dd>The smaller the saturation, the darker the returned color.
+A saturation of 0 returns black.
+A saturation of 1 leaves the color untouched.
+A saturation of 2 returns white.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>string</code> or <code>dictionary</code></dt>
+<dd>The darker color as a hexadecimal RGB string (e.g. '#rrggbb').
+If <code>color</code> is a dictionary, a copy of the dictionary is returned
+with the value of 'color' or 'facecolor' set to the darker color.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>For 40% darker blue do</p>
+<pre><code class="language-py">import plottools.colors as c
+colors = c.palettes['muted']
+darkblue = c.darker(colors['blue'], 0.4)
+</code></pre></div>
+</dd>
+<dt id="plottools.colors.gradient"><code class="name flex">
+<span>def <span class="ident">gradient</span></span>(<span>color0, color1, r)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Interpolate between two colors.</p>
+<p><img alt="gradient" src="figures/colors-gradient.png"></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>color0</code></strong> :&ensp;<code>dict</code> or <code>matplotlib color spec</code></dt>
+<dd>A matplotlib color (hex string, name color string, rgb tuple)
+or a dictionary with an 'color' or 'facecolor' key.</dd>
+<dt><strong><code>color1</code></strong> :&ensp;<code>dict</code> or <code>matplotlib color spec</code></dt>
+<dd>A matplotlib color (hex string, name color string, rgb tuple)
+or a dictionary with an 'color' or 'facecolor' key.</dd>
+<dt><strong><code>r</code></strong> :&ensp;<code>float</code></dt>
+<dd>Value between 0 and for interpolating between the two colors.
+r=0 returns color0, r=1 returns color1.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>string</code> or <code>dict</code></dt>
+<dd>The interpolated color as a hexadecimal RGB string (e.g. '#rrggbb').
+If at least one of the colors is a dictionary, then return a copy of the
+first dictionary with the value of 'color' or 'facecolor'
+set to the interpolated color.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="keyerror">Keyerror</h2>
+<p>If a <code>color0</code> or <code>color1</code> is a dictionary, but does not contain a
+'color' or 'facecolor' key.</p>
+<h2 id="examples">Examples</h2>
+<p>For 30% transition between blue and orange do</p>
+<pre><code class="language-py">import plottools.colors as c
+colors = c.palettes['muted']
+color = c.gradient(colors['blue'], colors['orange'], 0.3)
+</code></pre></div>
+</dd>
+<dt id="plottools.colors.latex_colors"><code class="name flex">
+<span>def <span class="ident">latex_colors</span></span>(<span>colors, name='', model='rgb')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Print <code>\definecolor</code> commands for LaTeX.</p>
+<p>Copy the color definitions from the console into you LaTeX
+preamble. Do not forget to load the <code>color</code> or <code>xcolor</code> packages before:</p>
+<pre><code class="language-tex">\usepackage{xcolor}
+</code></pre>
+<p>You then can use the newly defined
+colors with the usual commands, like for example:</p>
+<pre><code class="language-tex">\textcolor{red}{Some text in my special red.}
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>colors</code></strong> :&ensp;<code>matplotlib color</code> or <code>dict</code> of <code>matplotlib colors</code></dt>
+<dd>A dictionary with names and rgb hex-strings of colors
+or a single matplotlib color.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>If colors is a single color, then name is the name of the color.</dd>
+<dt><strong><code>model</code></strong> :&ensp;<code>'rgb', 'RGB'</code> or <code>'HTML'</code></dt>
+<dd>Color model.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>Print LaTeX color definition for a single color:</p>
+<pre><code class="language-py">import plottools.colors as c
+colors = c.palettes['muted']
+c.latex_colors(colors['red'], 'red')
+</code></pre>
+<p>writes to the console</p>
+<pre><code class="language-tex">\definecolor{red}{rgb}{0.753,0.153,0.090}
+</code></pre>
+<p>Or print color definitions for a whole palette:</p>
+<pre><code class="language-py">c.latex_colors(c.colors_vivid)
+</code></pre>
+<p>writes to the console</p>
+<pre><code class="language-tex">\definecolor{red}{rgb}{0.843,0.063,0.000}
+\definecolor{orange}{rgb}{1.000,0.565,0.000}
+\definecolor{yellow}{rgb}{1.000,0.969,0.000}
+...
+</code></pre></div>
+</dd>
+<dt id="plottools.colors.colormap"><code class="name flex">
+<span>def <span class="ident">colormap</span></span>(<span>name, colors, values=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate and register a color map.</p>
+<p>This is a simple shortcut to the cumbersome names and imports needed for
+<code>matplotlib.colors.LinearSegmentedColormap</code> and <code>matplotlib.cm.register_cmap</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of the color map. You can use this name to set the colormap, e.g.
+<code>ax.contourf(x, y, z, cmap=name)</code></dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>sequence</code> of <code>matplotlib color specifications</code></dt>
+<dd>The colors from which to generate the color map.</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>sequence</code> of <code>floats</code> or <code>None</code></dt>
+<dd>If None, <code>colors</code> are equidistantly mapped on the range 0 to 1.
+Otherwise for each color the position in the colors map range.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib <a title="plottools.colors.colormap" href="#plottools.colors.colormap">colormap()</a></code></dt>
+<dd>The color map generated from <code>colors</code>.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<p>Generate and register a color map from colors like this:</p>
+<pre><code class="language-py">import plottools.colors as c
+colors = c.palettes['muted']
+cmcolors = [colors['red'],
+            c.lighter(colors['orange'], 0.85),
+            c.lighter(colors['yellow'], 0.2),
+            c.lighter(colors['lightblue'], 0.8),
+            colors['blue']]
+cmvalues = [0.0, 0.25, 0.5, 0.8, 1.0]
+c.colormap('RYB', cmcolors, cmvalues)
+</code></pre>
+<p>The new colormap can then be used directly by its name for the <code>cmap</code>
+arguments of <code>imshow()</code>, <code>pcolormesh()</code>, <code>contourf()</code>, etc.:</p>
+<pre><code class="language-py">ax.imshow(image, cmap='RYB')
+</code></pre>
+<p><img alt="colormap" src="figures/colors-colormap.png"></p></div>
+</dd>
+<dt id="plottools.colors.cmap_color"><code class="name flex">
+<span>def <span class="ident">cmap_color</span></span>(<span>cmap, x, alpha=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retrieve color from a color map.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>string</code> or <code>matplotib <a title="plottools.colors.colormap" href="#plottools.colors.colormap">colormap()</a></code></dt>
+<dd>Name or instance of a matplotlib color map.</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code> or <code>sequence</code> of <code>floats</code></dt>
+<dd>The fraction along the color map to be converted in to a color
+(between 0 and 1).</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>If specified, alpha value of the returned color.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>color: tuple of floats, or sequence thereof.
+RGBA value of selected color.</p>
+<h2 id="examples">Examples</h2>
+<p>Retrieve a single color from a color map:</p>
+<pre><code class="language-py">jet_red = c.cmap_color('jet', 0.0)
+</code></pre></div>
+</dd>
+<dt id="plottools.colors.colors_params"><code class="name flex">
+<span>def <span class="ident">colors_params</span></span>(<span>palette=None, colors=None, cmap=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set colors for the matplotlib color cycler.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>palette</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary with named colors.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>Names of the colors from <code>palette</code> that should go into the color cycler
+(rcParam <code>axes.prop_cycle</code> or <code>axes.color_cycle</code>).</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>string</code></dt>
+<dd>Name of default color map (<code>rcParam['image.cmap']</code>).</dd>
+</dl></div>
+</dd>
+<dt id="plottools.colors.plot_colors"><code class="name flex">
+<span>def <span class="ident">plot_colors</span></span>(<span>ax, colors, n=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot all colors of a palette and optionally some lighter and darker variants.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the colors.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary with names and matplotlib colors.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>If one, plot the colors of the palette only.
+If larger than one, plot in addition that many
+lighter and darker versions of the colors.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>import matplotlib.pyplot as plt
+import plottools.colors as c
+fig, ax = plt.subplots()
+c.plot_colors(ax, c.palettes['muted'], 5)
+</code></pre>
+<p><img alt="plotcolors" src="figures/colors-plotcolors.png"></p></div>
+</dd>
+<dt id="plottools.colors.plot_complementary_colors"><code class="name flex">
+<span>def <span class="ident">plot_complementary_colors</span></span>(<span>ax, colors, n=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot complementary colors of a palette on top of each other.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the colors.</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dictionary with names and matplotlib colors.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of additional gradient values to be plotted inbetween the complementary colors.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>import matplotlib.pyplot as plt
+import plottools.colors as c
+fig, ax = plt.subplots()
+c.plot_complementary_colors(ax, c.palettes['muted'])
+</code></pre>
+<p><img alt="plotcomplementary" src="figures/colors-plotcomplementary.png"></p></div>
+</dd>
+<dt id="plottools.colors.plot_color_comparison"><code class="name flex">
+<span>def <span class="ident">plot_color_comparison</span></span>(<span>ax, colorsa, *args)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot matching colors of severals palettes on top of each other.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Subplot to use for plotting the colors.</dd>
+<dt><strong><code>colorsa</code></strong> :&ensp;<code>dict</code> or <code>tuple (dict, string)</code> or <code>string</code></dt>
+<dd>A dictionary with names and matplotlib colors.
+This is the reference palette which is plotted completely at the bottom.
+The optional second name is used as a string to annotate the colors.
+Alternatively, just the name of the color palette in <code>palettes</code>.</dd>
+<dt><strong><code>args</code></strong> :&ensp;<code>list</code> of <code>dicts</code> or <code>tuples (dict, string)</code> or <code>strings</code></dt>
+<dd>Further dictionaries with names and matplotlib colors.
+Colors with names matching the ones from <code>colorsa</code> are plotted on top.
+The optional second element is used as a string to annotated the colors.
+Alternatively, just the names of the color palettes in <code>palettes</code>.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>import matplotlib.pyplot as plt
+import plottools.colors as c
+fig, ax = plt.subplots()
+c.plot_color_comparison(ax, ('muted', 'vivid', 'plain'))
+</code></pre>
+<p><img alt="plotcomparison" src="figures/colors-plotcomparison.png"></p></div>
+</dd>
+<dt id="plottools.colors.plot_colormap"><code class="name flex">
+<span>def <span class="ident">plot_colormap</span></span>(<span>ax, cmap, luminance=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot a color map and its luminance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes for plotting gradient of the color map.</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>string</code> or <code>matplotlib color map</code></dt>
+<dd>Color map to be plotted.</dd>
+<dt><strong><code>luminance</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If True, also plot a gradient of the luminance of the color map.
+Requires the <code>colorspacious</code> package.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>import matplotlib.pyplot as plt
+import plottools.colors as c
+fig, ax = plt.subplots()
+c.plot_colormap(ax, 'jet', True)
+</code></pre>
+<p><img alt="plotcolormap" src="figures/colors-plotcolormap.png"></p></div>
+</dd>
+<dt id="plottools.colors.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>n=1, complementary=False, *args)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot one or more color palettes or color maps.</p>
+<p>If only one color palette is specified in <code>args</code>, then plot this color palette
+in the following ways:</p>
+<ul>
+<li>complementary colors plotted on top of each other if <code>complementary</code> is
+set <code>True</code> (using <code><a title="plottools.colors.plot_complementary_colors" href="#plottools.colors.plot_complementary_colors">plot_complementary_colors()</a></code>).</li>
+<li>complementary colors with <code>n</code> intermediate colors, for <code>n&gt;1</code> and <code>complementary</code>
+set <code>True</code> (using <code><a title="plottools.colors.plot_complementary_colors" href="#plottools.colors.plot_complementary_colors">plot_complementary_colors()</a></code>).</li>
+<li>just the plain color palette, if <code>n==1</code> (using <code><a title="plottools.colors.plot_colors" href="#plottools.colors.plot_colors">plot_colors()</a></code>).</li>
+<li>the color palette with darker and lighter colors for <code>n&gt;1</code> using <code><a title="plottools.colors.plot_colors" href="#plottools.colors.plot_colors">plot_colors()</a></code>.</li>
+<li>if a color map is specified, plot the map and its luminance using <code><a title="plottools.colors.plot_colormap" href="#plottools.colors.plot_colormap">plot_colormap()</a></code>.</li>
+</ul>
+<p>If more than one color palette is specified, the color palettes are
+plotted on top of each other using <code><a title="plottools.colors.plot_color_comparison" href="#plottools.colors.plot_color_comparison">plot_color_comparison()</a></code>. Only
+the colors named by the first palette are drawn. If <code>args</code> contains
+the single element <code>all</code>, then all available color palettes are
+compared.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>
+<ul>
+<li>1: plot the selected color palette</li>
+<li>n&gt;1: plot the selected color palette with n-1 lighter and darker colors or
+n gradient values for 'complementary'</li>
+</ul>
+</dd>
+<dt><strong><code>complementary</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If <code>True</code>, plot complementary colors of the selected palette</dd>
+<dt><strong><code>*args</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>names of color palettes or color maps.</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#dictionaries-with-colors">Dictionaries with colors</a></li>
+<li><a href="#manipulating-colors">Manipulating colors</a></li>
+<li><a href="#exporting-colors">Exporting colors</a></li>
+<li><a href="#color-maps">Color maps</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#plot-colors">Plot colors</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="plottools.colors.lighter" href="#plottools.colors.lighter">lighter</a></code></li>
+<li><code><a title="plottools.colors.darker" href="#plottools.colors.darker">darker</a></code></li>
+<li><code><a title="plottools.colors.gradient" href="#plottools.colors.gradient">gradient</a></code></li>
+<li><code><a title="plottools.colors.latex_colors" href="#plottools.colors.latex_colors">latex_colors</a></code></li>
+<li><code><a title="plottools.colors.colormap" href="#plottools.colors.colormap">colormap</a></code></li>
+<li><code><a title="plottools.colors.cmap_color" href="#plottools.colors.cmap_color">cmap_color</a></code></li>
+<li><code><a title="plottools.colors.colors_params" href="#plottools.colors.colors_params">colors_params</a></code></li>
+<li><code><a title="plottools.colors.plot_colors" href="#plottools.colors.plot_colors">plot_colors</a></code></li>
+<li><code><a title="plottools.colors.plot_complementary_colors" href="#plottools.colors.plot_complementary_colors">plot_complementary_colors</a></code></li>
+<li><code><a title="plottools.colors.plot_color_comparison" href="#plottools.colors.plot_color_comparison">plot_color_comparison</a></code></li>
+<li><code><a title="plottools.colors.plot_colormap" href="#plottools.colors.plot_colormap">plot_colormap</a></code></li>
+<li><code><a title="plottools.colors.demo" href="#plottools.colors.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>
