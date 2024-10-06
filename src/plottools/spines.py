@@ -142,6 +142,7 @@ def show_spines(ax, spines='lrtb'):
             ax.xaxis._orig_major_locator = ax.xaxis.get_major_locator()
             ax.xaxis.set_major_locator(ticker.NullLocator())
         else:
+            ax.xaxis.label.set_visible(True)
             if hasattr(ax.xaxis, '_orig_major_locator'):
                 ax.xaxis.set_major_locator(ax.xaxis._orig_major_locator)
                 delattr(ax.xaxis, '_orig_major_locator')
@@ -159,6 +160,7 @@ def show_spines(ax, spines='lrtb'):
             ax.yaxis._orig_major_locator = ax.yaxis.get_major_locator()
             ax.yaxis.set_major_locator(ticker.NullLocator())
         else:
+            ax.yaxis.label.set_visible(True)
             if hasattr(ax.yaxis, '_orig_major_locator'):
                 ax.yaxis.set_major_locator(ax.yaxis._orig_major_locator)
                 delattr(ax.yaxis, '_orig_major_locator')
