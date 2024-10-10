@@ -315,6 +315,12 @@ def figure_params(color=None, format=None, counter=None, dpi=None,
     color: matplotlib color specification or 'none'
         Background color for the whole figure.
         Sets rcParam `figure.facecolor` and `savefig.facecolor`.
+        For setting the background color of a specific figure, use
+        ```
+        fig.set_facecolor(color)
+        ```
+        or pass it to the `plt.figure()` or `plt.subplots()` functions
+        via the `facecolor`keyword argument.
     format: 'png', 'ps', 'pdf', 'svg'
         File format of the saved figure. Sets rcParam `savefig.format`.
     counter: 'A', 'a', or '1'

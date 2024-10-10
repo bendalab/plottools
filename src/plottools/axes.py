@@ -30,6 +30,10 @@ def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None):
     color: matplotlib color or 'none'
         Background color for each subplot.
         Sets rcParam `axes.facecolor`.
+        For setting the backround color of a given axes, use
+        ```
+        ax.set_facecolor(color)
+        ```
     """
     if xmargin is not None:
         mpl.rcParams['axes.xmargin'] = xmargin
