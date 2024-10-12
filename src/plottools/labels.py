@@ -16,6 +16,8 @@ Annotate axis with label and unit.
 `mpl.rcParams` defined by the labels module:
 ```py
 axes.label.format: '{label} [{unit}]'
+xaxis.labelrotation: 'horizontal'
+yaxis.labelrotation: 'vertical'
 ```
 
 ## Install/uninstall labels functions
@@ -74,6 +76,8 @@ def set_xlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_xlabel()` function.
     """
+    if not 'rotation' in kwargs:
+        kwargs.update(rotation=mpl.rcParams['xaxis.labelrotation'])
     ax.__set_xlabel_labels(__axis_label(label, unit), **kwargs)
 
         
@@ -91,6 +95,8 @@ def set_ylabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_ylabel()` function.
     """
+    if not 'rotation' in kwargs:
+        kwargs.update(rotation=mpl.rcParams['yaxis.labelrotation'])
     ax.__set_ylabel_labels(__axis_label(label, unit), **kwargs)
 
         
@@ -113,7 +119,8 @@ def set_zlabel(ax, label, unit=None, **kwargs):
 
 def labels_params(labelformat=None, labelsize=None, labelweight=None,
                   labelcolor='axes', labelpad=None,
-                  xlabellocation=None, ylabellocation=None):
+                  xlabelloc=None, ylabelloc=None,
+                  xlabelrot=None, ylabelrot=None):
     """ Set parameters for axis labels.
                   
     Only parameters that are not `None` are updated.
@@ -139,10 +146,14 @@ def labels_params(labelformat=None, labelsize=None, labelweight=None,
     labelpad: float
         Set space between x- and y-axis labels and axis in points.
         Sets rcParam `axes.labelpad`.
-    xlabellocation: {'center', 'left', 'right'}
+    xlabelloc: {'center', 'left', 'right'}
         Location of xlabels. Sets rcParams `xaxis.labellocation`.
-    ylabellocation: {'center', 'bottom', 'top'}
+    ylabelloc: {'center', 'bottom', 'top'}
         Location of ylabels. Sets rcParams `yaxis.labellocation`.
+    xlabelrot: float, or {'horizontal', 'vertical'}
+        Rotation angle of xlabels. Sets rcParams `xaxis.labelrotation`.
+    ylabelrot: float, or {'horizontal', 'vertical'}
+        Rotation angle of ylabels. Sets rcParams `yaxis.labelrotation`.
     """
     if labelformat is not None and 'axes.label.format' in mrc._validators:
         mpl.rcParams['axes.label.format'] = labelformat
@@ -156,10 +167,25 @@ def labels_params(labelformat=None, labelsize=None, labelweight=None,
         mpl.rcParams['axes.labelcolor'] = labelcolor
     if 'axes.labelpad' in mpl.rcParams and labelpad is not None:
         mpl.rcParams['axes.labelpad'] = labelpad
-    if 'xaxis.labellocation' in mpl.rcParams and xlabellocation is not None:
-        mpl.rcParams['xaxis.labellocation'] = xlabellocation
-    if 'yaxis.labellocation' in mpl.rcParams and ylabellocation is not None:
-        mpl.rcParams['yaxis.labellocation'] = ylabellocation
+    if 'xaxis.labellocation' in mpl.rcParams and xlabelloc is not None:
+        mpl.rcParams['xaxis.labellocation'] = xlabelloc
+    if 'yaxis.labellocation' in mpl.rcParams and ylabelloc is not None:
+        mpl.rcParams['yaxis.labellocation'] = ylabelloc
+    if 'xaxis.labelrotation' in mpl.rcParams and xlabelrot is not None:
+        mpl.rcParams['xaxis.labelrotation'] = xlabelrot
+    if 'yaxis.labelrotation' in mpl.rcParams and ylabelrot is not None:
+        mpl.rcParams['yaxis.labelrotation'] = ylabelrot
+
+            
+def _validate_rotation(s):
+    """ Validator for matplotlib.rcsetup.
+    """
+    if s in ('horizontal', 'vertical'):
+        return s
+    try:
+        return float(s)
+    except ValueError as e:
+        raise ValueError('not a valid rotation specification for label') from e
 
 
 def install_labels():
@@ -168,6 +194,8 @@ def install_labels():
     Adds `matplotlib.rcParams`:
     ```py
     axes.label.format: '{label} [{unit}]'
+    xaxis.labelrotation: 'horizontal'
+    yaxis.labelrotation: 'vertical'
     ```
 
     This function is also called automatically upon importing the module.
@@ -176,6 +204,8 @@ def install_labels():
     --------
     set_xlabel(), uninstall_labels()
     """
+    if not hasattr(mrc, 'validate_rotation'):
+        mrc.validate_rotation = _validate_rotation
     if not hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
         mpl.axes.Axes.__set_xlabel_labels = mpl.axes.Axes.set_xlabel
         mpl.axes.Axes.set_xlabel = set_xlabel
@@ -185,9 +215,16 @@ def install_labels():
     if has_zlabel and not hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.__set_zlabel_labels = Axes3D.set_zlabel
         Axes3D.set_zlabel = set_zlabel
-    # add labels parameter to rc configuration:
-    mrc._validators['axes.label.format'] = mrc.validate_string
-    mpl.rcParams['axes.label.format'] = '{label} [{unit}]'
+    # add parameter to rc configuration:
+    if 'axes.label.format' not in mrc._validators:
+        mrc._validators['axes.label.format'] = mrc.validate_string
+        mpl.rcParams['axes.label.format'] = '{label} [{unit}]'
+    if 'xaxis.labelrotation' not in mrc._validators:
+        mrc._validators['xaxis.labelrotation'] = mrc.validate_rotation
+        mpl.rcParams['xaxis.labelrotation'] = 'horizontal'
+    if 'yaxis.labelrotation' not in mrc._validators:
+        mrc._validators['yaxis.labelrotation'] = mrc.validate_rotation
+        mpl.rcParams['yaxis.labelrotation'] = 'vertical'
         
 
 def uninstall_labels():
@@ -199,6 +236,8 @@ def uninstall_labels():
     --------
     install_labels()
     """
+    if hasattr(mrc, 'validate_rotation'):
+        delattr(mrc, 'validate_rotation')
     if hasattr(mpl.axes.Axes, '__set_xlabel_labels'):
         mpl.axes.Axes.set_xlabel = mpl.axes.Axes.__set_xlabel_labels
         delattr(mpl.axes.Axes, '__set_xlabel_labels')
@@ -208,9 +247,13 @@ def uninstall_labels():
     if has_zlabel and hasattr(Axes3D, '__set_zlabel_labels'):
         Axes3D.set_zlabel = Axes3D.__set_zlabel_labels
         delattr(Axes3D, '__set_zlabel_labels')
-    # remove labels parameter from mpl.ptParams:
-    mrc._validators.pop('axes.label.format', None)
-    #mpl.rcParams.pop('axes.label.format', None)
+    # remove parameter from rc configuration:
+    if hasattr(mrc._validators, 'axes.label.format'):
+        mrc._validators.pop('axes.label.format', None)
+    if hasattr(mrc._validators, 'xaxis.labelrotation'):
+        mrc._validators.pop('xaxis.labelrotation', None)
+    if hasattr(mrc._validators, 'yaxis.labelrotation'):
+        mrc._validators.pop('yaxis.labelrotation', None)
 
 
 install_labels()
@@ -219,6 +262,7 @@ install_labels()
 def demo():
     """ Run a demonstration of the labels module.
     """
+    labels_params(xlabelloc='right', ylabelloc='top')
     fig, axs = plt.subplots(1, 2, figsize=(9, 5))
     fig.subplots_adjust(wspace=0.5)
     fig.suptitle('plottools.labels')
