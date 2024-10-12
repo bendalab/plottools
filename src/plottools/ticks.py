@@ -53,6 +53,7 @@ from fractions import Fraction
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+from .latex import translate_latex_text
 
 
 def set_xticks_delta(ax, delta):
@@ -166,7 +167,8 @@ def set_xticks_fixed(ax, locs, labels='%g'):
     """
     ax.xaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
-        ax.xaxis.set_major_formatter(ticker.FixedFormatter(labels))
+        ls = [translate_latex_text(l)[0] for l in labels]
+        ax.xaxis.set_major_formatter(ticker.FixedFormatter(ls))
     else:
         ax.xaxis.set_major_formatter(ticker.FormatStrFormatter(labels))
 
@@ -195,7 +197,8 @@ def set_yticks_fixed(ax, locs, labels='%g'):
     """
     ax.yaxis.set_major_locator(ticker.FixedLocator(locs))
     if isinstance(labels, (tuple, list)):
-        ax.yaxis.set_major_formatter(ticker.FixedFormatter(labels))
+        ls = [translate_latex_text(l)[0] for l in labels]
+        ax.yaxis.set_major_formatter(ticker.FixedFormatter(ls))
     else:
         ax.yaxis.set_major_formatter(ticker.FormatStrFormatter(labels))
 
