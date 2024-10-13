@@ -44,6 +44,8 @@ new functionality or some specialized interface:
   arrows.
 - [`aspect`](https://bendalab.github.io/plottools/api/aspect.html):
   adapting plots to aspect ratio of axes.
+- [`axes`](https://bendalab.github.io/plottools/api/axes.html):
+  setting appearance of axes.
 - [`circuits`](https://bendalab.github.io/plottools/api/circuits.html):
   electrical circuits.
 - [`common`](https://bendalab.github.io/plottools/api/common.html):
@@ -191,8 +193,6 @@ functions.
 The following modules just provide such a function as an alternative
 interface for setting [matplotlib]'s [rcParams]:
 
-- [`axes`](https://bendalab.github.io/plottools/api/axes.html):
-  setting [axes] appearance.
 - [`grid`](https://bendalab.github.io/plottools/api/git.html):
   setting grid appearance.
 
