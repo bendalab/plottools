@@ -35,7 +35,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def set_arrow_style(ax):
+def set_arrow_style(ax, spines='lb'):
     """Turn the axes into arrows through the origin.
 
     Note: Call this function *after* you have set the xlabel and ylabel.
@@ -58,11 +58,14 @@ def set_arrow_style(ax):
     if not isinstance(axs, (list, tuple)):
         axs = [axs]
     for ax in axs:
-        ax.show_spines('lb')
-        ax.set_spines_outward('lb', 0)
-        ax.set_spines_zero('lb', 0)
-        ax.arrow_spines('b', flush=0, extend=0)
-        ax.arrow_spines('l', flush=0, extend=1)
+        ax.show_spines(spines)
+        ax.set_spines_outward(spines, 0)
+        ax.set_spines_zero(spines, 0)
+        for s in spines:
+            if s in 'bt':
+                ax.arrow_spines(s, flush=0, extend=0)
+            elif s in 'lr':
+                ax.arrow_spines(s, flush=0, extend=1)
         label = ax.xaxis.get_label()
         x, y = label.get_position()
         label.set_position([1, y])
@@ -78,7 +81,8 @@ def set_arrow_style(ax):
                                  length=2*plt.rcParams['ytick.major.size'])
                  
 
-def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None):
+def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None,
+                spinecolor=None, spinewidth=None):
     """ Set rc settings for axes.
 
     Only parameters that are not `None` are updated.
@@ -101,6 +105,12 @@ def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None):
         ```
         ax.set_facecolor(color)
         ```
+    spinecolor: matplotlib color or 'none'
+        Color of the spines.
+        Sets rcParam `axes.edgecolor`.
+    spinewidth: float
+        Line width of the spines.
+        Sets rcParam `axes.linewidth`.
     """
     if xmargin is not None:
         mpl.rcParams['axes.xmargin'] = xmargin
@@ -110,6 +120,10 @@ def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None):
         mpl.rcParams['axes.zmargin'] = zmargin
     if color is not None:
         mpl.rcParams['axes.facecolor'] = color
+    if spinecolor is not None:
+        mpl.rcParams['axes.edgecolor'] = spinecolor
+    if spinewidth is not None:
+        mpl.rcParams['axes.linewidth'] = spinewidth
 
 
 def install_axes():
@@ -147,12 +161,12 @@ def demo():
     """ Run a demonstration of the axes module.
     """
     from .spines import spines_params
-    axes_params(xmargin=0, ymargin=0)
+    axes_params(xmargin=0, ymargin=0, spinecolor='gray', spinewidth=2)
     fig, ax = plt.subplots()
     fig.suptitle('plottools.axes')
     ax.set_xlabel('xlabel')
     ax.set_ylabel('ylabel')
-    ax.text(0.1, 0.7, 'axes_params(xmargin=0, ymargin=0)', transform=ax.transAxes)
+    ax.text(0.05, 0.7, 'axes_params(xmargin=0, ymargin=0, spinecolor="gray", spinewidth=2)', transform=ax.transAxes)
     ax.set_arrow_style()
     plt.show()
         
