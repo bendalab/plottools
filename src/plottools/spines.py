@@ -130,6 +130,9 @@ def show_spines(ax, spines='lrtb'):
         if not 'top' in ax.spines or not 'bottom' in ax.spines or \
            not 'left' in ax.spines or not 'right' in ax.spines:
             continue
+        # memorize spines:
+        x_hidden = not ax.spines['top'].get_visible() and not ax.spines['bottom'].get_visible()
+        y_hidden = not ax.spines['left'].get_visible() and not ax.spines['right'].get_visible()
         # hide spines:
         ax.spines['top'].set_visible('top' in xspines)
         ax.spines['bottom'].set_visible('bottom' in xspines)
@@ -143,11 +146,12 @@ def show_spines(ax, spines='lrtb'):
             ax.xaxis.set_major_locator(ticker.NullLocator())
         else:
             ax.xaxis.label.set_visible(True)
-            if hasattr(ax.xaxis, '_orig_major_locator'):
-                ax.xaxis.set_major_locator(ax.xaxis._orig_major_locator)
-                delattr(ax.xaxis, '_orig_major_locator')
-            elif isinstance(ax.xaxis.get_major_locator(), ticker.NullLocator):
-                ax.xaxis.set_major_locator(ticker.AutoLocator())
+            if x_hidden:
+                if hasattr(ax.xaxis, '_orig_major_locator'):
+                    ax.xaxis.set_major_locator(ax.xaxis._orig_major_locator)
+                    delattr(ax.xaxis, '_orig_major_locator')
+                elif isinstance(ax.xaxis.get_major_locator(), ticker.NullLocator):
+                    ax.xaxis.set_major_locator(ticker.AutoLocator())
             if len(xspines) == 1:
                 ax.xaxis.set_ticks_position(xspines[0])
                 ax.xaxis.set_label_position(xspines[0])
@@ -161,11 +165,12 @@ def show_spines(ax, spines='lrtb'):
             ax.yaxis.set_major_locator(ticker.NullLocator())
         else:
             ax.yaxis.label.set_visible(True)
-            if hasattr(ax.yaxis, '_orig_major_locator'):
-                ax.yaxis.set_major_locator(ax.yaxis._orig_major_locator)
-                delattr(ax.yaxis, '_orig_major_locator')
-            elif isinstance(ax.yaxis.get_major_locator(), ticker.NullLocator):
-                ax.yaxis.set_major_locator(ticker.AutoLocator())
+            if y_hidden:
+                if hasattr(ax.yaxis, '_orig_major_locator'):
+                    ax.yaxis.set_major_locator(ax.yaxis._orig_major_locator)
+                    delattr(ax.yaxis, '_orig_major_locator')
+                elif isinstance(ax.yaxis.get_major_locator(), ticker.NullLocator):
+                    ax.yaxis.set_major_locator(ticker.AutoLocator())
             if len(yspines) == 1:
                 ax.yaxis.set_ticks_position(yspines[0])
                 ax.yaxis.set_label_position(yspines[0])
