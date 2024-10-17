@@ -50,6 +50,8 @@ def common_xlabels(fig, axes=None):
     miny = np.min(coords[:,1])
     maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    if axes[0].xaxis.get_label().get_position()[0] == 1:
+        xl = maxx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
@@ -129,6 +131,8 @@ def common_xticks(fig, axes=None):
     miny = np.min(coords[:,1])
     maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    if axes[0].xaxis.get_label().get_position()[0] == 1:
+        xl = maxx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
@@ -209,6 +213,8 @@ def common_xspines(fig, axes=None):
     miny = np.min(coords[:,1])
     maxy = np.min(coords[:,3])
     xl = 0.5*(minx+maxx)
+    if axes[0].xaxis.get_label().get_position()[0] == 1:
+        xl = maxx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
