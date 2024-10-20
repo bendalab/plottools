@@ -35,7 +35,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def set_arrow_style(ax, spines='lb'):
+def set_arrow_style(ax, spines='lb', xpos=0, ypos=0):
     """Turn the axes into arrows through the origin.
 
     Note: Call this function *after* you have set the xlabel and ylabel.
@@ -46,6 +46,12 @@ def set_arrow_style(ax, spines='lb'):
         Axes whose style is changed.
         If figure, then apply manipulations on all axes of the figure.
         If list of axes, apply manipulations on each of the given axes.
+    spines: str
+        String specifying which spines should be turned into arrows ('lrbt').
+    xpos: float
+        Position of the verical axis ('lr') on the x-axis.
+    ypos: float
+        Position of the horizontal axis ('bt') on the y-axis.
     """
     # collect axes:
     if isinstance(ax, (list, tuple, np.ndarray)):
@@ -58,27 +64,51 @@ def set_arrow_style(ax, spines='lb'):
     if not isinstance(axs, (list, tuple)):
         axs = [axs]
     for ax in axs:
-        ax.show_spines(spines)
+        show_spines = ''
+        if ax.spines['top'].get_visible():
+            show_spines += 't'
+        if ax.spines['bottom'].get_visible():
+            show_spines += 'b'
+        if ax.spines['left'].get_visible():
+            show_spines += 'l'
+        if ax.spines['right'].get_visible():
+            show_spines += 'r'
         ax.set_spines_outward(spines, 0)
-        ax.set_spines_zero(spines, 0)
+        xspines = ''
+        yspines = ''
         for s in spines:
             if s in 'bt':
+                xspines += s
+                if s == 'b':
+                    show_spines = show_spines.replace('t', '')
+                elif s == 't':
+                    show_spines = show_spines.replace('b', '')
                 ax.arrow_spines(s, flush=0, extend=0)
             elif s in 'lr':
+                yspines += s
+                if s == 'l':
+                    show_spines = show_spines.replace('r', '')
+                elif s == 'r':
+                    show_spines = show_spines.replace('l', '')
                 ax.arrow_spines(s, flush=0, extend=1)
-        label = ax.xaxis.get_label()
-        x, y = label.get_position()
-        label.set_position([1, y])
-        label.set_horizontalalignment('right')
-        label = ax.yaxis.get_label()
-        x, y = label.get_position()
-        label.set_position([x, 1])
-        label.set_rotation(0)
-        label.set_horizontalalignment('right')
-        ax.xaxis.set_tick_params(direction='inout',
-                                 length=2*plt.rcParams['xtick.major.size'])
-        ax.yaxis.set_tick_params(direction='inout', labelrotation=0,
-                                 length=2*plt.rcParams['ytick.major.size'])
+        ax.show_spines(show_spines)
+        if xspines:
+            ax.set_spines_zero(xspines, ypos)
+            label = ax.xaxis.get_label()
+            x, y = label.get_position()
+            label.set_position([1, y])
+            label.set_horizontalalignment('right')
+            ax.xaxis.set_tick_params(direction='inout',
+                                     length=2*plt.rcParams['xtick.major.size'])
+        if yspines:
+            ax.set_spines_zero(yspines, xpos)
+            label = ax.yaxis.get_label()
+            x, y = label.get_position()
+            label.set_position([x, 1])
+            label.set_rotation(0)
+            label.set_horizontalalignment('right')
+            ax.yaxis.set_tick_params(direction='inout', labelrotation=0,
+                                     length=2*plt.rcParams['ytick.major.size'])
                  
 
 def axes_params(xmargin=None, ymargin=None, zmargin=None, color=None,
