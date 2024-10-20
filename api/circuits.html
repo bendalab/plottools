@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.circuits API documentation</title>
+<meta name="description" content="Electrical circuits …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.circuits</code></h1>
+</header>
+<section id="section-intro">
+<p>Electrical circuits.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.circuits.resistance_h" href="#plottools.circuits.resistance_h">resistance_h()</a></code>: draw a horizontal resistance.</li>
+<li><code><a title="plottools.circuits.resistance_v" href="#plottools.circuits.resistance_v">resistance_v()</a></code>: draw a vertical resistance.</li>
+<li><code><a title="plottools.circuits.resistance" href="#plottools.circuits.resistance">resistance()</a></code>: draw an arbitrarily rotated resistance.</li>
+<li><code><a title="plottools.circuits.capacitance_h" href="#plottools.circuits.capacitance_h">capacitance_h()</a></code>: draw a horizontal capacitance.</li>
+<li><code><a title="plottools.circuits.capacitance_v" href="#plottools.circuits.capacitance_v">capacitance_v()</a></code>: draw a vertical capacitance.</li>
+<li><code><a title="plottools.circuits.battery_h" href="#plottools.circuits.battery_h">battery_h()</a></code>: draw a horizontal battery (voltage source).</li>
+<li><code><a title="plottools.circuits.battery_v" href="#plottools.circuits.battery_v">battery_v()</a></code>: draw a vertical battery (voltage source).</li>
+<li><code><a title="plottools.circuits.ground" href="#plottools.circuits.ground">ground()</a></code>: draw ground.</li>
+<li><code><a title="plottools.circuits.ground_u" href="#plottools.circuits.ground_u">ground_u()</a></code>: draw ground upwards.</li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l()</a></code>: draw an operational amplifier with inputs on the left.</li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l()</a></code>: draw an operational amplifier with inputs on the right.</li>
+<li><code><a title="plottools.circuits.switch_h" href="#plottools.circuits.switch_h">switch_h()</a></code>: draw a horizontal switch.</li>
+<li><code><a title="plottools.circuits.switch_v" href="#plottools.circuits.switch_v">switch_v()</a></code>: draw a vertical switch.</li>
+<li><code><a title="plottools.circuits.node" href="#plottools.circuits.node">node()</a></code>: draw a node connecting lines.</li>
+<li><code><a title="plottools.circuits.pin" href="#plottools.circuits.pin">pin()</a></code>: draw a pin hole.</li>
+<li><code><a title="plottools.circuits.connect" href="#plottools.circuits.connect">connect()</a></code>: draw lines directly connecting circuit elements.</li>
+<li><code><a title="plottools.circuits.connect_straight" href="#plottools.circuits.connect_straight">connect_straight()</a></code>: draw straight lines connecting circuit elements.</li>
+</ul>
+<h2 id="classes">Classes</h2>
+<ul>
+<li><code>class <a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code>: x and y coordinate of a circuit element.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.circuits.circuits_params" href="#plottools.circuits.circuits_params">circuits_params()</a></code>: set rc settings for circuits.</li>
+</ul>
+<p><code>matplotlib.rcParams</code> defined by the circuits module:</p>
+<pre><code class="language-py">circuits.scale: 1
+circuits.connectwidth: 1
+circuits.linewidth: 2
+circuits.color: 'black'
+circuits.facecolor: 'white'
+circuits.alpha: 1
+circuits.zorder: 100
+circuits.font: dict()
+</code></pre>
+<h2 id="installuninstall-circuits-functions">Install/uninstall circuits functions</h2>
+<p>You usually do not need to call these functions. Upon loading the circuits
+module, <code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code>: install functions of the circuits module in matplotlib.</li>
+<li><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits()</a></code>: uninstall all code of the circuits module from matplotlib.</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.circuits.resistance_h"><code class="name flex">
+<span>def <span class="ident">resistance_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance bar.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the resistance.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the resistance.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the resistance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.resistance_v"><code class="name flex">
+<span>def <span class="ident">resistance_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right', 'center'</code></dt>
+<dd>Position the label to the left, right or in the center of the resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the resistance.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the resistance.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the resistance.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.resistance"><code class="name flex">
+<span>def <span class="ident">resistance</span></span>(<span>ax, pos, angle=0, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an arbitrarily rotated resistance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the resistance bar.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the resistance.</dd>
+<dt><strong><code>angle</code></strong> :&ensp;<code>float</code></dt>
+<dd>Rotation angle in degrees.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the resistance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the
+non-rotated resistance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the resistance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the resistance.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the resistance.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the resistance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the resistance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the resistance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.capacitance_h"><code class="name flex">
+<span>def <span class="ident">capacitance_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal capacitance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the capacitance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the capacitance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the capacitance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below'</code></dt>
+<dd>Position the label above or below the capacitance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the capacitance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the capacitance.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the capacitance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the capacitance.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the capacitance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.capacitance_v"><code class="name flex">
+<span>def <span class="ident">capacitance_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical capacitance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the capacitance.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the capacitance.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the capacitance.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the capacitance.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the capacitance.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the capacitance.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the capacitance and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the capacitance.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the capacitance.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.battery_h"><code class="name flex">
+<span>def <span class="ident">battery_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal battery (voltage source).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the battery.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below'</code></dt>
+<dd>Position the label above or below the battery.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the battery.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the battery.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the battery.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.battery_v"><code class="name flex">
+<span>def <span class="ident">battery_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical battery (voltage source).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the battery.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the battery.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the battery.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the battery.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the battery.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.ground"><code class="name flex">
+<span>def <span class="ident">ground</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw ground.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of ground.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the ground.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the battery.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of ground.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.ground_u"><code class="name flex">
+<span>def <span class="ident">ground_u</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw ground upwards.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the battery.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of ground.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the battery.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or to the right of the ground.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the battery.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the battery.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the battery and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of ground.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.opamp_l"><code class="name flex">
+<span>def <span class="ident">opamp_l</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an operational amplifier with inputs on the left.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the opamp.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the opamp.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the opamp.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the opamp.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the opamp.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the opamp.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the opamp.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the opamp and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pospos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the positive (upper) input of the opamp.</dd>
+<dt><strong><code>posneg</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the negative (lower) input of the opamp.</dd>
+<dt><strong><code>posout</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the output of the opamp.</dd>
+<dt><strong><code>posgnd</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the ground supply of the opamp.</dd>
+<dt><strong><code>pospwr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the power supply of the opamp.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.opamp_r"><code class="name flex">
+<span>def <span class="ident">opamp_r</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw an operational amplifier with inputs on the right.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the opamp.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the opamp.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the opamp.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below', 'center'</code></dt>
+<dd>Position the label above, below or in the center of the opamp.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the opamp.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the opamp.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the opamp.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the opamp and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pospos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the positive (upper) input of the opamp.</dd>
+<dt><strong><code>posneg</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the negative (lower) input of the opamp.</dd>
+<dt><strong><code>posout</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the output of the opamp.</dd>
+<dt><strong><code>posgnd</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the ground supply of the opamp.</dd>
+<dt><strong><code>pospwr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the power supply of the opamp.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.switch_h"><code class="name flex">
+<span>def <span class="ident">switch_h</span></span>(<span>ax, pos, label='', align='above', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a horizontal switch.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the switch.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the switch.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the switch.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'above', 'below'</code></dt>
+<dd>Position the label above or below the switch.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the wire of the switch.
+Defaults to <code>circuits.connectwidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the wire of the switch.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the switch and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posl</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the left end of the switch.</dd>
+<dt><strong><code>posr</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the right end of the switch.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.switch_v"><code class="name flex">
+<span>def <span class="ident">switch_v</span></span>(<span>ax, pos, label='', align='right', lw=None, color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a vertical switch.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the switch.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the switch.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the switch.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right'</code></dt>
+<dd>Position the label to the left or right of the switch.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the wire of the switch.
+Defaults to <code>circuits.connectwidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the wire of the switch.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the switch and the label.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>posb</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the bottom end of the switch.</dd>
+<dt><strong><code>post</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the top end of the switch.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>Invalid value for <code>align</code>.</p></div>
+</dd>
+<dt id="plottools.circuits.node"><code class="name flex">
+<span>def <span class="ident">node</span></span>(<span>ax, pos, label='', align='northeast', color=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a node connecting lines.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the node.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the node.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the node.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'</code></dt>
+<dd>Position of the label relative to the node.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the node.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the node.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the node.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.pin"><code class="name flex">
+<span>def <span class="ident">pin</span></span>(<span>ax, pos, label='', align='northeast', lw=None, color=None, facecolor=None, alpha=None, zorder=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw a pin hole.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the pin hole.</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinate of position of the center of the pin hole.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Optional label for the pin hole.</dd>
+<dt><strong><code>align</code></strong> :&ensp;<code>'left', 'right', 'above', 'below', 'north', 'south', 'west', 'east', 'northwest', 'northeast', 'southwest', 'southeast'</code></dt>
+<dd>Position of the label relative to the pin hole.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the outline of the pin hole.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for the outline of the pin hole.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color for filling the pin hole.
+Defaults to <code>circuits.facecolor</code> rcParams settings.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for the face color.
+Defaults to <code>circuits.alpha</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the node.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the label.
+Defaults to <code>circuits.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Coordinates of the pin hole.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>ax, nodes, lw=None, color=None, zorder=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw horizontal and vertical lines connecting circuit elements.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the connections.</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> of <code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinates of positions that should be connected.
+If an element is <code>None</code> then leave a gap between the neighboring nodes.
+Makes only horizontal and vertical connection lines in
+counter-clockwise direction.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the connection lines.
+Defaults to <code>circuits.connectwidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the connection lines.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the connection lines.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.connect_straight"><code class="name flex">
+<span>def <span class="ident">connect_straight</span></span>(<span>ax, nodes, lw=None, color=None, zorder=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw straight lines connecting circuit elements.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the connections.</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> of <code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code> or <code>2-tuple</code> of <code>floats</code></dt>
+<dd>x and y-coordinates of positions that should be connected.
+If an element is <code>None</code> then leave a gap between the neighboring nodes.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float, int</code></dt>
+<dd>Linewidth for drawing the connection lines.
+Defaults to <code>circuits.linewidth</code> rcParams settings.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the connection lines.
+Defaults to <code>circuits.color</code> rcParams settings.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>zorder for the connection lines.
+Defaults to <code>circuits.zorder</code> rcParams settings.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.circuits_params"><code class="name flex">
+<span>def <span class="ident">circuits_params</span></span>(<span>scale=None, connectwidth=None, linewidth=None, color=None, facecolor=None, alpha=None, zorder=None, font=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set rc settings for circuits.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>scale</code></strong> :&ensp;<code>float</code></dt>
+<dd>Size of circuit elements as the height of a vertical resistance
+in x/y coordinate units.</dd>
+<dt><strong><code>connectwidth</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width of lines connecting circuit elements.
+Set rcParam <code>circuits.connectwidth</code>.</dd>
+<dt><strong><code>linewidth</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width used for drawing circuit elements.
+Set rcParam <code>circuits.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the connections and circuit elements.
+Set rcParam <code>circuits.color</code>.</dd>
+<dt><strong><code>facecolor</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Face color for closed circuit elements like resistances or opamps.
+Set rcParam <code>circuits.facecolor</code>.</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>Alpha value for face color for closed circuit elements like
+resistances or opamps.
+Set rcParam <code>circuits.alpha</code>.</dd>
+<dt><strong><code>zorder</code></strong> :&ensp;<code>int</code></dt>
+<dd>Zorder for all circuit elements drawn.
+Set rcParam <code>circuits.zorder</code>.</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary with font settings used for labeling circuit elements
+(e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, &hellip;).
+Set rcParam <code>circuits.font</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.install_circuits"><code class="name flex">
+<span>def <span class="ident">install_circuits</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install circuits functions on matplotlib axes.</p>
+<p>This function is also called automatically upon importing the module.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits()</a></code></p></div>
+</dd>
+<dt id="plottools.circuits.uninstall_circuits"><code class="name flex">
+<span>def <span class="ident">uninstall_circuits</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall circuits functions from matplotlib axes.</p>
+<p>Call this code to disable anything that was installed by <code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code>.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits()</a></code></p></div>
+</dd>
+<dt id="plottools.circuits.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="plottools.circuits.Pos"><code class="flex name class">
+<span>class <span class="ident">Pos</span></span>
+<span>(</span><span>x, y)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>x and y coordinate of a circuit element.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Pos(tuple):
+    &#34;&#34;&#34; x and y coordinate of a circuit element.
+    &#34;&#34;&#34;
+
+    def __new__(cls, x, y):
+        return tuple.__new__(cls, (x, y))
+
+    def x(self):
+        &#34;&#34;&#34; x coordinate of the circuit element.
+
+        Returns
+        -------
+        x: float
+            x-coordinate
+        &#34;&#34;&#34;
+        return self[0]
+
+    def y(self):
+        &#34;&#34;&#34; y coordinate of the circuit element.
+
+        Returns
+        -------
+        y: float
+            y-coordinate
+        &#34;&#34;&#34;
+        return self[1]
+
+    def up(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta)
+
+    def down(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta)
+
+    def left(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta, self[1])
+
+    def right(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in data coordinates.
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta, self[1])
+
+    def ups(self, delta=1):
+        &#34;&#34;&#34; Increment y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] + delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def downs(self, delta=1):
+        &#34;&#34;&#34; Decrement y coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0], self[1] - delta*mpl.rcParams[&#39;circuits.scale&#39;])
+
+    def lefts(self, delta=1):
+        &#34;&#34;&#34; Decrement x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Decrement in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Decremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] - delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])
+
+    def rights(self, delta=1):
+        &#34;&#34;&#34; Increment x coordinate of position of circuit element.
+
+        Parameters
+        ----------
+        delta: float
+            Increment in multiples of circuits scale (rcParam `circuits.scale`).
+
+        Returns
+        -------
+        pos: Pos
+            Incremented copy of position of circuit element.
+        &#34;&#34;&#34;
+        return Pos(self[0] + delta*mpl.rcParams[&#39;circuits.scale&#39;], self[1])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.tuple</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="plottools.circuits.Pos.x"><code class="name flex">
+<span>def <span class="ident">x</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>x coordinate of the circuit element.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code></dt>
+<dd>x-coordinate</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.y"><code class="name flex">
+<span>def <span class="ident">y</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>y coordinate of the circuit element.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>y-coordinate</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.up"><code class="name flex">
+<span>def <span class="ident">up</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.down"><code class="name flex">
+<span>def <span class="ident">down</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.left"><code class="name flex">
+<span>def <span class="ident">left</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.right"><code class="name flex">
+<span>def <span class="ident">right</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in data coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.ups"><code class="name flex">
+<span>def <span class="ident">ups</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.downs"><code class="name flex">
+<span>def <span class="ident">downs</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement y coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.lefts"><code class="name flex">
+<span>def <span class="ident">lefts</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Decrement x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Decrement in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Decremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.circuits.Pos.rights"><code class="name flex">
+<span>def <span class="ident">rights</span></span>(<span>self, delta=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Increment x coordinate of position of circuit element.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Increment in multiples of circuits scale (rcParam <code>circuits.scale</code>).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>pos</code></strong> :&ensp;<code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></dt>
+<dd>Incremented copy of position of circuit element.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#classes">Classes</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-circuits-functions">Install/uninstall circuits functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.circuits.resistance_h" href="#plottools.circuits.resistance_h">resistance_h</a></code></li>
+<li><code><a title="plottools.circuits.resistance_v" href="#plottools.circuits.resistance_v">resistance_v</a></code></li>
+<li><code><a title="plottools.circuits.resistance" href="#plottools.circuits.resistance">resistance</a></code></li>
+<li><code><a title="plottools.circuits.capacitance_h" href="#plottools.circuits.capacitance_h">capacitance_h</a></code></li>
+<li><code><a title="plottools.circuits.capacitance_v" href="#plottools.circuits.capacitance_v">capacitance_v</a></code></li>
+<li><code><a title="plottools.circuits.battery_h" href="#plottools.circuits.battery_h">battery_h</a></code></li>
+<li><code><a title="plottools.circuits.battery_v" href="#plottools.circuits.battery_v">battery_v</a></code></li>
+<li><code><a title="plottools.circuits.ground" href="#plottools.circuits.ground">ground</a></code></li>
+<li><code><a title="plottools.circuits.ground_u" href="#plottools.circuits.ground_u">ground_u</a></code></li>
+<li><code><a title="plottools.circuits.opamp_l" href="#plottools.circuits.opamp_l">opamp_l</a></code></li>
+<li><code><a title="plottools.circuits.opamp_r" href="#plottools.circuits.opamp_r">opamp_r</a></code></li>
+<li><code><a title="plottools.circuits.switch_h" href="#plottools.circuits.switch_h">switch_h</a></code></li>
+<li><code><a title="plottools.circuits.switch_v" href="#plottools.circuits.switch_v">switch_v</a></code></li>
+<li><code><a title="plottools.circuits.node" href="#plottools.circuits.node">node</a></code></li>
+<li><code><a title="plottools.circuits.pin" href="#plottools.circuits.pin">pin</a></code></li>
+<li><code><a title="plottools.circuits.connect" href="#plottools.circuits.connect">connect</a></code></li>
+<li><code><a title="plottools.circuits.connect_straight" href="#plottools.circuits.connect_straight">connect_straight</a></code></li>
+<li><code><a title="plottools.circuits.circuits_params" href="#plottools.circuits.circuits_params">circuits_params</a></code></li>
+<li><code><a title="plottools.circuits.install_circuits" href="#plottools.circuits.install_circuits">install_circuits</a></code></li>
+<li><code><a title="plottools.circuits.uninstall_circuits" href="#plottools.circuits.uninstall_circuits">uninstall_circuits</a></code></li>
+<li><code><a title="plottools.circuits.demo" href="#plottools.circuits.demo">demo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="plottools.circuits.Pos" href="#plottools.circuits.Pos">Pos</a></code></h4>
+<ul class="two-column">
+<li><code><a title="plottools.circuits.Pos.x" href="#plottools.circuits.Pos.x">x</a></code></li>
+<li><code><a title="plottools.circuits.Pos.y" href="#plottools.circuits.Pos.y">y</a></code></li>
+<li><code><a title="plottools.circuits.Pos.up" href="#plottools.circuits.Pos.up">up</a></code></li>
+<li><code><a title="plottools.circuits.Pos.down" href="#plottools.circuits.Pos.down">down</a></code></li>
+<li><code><a title="plottools.circuits.Pos.left" href="#plottools.circuits.Pos.left">left</a></code></li>
+<li><code><a title="plottools.circuits.Pos.right" href="#plottools.circuits.Pos.right">right</a></code></li>
+<li><code><a title="plottools.circuits.Pos.ups" href="#plottools.circuits.Pos.ups">ups</a></code></li>
+<li><code><a title="plottools.circuits.Pos.downs" href="#plottools.circuits.Pos.downs">downs</a></code></li>
+<li><code><a title="plottools.circuits.Pos.lefts" href="#plottools.circuits.Pos.lefts">lefts</a></code></li>
+<li><code><a title="plottools.circuits.Pos.rights" href="#plottools.circuits.Pos.rights">rights</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>
