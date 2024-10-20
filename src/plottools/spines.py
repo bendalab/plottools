@@ -529,7 +529,7 @@ def __update_spines(fig):
     """ Update bounds and arrows of spines.
 
     This is needed for applying the 'ticks' setting of
-    `set_spines_bounds()` and to draw aspines with arrows.  The spines
+    `set_spines_bounds()` and for drawing spines with arrows.  The spines
     module patches the `plt.show()`, `fig.show()`, and `fig.savefig()`
     functions to first call `__update_spines()`. This way this function
     is called automatically right before the figure is drawn.
@@ -578,6 +578,7 @@ def __update_spines(fig):
                     locs = locs[(locs >= lower-eps) & (locs <= upper+eps)]
                     axis.set_major_locator(ticker.FixedLocator(locs))
             if hasattr(sp, 'arrow'):
+                sp.arrow['visible'] = sp.get_visible()
                 major = int(mpl.__version__.split('.')[0])
                 fac = 1.38 if major > 2 else 1.1
                 figw, figh = ax.get_figure().get_size_inches()*fig.dpi
@@ -714,12 +715,35 @@ def __update_spines(fig):
                                                      ec='none', fc=color, lw=0.0,
                                                      transform=ax.transAxes, clip_on=False))
     
-    
+
+def __cleanup_spines(fig):
+    """Cleanup spines.
+
+    The spines module patches the `plt.show()`, `fig.show()`, and
+    `fig.savefig()` functions to first call `__update_spines()`. Then
+    the figure is drawn and saved, and afterwards `__cleanup_spines()`
+    is called.
+
+    Parameters
+    ----------
+    fig: matplotlib figure
+
+    """
+    for ax in fig.get_axes():
+        for spn in ['left', 'right', 'top', 'bottom']:
+            if not spn in ax.spines:
+                continue
+            sp = ax.spines[spn]
+            if hasattr(sp, 'arrow'):
+                sp.set_visible(sp.arrow['visible'])
+
+                
 def __fig_show_spines(fig, *args, **kwargs):
     """ Call `__update_spines()` on the figure before showing it.
     """
     fig.__update_spines()
     fig.__show_orig_spines(*args, **kwargs)
+    fig.__cleanup_spines()
 
     
 def __fig_savefig_spines(fig, *args, **kwargs):
@@ -727,6 +751,7 @@ def __fig_savefig_spines(fig, *args, **kwargs):
     """
     fig.__update_spines()
     fig.__savefig_orig_spines(*args, **kwargs)
+    fig.__cleanup_spines()
 
 
 def __plt_show_spines(*args, **kwargs):
@@ -735,6 +760,8 @@ def __plt_show_spines(*args, **kwargs):
     for fig in map(plt.figure, plt.get_fignums()):
         fig.__update_spines()
     plt.__show_orig_spines(*args, **kwargs)
+    for fig in map(plt.figure, plt.get_fignums()):
+        fig.__cleanup_spines()
 
 
 def __plt_savefig_spines(*args, **kwargs):
@@ -742,6 +769,7 @@ def __plt_savefig_spines(*args, **kwargs):
     """
     plt.gcf().__update_spines()
     plt.__savefig_orig_spines(*args, **kwargs)
+    plt.gcf().__cleanup_spines()
 
 
 def __axes_init_spines__(ax, *args, **kwargs):
@@ -1112,9 +1140,11 @@ def install_spines():
         mpl.figure.Figure.set_spines_bounds = set_spines_bounds
     if not hasattr(mpl.figure.Figure, 'arrow_spines'):
         mpl.figure.Figure.arrow_spines = arrow_spines
+    # install __update_spines():
     if not hasattr(mpl.figure.Figure, '__update_spines'):
         mpl.figure.Figure.__update_spines = __update_spines
-    # install __update_spines():
+    if not hasattr(mpl.figure.Figure, '__cleanup_spines'):
+        mpl.figure.Figure.__cleanup_spines = __cleanup_spines
     if not hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
         mpl.figure.Figure.__savefig_orig_spines = mpl.figure.Figure.savefig
         mpl.figure.Figure.savefig = __fig_savefig_spines
@@ -1211,6 +1241,8 @@ def uninstall_spines():
     # uninstall __update_spines():
     if hasattr(mpl.figure.Figure, '__update_spines'):
         delattr(mpl.figure.Figure, '__update_spines')
+    if hasattr(mpl.figure.Figure, '__cleanup_spines'):
+        delattr(mpl.figure.Figure, '__cleanup_spines')
     if hasattr(mpl.figure.Figure, '__savefig_orig_spines'):
         mpl.figure.Figure.savefig = mpl.figure.Figure.__savefig_orig_spines
         delattr(mpl.figure.Figure, '__savefig_orig_spines')
