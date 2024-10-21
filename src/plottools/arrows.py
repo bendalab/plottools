@@ -240,21 +240,24 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
         style = '>'
     if style == '>>':
         arrowstyle = ArrowStyle.Fancy(head_length=0.07*head_length,
-                                      head_width=0.07*head_width, tail_width=0.01)
+                                      head_width=0.07*head_width,
+                                      tail_width=0.01)
         if heads in ['right', 'both']:
             ax.annotate('', (x, y+dy), (x, y),
                         xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
-                                        linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False, **zkwargs)
+                                        linewidth=0, shrinkA=shrink,
+                                        shrinkB=shrink, clip_on=False),
+                        annotation_clip=False, **zkwargs)
         if heads in ['left', 'both']:
             ax.annotate('', (x, y), (x, y+dy),
                         xycoords=transcoord, textcoords=transcoord,
                         arrowprops=dict(arrowstyle=arrowstyle,
                                         edgecolor='none', facecolor=color,
-                                        linewidth=0, shrinkA=shrink, shrinkB=shrink,
-                                        clip_on=False), annotation_clip=False, **zkwargs)
+                                        linewidth=0, shrinkA=shrink,
+                                        shrinkB=shrink, clip_on=False),
+                        annotation_clip=False, **zkwargs)
     else:
         scale = head_width*2.0
         if style == '|':
@@ -315,7 +318,7 @@ def varrow(ax, x, y, dy, heads='right', text=None, ha='right', dist=3.0,
 
 
 def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
-             style='>', shrink=0, lw=1, color='k',
+             heads='right', style='>', shrink=0, lw=1, color='k',
              head_width=15, head_length=15, **kwargs):
     """ Text with arrow pointing to a point.
            
@@ -333,6 +336,10 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
         Radius of arrow line. Negative curves to the right. Relative to arrow length.
     relpos: tuple of floats
         X- and y-coordinate of starting point of arrow on text box. Between 0 and 1.
+    heads: string
+        One of 'left', '<', 'right', '>', 'both', '<>', 'none', or '',
+        Specifies whether to draw the arrow head at the starting point ('left', '<'),
+        at the end ('right', '>'), on both ends ('both', '<>'), or none ('none', '').
     style: string
         Appearance of the arrow head:
         '>': line arrow, '|>': filled arrow, '>>': fancy arrow
@@ -353,19 +360,35 @@ def point_to(ax, text, xyfrom, xyto, radius=0.2, relpos=(1, 0.5),
     --------
     harrow(), varrow(), arrow_style()
     """
+    heads_d = {'leftx': 'left', '<x': 'left', 'rightx': 'right', '>x': 'right',
+               'bothx': 'both', '<>x': 'both', 'nonex': 'none', 'x': 'none'}
+    heads = heads_d[heads+'x']
+    if heads == 'none':
+        style = '>'
+    if heads == 'both' and style == '>>':
+        style = '|>'
+    back_styles = {'>': '<', '|>': '<|', '>>': '<<'}
+    bstyle = back_styles[style]
+    astyle = ''
+    if heads in ['left', 'both']:
+        astyle += bstyle
+    astyle += '-'
+    if heads in ['right', 'both']:
+        astyle += style
     if style == '>>':
         arrowstyle = ArrowStyle.Fancy(head_length=0.09*head_length,
-                                      head_width=0.09*head_width, tail_width=0.14*lw)
+                                      head_width=0.09*head_width,
+                                      tail_width=0.14*lw)
         arrowprops = dict(arrowstyle=arrowstyle, edgecolor='none', linewidth=0)
     else:
         scale = head_width*2.0
         if style == '|':
             scale /= 4.0
-        arrowprops = dict(arrowstyle='-' + style, edgecolor=color,
+        arrowprops = dict(arrowstyle=astyle, edgecolor=color,
                           mutation_scale=scale, linewidth=lw)
     arrowprops.update(dict(facecolor=color, relpos=relpos,
                            shrinkA=shrink, shrinkB=shrink, clip_on=False))
-    arrowprops.update(dict(connectionstyle='arc3,rad=%g' % radius))
+    arrowprops.update(dict(connectionstyle=f'arc3,rad={radius:g}'))
     if 'dist' in kwargs:
         kwargs.pop('dist')
     ax.annotate(text, xy=xyto, xytext=xyfrom, arrowprops=arrowprops,
