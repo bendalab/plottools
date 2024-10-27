@@ -21,9 +21,10 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
-def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput=None,
-           fc='white', ec='black', lw=2, **kwargs):
-    """ Draw a sketch of a neuron.
+def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc',
+           adapt=0, xyinput=None, fc='white', ec='black', lw=2,
+           **kwargs):
+    """Draw a sketch of a neuron.
 
     The coordinate system should have equal distances in both directions
     for the cell bodies being true circles. That is, you should call
@@ -47,21 +48,25 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
     label: string or None
         If not `None`, text to printed inside the cell body.
     xytarget: tuple of floats, sequence of tuple of floats or None
-        If not `None`, list of x and y coordinates to which connections are drawn.
-        The coordinates are the centers of the target neurons in data coordinates
-        from which the radius `r` is subtracted.
+        If not `None`, list of x and y coordinates to which
+        connections are drawn.  The coordinates are the centers of the
+        target neurons in data coordinates from which the radius `r`
+        is subtracted.
     synapse: 'exc', 'inh' or 'arr' or lis thereof
-        For each `xytarget` the type of synapse to be drawn: excitatory synapse (atriangle),
-        inhibitory synapse (a bar), or an arrow.
+        For each `xytarget` the type of synapse to be drawn:
+        excitatory synapse (a triangle), inhibitory synapse (a bar),
+        or an arrow.
     adapt: int
         If not zero draw a self-inhibitory circular connection,
         indicating an adaptation current.
-        1: draw self-inhibition to the side of the top-most connection to a target neuron.
-        2: draw self-inhibition opposite of outgoing connections to target neurons.
-        3: draw self-inhibition on top.
+        - 1: draw self-inhibition to the side of the top-most connection
+          to a target neuron.
+        - 2: draw self-inhibition opposite of outgoing connections to
+          target neurons.
+        - 3: draw self-inhibition on top.
     xyinput: tuple of floats or None
-        If not `None`, draw an input arrow originating from the given coordinates
-        (in data coordinates).
+        If not `None`, draw an input arrow originating from the given
+        coordinates (in data coordinates).
     fc: matplotlib color specification
         Fill color for the cell body.
     ec: matplotlib color specification
@@ -72,6 +77,7 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
         synapses and arrows.
     **kwargs: key-word arguments
         Arguments passed on to `ax.text()` for drawing the `label`.
+
     """
     xy = np.asarray(xy)
     arx = 0.5*r
@@ -87,13 +93,14 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
         tt += mpl.transforms.Affine2D().translate(xy[0], xy[1])
         tt += ax.transData
         # input arrow:
-        ax.plot((rx, dd), (0.0, 0.0), color=ec, lw=lw, clip_on=False, transform=tt)
+        ax.plot((rx, dd), (0.0, 0.0), color=ec, lw=lw, clip_on=False,
+                transform=tt)
         ax.plot((rx+arx, rx, rx+arx), (ary, 0.0, -ary), color=ec, lw=lw,
                 clip_on=False, transform=tt)
     # targets:
     dm = None
     t = None
-    if xytarget is not None:
+    if xytarget is not None and len(xytarget) > 0:
         if not isinstance(xytarget[0], (list, tuple)):
             xytarget = [xytarget]
         if not isinstance(synapse, (list, tuple)):
@@ -122,13 +129,15 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
                         clip_on=False, color=ec, lw=lw, transform=tt)
             elif 'inh' in syn:
                 dd -= 0.2*r
-                ax.plot((dd, dd), (-y, y), color=ec, lw=lw, clip_on=False, transform=tt)
+                ax.plot((dd, dd), (-y, y), color=ec, lw=lw,
+                        clip_on=False, transform=tt)
             elif 'arr' in syn:
                 dd -= 0.2*r
                 ax.plot((dd-arx, dd, dd-arx), (-ary, 0.0, ary),
                         clip_on=False, color=ec, lw=lw, transform=tt)
             # axon:
-            ax.plot((r, dd), (0.0, 0.0), color=ec, lw=lw, clip_on=False, transform=tt)
+            ax.plot((r, dd), (0.0, 0.0), color=ec, lw=lw,
+                    clip_on=False, transform=tt)
     # adaptation:
     if adapt > 0:
         ar = 1.5*r
@@ -143,13 +152,17 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
         else:
             t = mpl.transforms.Affine2D().translate(xy[0], xy[1])
             t += ax.transData
-        ax.add_patch(mpl.patches.Arc((0.0, ar), ar, ar, 0.0, -50.0, 220.0,
-                                     transform=t, clip_on=False, color=ec, lw=lw))
-        ax.plot([1.15*r, 1.2*r], [-0.35*r, 0.35*r], color=ec, lw=lw, clip_on=False, 
+        ax.add_patch(mpl.patches.Arc((0.0, ar), ar, ar, 0.0, -50.0,
+                                     220.0, transform=t,
+                                     clip_on=False, color=ec, lw=lw))
+        ax.plot([1.15*r, 1.2*r], [-0.35*r, 0.35*r], color=ec, lw=lw,
+                clip_on=False,
                 transform=mpl.transforms.Affine2D().rotate_deg(120) + t)
     # cell body:
-    ax.add_patch(mpl.patches.Circle((xy[0], xy[1]), r, ec='none', fc=fc, lw=0, clip_on=False))
-    ax.add_patch(mpl.patches.Circle((xy[0], xy[1]), r, ec=ec, fc='none', lw=lw, clip_on=False))
+    ax.add_patch(mpl.patches.Circle((xy[0], xy[1]), r, ec='none',
+                                    fc=fc, lw=0, clip_on=False))
+    ax.add_patch(mpl.patches.Circle((xy[0], xy[1]), r, ec=ec,
+                                    fc='none', lw=lw, clip_on=False))
     # label:
     if label:
         figw, _ = ax.get_figure().get_size_inches()
@@ -164,8 +177,8 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc', adapt=0, xyinput
         fp = mpl.font_manager.FontProperties(size=fs)
         cfs = fp.get_size_in_points()
         cf = cfs*aw/pw
-        ax.text(xy[0]-0.03*cf, xy[1]-0.08*cf, label, ha='center', va='center',
-                clip_on=False, **kwargs)
+        ax.text(xy[0]-0.03*cf, xy[1]-0.08*cf, label, ha='center',
+                va='center', clip_on=False, **kwargs)
 
 
 def install_neurons():
