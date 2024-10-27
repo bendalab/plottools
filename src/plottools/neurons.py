@@ -33,7 +33,7 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc',
     ```
     or
     ```
-    import plottools.axes
+    import plottools.aspect
     ax.set_ylim_equal()
     ```
 
