@@ -78,6 +78,7 @@ def set_xlabel(ax, label, unit=None, **kwargs):
     """
     if not 'rotation' in kwargs:
         kwargs.update(rotation=mpl.rcParams['xaxis.labelrotation'])
+    ax.xaxis.label.set_visible(True)
     ax.__set_xlabel_labels(__axis_label(label, unit), **kwargs)
 
         
@@ -97,6 +98,7 @@ def set_ylabel(ax, label, unit=None, **kwargs):
     """
     if not 'rotation' in kwargs:
         kwargs.update(rotation=mpl.rcParams['yaxis.labelrotation'])
+    ax.yaxis.label.set_visible(True)
     ax.__set_ylabel_labels(__axis_label(label, unit), **kwargs)
 
         
@@ -114,6 +116,7 @@ def set_zlabel(ax, label, unit=None, **kwargs):
     kwargs: key-word arguments
         Further arguments passed on to the `set_zlabel()` function.
     """
+    ax.zaxis.label.set_visible(True)
     ax.__set_zlabel_labels(__axis_label(label, unit), **kwargs)
 
 
