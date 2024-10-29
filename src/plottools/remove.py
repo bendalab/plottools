@@ -17,6 +17,8 @@ loading the remove module, `install_remove()` is called automatically.
 - `uninstall_remove()`: uninstall all code of the remove module from matplotlib.
 """
 
+import matplotlib as mpl
+
 
 def remove_lines(ax):
     """Remove all line artists that are lines without a marker.
@@ -31,7 +33,7 @@ def remove_lines(ax):
         if line.get_marker() == 'None':
             remove_lines.append(line)
     for line in remove_lines:
-        ax.remove(line)
+        line.remove()
 
 
 def remove_markers(ax):
@@ -47,7 +49,7 @@ def remove_markers(ax):
         if line.get_marker() != 'None' and line.get_linestyle() == 'None':
             remove_lines.append(line)
     for line in remove_lines:
-        ax.remove(line)
+        line.remove()
 
 
 def install_remove():
@@ -63,7 +65,7 @@ def install_remove():
     if not hasattr(mpl.axes.Axes, 'remove_lines'):
         mpl.axes.Axes.remove_lines = remove_lines
     if not hasattr(mpl.axes.Axes, 'remove_markers'):
-        mpl.axes.Axes.remove_lines = remove_markers
+        mpl.axes.Axes.remove_markers = remove_markers
 
         
 def uninstall_remove():
