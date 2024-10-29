@@ -60,6 +60,8 @@ new functionality or some specialized interface:
   enhance legend text.
 - [`neurons`](https://bendalab.github.io/plottools/api/neurons.html):
   draw sketches of neurons.
+- [`remove`](https://bendalab.github.io/plottools/api/clear.html):
+  remove specific artists from an axes.
 - [`scalebars`](https://bendalab.github.io/plottools/api/scalebars.html):
   labeled scale bars. [More...](docs/scalebars.md)
 - [`significance`](https://bendalab.github.io/plottools/api/significance.html):

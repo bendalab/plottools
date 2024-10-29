@@ -28,6 +28,7 @@ from .insets import install_insets, uninstall_insets
 from .labels import labels_params, install_labels, uninstall_labels
 from .legend import legend_params, install_legend, uninstall_legend
 from .neurons import install_neurons, uninstall_neurons
+from .remove import install_remove, uninstall_remove
 from .scalebars import scalebars_params, install_scalebars, uninstall_scalebars
 from .significance import install_significance, uninstall_significance
 from .styles import style, lighter_styles, darker_styles, lighter_darker_styles
