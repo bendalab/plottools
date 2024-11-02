@@ -67,7 +67,7 @@ def remove_style(ax, **style):
         for k in style:
             if k == 'color' and line.get_color() != style[k]:
                 same = False
-            elif k in ['linestyle', 'ls'] and line.get_linestyle() != style[k]:
+            elif k in ['linestyle', 'ls'] and line.get_linestyle().lower() != style[k].lower():
                 same = False
             elif k in ['linewidth', 'lw'] and line.get_linewidth() != style[k]:
                 same = False
