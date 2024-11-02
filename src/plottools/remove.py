@@ -7,6 +7,7 @@ Remove specific artists from an axes.
 - `remove_lines()`: remove all line artists.
 - `remove_markers()`: remove all line artists with markers that are not connected by lines.
 - `remove_style()`: remove all line artists that match a style.
+- `remove_legend()`: remove legend artist.
 - `remove_texts()`: remove text artists.
 - `remove_arrows()`: remove arrow, i.e. annotation artists.
 
@@ -93,6 +94,19 @@ def remove_style(ax, **style):
         line.remove()
 
 
+def remove_legend(ax):
+    """Remove legend artist.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+       Axes from which legend should be removed.
+    """
+    l = ax.get_legend()
+    if l is not None:
+        l.remove()
+
+
 def remove_texts(ax, *indices):
     """Remove text artists.
 
@@ -169,6 +183,8 @@ def install_remove():
         mpl.axes.Axes.remove_style = remove_style
     if not hasattr(mpl.axes.Axes, 'remove_texts'):
         mpl.axes.Axes.remove_texts = remove_texts
+    if not hasattr(mpl.axes.Axes, 'remove_legend'):
+        mpl.axes.Axes.remove_legend = remove_legend
     if not hasattr(mpl.axes.Axes, 'remove_arrows'):
         mpl.axes.Axes.remove_arrows = remove_arrows
 
@@ -188,6 +204,8 @@ def uninstall_remove():
         delattr(mpl.axes.Axes, 'remove_markers')
     if hasattr(mpl.axes.Axes, 'remove_style'):
         delattr(mpl.axes.Axes, 'remove_style')
+    if hasattr(mpl.axes.Axes, 'remove_legend'):
+        delattr(mpl.axes.Axes, 'remove_legend')
     if hasattr(mpl.axes.Axes, 'remove_texts'):
         delattr(mpl.axes.Axes, 'remove_texts')
     if hasattr(mpl.axes.Axes, 'remove_arrows'):
