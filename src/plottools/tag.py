@@ -131,13 +131,15 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
                         mlabel = mlabel.replace('%a', chr(ord('a') + major_index + k))
                         mlabel = mlabel.replace('%A', chr(ord('A') + major_index + k))
                         mlabel = mlabel.replace('%1', chr(ord('1') + major_index + k))
-                        mlabel = mlabel.replace('%i', romans_lower[major_index + k])
-                        mlabel = mlabel.replace('%I', romans_upper[major_index + k]) 
+                        if major_index + k < len(romans_lower):
+                            mlabel = mlabel.replace('%i', romans_lower[major_index + k])
+                            mlabel = mlabel.replace('%I', romans_upper[major_index + k]) 
                         mlabel = mlabel.replace('%ma', chr(ord('a') + minor_index + j))
                         mlabel = mlabel.replace('%mA', chr(ord('A') + minor_index + j))
                         mlabel = mlabel.replace('%m1', chr(ord('1') + minor_index + j))
-                        mlabel = mlabel.replace('%mi', romans_lower[minor_index + j])
-                        mlabel = mlabel.replace('%mI', romans_upper[minor_index + j]) 
+                        if minor_index + j < len(romans_lower):
+                            mlabel = mlabel.replace('%mi', romans_lower[minor_index + j])
+                            mlabel = mlabel.replace('%mI', romans_upper[minor_index + j]) 
                         label_list.append(mlabel)
                         j += 1
                 if j > 0:
@@ -147,8 +149,9 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
                 label = labels.replace('%a', chr(ord('a') + major_index + k))
                 label = label.replace('%A', chr(ord('A') + major_index + k))
                 label = label.replace('%1', chr(ord('1') + major_index + k))
-                label = label.replace('%i', romans_lower[major_index + k])
-                label = label.replace('%I', romans_upper[major_index + k]) 
+                if major_index + k < len(romans_lower):
+                    label = label.replace('%i', romans_lower[major_index + k])
+                    label = label.replace('%I', romans_upper[major_index + k]) 
                 label_list.append(label)
                 k += 1
         fig.tags_major_index = major_index + k
