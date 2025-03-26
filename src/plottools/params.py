@@ -81,7 +81,7 @@ def screen_style(namespace=None):
     grid_params(grid=True, axis='both', which='major', **ns.lsGrid)
     labels_params(labelformat='{label} [{unit}]', labelsize='medium',
                   labelweight='normal', labelcolor='axes', labelpad=4,
-                  xlabellocation='center', ylabellocation='center')
+                  xlabelloc='center', ylabelloc='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5,
                   numpoints=1, scatterpoints=1, labelspacing=0.5, columnspacing=0.5)
@@ -159,7 +159,7 @@ def paper_style(namespace=None):
     grid_params(grid=False, axis='both', which='major', **ns.lsGrid)
     labels_params(labelformat='{label} [{unit}]', labelsize='small',
                   labelweight='normal', labelcolor='axes', labelpad=4,
-                  xlabellocation='center', ylabellocation='center')
+                  xlabelloc='center', ylabelloc='center')
     legend_params(fontsize='small', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5, numpoints=1,
                   scatterpoints=1, labelspacing=0.5,
@@ -245,7 +245,7 @@ def sketch_style(namespace=None):
     grid_params(grid=False, axis='both', which='major', **ns.lsGrid)
     labels_params(labelformat='{label} ({unit})', labelsize='medium',
                   labelweight='normal', labelcolor='axes', labelpad=4,
-                  xlabellocation='center', ylabellocation='center')
+                  xlabelloc='center', ylabelloc='center')
     legend_params(fontsize='medium', frameon=False, borderpad=0,
                   handlelength=1.5, handletextpad=0.5, numpoints=1,
                   scatterpoints=1, labelspacing=0.5,
