@@ -61,6 +61,8 @@ def common_xlabels(fig, *axes):
     xl = 0.5*(minx+maxx)
     if axes[0].xaxis.get_label().get_position()[0] == 1:
         xl = maxx
+    elif axes[0].xaxis.get_label().get_position()[0] == 0:
+        xl = minx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
@@ -110,6 +112,10 @@ def common_ylabels(fig, *axes):
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    if axes[0].yaxis.get_label().get_position()[1] == 1:
+        yl = maxy
+    elif axes[0].yaxis.get_label().get_position()[1] == 0:
+        yl = miny
     pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
@@ -160,6 +166,8 @@ def common_xticks(fig, *axes):
     xl = 0.5*(minx+maxx)
     if axes[0].xaxis.get_label().get_position()[0] == 1:
         xl = maxx
+    elif axes[0].xaxis.get_label().get_position()[0] == 0:
+        xl = minx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
@@ -209,6 +217,10 @@ def common_yticks(fig, *axes):
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    if axes[0].yaxis.get_label().get_position()[1] == 1:
+        yl = maxy
+    elif axes[0].yaxis.get_label().get_position()[1] == 0:
+        yl = miny
     pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
@@ -260,6 +272,8 @@ def common_xspines(fig, *axes):
     xl = 0.5*(minx+maxx)
     if axes[0].xaxis.get_label().get_position()[0] == 1:
         xl = maxx
+    elif axes[0].xaxis.get_label().get_position()[0] == 0:
+        xl = minx
     pos = axes[0].xaxis.get_label_position()
     done = False
     for ax in axes:
@@ -310,6 +324,10 @@ def common_yspines(fig, *axes):
     miny = np.min(coords[:,1])
     maxy = np.max(coords[:,3])
     yl = 0.5*(miny+maxy)
+    if axes[0].yaxis.get_label().get_position()[1] == 1:
+        yl = maxy
+    elif axes[0].yaxis.get_label().get_position()[1] == 0:
+        yl = miny
     pos = axes[0].yaxis.get_label_position()
     done = False
     for ax in axes:
