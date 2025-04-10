@@ -59,7 +59,7 @@ def get_ticklabel_extend(axis, pos, height, renderer):
     return np.abs(np.diff(bbox.get_points()[:, height]))[0]
 
 
-def align_xlabels(fig, axs=None):
+def align_xlabels(fig, axs=None, dist=None):
     """ Align xlabels of a figure.
 
     Labels with the same orientation and on axes with the same
@@ -72,25 +72,30 @@ def align_xlabels(fig, axs=None):
     fig: matplotlib figure
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
-        Axes of which labels should be aligned. If `None` align labels of all axes.
+        Axes of which labels should be aligned.
+        If `None` align labels of all axes.
+    dist: float or None
+        Distance between label and xtick labels.
+        If provided, overwrites rc parameter `axes.labelpad`.
     """
-    xdist = mpl.rcParams.get('axes.labelpad', 3)
+    if dist is None:
+        dist = mpl.rcParams.get('axes.labelpad', 3)
     xtick_size = mpl.rcParams['xtick.major.size']
     if mpl.rcParams['xtick.direction'] == 'inout':
         xtick_size *= 0.5
     elif mpl.rcParams['xtick.direction'] == 'in':
         xtick_size = 0.0
     if xtick_size > 0:
-        xdist += xtick_size
-        xdist += mpl.rcParams['xtick.major.pad']
+        dist += xtick_size
+        dist += mpl.rcParams['xtick.major.pad']
     if axs is None:
         axs = fig.get_axes()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
-    yap = np.zeros((len(fig.get_axes()), 3))
-    yph = np.zeros(len(fig.get_axes()))
-    ylh = np.zeros(len(fig.get_axes()))
-    ylx = np.zeros(len(fig.get_axes()))
+    yap = np.zeros((len(axs), 3))
+    yph = np.zeros(len(axs))
+    ylh = np.zeros(len(axs))
+    ylx = np.zeros(len(axs))
     for k, ax in enumerate(axs):
         xax = ax.xaxis
         if xax.get_label_text():
@@ -99,7 +104,7 @@ def align_xlabels(fig, axs=None):
             pos = xax.get_label_position() == 'top'
             #tlh = np.abs(np.diff(xax.get_ticklabel_extents(renderer)[pos].get_points()[:,1]))[0]
             tlh = get_ticklabel_extend(xax, pos, 1, renderer)
-            tlh += xdist
+            tlh += dist
             if pos:
                 tlh += 0.5*xax.get_label().get_fontsize()
             else:
@@ -113,15 +118,17 @@ def align_xlabels(fig, axs=None):
         idx = np.all(yap == yp, 1)
         ylh[idx] = np.max(ylh[idx])
     # set label position:
-    for k, ax in enumerate(fig.get_axes()):
-        if yap[k, 0] > 0:
+    for k, ax in enumerate(axs):
+        if yap[k, 0] > 0 and \
+           (not hasattr(ax, '__align_alignedx') or not ax.__align_alignedx):
             if yap[k, 2]:
-                ax.xaxis.set_label_coords(ylx[k], 1+ylh[k]/yph[k], None)
+                ax.xaxis.set_label_coords(ylx[k], 1 + ylh[k]/yph[k], None)
             else:
                 ax.xaxis.set_label_coords(ylx[k], -ylh[k]/yph[k], None)
+            ax.__align_alignedx = True
 
 
-def align_ylabels(fig, axs=None):
+def align_ylabels(fig, axs=None, dist=None):
     """ Align ylabels of a figure.
 
     Labels with the same orientation and on axes with the same
@@ -135,24 +142,29 @@ def align_ylabels(fig, axs=None):
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
         Axes of which labels should be aligned. If `None` align labels of all axes.
+    dist: float or None
+        Distance between label and ytick labels.
+        If provided, overwrites rc parameter `axes.labelpad`.
     """
-    ydist = mpl.rcParams.get('axes.labelpad', 3)
+    if dist is None:
+        dist = mpl.rcParams.get('axes.labelpad', 3)
+    print('aligny', dist)
     ytick_size = mpl.rcParams['ytick.major.size']
     if mpl.rcParams['ytick.direction'] == 'inout':
         ytick_size *= 0.5
     elif mpl.rcParams['ytick.direction'] == 'in':
         ytick_size = 0.0
     if ytick_size > 0:
-        ydist += ytick_size
-        ydist += mpl.rcParams['ytick.major.pad']
+        dist += ytick_size
+        dist += mpl.rcParams['ytick.major.pad']
     if axs is None:
         axs = fig.get_axes()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
-    xap = np.zeros((len(fig.get_axes()), 3))
-    xpw = np.zeros(len(fig.get_axes()))
-    xlw = np.zeros(len(fig.get_axes()))
-    xly = np.zeros(len(fig.get_axes()))
+    xap = np.zeros((len(axs), 3))
+    xpw = np.zeros(len(axs))
+    xlw = np.zeros(len(axs))
+    xly = np.zeros(len(axs))
     for k, ax in enumerate(axs):
         yax = ax.yaxis
         if yax.get_label_text():
@@ -161,7 +173,7 @@ def align_ylabels(fig, axs=None):
             pos = yax.get_label_position() == 'right'
             #tlw = np.abs(np.diff(yax.get_ticklabel_extents(renderer)[pos].get_points()[:,0]))[0]
             tlw = get_ticklabel_extend(yax, pos, 0, renderer)
-            tlw += ydist
+            tlw += dist
             if pos:
                 tlw += 0.7*yax.get_label().get_fontsize()
             else:
@@ -175,15 +187,21 @@ def align_ylabels(fig, axs=None):
         idx = np.all(xap == xp, 1)
         xlw[idx] = np.max(xlw[idx])
     # set label position:
-    for k, ax in enumerate(fig.get_axes()):
-        if xap[k, 0] > 0:
+    for k, ax in enumerate(axs):
+        if xap[k, 0] > 0 and \
+           (not hasattr(ax, '__align_alignedy') or not ax.__align_alignedy):
             if xap[k, 2]:
-                ax.yaxis.set_label_coords(1+xlw[k]/xpw[k], xly[k], None)
+                ax.yaxis.set_label_coords(1 + xlw[k]/xpw[k], xly[k], None)
             else:
                 ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
+            print(k, 'aligned y')
+            ax.__align_alignedy = True
+        else:
+            print(k, 'already aligned y')
+    print('done')
 
 
-def align_labels(fig, axs=None):
+def align_labels(fig, axs=None, xdist=None, ydist=None):
     """ Align x- and ylabels of a figure.
 
     Labels with the same orientation and on axes with the same
@@ -197,28 +215,34 @@ def align_labels(fig, axs=None):
         The figure on which xlabels and ylabels of all axes are aligned.
     axs: list of matplotlib axes
         Axes of which labels should be aligned. If `None` align labels of all axes.
+    xdist: float or None
+        Distance between label and xtick labels.
+        If provided, overwrites rc parameter `axes.labelpad`.
+    ydist: float or None
+        Distance between label and ytick labels.
+        If provided, overwrites rc parameter `axes.labelpad`.
     """
-    fig.align_xlabels(axs)
-    fig.align_ylabels(axs)
+    fig.align_xlabels(axs, xdist)
+    fig.align_ylabels(axs, ydist)
 
 
 
-def __align_xlabels(fig, axs=None):
+def __align_xlabels(fig, axs=None, dist=None):
     """ Select align_xlabels() function from matplotlib or plottools.
     """
     if (hasattr(fig, '__align_overwritex') and fig.__align_overwritex) or \
        (not hasattr(fig, '__align_overwritex') and  mpl.rcParams['align.overwritex']):
-        fig.__align_xlabels(axs)
+        fig.__align_xlabels(axs, dist)
     else:
         fig.__align_xlabels_orig_align(axs)
     
 
-def __align_ylabels(fig, axs=None):
+def __align_ylabels(fig, axs=None, dist=None):
     """ Select align_ylabels() function from matplotlib or plottools.
     """
     if (hasattr(fig, '__align_overwritey') and fig.__align_overwritey) or \
        (not hasattr(fig, '__align_overwritey') and  mpl.rcParams['align.overwritey']):
-        fig.__align_ylabels(axs)
+        fig.__align_ylabels(axs, dist)
     else:
         fig.__align_ylabels_orig_align(axs)
     
