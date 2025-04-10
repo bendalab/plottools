@@ -7,8 +7,12 @@ Setting tick locations and formats.
 - `set_xticks_delta()`: set interval between major xticks.
 - `set_yticks_delta()`: set interval between major yticks.
   ![delta](figures/ticks-delta.png)
+- `set_minor_xticks_delta()`: set interval between minor xticks.
+- `set_minor_yticks_delta()`: set interval between minor yticks.
 - `set_xticks_log()`: set major ticks on a logarithmic x-axis.
 - `set_yticks_log()`: set major ticks on a logarithmic y-axis.
+- `set_minor_xticks_log()`: set minor ticks on a logarithmic x-axis.
+- `set_minor_yticks_log()`: set minor ticks on a logarithmic y-axis.
 - `set_xticks_fixed()`: set custom xticks at fixed positions.
 - `set_yticks_fixed()`: set custom yticks at fixed positions.
   ![fixedlabels](figures/ticks-fixedlabels.png)
@@ -32,6 +36,8 @@ Setting tick locations and formats.
   ![off](figures/ticks-off.png)
 - `set_minor_xticks_off()`: do not draw any minor xticks.
 - `set_minor_yticks_off()`: do not draw any minor yticks.
+- `set_minor_xticks()`: draw minor xticks at a specified number of intervals.
+- `set_minor_yticks()`: draw minor yticks at a specified number of intervals.
 
 
 ## Settings
@@ -93,6 +99,48 @@ def set_yticks_delta(ax, delta):
     ax.yaxis.set_major_locator(ticker.MultipleLocator(delta))
 
 
+def set_minor_xticks_delta(ax, delta):
+    """ Set interval between minor xticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor xticks are set.
+    delta: float
+        Interval between minor xticks.
+
+    Examples
+    --------
+    ```
+    ax.set_minor_xticks_delta(0.5)
+    ```
+
+    See also
+    --------
+    set_xticks_delta()
+    set_minor_yticks_delta()
+    """
+    ax.xaxis.set_minor_locator(ticker.MultipleLocator(delta))
+
+
+def set_minor_yticks_delta(ax, delta):
+    """ Set interval between minor yticks.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor yticks are set.
+    delta: float
+        Interval between minor yticks.
+
+    See also
+    --------
+    set_yticks_delta()
+    set_minor_xticks_delta()
+    """
+    ax.yaxis.set_minor_locator(ticker.MultipleLocator(delta))
+
+
 def set_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
     """ Set major ticks on a logarithmic x-axis.
 
@@ -131,6 +179,56 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
     """
     ax.set_yscale('log')
     ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+
+
+def set_minor_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+    """ Set minor ticks on a logarithmic x-axis.
+
+    Also switch of minor tick labels.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor xticks are set.
+    subs: None, 'auto', 'all', or sequence of floats
+        Multiples of integer powers of ten, where to place minor ticks.
+    numdecs: int
+        ???
+    numticks: int
+        Maximum number of minor ticks placed on the axis.
+
+    See also
+    --------
+    set_xticks_log()
+    set_minor_yticks_log()
+    """
+    ax.xaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    ax.xaxis.set_minor_formatter(ticker.NullFormatter())
+
+
+def set_minor_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+    """ Set minor ticks on a logarithmic y-axis.
+
+    Also switch of minor tick labels.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor yticks are set.
+    subs: None, 'auto', 'all', or sequence of floats
+        Multiples of integer powers of ten, where to place minor ticks.
+    numdecs: int
+        ???
+    numticks: int
+        Maximum number of minor ticks placed on the axis.
+
+    See also
+    --------
+    set_yticks_log()
+    set_minor_xticks_log()
+    """
+    ax.yaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    ax.yaxis.set_minor_formatter(ticker.NullFormatter())
 
 
 def set_xticks_fixed(ax, locs, labels='%g'):
@@ -545,6 +643,11 @@ def set_minor_xticks_off(ax):
     ----------
     ax: matplotlib axes
         Axes on which the minor xticks are set.
+
+    See also
+    --------
+    set_minor_xticks()
+    set_minor_yticks_off()
     """
     ax.xaxis.set_minor_locator(ticker.NullLocator())
 
@@ -559,9 +662,46 @@ def set_minor_yticks_off(ax):
 
     See also
     --------
+    set_minor_yticks()
     set_minor_xticks_off()
     """
     ax.yaxis.set_minor_locator(ticker.NullLocator())
+
+
+def set_minor_xticks(ax, n=None):
+    """ Draw minor xticks at a specified number of intervals.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor xticks are set.
+    n: int
+        Number of intervals between major ticks.
+
+    See also
+    --------
+    set_minor_yticks()
+    set_minor_xticks_off()
+    """
+    ax.xaxis.set_minor_locator(ticker.AutoMinorLocator(n))
+
+
+def set_minor_yticks(ax, n=None):
+    """ Draw minor yticks at a specified number of intervals.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes on which the minor yticks are set.
+    n: int
+        Number of intervals between major ticks.
+
+    See also
+    --------
+    set_minor_xticks()
+    set_minor_yticks_off()
+    """
+    ax.yaxis.set_minor_locator(ticker.AutoMinorLocator(n))
 
 
 def ticks_params(xtick_minor=None, ytick_minor='same',
@@ -761,10 +901,18 @@ def install_ticks():
         mpl.axes.Axes.set_xticks_delta = set_xticks_delta
     if not hasattr(mpl.axes.Axes, 'set_yticks_delta'):
         mpl.axes.Axes.set_yticks_delta = set_yticks_delta
+    if not hasattr(mpl.axes.Axes, 'set_minor_xticks_delta'):
+        mpl.axes.Axes.set_minor_xticks_delta = set_minor_xticks_delta
+    if not hasattr(mpl.axes.Axes, 'set_minor_yticks_delta'):
+        mpl.axes.Axes.set_minor_yticks_delta = set_minor_yticks_delta
     if not hasattr(mpl.axes.Axes, 'set_xticks_log'):
         mpl.axes.Axes.set_xticks_log = set_xticks_log
     if not hasattr(mpl.axes.Axes, 'set_yticks_log'):
         mpl.axes.Axes.set_yticks_log = set_yticks_log
+    if not hasattr(mpl.axes.Axes, 'set_minor_xticks_log'):
+        mpl.axes.Axes.set_minor_xticks_log = set_minor_xticks_log
+    if not hasattr(mpl.axes.Axes, 'set_minor_yticks_log'):
+        mpl.axes.Axes.set_minor_yticks_log = set_minor_yticks_log
     if not hasattr(mpl.axes.Axes, 'set_xticks_fixed'):
         mpl.axes.Axes.set_xticks_fixed = set_xticks_fixed
     if not hasattr(mpl.axes.Axes, 'set_yticks_fixed'):
@@ -797,6 +945,10 @@ def install_ticks():
         mpl.axes.Axes.set_minor_xticks_off = set_minor_xticks_off
     if not hasattr(mpl.axes.Axes, 'set_minor_yticks_off'):
         mpl.axes.Axes.set_minor_yticks_off = set_minor_yticks_off
+    if not hasattr(mpl.axes.Axes, 'set_minor_xticks'):
+        mpl.axes.Axes.set_minor_xticks = set_minor_xticks
+    if not hasattr(mpl.axes.Axes, 'set_minor_yticks'):
+        mpl.axes.Axes.set_minor_yticks = set_minor_yticks
 
 
 def uninstall_ticks():
@@ -812,10 +964,18 @@ def uninstall_ticks():
         delattr(mpl.axes.Axes, 'set_xticks_delta')
     if hasattr(mpl.axes.Axes, 'set_yticks_delta'):
         delattr(mpl.axes.Axes, 'set_yticks_delta')
+    if hasattr(mpl.axes.Axes, 'set_minor_xticks_delta'):
+        delattr(mpl.axes.Axes, 'set_minor_xticks_delta')
+    if hasattr(mpl.axes.Axes, 'set_minor_yticks_delta'):
+        delattr(mpl.axes.Axes, 'set_minor_yticks_delta')
     if hasattr(mpl.axes.Axes, 'set_xticks_log'):
         delattr(mpl.axes.Axes, 'set_xticks_log')
     if hasattr(mpl.axes.Axes, 'set_yticks_log'):
         delattr(mpl.axes.Axes, 'set_yticks_log')
+    if hasattr(mpl.axes.Axes, 'set_minor_xticks_log'):
+        delattr(mpl.axes.Axes, 'set_minor_xticks_log')
+    if hasattr(mpl.axes.Axes, 'set_minor_yticks_log'):
+        delattr(mpl.axes.Axes, 'set_minor_yticks_log')
     if hasattr(mpl.axes.Axes, 'set_xticks_fixed'):
         delattr(mpl.axes.Axes, 'set_xticks_fixed')
     if hasattr(mpl.axes.Axes, 'set_yticks_fixed'):
@@ -848,6 +1008,10 @@ def uninstall_ticks():
         delattr(mpl.axes.Axes, 'set_minor_xticks_off')
     if hasattr(mpl.axes.Axes, 'set_minor_yticks_off'):
         delattr(mpl.axes.Axes, 'set_minor_yticks_off')
+    if hasattr(mpl.axes.Axes, 'set_minor_xticks'):
+        delattr(mpl.axes.Axes, 'set_minor_xticks')
+    if hasattr(mpl.axes.Axes, 'set_minor_yticks'):
+        delattr(mpl.axes.Axes, 'set_minor_yticks')
 
 
 install_ticks()
