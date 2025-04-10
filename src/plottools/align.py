@@ -148,7 +148,6 @@ def align_ylabels(fig, axs=None, dist=None):
     """
     if dist is None:
         dist = mpl.rcParams.get('axes.labelpad', 3)
-    print('aligny', dist)
     ytick_size = mpl.rcParams['ytick.major.size']
     if mpl.rcParams['ytick.direction'] == 'inout':
         ytick_size *= 0.5
@@ -194,11 +193,7 @@ def align_ylabels(fig, axs=None, dist=None):
                 ax.yaxis.set_label_coords(1 + xlw[k]/xpw[k], xly[k], None)
             else:
                 ax.yaxis.set_label_coords(-xlw[k]/xpw[k], xly[k], None)
-            print(k, 'aligned y')
             ax.__align_alignedy = True
-        else:
-            print(k, 'already aligned y')
-    print('done')
 
 
 def align_labels(fig, axs=None, xdist=None, ydist=None):
