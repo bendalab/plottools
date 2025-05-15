@@ -1,5 +1,4 @@
-"""
-Enhanced subplots with margins.
+"""Enhanced subplots with margins.
 
 
 Patches matplotlib to provide the following features:
@@ -33,9 +32,6 @@ This sets all margins to zero.
 
 `plt.subplots()` can be called with `width_ratios` and `height_ratios`.
 
-Further, `figure.add_gridspec()` is made available for older
-matplotlib versions that do not have this function yet.
-
 To merge several subplots into a single axes, call `fig.merge()`.
 
 To replace an axes by subplots, call `ax.subplots()`.
@@ -43,6 +39,18 @@ To replace an axes by subplots, call `ax.subplots()`.
 `fig.merge()` and `ax.subplots()` can be arbitrarily combined.
 
 To expand, shrink or move an axes, use `expand()`.
+
+Further, `figure.add_gridspec()` is made available for older
+matplotlib versions that do not have this function yet.
+
+
+## Invisible axes
+
+Both `plt.subplots()` and `ax.subplots()` support the creation of
+invisble axes that are not returned. Simply provide more elements to
+`width_ratios` and `height_ratios` than specified by `ncols` and
+`nrows`, respectively. Then the axes with the smalles widths or
+heights are made invisible and are not returned.
 
 
 ## Axes member functions
@@ -69,6 +77,7 @@ module, `install_subplots()` is called automatically.
 ## Todo
 
 - default figure margins
+
 """
 
 import __main__
@@ -241,7 +250,20 @@ def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
     """ plt.subplots() with width_ratios and height_ratios.
     
     Missing: sharex, sharey support together with width_ratios, height_ratios!
+
+    By specifying more `width_ratios` or `height_ratios` than `ncols`
+    or `nrows`, respectively, you can create invisible axes that are
+    not returned. See `subplots()` for details.
     """
+    user_nrows = nrows
+    user_ncols = ncols
+    if 'height_ratios' in kwargs and len(kwargs['height_ratios']) > nrows:
+        hratios = kwargs['height_ratios']
+        nrows = len(hratios)
+    if 'width_ratios' in kwargs and len(kwargs['width_ratios']) > ncols:
+        wratios = kwargs['width_ratios']
+        ncols = len(wratios)
+    squeeze = True
     gskwargs = {}
     for k in ['width_ratios', 'height_ratios']:
         if k in kwargs:
@@ -257,7 +279,6 @@ def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
                   'left', 'right', 'top', 'bottom', 'hspace', 'wspace']:
             if k in kwargs:
                 upkwargs[k] = kwargs.pop(k)
-        squeeze = True
         if 'squeeze' in kwargs:
             squeeze = kwargs.pop('squeeze')
         fig = plt.figure(**figkwargs)
@@ -267,9 +288,36 @@ def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
         for r in range(nrows):
             for c in range(ncols):
                 axs[r,c] = fig.add_subplot(gs[r,c], **kwargs)
-        return fig, np.squeeze(axs) if squeeze else axs
     else:
-        return plt.__subplots_orig_subplots(nrows, ncols, *args, **kwargs)
+        if 'squeeze' in kwargs:
+            squeeze = kwargs.pop('squeeze')
+        fig, axs = plt.__subplots_orig_subplots(nrows, ncols, squeeze=False,
+                                                *args, **kwargs)
+    # remove axes with smallest height:
+    if nrows > user_nrows:
+        row_idx = np.argsort(hratios)
+        for axr in axs[row_idx[:nrows - user_nrows], :]:
+            for ax in axr:
+                try:
+                    ax.remove()
+                except NotImplementedError:
+                    ax.set_visible(False)
+        axs = axs[row_idx[nrows - user_nrows:], :]
+    # remove axes with smallest width:
+    if ncols > user_ncols:
+        col_idx = np.argsort(wratios)
+        for axc in axs[:, col_idx[:ncols - user_ncols]]:
+            for ax in axc:
+                try:
+                    ax.remove()
+                except NotImplementedError:
+                    ax.set_visible(False)
+        axs = axs[:, col_idx[ncols - user_ncols:]]
+    if squeeze:
+        axs = axs.squeeze()
+    if axs.ndim == 0:
+        return fig, axs.item()
+    return fig, axs
 
 
 def __resize(event):
@@ -361,10 +409,14 @@ def merge(fig, axs, remove=True):
 
 
 def subplots(ax, nrows, ncols, **kwargs):
-    """ Replace axes by subplots.
+    """Replace axes by subplots.
     
     Replace axes by all plots of a subgridspec at that axes. This way
     you do not need to use `subgridspec()` explicitly.
+
+    By specifying more `width_ratios` or `height_ratios` than `ncols`
+    or `nrows`, respectively, you can create invisible axes that are
+    not returned.
 
     Parameters
     ----------
@@ -372,8 +424,16 @@ def subplots(ax, nrows, ncols, **kwargs):
         Axes that should be replaced by subplots.
     nrows: int
         Number of rows of the new subgrid.
+        Can be smaller than the number of elements in `height_ratios`.
+        In this case, the axes with the smallest heights are removed
+        and only the `nrows` larger axes are returned.
+        This allows you to easily insert invisible spaces between rows.
     ncols: int
         Number of columns of the new subgrid.
+        Can be smaller than the number of elements in `width_ratios`.
+        In this case, the axes with the smallest widths are removed
+        and only the `ncols` larger axes are returned.
+        This allows you to easily insert invisible spaces between columns.
     kwargs: dict
         Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
         e.g. `wspace`, `hspace`, `height_ratios`, `width_ratios`.
@@ -406,7 +466,16 @@ def subplots(ax, nrows, ncols, **kwargs):
     subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
     ```
     and you can use the axes in `axs` and `subaxs` right away.
+
     """
+    user_nrows = nrows
+    user_ncols = ncols
+    if 'height_ratios' in kwargs and len(kwargs['height_ratios']) > nrows:
+        hratios = kwargs['height_ratios']
+        nrows = len(hratios)
+    if 'width_ratios' in kwargs and len(kwargs['width_ratios']) > ncols:
+        wratios = kwargs['width_ratios']
+        ncols = len(wratios)
     sps = ax.get_subplotspec()
     gs = sps.get_gridspec()
     nr, nc, idx0, idx1 = sps.get_geometry()
@@ -414,26 +483,54 @@ def subplots(ax, nrows, ncols, **kwargs):
         idx1 = idx0
     rows = (idx0//nc, idx1//nc)
     cols = (idx0%nc, idx1%nc)
-    gsi = gs[np.min(rows):np.max(rows)+1, np.min(cols):np.max(cols)+1]
+    gsi = gs[np.min(rows):np.max(rows) + 1, np.min(cols):np.max(cols) + 1]
     try:
         sgs = gsi.subgridspec(nrows, ncols, **kwargs)
     except AttributeError:
         sgs = gridspec.GridSpecFromSubplotSpec(nrows, ncols, subplot_spec=gsi, **kwargs)
+    # create axes:
     axs = np.array([ax.get_figure().add_subplot(sgs[r,c])
                     for r in range(nrows) for c in range(ncols)])
-    if nrows > 1 and ncols > 1:
-        axs = axs.reshape(nrows, ncols)
+    axs = axs.reshape(nrows, ncols)
+    # remove parent axes:
     try:
         ax.remove()
     except NotImplementedError:
         ax.set_visible(False)
-    return axs.squeeze()
+    # remove axes with smallest height:
+    if nrows > user_nrows:
+        row_idx = np.argsort(hratios)
+        for axr in axs[row_idx[:nrows - user_nrows], :]:
+            for ax in axr:
+                try:
+                    ax.remove()
+                except NotImplementedError:
+                    ax.set_visible(False)
+        axs = axs[row_idx[nrows - user_nrows:], :]
+    # remove axes with smallest width:
+    if ncols > user_ncols:
+        col_idx = np.argsort(wratios)
+        for axc in axs[:, col_idx[:ncols - user_ncols]]:
+            for ax in axc:
+                try:
+                    ax.remove()
+                except NotImplementedError:
+                    ax.set_visible(False)
+        axs = axs[:, col_idx[ncols - user_ncols:]]
+    squeeze = True
+    if 'squeeze' in kwargs:
+        squeeze = kwargs.pop('squeeze')
+    if squeeze:
+        axs = axs.squeeze()
+    if axs.ndim == 0:
+        return axs.item()
+    return axs
 
 
 def expand(ax, left=None, right=None, bottom=None, top=None):
     """ Expand size and modify position of Axes.
 
-    Note: only works with savefig(), not with plt show()!
+    Note: only works with savefig(), not with plt.show()!
 
     Parameters
     ----------
