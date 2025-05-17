@@ -53,16 +53,20 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         Integers in the list are indices to the axes of the figure.
         For axes in the out list, `labels` is used for tagging,
         for axes in (optional) inner lists, `minor_label` is used.
-    xoffs: float, 'auto', or None
+    xoffs: float, list of float, 'auto', or None
         X-coordinate of label relative to origin of axis in multiples of the width
         of a character (simply 60% of the current font size).
+        If list, use for each column of axes (estimated from their positions)
+        the corresponding offset.
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the right-most axis to the left figure border,
         otherwise use the value computed by the first call.
         If None take value from `mpl.rcParams['figure.tags.xoffs']`.
-    yoffs: float, 'auto', or None
+    yoffs: float, list of float, 'auto', or None
         Y-coordinate of label relative to top end of left yaxis in multiples
         of the height of a character (the current font size).
+        If list, use for each row of axes (estimated from their positions)
+        the corresponding offset.
         If 'auto' and this is the first call of this function on the figure,
         set it to the distance of the top-most axis to the top figure border,
         otherwise use the value computed by the first call.
@@ -162,24 +166,61 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
     for axs in axes:
         if isinstance(axs, (list, tuple, np.ndarray)):
             for ax in axs:
+                if isinstance(ax, int):
+                    ax = fig.get_axes()[ax]
                 if ax.get_visible():
                     axes_list.append(ax)
         elif axs.get_visible():
-            axes_list.append(axs)
+            if isinstance(axs, int):
+                axs = fig.get_axes()[axs]
+            axes_list.append(axs)            
     # font settings:
     fkwargs = dict(**mpl.rcParams['figure.tags.font'])
     fkwargs.update(**kwargs)
     # get axes offsets:
     xo = -1.0
     yo = +1.0
-    for ax, l in zip(axes_list, label_list):
-        if isinstance(ax, int):
-            ax = fig.get_axes()[ax]
+    box_pos = np.zeros((len(axes_list), 4))
+    for k, (ax, l) in enumerate(zip(axes_list, label_list)):
         x0, y0, width, height = ax.get_position(original=True).bounds
         if x0 <= -xo:
             xo = -x0
         if 1.0 - y0 - height < yo:
             yo = 1.0 - y0 - height
+        box_pos[k] = (x0, y0, width, height)
+    # columns first?
+    m_width = np.median(box_pos[:, 2])
+    m_height = np.median(box_pos[:, 3])
+    dx_pos = np.diff(box_pos[:, 0])
+    nx = np.sum(dx_pos < -0.9*m_width)
+    dy_pos = np.diff(box_pos[:, 1])
+    ny = np.sum(dy_pos > 0.9*m_height)
+    columns_first = nx > ny
+    # row and column indices:
+    rows_list = []
+    cols_list = []
+    row = -1
+    col = -1
+    prev_x0 = 2
+    prev_y0 = -1
+    for ax in axes_list:
+        x0, y0, _, _ = ax.get_position(original=True).bounds
+        if columns_first:
+            if x0 > prev_x0:
+                col += 1
+            else:
+                col = 0
+                row += 1
+        else:
+            if y0 < prev_y0:
+                row += 1
+            else:
+                row = 0
+                col += 1
+        rows_list.append(row)
+        cols_list.append(col)
+        prev_x0 = x0
+        prev_y0 = y0
     # get figure size in pixel:
     w, h = fig.get_window_extent().bounds[2:]
     ppi = 72.0 # points per inch:
@@ -195,6 +236,10 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         else:
             xoffs = xo
     else:
+        if isinstance(xoffs, (list, tuple, np.ndarray)):
+            xoffs = np.asarray(xoffs, dtype=float)
+        else:
+            xoffs = np.array([xoffs], dtype=float)
         xoffs *= 0.6*fs/w
     if yoffs == 'auto':
         if hasattr(fig, 'tags_yoffs'):
@@ -202,21 +247,24 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         else:
             yoffs = yo - 1.0/h   # minus one pixel
     else:
+        if isinstance(yoffs, (list, tuple, np.ndarray)):
+            yoffs = np.asarray(yoffs, dtype=float)
+        else:
+            yoffs = np.array([yoffs], dtype=float)
         yoffs *= fs/h
     fig.tags_xoffs = xoffs
     fig.tags_yoffs = yoffs
     # put labels onto axes:
-    for ax, l in zip(axes_list, label_list):
-        if isinstance(ax, int):
-            ax = fig.get_axes()[ax]
+    for ax, l, r, c in zip(axes_list, label_list, rows_list, cols_list):
         x0, y0, width, height = ax.get_position(original=True).bounds
-        x = x0 + xoffs
+        x = x0 + xoffs[c if c < len(xoffs) else 0]
         if x <= 0.0:
             x = 0.0
-        y = y0 + height + yoffs
+        y = y0 + height + yoffs[r if r < len(yoffs) else 0]
         if y >= 1.0:
             y = 1.0
-        ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top', **fkwargs)
+        ax.text(x, y, l, transform=fig.transFigure, ha='left', va='top',
+                **fkwargs)
 
 
 def tag_params(xoffs=None, yoffs=None, label=None, minor_label=None, font=None):
