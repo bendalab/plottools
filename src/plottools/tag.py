@@ -234,7 +234,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if hasattr(fig, 'tags_xoffs'):
             xoffs = fig.tags_xoffs
         else:
-            xoffs = xo
+            xoffs = np.array([xo])
     else:
         if isinstance(xoffs, (list, tuple, np.ndarray)):
             xoffs = np.asarray(xoffs, dtype=float)
@@ -245,7 +245,7 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         if hasattr(fig, 'tags_yoffs'):
             yoffs = fig.tags_yoffs
         else:
-            yoffs = yo - 1.0/h   # minus one pixel
+            yoffs = np.array([yo - 1.0/h])   # minus one pixel
     else:
         if isinstance(yoffs, (list, tuple, np.ndarray)):
             yoffs = np.asarray(yoffs, dtype=float)
