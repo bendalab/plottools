@@ -296,23 +296,23 @@ def __plt_subplots(nrows=1, ncols=1, *args, **kwargs):
     # remove axes with smallest height:
     if nrows > user_nrows:
         row_idx = np.argsort(hratios)
-        for axr in axs[row_idx[:nrows - user_nrows], :]:
+        for axr in axs[np.sort(row_idx[:nrows - user_nrows]), :]:
             for ax in axr:
                 try:
                     ax.remove()
                 except NotImplementedError:
                     ax.set_visible(False)
-        axs = axs[row_idx[nrows - user_nrows:], :]
+        axs = axs[np.sort(row_idx[nrows - user_nrows:]), :]
     # remove axes with smallest width:
     if ncols > user_ncols:
         col_idx = np.argsort(wratios)
-        for axc in axs[:, col_idx[:ncols - user_ncols]]:
+        for axc in axs[:, np.sort(col_idx[:ncols - user_ncols])]:
             for ax in axc:
                 try:
                     ax.remove()
                 except NotImplementedError:
                     ax.set_visible(False)
-        axs = axs[:, col_idx[ncols - user_ncols:]]
+        axs = axs[:, np.sort(col_idx[ncols - user_ncols:])]
     if squeeze:
         axs = axs.squeeze()
     if axs.ndim == 0:
