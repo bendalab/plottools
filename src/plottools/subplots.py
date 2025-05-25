@@ -416,7 +416,8 @@ def subplots(ax, nrows, ncols, **kwargs):
 
     By specifying more `width_ratios` or `height_ratios` than `ncols`
     or `nrows`, respectively, you can create invisible axes that are
-    not returned.
+    not returned. The ones that are made invisible and are not returned
+    are the smallest ones.
 
     Parameters
     ----------
@@ -500,23 +501,23 @@ def subplots(ax, nrows, ncols, **kwargs):
     # remove axes with smallest height:
     if nrows > user_nrows:
         row_idx = np.argsort(hratios)
-        for axr in axs[row_idx[:nrows - user_nrows], :]:
+        for axr in axs[np.sort(row_idx[:nrows - user_nrows]), :]:
             for ax in axr:
                 try:
                     ax.remove()
                 except NotImplementedError:
                     ax.set_visible(False)
-        axs = axs[row_idx[nrows - user_nrows:], :]
+        axs = axs[np.sort(row_idx[nrows - user_nrows:]), :]
     # remove axes with smallest width:
     if ncols > user_ncols:
         col_idx = np.argsort(wratios)
-        for axc in axs[:, col_idx[:ncols - user_ncols]]:
+        for axc in axs[:, np.sort(col_idx[:ncols - user_ncols])]:
             for ax in axc:
                 try:
                     ax.remove()
                 except NotImplementedError:
                     ax.set_visible(False)
-        axs = axs[:, col_idx[ncols - user_ncols:]]
+        axs = axs[:, np.sort(col_idx[ncols - user_ncols:])]
     squeeze = True
     if 'squeeze' in kwargs:
         squeeze = kwargs.pop('squeeze')
