@@ -141,7 +141,7 @@ def set_minor_yticks_delta(ax, delta):
     ax.yaxis.set_minor_locator(ticker.MultipleLocator(delta))
 
 
-def set_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+def set_xticks_log(ax, subs=(1.0,), numticks=None):
     """ Set major ticks on a logarithmic x-axis.
 
     Parameters
@@ -150,16 +150,18 @@ def set_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
         Axes on which the xticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place major ticks.
-    numdecs: int
-        ???
     numticks: int
         Maximum number of ticks placed on the axis.
     """
     ax.set_xscale('log')
-    ax.xaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    try:
+        numdecs = 4
+        ax.xaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    except TypeError:
+        ax.xaxis.set_major_locator(ticker.LogLocator(base=10.0, subs=subs, numticks=numticks))
 
 
-def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+def set_yticks_log(ax, subs=(1.0,), numticks=None):
     """ Set major ticks on a logarithmic y-axis.
 
     Parameters
@@ -168,8 +170,6 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
         Axes on which the yticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place major ticks.
-    numdecs: int
-        ???
     numticks: int
         Maximum number of ticks placed on the axis.
 
@@ -178,10 +178,14 @@ def set_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
     set_xticks_log()
     """
     ax.set_yscale('log')
-    ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    try:
+        numdecs = 4
+        ax.yaxis.set_major_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    except TypeError:
+        ax.yaxis.set_major_locator(ticker.LogLocator(base=10.0, subs=subs, numticks=numticks))
 
 
-def set_minor_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+def set_minor_xticks_log(ax, subs=(1.0,), numticks=None):
     """ Set minor ticks on a logarithmic x-axis.
 
     Also switch of minor tick labels.
@@ -192,8 +196,6 @@ def set_minor_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
         Axes on which the minor xticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place minor ticks.
-    numdecs: int
-        ???
     numticks: int
         Maximum number of minor ticks placed on the axis.
 
@@ -202,11 +204,15 @@ def set_minor_xticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
     set_xticks_log()
     set_minor_yticks_log()
     """
-    ax.xaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    try:
+        numdecs = 4
+        ax.xaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    except TypeError:
+        ax.xaxis.set_minor_locator(ticker.LogLocator(base=10.0, subs=subs, numticks=numticks))
     ax.xaxis.set_minor_formatter(ticker.NullFormatter())
 
 
-def set_minor_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
+def set_minor_yticks_log(ax, subs=(1.0,), numticks=None):
     """ Set minor ticks on a logarithmic y-axis.
 
     Also switch of minor tick labels.
@@ -217,8 +223,6 @@ def set_minor_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
         Axes on which the minor yticks are set.
     subs: None, 'auto', 'all', or sequence of floats
         Multiples of integer powers of ten, where to place minor ticks.
-    numdecs: int
-        ???
     numticks: int
         Maximum number of minor ticks placed on the axis.
 
@@ -227,7 +231,11 @@ def set_minor_yticks_log(ax, subs=(1.0,), numdecs=4, numticks=None):
     set_yticks_log()
     set_minor_xticks_log()
     """
-    ax.yaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    try:
+        numdecs = 4
+        ax.yaxis.set_minor_locator(ticker.LogLocator(10.0, subs, numdecs, numticks))
+    except TypeError:
+        ax.yaxis.set_minor_locator(ticker.LogLocator(base=10.0, subs=subs, numticks=numticks))
     ax.yaxis.set_minor_formatter(ticker.NullFormatter())
 
 
