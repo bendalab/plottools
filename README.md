@@ -1,5 +1,4 @@
 [![license](https://img.shields.io/pypi/l/plottools.svg)](https://github.com/bendalab/plottools/blob/master/LICENSE)
-[![PyPI version](https://img.shields.io/pypi/v/plottools.svg)](https://pypi.python.org/pypi/plottools/)
 ![downloads](https://img.shields.io/pypi/dm/plottools.svg)
 [![contributors](https://img.shields.io/github/contributors/bendalab/plottools)](https://github.com/bendalab/plottools/graphs/contributors)
 [![commits](https://img.shields.io/github/commit-activity/m/bendalab/plottools)](https://github.com/bendalab/plottools/pulse)
