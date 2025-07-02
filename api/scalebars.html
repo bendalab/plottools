@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.scalebars API documentation</title>
+<meta name="description" content="Labeled scale bars …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.scalebars</code></h1>
+</header>
+<section id="section-intro">
+<p>Labeled scale bars.</p>
+<p><img alt="scalebars" src="figures/scalebars-scalebars.png"></p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.scalebars.xscalebar" href="#plottools.scalebars.xscalebar">xscalebar()</a></code>: horizontal scale bar with label.</li>
+<li><code><a title="plottools.scalebars.yscalebar" href="#plottools.scalebars.yscalebar">yscalebar()</a></code>: vertical scale bar with label.</li>
+<li><code><a title="plottools.scalebars.scalebars" href="#plottools.scalebars.scalebars">scalebars()</a></code>: horizontal and vertical scale bars with labels.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.scalebars.scalebars_params" href="#plottools.scalebars.scalebars_params">scalebars_params()</a></code>: set rc settings for scalebars.</li>
+</ul>
+<p><code>matplotlib.rcParams</code> defined by the scalebar module:</p>
+<pre><code class="language-py">scalebar.format.large: '%.0f'
+scalebar.format.small: '%.1f'
+scalebar.linewidth: 2
+scalebar.color: 'k'
+scalebar.capsize: 0
+scalebar.caplinewidth: 0.5
+scalebar.font: dict()
+</code></pre>
+<h2 id="installuninstall-scalebars-functions">Install/uninstall scalebars functions</h2>
+<p>You usually do not need to call these functions. Upon loading the scalebars
+module, <code><a title="plottools.scalebars.install_scalebars" href="#plottools.scalebars.install_scalebars">install_scalebars()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.scalebars.install_scalebars" href="#plottools.scalebars.install_scalebars">install_scalebars()</a></code>: install functions of the scalebars module in matplotlib.</li>
+<li><code><a title="plottools.scalebars.uninstall_scalebars" href="#plottools.scalebars.uninstall_scalebars">uninstall_scalebars()</a></code>: uninstall all code of the scalebars module from matplotlib.</li>
+</ul>
+<h2 id="alternatives">Alternatives</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib">https://stackoverflow.com/questions/39786714/how-to-insert-scale-bar-in-a-map-in-matplotlib</a></li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar.html#mpl_toolkits.axes_grid1.anchored_artists.AnchoredSizeBar">AnchoredSizeBar</a></li>
+<li><a href="https://github.com/ppinard/matplotlib-scalebar">matplotlib-scalebar</a></li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.scalebars.xscalebar"><code class="name flex">
+<span>def <span class="ident">xscalebar</span></span>(<span>ax, x, y, width, wunit=None, wformat=None, ha='left', va='bottom', hat='center', lw=None, color=None, capsize=None, clw=None, return_coords=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Horizontal scale bar with label.</p>
+<p>The first two arguments set the anchor point
+on which the scalebar is positioned. The scalebar position is given in
+relative coordinates of the axes (ranging from 0 to 1).</p>
+<p>The third argument sets the length of the scale bar in data
+coordinates of the x-axis, followed by a string setting the unit of
+the scale.</p>
+<p>The following code and figure illustrate the positioning of the
+scalebar and its annotation.
+<code>ha</code> (horizontal alignment) determines
+whether the anchor is on the 'left', 'center', or 'right' of the
+scalebar. The vertical alignment (<code>va</code>) determines whether the
+annotation is on top ('top') or below ('bottom') the scalebar. In
+the figure the position of the scalebar, the anchor point, is shown
+as a red circle.</p>
+<pre><code class="language-py">ax.xscalebar(0.0, 0.8, 2, 's', ha='left', va='top')
+ax.xscalebar(0.5, 0.8, 2, 's', ha='center', va='top')
+ax.xscalebar(1.0, 0.8, 2, 's', ha='right', va='top')
+ax.xscalebar(0.0, 0.3, 2, 's', ha='left', va='bottom')
+ax.xscalebar(0.5, 0.3, 2, 's', ha='center', va='bottom')
+ax.xscalebar(1.0, 0.3, 2, 's', ha='right', va='bottom')
+</code></pre>
+<p><img alt="xpos" src="figures/scalebars-xpos.png">
+</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the scale bar.</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code></dt>
+<dd>x-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>y-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of the scale bar in units of the data's x-values.</dd>
+<dt><strong><code>wunit</code></strong> :&ensp;<code>string</code> or <code>None</code></dt>
+<dd>Optional unit of the data's x-values.</dd>
+<dt><strong><code>wformat</code></strong> :&ensp;<code>string</code> or <code>None</code></dt>
+<dd>Optional format string for formatting the label of the scale bar
+or simply a string used for labeling the scale bar.
+If None take value from rcParams <code>scalebar.format.large</code> for width larger than one,
+or <code>scalebar.format.small</code> for width smaller than one.</dd>
+<dt><strong><code>ha</code></strong> :&ensp;<code>'left', 'right',</code> or <code>'center'</code></dt>
+<dd>Scale bar aligned left, right, or centered to (x, y)</dd>
+<dt><strong><code>va</code></strong> :&ensp;<code>'top'</code> or <code>'bottom'</code></dt>
+<dd>Label of the scale bar either above or below the scale bar.</dd>
+<dt><strong><code>hat</code></strong> :&ensp;<code>'left', 'right',</code> or <code>'center'</code></dt>
+<dd>Horizontal alignment of text:
+text aligned on left, right or center of scale bar.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>int, float, None</code></dt>
+<dd>Line width of the scale bar. If None take value from rcSetting <code>scalebar.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the scalebar.</dd>
+<dt><strong><code>capsize</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>If larger then zero draw cap lines at the ends of the bar.
+The length of the lines is given in points (same unit as linewidth).
+If None take value from rcParam <code>scalebar.capsize</code>.</dd>
+<dt><strong><code>clw</code></strong> :&ensp;<code>int, float, None</code></dt>
+<dd>Line width of the cap lines.
+If None take value from rcParam <code>scalebar.caplinewidth</code>.</dd>
+<dt><strong><code>return_coords</code></strong> :&ensp;<code>bool</code></dt>
+<dd>For internal usage only. If <code>True</code> return <code>x0</code>, <code>x1</code>, and <code>y</code>
+coordinates of scale bar in addition to artists.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the scale bar label.
+Defaults to <code>scalebar.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>artists</code></strong> :&ensp;<code>list</code> of <code>matplotlib artists</code></dt>
+<dd>The Lin2D and Text objects making up the scalebar.
+Use it to hide the scale bar like this
+<code>py
+sb = ax.xscalebar(1.0, 0.0, 1, 'ms', ha='right')
+[a.set_visible(False) for a in sb]</code></dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+import plottools.scalebars
+
+fig, ax = plt.subplots()
+ax.show_spines('')
+ax.xscalebar(1.0, 0.0, 2, 's', ha='right', va='bottom')
+</code></pre>
+<p><img alt="xscalebar" src="figures/scalebars-xscalebar.png"></p></div>
+</dd>
+<dt id="plottools.scalebars.yscalebar"><code class="name flex">
+<span>def <span class="ident">yscalebar</span></span>(<span>ax, x, y, height, hunit=None, hformat=None, ha='left', va='bottom', vat='center', lw=None, color=None, capsize=None, clw=None, return_coords=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Vertical scale bar with label.</p>
+<p>The first two arguments set the anchor point
+on which the scalebar is positioned. The scalebar position is given in
+relative coordinates of the axes (ranging from 0 to 1).</p>
+<p>The third argument sets the length of the scale bar in data
+coordinates of the y-axis, followed by a string setting the unit of
+the scale.</p>
+<p>The following code and figure illustrate the positioning of the
+scalebar and its annotation. <code>va</code> (vertical alignment) determines
+whether the anchor is on the 'top', 'center', or 'bottom' of the
+scalebar. The horizontal alignment (<code>ha</code>) determines whether the
+annotation is to the 'left' or to the 'right' of the scale bar. In
+the figure the position of the scalebar, the anchor point, is shown
+as a red circle.</p>
+<pre><code class="language-py">ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top')
+ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center')
+ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom')
+ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top')
+ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center')
+ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom')
+</code></pre>
+<p><img alt="ypos" src="figures/scalebars-ypos.png">
+</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the scale bar.</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code></dt>
+<dd>x-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>y-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of the scale bar in units of the data's y-values.</dd>
+<dt><strong><code>hunit</code></strong> :&ensp;<code>string</code></dt>
+<dd>Unit of the data's y-values.</dd>
+<dt><strong><code>hformat</code></strong> :&ensp;<code>string</code> or <code>None</code></dt>
+<dd>Optional format string for formatting the label of the scale bar
+or simply a string used for labeling the scale bar.
+If None take value from rcParams <code>scalebar.format.large</code> for hight larger than one,
+or <code>scalebar.format.small</code> for hight smaller than one.</dd>
+<dt><strong><code>ha</code></strong> :&ensp;<code>'left'</code> or <code>'right'</code></dt>
+<dd>Label of the scale bar either to the left or to the right
+of the scale bar.</dd>
+<dt><strong><code>va</code></strong> :&ensp;<code>'top', 'bottom',</code> or <code>'center'</code></dt>
+<dd>Scale bar aligned below, above, or centered on (x, y).</dd>
+<dt><strong><code>vat</code></strong> :&ensp;<code>'top', 'bottom',</code> or <code>'center'</code></dt>
+<dd>Vertical alignment of text:
+text aligned on top, bottom or center of scale bar.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>int, float, None</code></dt>
+<dd>Line width of the scale bar. If None take value from rcParams <code>scalebar.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the scalebar.</dd>
+<dt><strong><code>capsize</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>If larger then zero draw cap lines at the ends of the bar.
+The length of the lines is given in points (same unit as linewidth).
+If None take value from rcParams <code>scalebar.capsize</code>.</dd>
+<dt><strong><code>clw</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width of the cap lines.
+If None take value from rcParams <code>scalebar.caplinewidth</code>.</dd>
+<dt><strong><code>return_coords</code></strong> :&ensp;<code>bool</code></dt>
+<dd>For internal usage only. If <code>True</code> return <code>x</code>, <code>y0</code>, and <code>y1</code>
+coordinates of scale bar in addition to artists.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the scale bar label.
+Defaults to <code>scalebar.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>artists</code></strong> :&ensp;<code>list</code> of <code>matplotlib artists</code></dt>
+<dd>The Lin2D and Text objects making up the scalebar.
+Use it to hide the scale bar like this
+<code>py
+sb = ax.yscalebar(1.0, 0.0, 1, 'mV', ha='right')
+[a.set_visible(False) for a in sb]</code></dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+import plottools.scalebars
+
+fig, ax = plt.subplots()
+ax.show_spines('')
+ax.yscalebar(1.05, 0.0, 1, 'mV', ha='right', va='bottom')
+</code></pre>
+<p><img alt="yscalebar" src="figures/scalebars-yscalebar.png"></p></div>
+</dd>
+<dt id="plottools.scalebars.scalebars"><code class="name flex">
+<span>def <span class="ident">scalebars</span></span>(<span>ax, x, y, width, height, wunit=None, hunit=None, wformat=None, hformat=None, ha='left', va='bottom', hat='center', vat='center', lw=None, color=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Horizontal and vertical scale bars with labels.</p>
+<p>The first two arguments set the anchor point
+on which the scalebar is positioned. The scalebar position is given in
+relative coordinates of the axes (ranging from 0 to 1).</p>
+<p>The third and forth arguments set the length of the scale bars in data
+coordinates of the x- and y-axis, followed by two strings setting the unit of
+the scales.</p>
+<p>Horizontal alignment (<code>ha</code>) determines whether the anchor point and the
+vertical scalebar is on the 'left' or on the 'right' of the horizontal
+scalebar. Vertical alignment (<code>va</code>) determines whether the anchor point
+and the horizontal scalebar are at the 'top' or 'bottom' of the vertical
+scalebar. In the figure the position of the scalebar, the anchor point,
+is shown as a red circle.</p>
+<pre><code class="language-py">ax.scalebars(0.2, 0.8, 2, 1, 's', 'mV', ha='left', va='top')
+ax.scalebars(0.8, 0.8, 2, 1, 's', 'mV', ha='right', va='top')
+ax.scalebars(0.2, 0.1, 2, 1, 's', 'mV', ha='left', va='bottom')
+ax.scalebars(0.8, 0.1, 2, 1, 's', 'mV', ha='right', va='bottom')
+</code></pre>
+<p><img alt="pos" src="figures/scalebars-pos.png"></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes where to draw the scale bar.</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>float</code></dt>
+<dd>x-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>float</code></dt>
+<dd>y-coordinate where to draw the scale bar in relative units of the axes.</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of horizontal scale bar in units of the data.</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of vertical scale bar in units of the data.</dd>
+<dt><strong><code>wunit</code></strong> :&ensp;<code>string</code></dt>
+<dd>Unit of x-values.</dd>
+<dt><strong><code>hunit</code></strong> :&ensp;<code>string</code></dt>
+<dd>Unit of y-values.</dd>
+<dt><strong><code>wformat</code></strong> :&ensp;<code>string</code> or <code>None</code></dt>
+<dd>Optional format string for formatting the x-label of the scale bar
+or simply a string used for labeling the x scale bar.
+If None take value from rcParams <code>scalebar.format.large</code> for width larger than one,
+or <code>scalebar.format.small</code> for width smaller than one.</dd>
+<dt><strong><code>hformat</code></strong> :&ensp;<code>string</code> or <code>None</code></dt>
+<dd>Optional format string for formatting the y-label of the scale bar
+or simply a string used for labeling the y scale bar.
+If None take value from rcParams <code>scalebar.format.large</code> for height larger than one,
+or <code>scalebar.format.small</code> for height smaller than one.</dd>
+<dt><strong><code>ha</code></strong> :&ensp;<code>'left'</code> or <code>'right'</code></dt>
+<dd>Scale bars aligned left or right to (x, y).
+Vertical scale bar left or right.</dd>
+<dt><strong><code>va</code></strong> :&ensp;<code>'top'</code> or <code>'bottom'</code></dt>
+<dd>Scale bars aligned above or below (x, y).
+Horizontal scale bar on top or at the bottom.</dd>
+<dt><strong><code>hat</code></strong> :&ensp;<code>'left', 'right',</code> or <code>'center'</code></dt>
+<dd>Horizontal alignment of text:
+text aligned on left, right or center of scale bar.</dd>
+<dt><strong><code>vat</code></strong> :&ensp;<code>'top', 'bottom',</code> or <code>'center'</code></dt>
+<dd>Vertical alignment of text:
+text aligned on top, bottom or center of scale bar.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>int, float, None</code></dt>
+<dd>Line width of the scale bar. If None take value from rcParams <code>scalebar.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the scalebar.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>key-word arguments</code></dt>
+<dd>Passed on to <code>ax.text()</code> used to print the scale bar labels.
+Defaults to <code>scalebar.font</code> rcParams settings.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>artists</code></strong> :&ensp;<code>list</code> of <code>matplotlib artists</code></dt>
+<dd>The Lin2D and Text objects making up the scalebar.
+Use it to hide the scale bar like this
+<code>py
+sb = ax.scalebar(1.0, 0.0, 2, 1, 'ms', 'mV')
+[a.set_visible(False) for a in sb]</code></dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+import plottools.scalebars
+
+fig, ax = plt.subplots()
+ax.show_spines('')
+ax.scalebars(1.05, 0.0, 2, 1, 's', 'mV', ha='right', va='bottom')
+</code></pre>
+<p><img alt="scalebars" src="figures/scalebars-scalebars.png"></p></div>
+</dd>
+<dt id="plottools.scalebars.scalebars_params"><code class="name flex">
+<span>def <span class="ident">scalebars_params</span></span>(<span>format_large=None, format_small=None, lw=2, color=None, capsize=None, clw=None, font=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set rc settings for scalebars.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>format_large</code></strong> :&ensp;<code>string</code></dt>
+<dd>Format string for formatting the label of the scale bar
+for scalebars longer than one. Set rcParam <code>scalebar.format.large</code>.</dd>
+<dt><strong><code>format_small</code></strong> :&ensp;<code>string</code></dt>
+<dd>Format string for formatting the label of the scale bar
+for scalebars shorter than one. Set rcParam <code>scalebar.format.small</code>.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width of a scale bar. Set rcParam <code>scalebar.linewidth</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of the scalebar. Set rcParam <code>scalebar.color</code>.</dd>
+<dt><strong><code>capsize</code></strong> :&ensp;<code>float</code></dt>
+<dd>If larger then zero draw cap lines at the ends of the bar.
+The length of the lines is given in points (same unit as linewidth).
+Set rcParam <code>scalebar.capsize</code>.</dd>
+<dt><strong><code>clw</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Line width of the cap lines. Set rcParam <code>scalebar.caplinewidth</code>.</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary with font settings
+(e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, &hellip;).
+Set rcParam <code>scalebar.font</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.scalebars.install_scalebars"><code class="name flex">
+<span>def <span class="ident">install_scalebars</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install scalebars functions on matplotlib axes.</p>
+<p>This function is also called automatically upon importing the module.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.scalebars.uninstall_scalebars" href="#plottools.scalebars.uninstall_scalebars">uninstall_scalebars()</a></code></p></div>
+</dd>
+<dt id="plottools.scalebars.uninstall_scalebars"><code class="name flex">
+<span>def <span class="ident">uninstall_scalebars</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall scalebars functions from matplotlib axes.</p>
+<p>Call this code to disable anything that was installed by <code><a title="plottools.scalebars.install_scalebars" href="#plottools.scalebars.install_scalebars">install_scalebars()</a></code>.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.scalebars.install_scalebars" href="#plottools.scalebars.install_scalebars">install_scalebars()</a></code></p></div>
+</dd>
+<dt id="plottools.scalebars.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the scalebars module.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-scalebars-functions">Install/uninstall scalebars functions</a></li>
+<li><a href="#alternatives">Alternatives</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.scalebars.xscalebar" href="#plottools.scalebars.xscalebar">xscalebar</a></code></li>
+<li><code><a title="plottools.scalebars.yscalebar" href="#plottools.scalebars.yscalebar">yscalebar</a></code></li>
+<li><code><a title="plottools.scalebars.scalebars" href="#plottools.scalebars.scalebars">scalebars</a></code></li>
+<li><code><a title="plottools.scalebars.scalebars_params" href="#plottools.scalebars.scalebars_params">scalebars_params</a></code></li>
+<li><code><a title="plottools.scalebars.install_scalebars" href="#plottools.scalebars.install_scalebars">install_scalebars</a></code></li>
+<li><code><a title="plottools.scalebars.uninstall_scalebars" href="#plottools.scalebars.uninstall_scalebars">uninstall_scalebars</a></code></li>
+<li><code><a title="plottools.scalebars.demo" href="#plottools.scalebars.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>

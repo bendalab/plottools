@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.ticks API documentation</title>
+<meta name="description" content="Setting tick locations and formats …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.ticks</code></h1>
+</header>
+<section id="section-intro">
+<p>Setting tick locations and formats.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.ticks.set_xticks_delta" href="#plottools.ticks.set_xticks_delta">set_xticks_delta()</a></code>: set interval between major xticks.</li>
+<li><code><a title="plottools.ticks.set_yticks_delta" href="#plottools.ticks.set_yticks_delta">set_yticks_delta()</a></code>: set interval between major yticks.
+<img alt="delta" src="figures/ticks-delta.png"></li>
+<li><code><a title="plottools.ticks.set_minor_xticks_delta" href="#plottools.ticks.set_minor_xticks_delta">set_minor_xticks_delta()</a></code>: set interval between minor xticks.</li>
+<li><code><a title="plottools.ticks.set_minor_yticks_delta" href="#plottools.ticks.set_minor_yticks_delta">set_minor_yticks_delta()</a></code>: set interval between minor yticks.</li>
+<li><code><a title="plottools.ticks.set_xticks_log" href="#plottools.ticks.set_xticks_log">set_xticks_log()</a></code>: set major ticks on a logarithmic x-axis.</li>
+<li><code><a title="plottools.ticks.set_yticks_log" href="#plottools.ticks.set_yticks_log">set_yticks_log()</a></code>: set major ticks on a logarithmic y-axis.</li>
+<li><code><a title="plottools.ticks.set_minor_xticks_log" href="#plottools.ticks.set_minor_xticks_log">set_minor_xticks_log()</a></code>: set minor ticks on a logarithmic x-axis.</li>
+<li><code><a title="plottools.ticks.set_minor_yticks_log" href="#plottools.ticks.set_minor_yticks_log">set_minor_yticks_log()</a></code>: set minor ticks on a logarithmic y-axis.</li>
+<li><code><a title="plottools.ticks.set_xticks_fixed" href="#plottools.ticks.set_xticks_fixed">set_xticks_fixed()</a></code>: set custom xticks at fixed positions.</li>
+<li><code><a title="plottools.ticks.set_yticks_fixed" href="#plottools.ticks.set_yticks_fixed">set_yticks_fixed()</a></code>: set custom yticks at fixed positions.
+<img alt="fixedlabels" src="figures/ticks-fixedlabels.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_prefix" href="#plottools.ticks.set_xticks_prefix">set_xticks_prefix()</a></code>: format xticks with SI prefixes.</li>
+<li><code><a title="plottools.ticks.set_yticks_prefix" href="#plottools.ticks.set_yticks_prefix">set_yticks_prefix()</a></code>: format yticks with SI prefixes.
+<img alt="prefix" src="figures/ticks-prefix.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_fracs" href="#plottools.ticks.set_xticks_fracs">set_xticks_fracs()</a></code>: format and place xticks as fractions.</li>
+<li><code><a title="plottools.ticks.set_yticks_fracs" href="#plottools.ticks.set_yticks_fracs">set_yticks_fracs()</a></code>: format and place xticks as fractions.
+<img alt="fracs" src="figures/ticks-fracs.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_pifracs" href="#plottools.ticks.set_xticks_pifracs">set_xticks_pifracs()</a></code>: format and place xticks as mutiples of pi.</li>
+<li><code><a title="plottools.ticks.set_yticks_pifracs" href="#plottools.ticks.set_yticks_pifracs">set_yticks_pifracs()</a></code>: format and place yticks as mutiples of pi.
+<img alt="pifracs" src="figures/ticks-pifracs.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_format" href="#plottools.ticks.set_xticks_format">set_xticks_format()</a></code>: format xticks according to formatter string.</li>
+<li><code><a title="plottools.ticks.set_yticks_format" href="#plottools.ticks.set_yticks_format">set_yticks_format()</a></code>: format yticks according to formatter string.
+<img alt="format" src="figures/ticks-format.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_blank" href="#plottools.ticks.set_xticks_blank">set_xticks_blank()</a></code>: draw xticks without labeling them.</li>
+<li><code><a title="plottools.ticks.set_yticks_blank" href="#plottools.ticks.set_yticks_blank">set_yticks_blank()</a></code>: draw yticks without labeling them.
+<img alt="blank" src="figures/ticks-blank.png"></li>
+<li><code><a title="plottools.ticks.set_xticks_off" href="#plottools.ticks.set_xticks_off">set_xticks_off()</a></code>: do not draw and label any xticks.</li>
+<li><code><a title="plottools.ticks.set_yticks_off" href="#plottools.ticks.set_yticks_off">set_yticks_off()</a></code>: do not draw and label any yticks.
+<img alt="off" src="figures/ticks-off.png"></li>
+<li><code><a title="plottools.ticks.set_minor_xticks_off" href="#plottools.ticks.set_minor_xticks_off">set_minor_xticks_off()</a></code>: do not draw any minor xticks.</li>
+<li><code><a title="plottools.ticks.set_minor_yticks_off" href="#plottools.ticks.set_minor_yticks_off">set_minor_yticks_off()</a></code>: do not draw any minor yticks.</li>
+<li><code><a title="plottools.ticks.set_minor_xticks" href="#plottools.ticks.set_minor_xticks">set_minor_xticks()</a></code>: draw minor xticks at a specified number of intervals.</li>
+<li><code><a title="plottools.ticks.set_minor_yticks" href="#plottools.ticks.set_minor_yticks">set_minor_yticks()</a></code>: draw minor yticks at a specified number of intervals.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.ticks.ticks_params" href="#plottools.ticks.ticks_params">ticks_params()</a></code>: set default ticks appearance.</li>
+</ul>
+<h2 id="installuninstall-ticks-functions">Install/uninstall ticks functions</h2>
+<p>You usually do not need to call these functions. Upon loading the ticks
+module, <code><a title="plottools.ticks.install_ticks" href="#plottools.ticks.install_ticks">install_ticks()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.ticks.install_ticks" href="#plottools.ticks.install_ticks">install_ticks()</a></code>: install functions of the ticks module in matplotlib.</li>
+<li><code><a title="plottools.ticks.uninstall_ticks" href="#plottools.ticks.uninstall_ticks">uninstall_ticks()</a></code>: uninstall all code of the ticks module from matplotlib.</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.ticks.set_xticks_delta"><code class="name flex">
+<span>def <span class="ident">set_xticks_delta</span></span>(<span>ax, delta)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set interval between major xticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interval between xticks.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xticks_delta(0.5)
+</code></pre>
+<p><img alt="delta" src="figures/ticks-delta.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_delta"><code class="name flex">
+<span>def <span class="ident">set_yticks_delta</span></span>(<span>ax, delta)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set interval between major yticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interval between yticks.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_delta" href="#plottools.ticks.set_xticks_delta">set_xticks_delta()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_xticks_delta"><code class="name flex">
+<span>def <span class="ident">set_minor_xticks_delta</span></span>(<span>ax, delta)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set interval between minor xticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor xticks are set.</dd>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interval between minor xticks.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_minor_xticks_delta(0.5)
+</code></pre>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_delta" href="#plottools.ticks.set_xticks_delta">set_xticks_delta()</a></code>
+<code><a title="plottools.ticks.set_minor_yticks_delta" href="#plottools.ticks.set_minor_yticks_delta">set_minor_yticks_delta()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_yticks_delta"><code class="name flex">
+<span>def <span class="ident">set_minor_yticks_delta</span></span>(<span>ax, delta)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set interval between minor yticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor yticks are set.</dd>
+<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
+<dd>Interval between minor yticks.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_yticks_delta" href="#plottools.ticks.set_yticks_delta">set_yticks_delta()</a></code>
+<code><a title="plottools.ticks.set_minor_xticks_delta" href="#plottools.ticks.set_minor_xticks_delta">set_minor_xticks_delta()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_log"><code class="name flex">
+<span>def <span class="ident">set_xticks_log</span></span>(<span>ax, subs=(1.0,), numticks=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set major ticks on a logarithmic x-axis.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>subs</code></strong> :&ensp;<code>None, 'auto', 'all',</code> or <code>sequence</code> of <code>floats</code></dt>
+<dd>Multiples of integer powers of ten, where to place major ticks.</dd>
+<dt><strong><code>numticks</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of ticks placed on the axis.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_log"><code class="name flex">
+<span>def <span class="ident">set_yticks_log</span></span>(<span>ax, subs=(1.0,), numticks=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set major ticks on a logarithmic y-axis.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+<dt><strong><code>subs</code></strong> :&ensp;<code>None, 'auto', 'all',</code> or <code>sequence</code> of <code>floats</code></dt>
+<dd>Multiples of integer powers of ten, where to place major ticks.</dd>
+<dt><strong><code>numticks</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of ticks placed on the axis.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_log" href="#plottools.ticks.set_xticks_log">set_xticks_log()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_xticks_log"><code class="name flex">
+<span>def <span class="ident">set_minor_xticks_log</span></span>(<span>ax, subs=(1.0,), numticks=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set minor ticks on a logarithmic x-axis.</p>
+<p>Also switch of minor tick labels.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor xticks are set.</dd>
+<dt><strong><code>subs</code></strong> :&ensp;<code>None, 'auto', 'all',</code> or <code>sequence</code> of <code>floats</code></dt>
+<dd>Multiples of integer powers of ten, where to place minor ticks.</dd>
+<dt><strong><code>numticks</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of minor ticks placed on the axis.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_log" href="#plottools.ticks.set_xticks_log">set_xticks_log()</a></code>
+<code><a title="plottools.ticks.set_minor_yticks_log" href="#plottools.ticks.set_minor_yticks_log">set_minor_yticks_log()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_yticks_log"><code class="name flex">
+<span>def <span class="ident">set_minor_yticks_log</span></span>(<span>ax, subs=(1.0,), numticks=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set minor ticks on a logarithmic y-axis.</p>
+<p>Also switch of minor tick labels.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor yticks are set.</dd>
+<dt><strong><code>subs</code></strong> :&ensp;<code>None, 'auto', 'all',</code> or <code>sequence</code> of <code>floats</code></dt>
+<dd>Multiples of integer powers of ten, where to place minor ticks.</dd>
+<dt><strong><code>numticks</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of minor ticks placed on the axis.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_yticks_log" href="#plottools.ticks.set_yticks_log">set_yticks_log()</a></code>
+<code><a title="plottools.ticks.set_minor_xticks_log" href="#plottools.ticks.set_minor_xticks_log">set_minor_xticks_log()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_fixed"><code class="name flex">
+<span>def <span class="ident">set_xticks_fixed</span></span>(<span>ax, locs, labels='%g')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set custom xticks at fixed positions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>locs</code></strong> :&ensp;<code>list</code> of <code>floats</code></dt>
+<dd>Locations of xticks.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>Either a format string (e.g. '%.1f') or a list of labels
+for each tick position in <code>locs</code>.</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>On logarithmic axis you may want to turn off minor ticks, e.g. via
+<code>ax.set_minor_xticks_off()</code>.</p>
+<h2 id="examples">Examples</h2>
+<p>Fixed locations:</p>
+<pre><code>ax.set_xticks_fixed((0, 0.3, 1))
+</code></pre>
+<p><img alt="fixed" src="figures/ticks-fixed.png"></p>
+<p>Fixed locations and labels:</p>
+<pre><code>ax.set_xticks_fixed((0, 0.5, 1), ('a', 'b', 'c'))
+</code></pre>
+<p><img alt="fixedlabels" src="figures/ticks-fixedlabels.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_fixed"><code class="name flex">
+<span>def <span class="ident">set_yticks_fixed</span></span>(<span>ax, locs, labels='%g')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set custom yticks at fixed positions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+<dt><strong><code>locs</code></strong> :&ensp;<code>list</code> of <code>floats</code></dt>
+<dd>Locations of yticks.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>Either a format string (e.g. '%.1f') or a list of labels
+for each tick position in <code>locs</code>.</dd>
+</dl>
+<h2 id="notes">Notes</h2>
+<p>On logarithmic axis you may want to turn off minor ticks, e.g. via
+<code>ax.set_minor_yticks_off()</code>.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_fixed" href="#plottools.ticks.set_xticks_fixed">set_xticks_fixed()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.prefix_formatter"><code class="name flex">
+<span>def <span class="ident">prefix_formatter</span></span>(<span>x, pos)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function formatter used by <code><a title="plottools.ticks.set_xticks_prefix" href="#plottools.ticks.set_xticks_prefix">set_xticks_prefix()</a></code> and <code><a title="plottools.ticks.set_yticks_prefix" href="#plottools.ticks.set_yticks_prefix">set_yticks_prefix()</a></code>.</p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_prefix"><code class="name flex">
+<span>def <span class="ident">set_xticks_prefix</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format xticks with SI prefixes.</p>
+<p>Ensures ticks to be numbers between 1 and 999 by appending necessary
+SI prefixes. That is, numbers between 1 and 999 are not modified and
+are formatted with '%g'. Numbers between 1000 and 999999 are
+divdided by 1000 and get an 'k' appended, e.g. 10000 -&gt;
+'10k'. Numbers between 0.001 and 0.999 are multiplied with 1000 and
+get an 'm' appended, e.g. 0.02 -&gt; '20m'. And so on.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xscale('log')
+ax.set_xlim(1e-6, 1e0)
+ax.set_xticks_prefix()
+</code></pre>
+<p><img alt="prefix" src="figures/ticks-prefix.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_prefix"><code class="name flex">
+<span>def <span class="ident">set_yticks_prefix</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format yticks with SI prefixes.</p>
+<p>Ensures ticks to be numbers between 1 and 999 by appending necessary
+SI prefixes. That is, numbers between 1 and 999 are not modified and
+are formatted with '%g'. Numbers between 1000 and 999999 are
+divdided by 1000 and get an 'k' appended, e.g. 10000 -&gt;
+'10k'. Numbers between 0.001 and 0.999 are multiplied with 1000 and
+get an 'm' appended, e.g. 0.02 -&gt; '20m'. And so on.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_prefix" href="#plottools.ticks.set_xticks_prefix">set_xticks_prefix()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.fraction_formatter"><code class="name flex">
+<span>def <span class="ident">fraction_formatter</span></span>(<span>denominator, factor=1, fstring='', ontop=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function formatter used by <code><a title="plottools.ticks.set_xticks_fracs" href="#plottools.ticks.set_xticks_fracs">set_xticks_fracs()</a></code> and <code><a title="plottools.ticks.set_yticks_fracs" href="#plottools.ticks.set_yticks_fracs">set_yticks_fracs()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>denominator</code></strong> :&ensp;<code>int</code></dt>
+<dd>Ticks are located at multiples of factor/denominator.</dd>
+<dt><strong><code>factor</code></strong> :&ensp;<code>float</code></dt>
+<dd>Tick values are interpreted as multiples of factor, i.e.
+they are divided by factor, before turning them into fractions.</dd>
+<dt><strong><code>fstring</code></strong> :&ensp;<code>string</code></dt>
+<dd>Textual representation of factor that is appended to the fractions.</dd>
+<dt><strong><code>ontop</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Place fstring into the numerator instead of after the fraction.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>Function formatter.</p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_fracs"><code class="name flex">
+<span>def <span class="ident">set_xticks_fracs</span></span>(<span>ax, denominator, factor=1, fstring='', ontop=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format and place xticks as fractions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>denominator</code></strong> :&ensp;<code>int</code></dt>
+<dd>XTicks are located at multiples of factor/denominator.</dd>
+<dt><strong><code>factor</code></strong> :&ensp;<code>float</code></dt>
+<dd>Tick values are interpreted as multiples of factor, i.e.
+they are divided by factor, before turning them into fractions.</dd>
+<dt><strong><code>fstring</code></strong> :&ensp;<code>string</code></dt>
+<dd>Textual representation of factor that is appended to the fractions.</dd>
+<dt><strong><code>ontop</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Place fstring into the numerator instead of after the fraction.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xlim(-1, 1)
+ax.set_xticks_fracs(4)
+</code></pre>
+<p><img alt="fracs" src="figures/ticks-fracs.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_fracs"><code class="name flex">
+<span>def <span class="ident">set_yticks_fracs</span></span>(<span>ax, denominator, factor=1, fstring='', ontop=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format and place xticks as fractions.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>denominator</code></strong> :&ensp;<code>int</code></dt>
+<dd>YTicks are located at multiples of factor/denominator.</dd>
+<dt><strong><code>factor</code></strong> :&ensp;<code>float</code></dt>
+<dd>Tick values are interpreted as multiples of factor, i.e.
+they are divided by factor, before turning them into fractions.</dd>
+<dt><strong><code>fstring</code></strong> :&ensp;<code>string</code></dt>
+<dd>Textual representation of factor that is appended to the fractions.</dd>
+<dt><strong><code>ontop</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Place fstring into the numerator instead of after the fraction.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_fracs" href="#plottools.ticks.set_xticks_fracs">set_xticks_fracs()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_pifracs"><code class="name flex">
+<span>def <span class="ident">set_xticks_pifracs</span></span>(<span>ax, denominator, ontop=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format and place xticks as mutiples of pi.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>denominator</code></strong> :&ensp;<code>int</code></dt>
+<dd>XTicks are located at multiples of pi/denominator.</dd>
+<dt><strong><code>ontop</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Place fstring into the numerator instead of after the fraction.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xlim(-np.pi, 2*np.pi)
+ax.set_xticks_pifracs(2)
+</code></pre>
+<p><img alt="pifracs" src="figures/ticks-pifracs.png"></p>
+<p>Pi in the nominator:</p>
+<pre><code>ax.set_xlim(0, 4*np.pi/3)
+ax.set_xticks_pifracs(3, True)
+</code></pre>
+<p><img alt="pifracstop" src="figures/ticks-pifracstop.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_pifracs"><code class="name flex">
+<span>def <span class="ident">set_yticks_pifracs</span></span>(<span>ax, denominator, ontop=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format and place yticks as mutiples of pi.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>denominator</code></strong> :&ensp;<code>int</code></dt>
+<dd>YTicks are located at multiples of pi/denominator.</dd>
+<dt><strong><code>ontop</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Place fstring into the numerator instead of after the fraction.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_pifracs" href="#plottools.ticks.set_xticks_pifracs">set_xticks_pifracs()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_format"><code class="name flex">
+<span>def <span class="ident">set_xticks_format</span></span>(<span>ax, fs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format xticks according to formatter string.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+<dt><strong><code>fs</code></strong> :&ensp;<code>string</code></dt>
+<dd>Format string used to format xticks.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xticks_format('%04.1f')
+</code></pre>
+<p><img alt="format" src="figures/ticks-format.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_format"><code class="name flex">
+<span>def <span class="ident">set_yticks_format</span></span>(<span>ax, fs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Format yticks according to formatter string.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+<dt><strong><code>fs</code></strong> :&ensp;<code>string</code></dt>
+<dd>Format string used to format xticks.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_format" href="#plottools.ticks.set_xticks_format">set_xticks_format()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_blank"><code class="name flex">
+<span>def <span class="ident">set_xticks_blank</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw xticks without labeling them.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.common.common_xlabels" href="common.html#plottools.common.common_xlabels">common_xlabels()</a></code></p>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xticks_blank()
+</code></pre>
+<p><img alt="blank" src="figures/ticks-blank.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_blank"><code class="name flex">
+<span>def <span class="ident">set_yticks_blank</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw yticks without labeling them.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.common.common_ylabels" href="common.html#plottools.common.common_ylabels">common_ylabels()</a>,</code>
+<code><a title="plottools.ticks.set_xticks_blank" href="#plottools.ticks.set_xticks_blank">set_xticks_blank()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_xticks_off"><code class="name flex">
+<span>def <span class="ident">set_xticks_off</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Do not draw and label any xticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the xticks are set.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code>ax.set_xticks_off()
+</code></pre>
+<p><img alt="off" src="figures/ticks-off.png"></p></div>
+</dd>
+<dt id="plottools.ticks.set_yticks_off"><code class="name flex">
+<span>def <span class="ident">set_yticks_off</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Do not draw and label any yticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the yticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_xticks_off" href="#plottools.ticks.set_xticks_off">set_xticks_off()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_xticks_off"><code class="name flex">
+<span>def <span class="ident">set_minor_xticks_off</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Do not draw any minor xticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor xticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_minor_xticks" href="#plottools.ticks.set_minor_xticks">set_minor_xticks()</a></code>
+<code><a title="plottools.ticks.set_minor_yticks_off" href="#plottools.ticks.set_minor_yticks_off">set_minor_yticks_off()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_yticks_off"><code class="name flex">
+<span>def <span class="ident">set_minor_yticks_off</span></span>(<span>ax)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Do not draw any minor yticks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor yticks are set.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_minor_yticks" href="#plottools.ticks.set_minor_yticks">set_minor_yticks()</a></code>
+<code><a title="plottools.ticks.set_minor_xticks_off" href="#plottools.ticks.set_minor_xticks_off">set_minor_xticks_off()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_xticks"><code class="name flex">
+<span>def <span class="ident">set_minor_xticks</span></span>(<span>ax, n=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw minor xticks at a specified number of intervals.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor xticks are set.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of intervals between major ticks.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_minor_yticks" href="#plottools.ticks.set_minor_yticks">set_minor_yticks()</a></code>
+<code><a title="plottools.ticks.set_minor_xticks_off" href="#plottools.ticks.set_minor_xticks_off">set_minor_xticks_off()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.set_minor_yticks"><code class="name flex">
+<span>def <span class="ident">set_minor_yticks</span></span>(<span>ax, n=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Draw minor yticks at a specified number of intervals.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib axes</code></dt>
+<dd>Axes on which the minor yticks are set.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of intervals between major ticks.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.set_minor_xticks" href="#plottools.ticks.set_minor_xticks">set_minor_xticks()</a></code>
+<code><a title="plottools.ticks.set_minor_yticks_off" href="#plottools.ticks.set_minor_yticks_off">set_minor_yticks_off()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.ticks_params"><code class="name flex">
+<span>def <span class="ident">ticks_params</span></span>(<span>xtick_minor=None, ytick_minor='same', xtick_dir=None, ytick_dir='same', xtick_size=None, ytick_size='same', minor_tick_frac=0.6, xtick_major_width=None, ytick_major_width='same', xtick_minor_width=None, ytick_minor_width='same', xtick_major_pad=None, ytick_major_pad='same', xtick_minor_pad=None, ytick_minor_pad='same', xtick_alignment=None, ytick_alignment=None, xtick_color='axes', ytick_color='same', xtick_labelcolor='ticks', ytick_labelcolor='same', xtick_labelsize=None, ytick_labelsize='same')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set default ticks appearance.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<p>Arguments for ytick parameters with default 'same', are set to the
+respective xtick parameter, if that one is supplied. If you want to
+set the xtick parameter, but not the ytick parameter, you need to
+explicitly set the ytick parameter to <code>None</code>.</p>
+<p>Call this function <em>before</em> you create any matplotlib figure.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xtick_minor</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Show minor xticks.
+Sets rcParams <code>xtick.minor.visible</code>.</dd>
+<dt><strong><code>ytick_minor</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Show minor yticks. If 'same' set to the value of <code>ytick_minor</code>.
+Sets rcParams <code>ytick.minor.visible</code>.</dd>
+<dt><strong><code>xtick_dir</code></strong> :&ensp;<code>{'in', 'out', 'inout'}</code></dt>
+<dd>Direction of xticks.
+Sets rcParams <code>xtick.direction</code>.</dd>
+<dt><strong><code>ytick_dir</code></strong> :&ensp;<code>{'in', 'out', 'inout', 'same'}</code></dt>
+<dd>Direction of yticks. If 'same' set to the value of <code>xtick_dir</code>.
+Sets rcParams <code>ytick.direction</code>.</dd>
+<dt><strong><code>xtick_size</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of major xticks marks in points.
+Sets rcParams <code>xtick.major.size</code> and <code>xtick.minor.size</code>.
+The minor tick size is multiplied with <code>minor_tick_frac</code>.</dd>
+<dt><strong><code>ytick_size</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Length of major yticks in points. If 'same' set to the value of <code>xtick_size</code>.
+Sets rcParams <code>ytick.major.size</code> and <code>ytick.minor.size</code>.
+The minor ytick size is multiplied with <code>minor_tick_frac</code>.</dd>
+<dt><strong><code>minor_tick_frac</code></strong> :&ensp;<code>float</code></dt>
+<dd>Length of minor ticks relative to major tick size.</dd>
+<dt><strong><code>xtick_major_width</code></strong> :&ensp;<code>float</code></dt>
+<dd>Width of major xticks in points.
+Sets rcParams <code>xtick.major.width</code>.</dd>
+<dt><strong><code>ytick_major_width</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Width of major yticks in points. If 'same' set to the value of <code>xtick_major_width</code>.
+Sets rcParams <code>ytick.major.width</code>.</dd>
+<dt><strong><code>xtick_minor_width</code></strong> :&ensp;<code>float</code></dt>
+<dd>Width of minor xticks in points.
+Sets rcParams <code>xtick.minor.width</code>.</dd>
+<dt><strong><code>ytick_minor_width</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Width of minor yticks in points. If 'same' set to the value of <code>ytick_minor_width</code>.
+Sets rcParams <code>ytick.minor.width</code>.</dd>
+<dt><strong><code>xtick_major_pad</code></strong> :&ensp;<code>float</code></dt>
+<dd>Distance of major xtick labels from major xticks in points.
+Sets rcParams <code>xtick.major.pad</code>.</dd>
+<dt><strong><code>ytick_major_pad</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Distance of major ytick labels from major yticks in points.
+If 'same' set to the value of <code>xtick_major_pad</code>.
+Sets rcParams <code>ytick.major.pad</code>.</dd>
+<dt><strong><code>xtick_minor_pad</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Distance of minor xtick labels from minor xticks in points.
+If 'same' set to the value of <code>xtick_major_pad</code>.
+Sets rcParams <code>xtick.minor.pad</code>.</dd>
+<dt><strong><code>ytick_minor_pad</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Distance of minor ytick labels from minor yticks in points.
+If 'same' set to the value of <code>xtick_minor_pad</code>.
+Sets rcParams <code>ytick.minor.pad</code>.</dd>
+<dt><strong><code>xtick_alignment</code></strong> :&ensp;<code>{'center', 'left', 'right'}</code></dt>
+<dd>Alignment of xtick labels relative to xticks.
+Sets rcParams <code>xtick.alignment</code>.</dd>
+<dt><strong><code>ytick_alignment</code></strong> :&ensp;<code>{'center', 'top', 'bottom', 'baseline', 'center_baseline'}</code></dt>
+<dd>Alignment of ytick labels relative to yticks.
+Sets rcParams <code>ytick.alignment</code>.</dd>
+<dt><strong><code>xtick_color</code></strong> :&ensp;<code>matplotlib color</code> or <code>'axes'</code></dt>
+<dd>Color of xticks. If 'axes' set to color of axes (rcParam <code>axes.edgecolor</code>).
+Sets rcParam <code>xtick.color</code>.</dd>
+<dt><strong><code>ytick_color</code></strong> :&ensp;<code>matplotlib color, 'axes',</code> or <code>'same'</code></dt>
+<dd>Color of yticks. If 'axes' set to color of axes (rcParam <code>axes.edgecolor</code>).
+If 'same' set to the value of <code>xtick_color</code>. Sets rcParam <code>ytick.color</code>.</dd>
+<dt><strong><code>xtick_labelcolor</code></strong> :&ensp;<code>matplotlib color, 'axes'</code> or <code>'ticks'</code></dt>
+<dd>Color of xtick labels. If 'axes' set to color of axes (rcParam <code>axes.edgecolor</code>).
+If 'ticks' set to color of xticks (rcParam <code>xtick.color</code>).
+Sets rcParam <code>xtick.labelcolor</code>.</dd>
+<dt><strong><code>ytick_labelcolor</code></strong> :&ensp;<code>matplotlib color, 'axes', 'ticks',</code> or <code>'same'</code></dt>
+<dd>Color of ytick labels. If 'axes' set to color of axes (rcParam <code>axes.edgecolor</code>).
+If 'ticks' set to color of yticks (rcParam <code>ytick.color</code>).
+If 'same' set to the value of <code>xtick_labelcolor</code>. Sets rcParam <code>ytick.labelcolor</code>.</dd>
+<dt><strong><code>xtick_labelsize</code></strong> :&ensp;<code>float</code></dt>
+<dd>Font size of xtick labels. Sets rcParam <code>xtick.labelsize</code>.</dd>
+<dt><strong><code>ytick_labelsize</code></strong> :&ensp;<code>float</code> or <code>'same'</code></dt>
+<dd>Font size of ytick labels. If 'same' set to the value of <code>xtick_labelsize</code>.
+Sets rcParam <code>ytick.labelsize</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.ticks.install_ticks"><code class="name flex">
+<span>def <span class="ident">install_ticks</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install ticks functions on matplotlib axes.</p>
+<p>This function is also called automatically upon importing the module.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.uninstall_ticks" href="#plottools.ticks.uninstall_ticks">uninstall_ticks()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.uninstall_ticks"><code class="name flex">
+<span>def <span class="ident">uninstall_ticks</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall ticks functions from matplotlib axes.</p>
+<p>Call this function to disable anything that was installed by <code><a title="plottools.ticks.install_ticks" href="#plottools.ticks.install_ticks">install_ticks()</a></code>.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.ticks.install_ticks" href="#plottools.ticks.install_ticks">install_ticks()</a></code></p></div>
+</dd>
+<dt id="plottools.ticks.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the ticks module.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-ticks-functions">Install/uninstall ticks functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="plottools.ticks.set_xticks_delta" href="#plottools.ticks.set_xticks_delta">set_xticks_delta</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_delta" href="#plottools.ticks.set_yticks_delta">set_yticks_delta</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_xticks_delta" href="#plottools.ticks.set_minor_xticks_delta">set_minor_xticks_delta</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_yticks_delta" href="#plottools.ticks.set_minor_yticks_delta">set_minor_yticks_delta</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_log" href="#plottools.ticks.set_xticks_log">set_xticks_log</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_log" href="#plottools.ticks.set_yticks_log">set_yticks_log</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_xticks_log" href="#plottools.ticks.set_minor_xticks_log">set_minor_xticks_log</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_yticks_log" href="#plottools.ticks.set_minor_yticks_log">set_minor_yticks_log</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_fixed" href="#plottools.ticks.set_xticks_fixed">set_xticks_fixed</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_fixed" href="#plottools.ticks.set_yticks_fixed">set_yticks_fixed</a></code></li>
+<li><code><a title="plottools.ticks.prefix_formatter" href="#plottools.ticks.prefix_formatter">prefix_formatter</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_prefix" href="#plottools.ticks.set_xticks_prefix">set_xticks_prefix</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_prefix" href="#plottools.ticks.set_yticks_prefix">set_yticks_prefix</a></code></li>
+<li><code><a title="plottools.ticks.fraction_formatter" href="#plottools.ticks.fraction_formatter">fraction_formatter</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_fracs" href="#plottools.ticks.set_xticks_fracs">set_xticks_fracs</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_fracs" href="#plottools.ticks.set_yticks_fracs">set_yticks_fracs</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_pifracs" href="#plottools.ticks.set_xticks_pifracs">set_xticks_pifracs</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_pifracs" href="#plottools.ticks.set_yticks_pifracs">set_yticks_pifracs</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_format" href="#plottools.ticks.set_xticks_format">set_xticks_format</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_format" href="#plottools.ticks.set_yticks_format">set_yticks_format</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_blank" href="#plottools.ticks.set_xticks_blank">set_xticks_blank</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_blank" href="#plottools.ticks.set_yticks_blank">set_yticks_blank</a></code></li>
+<li><code><a title="plottools.ticks.set_xticks_off" href="#plottools.ticks.set_xticks_off">set_xticks_off</a></code></li>
+<li><code><a title="plottools.ticks.set_yticks_off" href="#plottools.ticks.set_yticks_off">set_yticks_off</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_xticks_off" href="#plottools.ticks.set_minor_xticks_off">set_minor_xticks_off</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_yticks_off" href="#plottools.ticks.set_minor_yticks_off">set_minor_yticks_off</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_xticks" href="#plottools.ticks.set_minor_xticks">set_minor_xticks</a></code></li>
+<li><code><a title="plottools.ticks.set_minor_yticks" href="#plottools.ticks.set_minor_yticks">set_minor_yticks</a></code></li>
+<li><code><a title="plottools.ticks.ticks_params" href="#plottools.ticks.ticks_params">ticks_params</a></code></li>
+<li><code><a title="plottools.ticks.install_ticks" href="#plottools.ticks.install_ticks">install_ticks</a></code></li>
+<li><code><a title="plottools.ticks.uninstall_ticks" href="#plottools.ticks.uninstall_ticks">uninstall_ticks</a></code></li>
+<li><code><a title="plottools.ticks.demo" href="#plottools.ticks.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>

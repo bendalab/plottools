@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/structure/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>How to structure your code - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "How to structure your code";
+        var mkdocs_page_input_path = "structure.md";
+        var mkdocs_page_url = "/plottools/structure/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">How to structure your code</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#file-organization">File organization</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-oriented-matplotlib-interface">Object-oriented matplotlib interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-plotstyle-module">The plotstyle module</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#plotting-scripts">Plotting scripts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#package-imports">Package imports</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#main-code">Main code</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#plot-code">Plot code</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#complexitysimplicity-of-the-plot-function">Complexity/simplicity of the plot function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multipanel-figures">Multipanel figures</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Tutorial</li>
+      <li class="breadcrumb-item active">How to structure your code</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="how-to-structure-your-code">How to structure your code</h1>
+<p>With our insights from <a href="../code/">coding a figure</a> and from the <a href="docs/guide.md">guide
+lines</a> we arrive on some best-practice tips on how to
+structure code for figures, such that:</p>
+<ul>
+<li>Others, including your future self, are able to modify your figures.</li>
+<li>Plot appearance can be changed quickly from a central module.</li>
+<li>Design and content are separated.</li>
+<li>It makes fun to improve your plots.</li>
+</ul>
+<h2 id="file-organization">File organization</h2>
+<p>Let's assume we need three figures that we call <code>basicdata</code>,
+<code>methods</code>, and <code>coolresult</code>.  Then for each of the figures we will
+have a separate python script (<a href="docs/guide.md">guide line 1</a>) with the
+respective name (<a href="docs/guide.md">guide line 2</a>).  That way everybody
+(or a Makefile for that matter) easily finds the script generating
+that figure.</p>
+<p>In addition, we will have a script defining the appearance of the
+figures (<a href="docs/guide.md">guide line 4</a>) that will be imported by all
+of the scripts generating the actual figures. Let's call that script
+<code>plotstyle.py</code>. This file is central for the separation of content
+from layout.</p>
+<p>We keep the file hierarchy flat and simply have four files in our
+working directory:</p>
+<pre><code class="language-txt">plotstyle.py
+basicdata.py
+methods.py
+coolresult.py
+</code></pre>
+<p>Data files can also go along with the python scripts, or in a separate
+sub-direcotry, for example <code>data/</code>.</p>
+<h2 id="object-oriented-matplotlib-interface">Object-oriented matplotlib interface</h2>
+<p>You should exclusively use the object-oriented interface of
+matplotlib. That way it is always clear on which axes plot commands
+are applied. And matplotlib recommends using the object-oriented
+interface anyways (check out the <a href="https://matplotlib.org/stable/api/index.html#the-object-oriented-api">object-oriented
+API</a>
+and <a href="https://matplotlib.org/stable/tutorials/introductory/lifecycle.html#a-note-on-the-object-oriented-api-vs-pyplot">the lifecycle of a
+plot</a>).</p>
+<h2 id="the-plotstyle-module">The plotstyle module</h2>
+<p>The <code>plotstyle.py</code> module provides a function that we name here
+<code>plot_style()</code>. This function contains code defining the overall
+design of your plots. It sets some
+<a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a> and defines some <a href="https://bendalab.github.io/plottools/api/styles.html"><code>plotting styles</code></a>. For now we just define two line styles and set the ticks
+to point outwards:</p>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+
+def plot_style():
+    # namespace for plotting styles:
+    class s: pass
+    s.lsSmall = dict(color='tab:red', lw=2)
+    s.lsLarge = dict(color='tab:orange', lw=2)
+
+    # global settings:
+    plt.rcParam['xtick.direction'] = 'out'
+    plt.rcParam['ytick.direction'] = 'out'
+
+    return s
+</code></pre>
+<p>Of course, this function will be much larger as you keep working on
+your plots. Step by step you improve and expand on the
+<a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>
+and the more data you plot the more <a href="https://bendalab.github.io/plottools/api/styles.html"><code>plotting
+styles</code></a> you
+need to add.</p>
+<p>Working on the <code>plotstyle</code> module requires some effort in the very
+beginning. Over time, however, the module converges to a state where
+you only occasionally add another <a href="https://bendalab.github.io/plottools/api/styles.html"><code>plotting
+styles</code></a>. Choose
+the names of the <a href="https://bendalab.github.io/plottools/api/styles.html"><code>plotting
+styles</code></a>, then
+they are easy to use. And of course you can use it for all your aother
+manuscripts, posters, or presentations. Just copy it over and adapt it
+if necessary.</p>
+<h2 id="plotting-scripts">Plotting scripts</h2>
+<p>So how to write a script generating a specific figure?</p>
+<p>Let's start simple with the script <code>basicdata.py</code> generating a figure
+with just a single panel (subplot).</p>
+<h3 id="package-imports">Package imports</h3>
+<p>First of all we need the usual imports of <code>numpy</code>, <code>scipy</code>, and
+<code>pandas</code> as required, of course of <code>matplotlib.pyplot</code> and also of the
+<code>plot_style()</code> function from our central <code>plotstyle.py</code> module:</p>
+<pre><code class="language-py">import numpy as np
+import matplotlib.pyplot as plt
+from plotstyle import plot_style
+</code></pre>
+<p>In contrast to your analysis scripts, try to keep the number of
+imported packages as low as possible. This reduces dependencies to a
+minimum and makes it easier to reuse the code for generating the
+figures. A low number of imports should be no problem, because the
+plotting scripts do only the plotting and are not supposed to do any
+complex data analysis.  The results of complex computation are stored
+in files. The plotting scripts just need to read these files and plot
+their content - not much overhead is needed.</p>
+<p>In particular this implies that we do not need to import <code>numba</code> for
+plotting! And <code>embed()</code> from the <code>IPython</code> package should not be
+needed - this is for more complicated issues than plotting.</p>
+<p>A well readable import list is necessary so that one can easily trace
+back the origin of some functions. To support this</p>
+<ul>
+<li>import only what is needed by your script</li>
+<li>import every package/symbol only once</li>
+<li>sort the imports according to package - common packages first, your
+  own modules last.</li>
+</ul>
+<h3 id="main-code">Main code</h3>
+<p>We start out at the bottom of the script with the
+following two lines:</p>
+<pre><code class="language-py">if __name__ == &quot;__main__&quot;:
+    s = plot_style()
+</code></pre>
+<p>The call of the <code>plot_style()</code> function sets up the plot appearance
+and returns a namespace containing various plotting styles as dicussed
+above.</p>
+<p>The following lines of code should set up the figure, call functions
+generating the actual plots, and save the figure to a file. In case of
+our simple example this looks like this:</p>
+<pre><code class="language-py">    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.subplots_adjust(top=0.95, bottom=0.1, left=0.1, right=0.95)
+    plot_data(ax, s)
+    fig.savefig('basicdata.pdf')
+</code></pre>
+<p>The call to <code>plt.subplots()</code> returns a new figure <code>fig</code> of the
+specified size and a single axes <code>ax</code>.</p>
+<p>Most certainly you need to adjust the figure margins via
+<a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust"><code>fig.subplots_adjust()</code></a>. A
+good plot does not have excessive white space on the borders. In
+particular if you include your figure in a LaTeX document it is much
+simpler to handle when it tightly fills the figure
+canvas. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.tight_layout.html"><code>fig.tight_layout()</code></a>
+usually does not work, but you may give a try to the
+<code>constrained_layout</code> argument to
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html"><code>plt.subplots()</code></a>.
+A problem with
+<a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust"><code>fig.subplots_adjust()</code></a>
+is, that the figure margins are specified relative to the figure
+size. Whenever changing the figure size you need to readjust the
+figure margins.</p>
+<p>The following function call to <code>plot_data(ax)</code> does the actual
+plotting. We discuss this in the next section.</p>
+<p>Finally, the figure needs to be saved. The filename should be the same
+as the name of the script to allow others to find the script given the
+figure file. You may omit the file extension if you have set the
+<a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParam</a>
+<code>savefig.format</code> to your preferred format. In the context of
+scientific publications this should be a vector graphic format like
+<code>pdf</code> or <code>svg</code>.</p>
+<p>Of course, you may stuff all this figure code into a function.</p>
+<h3 id="plot-code">Plot code</h3>
+<p>The basic unit of any figure is a plot, a single matplotlib axes.  You
+may rearrange the position of an axes within a figure or even move an
+axes to another figure. To allow for this flexibility, collecting all
+code needed to draw the content of an axes into a single dedicated
+function is central. This function takes as the first argument the
+axes into which it should draw. As a second argument it takes the
+namespace with the plotting styles.</p>
+<p><em>For every axes make a function that does the plotting and that takes
+ this axes as an argument.</em></p>
+<p>In our example this is the <code>plot_data()</code> function that might look
+like this:</p>
+<pre><code class="language-py">def plot_data(ax, s):
+    x, y = load_data()
+    ax.plot(x, y, **lsSmall)
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+</code></pre>
+<p>The first part of the function loads or generates the data to be
+plotted - symbolized by the <code>load_data()</code> function call.  The second
+part does the actual plotting. If you manage to separate content from
+design well, then the functions for the actual plotting are usually
+simple and sweet. Everybody can comprehend what is going on. The
+function - the plot - can be easily reused in a different context.</p>
+<p>Alternatively we could have called <code>load_data()</code> outside the
+<code>plot_data()</code> function and pass the loaded data as arguments to the
+plot function:</p>
+<pre><code class="language-py">    x, y = load_data()
+    plot_data(ax, s, x, y)
+</code></pre>
+<p>Then <code>plot_data()</code> would only contain plot commands. This is in
+particular useful for a multi-panel plot, where many panels use the
+same data for their plotting.  On the other hand, in many cases the
+data are loaded or generated in no time. So from a performance point
+of view it does not hurt to load/generate them for any plot within
+each plot function. But with the load function inside you need less
+function arguments and the plot function can be more easily moved
+somewhere else.</p>
+<h3 id="complexitysimplicity-of-the-plot-function">Complexity/simplicity of the plot function</h3>
+<p>Most of the design of the plots is handled by the central
+<code>plot_style()</code> function as described above. Then the plot function
+anly needs to provide content and usually gets quite simple. What is
+left to specify simply is:</p>
+<ul>
+<li>what to plot, e.g. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html"><code>ax.plot(x,
+  y)</code></a>. Of
+  course, this might require several <a href="https://matplotlib.org/stable/plot_types/index.html">plot
+  commands</a>, but
+  if you provide the data such that they can be more or less directly
+  passed to the plot commands, this stays simple.</li>
+<li>how to annotate,
+  e.g. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html"><code>ax.text()</code></a>,
+  <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.annotate.html"><code>ax.annotate()</code></a>
+  and/or some arrows.</li>
+<li>axis limits, e.g. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlim.html"><code>ax.set_xlim()</code></a>.</li>
+<li>tick marks (actually that often is a matter of design and should not be here...).</li>
+<li>axis scaling,
+  e.g. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xscale.html"><code>ax.set_xscale('log')</code></a>.</li>
+<li>axis labels, e.g. <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html"><code>ax.set_xlabel()</code></a>.</li>
+</ul>
+<p>That's it. No hiding of spines, no fixing of tick positions, etc. All
+these design issues should at least be bundled in some helper
+functions that would go into the central <code>plotstyle.py</code> module. Having
+code for the design directly in the plot function makes it very
+tedious to change the design later on, because this then needs to be
+changed in every plot function. Anyways, repeating the same commands
+over and over in all the different plot functions is not considered
+good coding style! Why should it be different for coding your figures?</p>
+<p>How to provide the data for the plotting function is the only other
+issue. You should make sure by means of other scripts that the data
+are available in appropriate formats. The data should be stored in a
+way that makes it simple to plot them. Then it is simply a matter of
+loading a file and selecting, for example, the relevant rows and
+columns. No rearranging, fixing, or whatever annoying stuff should be
+needed to make the data plotable. All this should go into scripts that
+output the files on which the plotting is based.</p>
+<p>The big advantages of keeping the plotting- as well as the
+data-handling code simple are</p>
+<ul>
+<li>less arguments need to be passed to the plot function, which makes
+  the code less cluttered, and</li>
+<li>dependencies of the plot function are reduced, which makes it
+  simpler to copy (or import) the plot function to another script and
+  use it there.</li>
+</ul>
+<h3 id="multipanel-figures">Multipanel figures</h3>
+<p>Scripts for multipanel figures follow the same structure as the
+single-panel script discussed so far. We have the same minimal
+imports. The main code setting up the figure is more complex, of
+course. For example, the main code in a <code>coolresult.py</code> script might
+look like this:</p>
+<pre><code class="language-py">if __name__ == &quot;__main__&quot;:
+    plot_style()
+    fig, axs = plt.subplots(2, 2, figsize=(6, 4))
+    fig.subplots_adjust(top=0.95, bottom=0.1, left=0.1, right=0.95, hspace=0.6, wspace=0.6)
+    plot_waveform(axs[0,0])
+    plot_temperature(axs[0,1])
+    plot_signal_n_power(axs[1,0], axs[1,1])
+    fig.savefig('coolresult.pdf')
+</code></pre>
+<p>With the <code>plt.subplots()</code> we generate an array of axes.</p>
+<p>We pass <code>hspace</code> and <code>wspace</code> arguments to
+<a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust"><code>fig.subplots_adjust()</code></a>. Try
+large values! You will be surprised how much better your plot looks
+with lot's of white space between the panels, althought the panels get
+smaller.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../code/" class="btn btn-neutral float-left" title="Coding a figure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../colors/" class="btn btn-neutral float-right" title="Colors">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../code/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../colors/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
