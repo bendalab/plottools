@@ -19,10 +19,10 @@ __pdoc__ = {}
 __pdoc__['__version__'] = True
 __pdoc__['__year__'] = True
 
-__version__ = '1.0'
+__version__ = '1.1'
 """Version of the plottools package. """
 
-__year__ = '2022'
+__year__ = '2025'
 """Year of last changes to the plottools package. """
 
 
