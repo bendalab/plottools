@@ -541,11 +541,17 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va, hat,
                               lw, color, 0.0, 1, return_coords=True, **kwargs)
     artists.extend(a)
-    ax.lines.pop()
+    try:
+        ax.lines.pop()
+    except AttributeError:
+        ax.lines[-1].remove()
     a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va, vat,
                               lw, color, 0.0, 1, return_coords=True, **kwargs)
     artists.extend(a)
-    ax.lines.pop()
+    try:
+        ax.lines.pop()
+    except AttributeError:
+        ax.lines[-1].remove()
     if x0 == xx:
         if y0 == yy:
             la = ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color, lw=lw,
