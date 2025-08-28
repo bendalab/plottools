@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.tag API documentation</title>
+<meta name="description" content="Tag axes with a label …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.tag</code></h1>
+</header>
+<section id="section-intro">
+<p>Tag axes with a label.</p>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<ul>
+<li><code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag()</a></code>: tag each axes with a label.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.tag.tag_params" href="#plottools.tag.tag_params">tag_params()</a></code>: set default tag appearance.</li>
+</ul>
+<p><code>matplotlib.rcParams</code> defined by the tag module:</p>
+<pre><code class="language-py">figure.tags.xoffs : 'auto',
+figure.tags.yoffs : 'auto',
+figure.tags.label : '%A',
+figure.tags.minorlabel : '%A%mi',
+figure.tags.font  : dict(fontsize='x-large', fontfamily='sans-serif')
+</code></pre>
+<h2 id="installuninstall-tag-functions">Install/uninstall tag functions</h2>
+<p>You usually do not need to call these functions. Upon loading the tag
+module, <code><a title="plottools.tag.install_tag" href="#plottools.tag.install_tag">install_tag()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.tag.install_tag" href="#plottools.tag.install_tag">install_tag()</a></code>: install functions of the tag module in matplotlib.</li>
+<li><code><a title="plottools.tag.uninstall_tag" href="#plottools.tag.uninstall_tag">uninstall_tag()</a></code>: uninstall all code of the tag module from matplotlib.</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.tag.tag"><code class="name flex">
+<span>def <span class="ident">tag</span></span>(<span>fig=None, axes=None, xoffs=None, yoffs=None, labels=None, minor_label=None, major_index=None, minor_index=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Tag each axes with a label.</p>
+<p>Labels are left/top aligned.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>If None take figure from first element in <code>axes</code>.</dd>
+<dt><strong><code>axes</code></strong> :&ensp;<code>None</code> or <code>matplotlib axes</code> or <code>int</code> or <code>list</code> of <code>matplotlib axes</code> or <code>int</code></dt>
+<dd>If None label all axes of the figure.
+Integers in the list are indices to the axes of the figure.
+For axes in the out list, <code>labels</code> is used for tagging,
+for axes in (optional) inner lists, <code>minor_label</code> is used.</dd>
+<dt><strong><code>xoffs</code></strong> :&ensp;<code>float, list</code> of <code>float, 'auto',</code> or <code>None</code></dt>
+<dd>X-coordinate of label relative to origin of axis in multiples of the width
+of a character (simply 60% of the current font size).
+If list, use for each column of axes (estimated from their positions)
+the corresponding offset.
+If 'auto' and this is the first call of this function on the figure,
+set it to the distance of the right-most axis to the left figure border,
+otherwise use the value computed by the first call.
+If None take value from <code>mpl.rcParams['figure.tags.xoffs']</code>.</dd>
+<dt><strong><code>yoffs</code></strong> :&ensp;<code>float, list</code> of <code>float, 'auto',</code> or <code>None</code></dt>
+<dd>Y-coordinate of label relative to top end of left yaxis in multiples
+of the height of a character (the current font size).
+If list, use for each row of axes (estimated from their positions)
+the corresponding offset.
+If 'auto' and this is the first call of this function on the figure,
+set it to the distance of the top-most axis to the top figure border,
+otherwise use the value computed by the first call.
+If None take value from <code>mpl.rcParams['figure.tags.yoffs']</code>.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>string</code> or <code>list</code> of <code>strings</code></dt>
+<dd>
+<p>If string, then replace formatting substrings
+'%A', '%a', '%1', '%i', and '%I' to generate labels for each axes in the outer list.</p>
+<ul>
+<li>'%A': A B C &hellip;</li>
+<li>'%a': a b c &hellip;</li>
+<li>'%1': 1 2 3 &hellip;</li>
+<li>'%i': i ii iii iv &hellip;</li>
+<li>'%I': I II III IV &hellip;</li>
+</ul>
+<p>Subsequent calls to <code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag()</a></code> keep incrementing the label.
+With a list arbitary labels can be specified.
+If None, set to <code>mpl.rcParams['figure.tags.label']</code>.</p>
+</dd>
+<dt><strong><code>minor_label</code></strong> :&ensp;<code>string</code></dt>
+<dd>If <code>axes</code> is a nested list of axes, then for the inner lists
+<code>minor_label</code> is used for formatting the axes label.
+Formatting substrings '%A', '%a', '%1', '%i', and '%I' are replaced
+by the corresponding tags for the outer list, '%mA', '%ma', '%m1', '%mi',
+and '%mI' are replaced by the equivalently formatted tags for the inner list.
+See <code>labels</code> for meaning of the formatting substrings.
+If None, set to <code>mpl.rcParams['figure.tags.minorlabel']</code>.</dd>
+<dt><strong><code>major_index</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
+<dd>Start labeling major axes with this index (0 = 'A').
+If None, use last index from previous call to <code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag()</a></code>.</dd>
+<dt><strong><code>minor_index</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
+<dd>Start labeling minor axes with this index (0 = 'A').
+If None, start with 0.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key-word arguments are passed on to ax.text() for formatting the tag label.
+Overrides settings in <code>mpl.rcParams['figure.tags.font']</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.tag.tag_params"><code class="name flex">
+<span>def <span class="ident">tag_params</span></span>(<span>xoffs=None, yoffs=None, label=None, minor_label=None, font=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set default tag appearance.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xoffs</code></strong> :&ensp;<code>float</code> or <code>'auto'</code></dt>
+<dd>X-coordinate of tag relative to origin of axis in multiples of the width
+of a character (simply 60% of the current font size).
+If 'auto', set it to the distance of the right-most axis to the left figure border,
+or to a previously computed value from that figure.
+Sets rcParam <code>figure.tags.xoffs</code>.</dd>
+<dt><strong><code>yoffs</code></strong> :&ensp;<code>float</code> or <code>'auto'</code></dt>
+<dd>Y-coordinate of tag relative to top end of left yaxis in multiples
+of the height of a character (the current font size).
+If 'auto', set it to the distance of the top-most axis to the top figure border,
+or to a previously computed value from that figure.
+Sets rcParam <code>figure.tags.yoffs</code>.</dd>
+<dt><strong><code>label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Label used to tag axes. Sets rcParam <code>figure.tags.label</code>.
+See <code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag()</a></code> for details.</dd>
+<dt><strong><code>minor_label</code></strong> :&ensp;<code>string</code></dt>
+<dd>Label used to tag minor axes. Sets rcParam <code>figure.tags.minorlabel</code>.
+See <code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag()</a></code> for details.</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary with font settings for tags
+(e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, &hellip;).
+Updates rcParam <code>figure.tags.font</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.tag.install_tag"><code class="name flex">
+<span>def <span class="ident">install_tag</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the tag module in matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.tag.uninstall_tag" href="#plottools.tag.uninstall_tag">uninstall_tag()</a></code></p></div>
+</dd>
+<dt id="plottools.tag.uninstall_tag"><code class="name flex">
+<span>def <span class="ident">uninstall_tag</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the tag module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.tag.install_tag" href="#plottools.tag.install_tag">install_tag()</a></code></p></div>
+</dd>
+<dt id="plottools.tag.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the tag module.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-tag-functions">Install/uninstall tag functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="plottools.tag.tag" href="#plottools.tag.tag">tag</a></code></li>
+<li><code><a title="plottools.tag.tag_params" href="#plottools.tag.tag_params">tag_params</a></code></li>
+<li><code><a title="plottools.tag.install_tag" href="#plottools.tag.install_tag">install_tag</a></code></li>
+<li><code><a title="plottools.tag.uninstall_tag" href="#plottools.tag.uninstall_tag">uninstall_tag</a></code></li>
+<li><code><a title="plottools.tag.demo" href="#plottools.tag.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>

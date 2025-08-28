@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.subplots API documentation</title>
+<meta name="description" content="Enhanced subplots with margins …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.subplots</code></h1>
+</header>
+<section id="section-intro">
+<p>Enhanced subplots with margins.</p>
+<p>Patches matplotlib to provide the following features:</p>
+<h2 id="figure-margins">Figure margins</h2>
+<p>Subplot positions can be adjusted by margins given in multiples of the current font size:</p>
+<pre><code>fig.subplots_adjust(leftm=5.0, bottomm=2.0, rightm=2.0, topm=1.0)  # in fontsize units!
+gs = fig.add_gridspec(3, 3, leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+gs.update(leftm=5.0, bottomm=2.0, rightm=2.0, topm=2.5)
+</code></pre>
+<p>That is,
+- <code>leftm</code> specifies the distance of the leftmost axes from the left margin of the figure,
+- <code>bottomm</code> specifies the distance of the bottom axes from the bottom margin of the figure,
+- <code>rightm</code> specifies the distance of the rightmost axes from the right margin of the figure, and
+- <code>topm</code> specifies the distance of the top axes from the top margin of the figure,
+all as multiples of the font size.</p>
+<p>This way, margins do not need to be adjusted when changing the size of a figure!</p>
+<p>For figures without any margins you can use the <code>nomargins</code> keyword:</p>
+<pre><code>fig.subplots_adjust(nomargins=True)
+</code></pre>
+<p>This sets all margins to zero.</p>
+<h2 id="grid-specs">Grid specs</h2>
+<p><code>plt.subplots()</code> can be called with <code>width_ratios</code> and <code>height_ratios</code>.</p>
+<p>To merge several subplots into a single axes, call <code>fig.merge()</code>.</p>
+<p>To replace an axes by subplots, call <code>ax.subplots()</code>.</p>
+<p><code>fig.merge()</code> and <code>ax.subplots()</code> can be arbitrarily combined.</p>
+<p>To expand, shrink or move an axes, use <code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand()</a></code>.</p>
+<p>Further, <code>figure.add_gridspec()</code> is made available for older
+matplotlib versions that do not have this function yet.</p>
+<h2 id="invisible-axes">Invisible axes</h2>
+<p>Both <code>plt.subplots()</code> and <code>ax.subplots()</code> support the creation of
+invisble axes that are not returned. Simply provide more elements to
+<code>width_ratios</code> and <code>height_ratios</code> than specified by <code>ncols</code> and
+<code>nrows</code>, respectively. Then the axes with the smalles widths or
+heights are made invisible and are not returned.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots()</a></code>: replace axes by subplots.</li>
+<li><code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand()</a></code>: expand size and modify position of Axes.</li>
+<li><code><a title="plottools.subplots.make_polar" href="#plottools.subplots.make_polar">make_polar()</a></code>: turn an axes into one with polar projection.</li>
+</ul>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<ul>
+<li><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge()</a></code>: merge several axes into a single one.</li>
+</ul>
+<h2 id="installuninstall-subplots-functions">Install/uninstall subplots functions</h2>
+<p>You usually do not need to call these functions. Upon loading the subplots
+module, <code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code>: install functions of the subplots module in matplotlib.</li>
+<li><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots()</a></code>: uninstall all code of the subplots module from matplotlib.</li>
+</ul>
+<h2 id="todo">Todo</h2>
+<ul>
+<li>default figure margins</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.subplots.merge"><code class="name flex">
+<span>def <span class="ident">merge</span></span>(<span>fig, axs, remove=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Merge several axes into a single one.</p>
+<p>Add new axes to the figure at the position and size of the common
+bounding box of all axes in <code>axs</code>. All axes in <code>axs</code> are then
+removed. This way you do not need to use <code>gridspec</code> explicitly.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib.figure</code></dt>
+<dd>The figure that contains the axes.</dd>
+<dt><strong><code>axs</code></strong> :&ensp;<code>array</code> of <code>axis objects</code></dt>
+<dd>The axes that should be combined.</dd>
+<dt><strong><code>remove</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If <code>True</code> remove the orignal axes <code>axs</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>axes object</code></dt>
+<dd>A single axes covering the area of all the axes objects in <code>axs</code>.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots()</a></code></p>
+<h2 id="example">Example</h2>
+<p>With gridspec you would do</p>
+<pre><code>fig = plt.figure()
+gs = fig.add_gridspec(3, 3)
+ax1 = fig.add_subplot(gs[1:,:2])  # merge 2x2 bottom left subplots
+ax2 = fig.add_subplot(gs[0,0])    # first in top row
+ax3 = fig.add_subplot(gs[0,1])    # second in top row
+ax4 = fig.add_subplot(gs[0,2])    # third in top row
+ax5 = fig.add_subplot(gs[1,2])    # last in second row
+ax6 = fig.add_subplot(gs[2,2])    # last in bottom row
+</code></pre>
+<p>with merge() this simplifies to</p>
+<pre><code>fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+ax1 = fig.merge(axs[1:3,0:2])     # merge 2x2 bottom left subplots into a single one.
+ax2 = axs[0,0]                    # first in top row
+ax3 = axs[0,1]                    # second in top row
+# ...
+</code></pre></div>
+</dd>
+<dt id="plottools.subplots.subplots"><code class="name flex">
+<span>def <span class="ident">subplots</span></span>(<span>ax, nrows, ncols, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Replace axes by subplots.</p>
+<p>Replace axes by all plots of a subgridspec at that axes. This way
+you do not need to use <code>subgridspec()</code> explicitly.</p>
+<p>By specifying more <code>width_ratios</code> or <code>height_ratios</code> than <code>ncols</code>
+or <code>nrows</code>, respectively, you can create invisible axes that are
+not returned. The ones that are made invisible and are not returned
+are the smallest ones.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib.axes</code></dt>
+<dd>Axes that should be replaced by subplots.</dd>
+<dt><strong><code>nrows</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of rows of the new subgrid.
+Can be smaller than the number of elements in <code>height_ratios</code>.
+In this case, the axes with the smallest heights are removed
+and only the <code>nrows</code> larger axes are returned.
+This allows you to easily insert invisible spaces between rows.</dd>
+<dt><strong><code>ncols</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of columns of the new subgrid.
+Can be smaller than the number of elements in <code>width_ratios</code>.
+In this case, the axes with the smallest widths are removed
+and only the <code>ncols</code> larger axes are returned.
+This allows you to easily insert invisible spaces between columns.</dd>
+<dt><strong><code>kwargs</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Further arguments for matplotlib.gridspec.GridSpecFromSubplotSpec,
+e.g. <code>wspace</code>, <code>hspace</code>, <code>height_ratios</code>, <code>width_ratios</code>.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>axs</code></strong> :&ensp;<code>array</code> of <code>matplotlib axes</code></dt>
+<dd>Axes of the new subgrid.</dd>
+</dl>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge()</a></code></p>
+<h2 id="example">Example</h2>
+<p>With gridspec you would do</p>
+<pre><code>fig = plt.figure()
+gs = fig.add_gridspec(3, 3)
+sgs = gs[0,2].subgridspec(2, 1)
+ax1 = fig.add_subplot(gs[0,0])
+# ... 8 more for all the subplots on gs
+subax1 = fig.add_subplot(sgs[0])
+subax2 = fig.add_subplot(sgs[1])
+</code></pre>
+<p>As usual, this requires a lot of calls to <code>fig.add_subplot()</code>.
+With subplots() this simplifies to</p>
+<pre><code class="language-py">fig, axs = plt.subplots(3, 3)     # axs contains 3x3 axes objects
+subaxs = axs[0,2].subplots(2, 1)  # replace axs[0,2] by two new subplots
+</code></pre>
+<p>and you can use the axes in <code>axs</code> and <code>subaxs</code> right away.</p></div>
+</dd>
+<dt id="plottools.subplots.expand"><code class="name flex">
+<span>def <span class="ident">expand</span></span>(<span>ax, left=None, right=None, bottom=None, top=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Expand size and modify position of Axes.</p>
+<p>Note: only works with savefig(), not with plt.show()!</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>Axes object</code></dt>
+<dd>The axes to be turned into polar projection.</dd>
+<dt><strong><code>left</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move left edge of Axes to the left
+(in figure coordinates, can be negative for right shift).</dd>
+<dt><strong><code>right</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move right edge of Axes to the right
+(in figure coordinates, can be negative for left shift).</dd>
+<dt><strong><code>bottom</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move bottom edge of Axes downwards
+(in figure coordinates, can be negative for upward shift).</dd>
+<dt><strong><code>top</code></strong> :&ensp;<code>float</code></dt>
+<dd>Move top edge of Axes to upwards
+(in figure coordinates, can be negative for downward shift).</dd>
+</dl></div>
+</dd>
+<dt id="plottools.subplots.make_polar"><code class="name flex">
+<span>def <span class="ident">make_polar</span></span>(<span>ax, shiftx=0, shifty=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Turn an axes into one with polar projection.</p>
+<p>Creates a new axes with polar projection at the position
+of the given axes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>Axes object</code></dt>
+<dd>The axes to be turned into polar projection.</dd>
+<dt><strong><code>shiftx</code></strong> :&ensp;<code>float</code></dt>
+<dd>Horizontally shift the axes relative to <code>ax</code> figure coordinates.</dd>
+<dt><strong><code>shifty</code></strong> :&ensp;<code>float</code></dt>
+<dd>Vertically shift the axes relative to <code>ax</code> in figure coordinates.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>axes object</code></dt>
+<dd>An axes with polar projection at the position of the given axes.</dd>
+</dl>
+<h2 id="example">Example</h2>
+<pre><code>fig, axs = plt.subplots(2, 3)
+axp = axs[1, 2].make_polar()
+axp.plot(theta, r)   # this is a polar plot!
+</code></pre></div>
+</dd>
+<dt id="plottools.subplots.install_subplots"><code class="name flex">
+<span>def <span class="ident">install_subplots</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the subplots module in matplotlib.</p>
+<p>Patches a few matplotlib functions (<code>plt.figure()</code>,
+<code>plt.subplots()</code>, <code>figure.add_gridspec()</code>, <code>gridspec.update()</code>).
+Each figure gets an resize event handler installed, that applies the
+supplied margins whenever a figure is resized.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots()</a></code></p></div>
+</dd>
+<dt id="plottools.subplots.uninstall_subplots"><code class="name flex">
+<span>def <span class="ident">uninstall_subplots</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the subplots module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots()</a></code></p></div>
+</dd>
+<dt id="plottools.subplots.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the subplots module.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#figure-margins">Figure margins</a></li>
+<li><a href="#grid-specs">Grid specs</a></li>
+<li><a href="#invisible-axes">Invisible axes</a></li>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#installuninstall-subplots-functions">Install/uninstall subplots functions</a></li>
+<li><a href="#todo">Todo</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.subplots.merge" href="#plottools.subplots.merge">merge</a></code></li>
+<li><code><a title="plottools.subplots.subplots" href="#plottools.subplots.subplots">subplots</a></code></li>
+<li><code><a title="plottools.subplots.expand" href="#plottools.subplots.expand">expand</a></code></li>
+<li><code><a title="plottools.subplots.make_polar" href="#plottools.subplots.make_polar">make_polar</a></code></li>
+<li><code><a title="plottools.subplots.install_subplots" href="#plottools.subplots.install_subplots">install_subplots</a></code></li>
+<li><code><a title="plottools.subplots.uninstall_subplots" href="#plottools.subplots.uninstall_subplots">uninstall_subplots</a></code></li>
+<li><code><a title="plottools.subplots.demo" href="#plottools.subplots.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>

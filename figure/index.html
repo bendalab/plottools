@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/figure/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Figure - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Figure";
+        var mkdocs_page_input_path = "figure.md";
+        var mkdocs_page_url = "/plottools/figure/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Figure</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#figure-size">Figure size</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#default-file-name">Default file name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#strip-fonts-from-a-pdf-figure">Strip fonts from a pdf figure</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Figure</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="figure-module">Figure module</h1>
+<p>Size and file names of a figure.</p>
+<p>Importing the figure module modifies the matplotlib functions
+<code>plt.figure()</code>, <code>plt.subplots()</code>, <code>fig.savefig()</code>, and <code>plt.savefig()</code>.</p>
+<pre><code>import matplotlib.pyplot as plt
+import plottools.figure
+</code></pre>
+<p>Then the following features are available:</p>
+<h2 id="figure-size">Figure size</h2>
+<p>The figure size can be specified in centimeters instead of inches via
+the <code>cmsize</code> argument to <code>plt.figure()</code> and <code>plt.subplots()</code>. Like this:</p>
+<pre><code>fig = plt.figure(cmsize=(12, 8))  # in centimeters
+</code></pre>
+<p>or</p>
+<pre><code>fig, axs = plt.subplots(3, 2, cmsize=(12, 8))  # in centimeters
+</code></pre>
+<p>A <code>set_size_cm()</code> function is also provided:</p>
+<pre><code>fig = plt.figure()
+fig.set_size_cm(12, 8)  # in centimeters
+</code></pre>
+<h2 id="default-file-name">Default file name</h2>
+<p>It is good practice to have a python script save a figure under the
+same name as the script (see our <a href="../guide/">plotting guidline</a>). That
+way it is easy to figure out, which script generated that figure,
+whithout the need to use cool command line tools like <code>grep</code>. To
+simplify this, the figure module patches the <code>fig.savefig()</code> function
+to use the name of the script as the name of the outpt file, when
+called without argument.</p>
+<p>If you have a python script <code>myplot.py</code> producing a figure and saving it like this:</p>
+<pre><code>fig, axs = plt.subplots(2, 3)
+# some fancy plots ...
+fig.savefig()
+</code></pre>
+<p>The plot is saved in a file named <code>myplot.pdf</code>.</p>
+<p>When only providing a path, the name of the script is appended:</p>
+<pre><code>fig.savefig('../')    # -&gt; ../myplot.pdf
+</code></pre>
+<p>A string to be added to the name of the script is indicated by a initial '+':</p>
+<pre><code>fig.savefig('+-example')    # -&gt; myplot-example.pdf
+</code></pre>
+<p>When saving a figure multiple times (for example when needed for a
+LaTeX beamer talk), then you may want to use the '@' character in the
+file name. This character in the file name is replaced by 'A', 'B',
+'C', ...  according to how often <code>fig.savefig()</code> is called from within
+the same figure.  If the '@' is the first character of the file name,
+it is added to the name of the main script. So in 'example.py' we can
+write</p>
+<pre><code class="language-py">fig.savefig('@')
+fig.savefig('@')
+latex_include_figures()
+</code></pre>
+<p>This prints to the console</p>
+<pre><code class="language-txt">\includegraphics&lt;1&gt;{myplotA}
+\includegraphics&lt;2&gt;{myplotB}
+</code></pre>
+<p>and generates the respective files.</p>
+<h2 id="strip-fonts-from-a-pdf-figure">Strip fonts from a pdf figure</h2>
+<p>When using full LaTeX based typesetting in your figures, the resulting
+files are quite large, because the LaTeX fonts are stored in the
+files. When you then include these files in a LaTeX document, then the
+resulting document can be really large, because for each included
+figure the fonts are stored again and again in the pdf of the
+document. The best solution I figured out to remove the excessive font
+descriptions is to run the pdfs of the figures through the <code>ps2ps</code>
+shell command (from Ghostscript). Then the standalone figure file may
+look not that nice, but included into the LaTeX docuement it looks the
+same as before and the resulting pdf is <em>much</em> smaller. To simplify
+this post-processing step the figure module adds a <code>stripfont</code>
+argument to <code>fig.savefig()</code>. When set <code>True</code>, then after the figure
+has been saved to a pdf file it is run through <code>ps2ps</code> in order to
+remove the fonts.</p>
+<pre><code>fig.savefig(stripfonts=True)
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../colors/" class="btn btn-neutral float-left" title="Colors"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../subplots/" class="btn btn-neutral float-right" title="Subplots">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../colors/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../subplots/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

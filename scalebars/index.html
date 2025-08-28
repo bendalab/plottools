@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/scalebars/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Scalebars - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Scalebars";
+        var mkdocs_page_input_path = "scalebars.md";
+        var mkdocs_page_url = "/plottools/scalebars/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Scalebars</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#x-scalebars">X Scalebars</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#y-scalebars">Y Scalebars</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#x-y-scalebars">X-Y Scalebars</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#styles">Styles</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Scalebars</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="scalebars-module">Scalebars module</h1>
+<p>Scalebars are an alternative to xticks and yticks.
+They visualize scales by the length of a bar.</p>
+<p><img alt="scalebars" src="../figures/scalebars-scalebars.png" /></p>
+<pre><code>ax.scalebars(1.05, 0.0, 2, 1, 's', 'mV', ha='right', va='bottom')
+</code></pre>
+<p>Do <em>not</em> use scalebars if a specific value on the axis (most likely
+zero) has a special meaning!</p>
+<p>The scalebar module installs the three functions</p>
+<ul>
+<li><code>xscalebar()</code></li>
+<li><code>yscalebar()</code></li>
+<li><code>scalebars()</code></li>
+</ul>
+<p>on matplotlib axes for drawing and annotating horizontal or vertical scalebars, or both.</p>
+<pre><code>import matplotlib.pyplot as plt
+from plottools.scalebars import scalebar_params
+
+fig, ax = plt.subplots()
+</code></pre>
+<h2 id="x-scalebars">X Scalebars</h2>
+<p><code>xscalebar()</code> draws and annotates a horizontal scalebar, visualizing
+the scale of the x-axis.</p>
+<p><img alt="xscalebar" src="../figures/scalebars-xscalebar.png" /></p>
+<pre><code>ax.xscalebar(1.0, 0.0, 2, 's', ha='right', va='bottom')
+</code></pre>
+<p>The first two arguments of the scalebar functions set the anchor point
+on which the scalebar is positioned. The scalebar position is given in
+relative coordinates of the axes (ranging from 0 to 1).</p>
+<p>For horizontal scalebars, <code>ha</code> (horizontal alignment) determines
+whether the anchor is on the 'left', 'center', or 'right' of the
+scalebar. The vertical alignment (<code>va</code>) determines whether the
+annotation is on top ('top') or below ('bottom') the
+scalebar. Horizontal alignment of the annotation text relative to the
+scalebar (<code>hat</code>) can be 'center' (default), 'left' or 'right'. In the
+figure the position of the scalebar, its anchor point, is shown as a
+red circle.</p>
+<p><img alt="xpos" src="../figures/scalebars-xpos.png" /></p>
+<pre><code>ax.xscalebar(0.0, 0.9, 2, 's', ha='left', va='top')
+ax.xscalebar(0.5, 0.9, 2, 's', ha='center', va='top')
+ax.xscalebar(1.0, 0.9, 2, 's', ha='right', va='top')
+
+ax.xscalebar(0.0, 0.5, 2, 's', ha='left', va='bottom')
+ax.xscalebar(0.5, 0.5, 2, 's', ha='center', va='bottom')
+ax.xscalebar(1.0, 0.5, 2, 's', ha='right', va='bottom')
+
+ax.xscalebar(0.0, 0.1, 2, 's', ha='left', va='bottom', hat='left')
+ax.xscalebar(0.5, 0.1, 2, 's', ha='center', va='bottom', hat='center')
+ax.xscalebar(1.0, 0.1, 2, 's', ha='right', va='bottom', hat='right')
+</code></pre>
+<p>The third argument sets the length of the scale bar in data
+coordinates of the x-axis, followed by a string setting the unit of
+the scale.</p>
+<h2 id="y-scalebars">Y Scalebars</h2>
+<p><code>yscalebar()</code> draws and annotates a vertical scalebar, visualizing the
+scale of the y-axis.</p>
+<p><img alt="yscalebar" src="../figures/scalebars-yscalebar.png" /></p>
+<pre><code>ax.yscalebar(1.05, 0.0, 1, 'mV', ha='right', va='bottom')
+</code></pre>
+<p>For vertical scalebars, <code>va</code> (vertical alignment) determines whether
+the anchor is on the 'top', 'center', or 'bottom' of the scalebar. The
+horizontal alignment (<code>ha</code>) determines whether the annotation is to
+the 'left' or to the 'right' of the scale bar. Vertical alignment of
+the annotation text relative to the scalebar (<code>vat</code>) can be 'center'
+(default), 'top' or 'bottom'. In the figure the position of the
+scalebar, the anchor point, is shown as a red circle.</p>
+<p><img alt="ypos" src="../figures/scalebars-ypos.png" /></p>
+<pre><code>ax.yscalebar(0.3, 1.0, 1, 'mV', ha='left', va='top')
+ax.yscalebar(0.3, 0.5, 1, 'mV', ha='left', va='center')
+ax.yscalebar(0.3, 0.0, 1, 'mV', ha='left', va='bottom')
+
+ax.yscalebar(0.7, 1.0, 1, 'mV', ha='right', va='top')
+ax.yscalebar(0.7, 0.5, 1, 'mV', ha='right', va='center')
+ax.yscalebar(0.7, 0.0, 1, 'mV', ha='right', va='bottom')
+</code></pre>
+<h2 id="x-y-scalebars">X-Y Scalebars</h2>
+<p><code>scalebars()</code> draws and annotates both a horizontal and a vertical
+scalebar, visualizing the scale of the x- and the y-axis.  Horizontal
+alignment (<code>ha</code>) determines whether the anchor point and the vertical
+scalebar is on the 'left' or on the 'right' of the horizontal
+scalebar. Vertical alignment (<code>va</code>) determines whether the anchor
+point and the horizontal scalebar are at the 'top' or 'bottom' of the
+vertical scalebar. Again, <code>hat</code> and <code>vat</code> allow to control the
+position of the annotation texts relative to the scalebars. In the
+figure the position of the scalebar, the anchor point, is shown as a
+red circle.</p>
+<p><img alt="pos" src="../figures/scalebars-pos.png" /></p>
+<pre><code>ax.scalebars(0.2, 0.8, 2, 1, 's', 'mV', ha='left', va='top')
+ax.scalebars(0.8, 0.8, 2, 1, 's', 'mV', ha='right', va='top')
+ax.scalebars(0.2, 0.1, 2, 1, 's', 'mV', ha='left', va='bottom')
+ax.scalebars(0.8, 0.1, 2, 1, 's', 'mV', ha='right', va='bottom')
+</code></pre>
+<h2 id="styles">Styles</h2>
+<p>The line width and the color of the scalebar can be set by the <code>lw</code>
+and <code>color</code> keyword arguments.</p>
+<p>The horizontal and vertical scalebars can have in addition start and
+stop markers. These are lines perpendicular to the scalebar line. Half
+of their length is set by <code>capsize</code> and their width by <code>clw</code>.</p>
+<p><img alt="styles" src="../figures/scalebars-styles.png" /></p>
+<pre><code>ax.xscalebar(0.0, 0.8, 2, 'mm', ha='left', va='bottom', lw=3)
+ax.xscalebar(0.0, 0.3, 2, 'mm', ha='left', va='bottom', lw=6)
+ax.xscalebar(1.0, 0.8, 2, 'mm', ha='right', va='bottom', lw=4, capsize=4, clw=2)
+ax.xscalebar(1.0, 0.3, 2, 'mm', ha='right', va='bottom', lw=4, capsize=6, clw=1)
+</code></pre>
+<p>Import and use the <code>scalebar_params()</code> function to modify default rc settings
+defining the style of the scalebars:</p>
+<pre><code>scalebar_params(format_large='%.0f', format_small='%.1f', lw=3, capsize=0, clw=0.5)
+</code></pre>
+<p>Ideally you use the scalebar functions without specifying the <code>lw</code>,
+<code>color</code>, <code>capsize</code>, <code>clw</code>, and <code>font</code> arguments and control them by a
+central call to <code>scalebar_params()</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../insets/" class="btn btn-neutral float-left" title="Insets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../insets/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

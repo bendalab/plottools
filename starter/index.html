@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/starter/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Getting started with matplotlib - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Getting started with matplotlib";
+        var mkdocs_page_input_path = "starter.md";
+        var mkdocs_page_url = "/plottools/starter/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Getting started with matplotlib</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#single-plot-in-a-figure">Single plot in a figure</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#plot-commands">Plot commands</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setting-colors-lines-and-markers">Setting colors, lines, and markers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logarithmic-axis">Logarithmic axis</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#legend">Legend</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#annotation">Annotation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#save-figure-to-a-file">Save figure to a file</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#multiple-plots-in-a-figure">Multiple plots in a figure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#customizing-figure-layout">Customizing figure layout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#customizing-figure-design">Customizing figure design</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#further-reading-and-cheat-sheets">Further reading and cheat sheets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#figure-guidelines">Figure guidelines</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Tutorial</li>
+      <li class="breadcrumb-item active">Getting started with matplotlib</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="getting-started-with-matplotlib">Getting started with matplotlib</h1>
+<p>This is a quick introduction into generating figures with
+<a href="https://www.python.org/"><code>python</code></a> and the
+<a href="https://matplotlib.org/"><code>matplotlib</code></a> package.  Use it for hints
+(and links) on the most important commands. Check then their
+documentation for further details.</p>
+<p>Import the <a href="https://matplotlib.org/"><code>matplotlib</code></a> package:</p>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+</code></pre>
+<p>and generate some time series data for plotting:</p>
+<pre><code class="language-py">import numpy as np
+t = np.arange(0.0, 1.0, 0.01) # one second with time step 0.01
+x = np.sin(2.0*np.pi*10.0*t)  # 10Hz sine wave
+</code></pre>
+<p>Then a quick way to plot this is</p>
+<pre><code class="language-py">plt.plot(t, x)
+plt.show()
+</code></pre>
+<p>Do not forget the
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html"><code>show()</code></a>!</p>
+<p>This command displays the plot in a new window and let you interact
+with it (zooming and panning). By the way, these features have short
+keys: press <code>o</code> for zooming or <code>p</code> for panning. <code>backspace</code> brings you
+back. <code>f</code> is fullscreen mode.</p>
+<p>This is great for quickly checking data in your code. For properly
+annotating a plot and for producing nice figures we use the
+object-oriented interface of matplotlib (see the <a href="https://matplotlib.org/stable/api/index.html#the-object-oriented-api">object-oriented
+API</a>
+and <a href="https://matplotlib.org/stable/tutorials/introductory/lifecycle.html#a-note-on-the-object-oriented-api-vs-pyplot">the lifecycle of a
+plot</a>). This
+is described in the following:</p>
+<h2 id="single-plot-in-a-figure">Single plot in a figure</h2>
+<p>Generate a figure and an axes using the <code>plt.subplots()</code> function:</p>
+<pre><code class="language-py">fig, ax = plt.subplots()
+</code></pre>
+<p>Then <code>ax</code> is a single matplotlib axes. This is a plot, a coordinate
+system, in which you can draw and annotate your data:</p>
+<pre><code class="language-py">ax.plot(t, x)
+ax.set_xlim(0, 0.2)
+ax.set_xlabel('Time [s]')
+ax.set_ylabel('Voltage [mV]')
+</code></pre>
+<h3 id="plot-commands">Plot commands</h3>
+<p>A nice overview on available plot types is given
+<a href="https://matplotlib.org/stable/plot_types/index.html">here</a>.  See the
+<a href="https://matplotlib.org/stable/api/axes_api.html">matplotlib.axes API</a>
+for a (long) list of member functions, including various types of
+plots and annotations.</p>
+<p>Here is a selection of often used plot commands:</p>
+<ul>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html"><code>plot(x, y)</code></a>: plot y versus x with markers and connected by lines. </li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.errorbar.html"><code>errorbar(x, y, yerr)</code></a>: plot errorbars (both vertical and horizontal ones)</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html"><code>scatter(x, y, size, color)</code></a>: plot y versus x with varying marker size and color.</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.fill_between.html"><code>fill_between(x, y1, y2)</code></a>: fill area between a curve and an axis (or another curve).</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html"><code>hist(x, bins)</code></a>: histogram (see also <code>np.histogram()</code> and <code>ax.bar()</code>).</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.boxplot.html"><code>boxplot(x)</code></a>: box-whisker plot.</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contour.html"><code>contour(x, y, z)</code></a>: contour lines.</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html"><code>pcolormesh(x, y, z)</code></a>: pseudocolor plot of a matrix with specified x- and y-axis ranges.</li>
+<li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.imshow.html"><code>imshow(z)</code></a>: plot an image - (almost) <em>never</em> use it for pseudocolor plots of matrices, use <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.pcolormesh.html"><code>pcolormesh()</code></a> instead.</li>
+</ul>
+<h3 id="setting-colors-lines-and-markers">Setting colors, lines, and markers</h3>
+<p>Further key-word arguments to the plot commands allow to change
+colors, lines, and markers. In the following some of the more commonly
+used ones are listed.</p>
+<p>Lines:</p>
+<ul>
+<li><code>color</code> or <code>c</code>: color specification, e.g. <code>'red'</code>, <code>'#DD0000'</code>, or <code>'C3'</code> (forth color of color cycle), see <a href="https://matplotlib.org/stable/tutorials/colors/colors.html">specifying colors</a>.</li>
+<li><code>linewidth</code> or <code>lw</code>: width of connecting lines.</li>
+<li><code>linestyle</code> or <code>ls</code>: solid, dashed, or dotted: '-', '--', '-.', ':', ''.</li>
+</ul>
+<p>Markers:</p>
+<ul>
+<li><code>marker</code>: the marker symbol, e.g. '.', 'o', 'v', 's', 'D', 'p', 'h', 'x', '+', '*', etc.
+  see <a href="https://matplotlib.org/stable/api/markers_api.html">matplotlib.markers</a> for a table.</li>
+<li><code>markersize</code> or <code>ms</code>: size of the marker symbol.</li>
+<li><code>markerfacecolor</code> or <code>mfc</code>: fill color of the marker, e.g. <code>'green'</code> or <code>'#00CC00'</code></li>
+<li><code>markeredgecolor</code> or <code>mec</code>: color of the outline of the marker, e.g. <code>'blue'</code> or <code>'#0000DD'</code></li>
+<li><code>markeredgewidth</code> or <code>mew</code>: width of the marker outline. </li>
+</ul>
+<p>Other:</p>
+<ul>
+<li><code>label</code>: a label for the legend (see below).</li>
+<li><code>clip_on</code>: set to <code>False</code> if you do not want, for example, marker symbols to be clipped.</li>
+<li><code>zorder</code>: some number specifying the order in which elements are drawn into the plot. Higher numbers are drawn on top of lower numbers.</li>
+</ul>
+<h3 id="logarithmic-axis">Logarithmic axis</h3>
+<p>For a logarithmic x-axis use
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xscale.html"><code>ax.set_xscale()</code></a>:</p>
+<pre><code class="language-py">ax.set_xlim(0.01, 1.0)
+ax.set_xscale('log')
+</code></pre>
+<p>Likewise for the y-axis.</p>
+<p>Make sure the data range starts at positive (non-zero) values using
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlim.html"><code>ax.set_xlim()</code></a> and <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylim.html"><code>ax.set_ylim()</code></a>.</p>
+<h3 id="legend">Legend</h3>
+<p>When you plot several data sets into an axes, you might want to add a
+legend to your plot. Pass a <code>label</code> to the plot commands and then call
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html"><code>legend()</code></a>:</p>
+<pre><code class="language-py">ax.plot(t, x, label='one')
+ax.plot(t, 1.5*x, label='two')
+ax.plot(t, 2.2*x, label='three')
+ax.legend(loc='upper right')
+</code></pre>
+<h3 id="annotation">Annotation</h3>
+<p>You can place some text somewhere in (or outside) your plot using the
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html"><code>text()</code></a>
+function:</p>
+<pre><code class="language-py">ax.text(12.7, 8.2, 'a note')
+</code></pre>
+<p>The first two arguments are the x- and y-coordinate of the text in data coordinates.</p>
+<p>Very useful is to specify the position of the text in relative axes coordinates:</p>
+<pre><code class="language-py">ax.text(0.9, 0.9, 'another note', ha='right', transform=ax.transAxes)
+</code></pre>
+<p>This text is placed right aligned (<code>ha='right'</code>) in the top right corner.</p>
+<h3 id="save-figure-to-a-file">Save figure to a file</h3>
+<p><code>fig</code> is a matplotlib figure. In this example it holds just one axes,
+but it can have many more (see next section). Each window you get with
+<code>plt.show()</code> contains a matplotlib figure. And you can save a
+matplotlib figure to a file using the
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html"><code>savefig()</code></a>
+function:</p>
+<pre><code class="language-py">fig.savefig('myplot.pdf')
+</code></pre>
+<p>You can save the figure into <code>pdf</code>, <code>svg</code>, <code>png</code>, <code>jpg</code> and <code>tex</code>
+files. Just supply the right file extension.</p>
+<p>If you also want to display your figure on screen, then call
+<code>plt.show()</code> <em>after</em> <code>fig.savefig()</code>, because on exit (closing the
+window), <code>plt.show()</code> destroys the figure.</p>
+<h2 id="multiple-plots-in-a-figure">Multiple plots in a figure</h2>
+<p>The simplest scenario is having a grid of subplots. The following
+example generates two rows and three columns of axes (=subplots) using
+the
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html"><code>subplots()</code></a>
+function:</p>
+<pre><code class="language-py">fig, axs = plt.subplots(2, 3)
+</code></pre>
+<p>Now, <code>axs</code> is a 2-dimensional numpy array holding the six axes that we
+use like this:</p>
+<pre><code class="language-py">axs[0,0].plot(t, x)    # top left plot
+axs[1,2].plot(t, 2*x)  # bottom right plot
+</code></pre>
+<p>Alternatively to indexing the axes by both a row and a column index,
+you can flatten the axes array:</p>
+<pre><code class="language-py">for k, ax in enumarate(axs.flat):
+    ax.plot(x, k*y, label=f'{k}')
+</code></pre>
+<p>A single row or column of subplots can also be initialized like this:</p>
+<pre><code class="language-py">fig, (ax1, ax2) = plt.subplots(1, 2)
+</code></pre>
+<p>With the <code>sharex</code> and <code>sharey</code> key words, you can tie the respective
+axis of the subplots together, such that is you zoom into one subplot,
+the other ones get zoomed as well:</p>
+<pre><code class="language-py">fig, axs = plt.subplots(2, 3, sharex=True, sharey=True)
+</code></pre>
+<p>A very useful and less well known feature is that the relative widths
+and heights of the columns and rows of a grid of subplots can be
+specified like this:</p>
+<pre><code class="language-py">fig, axs = plt.subplots(2, 3, gridspec_kw=dict(width_ratios=[3, 1, 1], height_ratios=[4, 1]))
+</code></pre>
+<p>The <code>width_ratios</code> and <code>height_ratios</code> give for each column/row a
+relative width/height.</p>
+<p>For more details on how to layout subplots you definitely want to read
+the <a href="https://matplotlib.org/stable/tutorials/intermediate/arranging_axes.html">Arranging multiple Axes in a
+Figure</a>
+tutorial and the <a href="https://matplotlib.org/stable/tutorials/intermediate/gridspec.html">GridSpec
+tutorial</a>.
+Also check out the
+<a href="https://matplotlib.org/stable/tutorials/provisional/mosaic.html">subplot_mosaic()</a> function.</p>
+<h2 id="customizing-figure-layout">Customizing figure layout</h2>
+<p>First of all, you want to specify the size of your figure. Make each
+figure as large as you want it to be in your manuscript or
+presentation to ensure that the plot labels of all your figures have
+the same font size (<em>no</em> scaling of the figures in the manuscript or
+presentation).</p>
+<pre><code class="language-py">fig, axs = plt.subplots(2, 3, figsize=(8, 5))  # in inch!
+</code></pre>
+<p>Unfortunately, the <code>figsize</code> argument takes the width and the height
+of the figure measured in inches. Hey - we are doing science here and
+want SI units! To specify your figure size in centimeters you need to
+divide by 2.54 cm/inch:</p>
+<pre><code class="language-py">fig, axs = plt.subplots(2, 3, figsize=(12/2.54, 8/2.54))  # in cm
+</code></pre>
+<p>Second, you want your plots to nicely fill the figure (no extra
+whitespace at the borders). For this use</p>
+<pre><code class="language-py">fig.subplots_adjust(left=0.2, right=0.95, top=0.95, bottom=0.1)
+</code></pre>
+<p>These are fractions of the full figure size. <code>right</code> and <code>top</code> are
+absolute coordinates, not the width and the height of the
+subplots. Adapt them as needed. After a while you get a feeling for
+good values and adjusting them gets easy.</p>
+<p>Third, adjust the whitespace between the subplots. Don't let your urge
+to give each subplot as much space as possible win. Figures usually
+look much better with quite a lot of whitespace between them:</p>
+<pre><code class="language-py">fig.subplots_adjust(wspace=0.5, hspace=0.4)
+</code></pre>
+<p>Both <code>wspace</code> and <code>hspace</code> specify the amount of whitespace relative
+to the average width/height of the subplots. <code>hspace</code> stands for
+"height" not "horizontal".</p>
+<h2 id="customizing-figure-design">Customizing figure design</h2>
+<p>Label fonts, default colors, etc. can be customized globally for all
+your plots via
+<a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>. This
+is a must-read!</p>
+<p>For example, to set the standard font size to 11pt and have somewhat
+smaller tick labels you may call</p>
+<pre><code class="language-py">plt.rcParams['font.size'] = 11
+plt.rcParams['xtick.labelsize'] = 'small'
+plt.rcParams['ytick.labelsize'] = 'small'
+</code></pre>
+<p>before you create any figures and axes.</p>
+<h2 id="further-reading-and-cheat-sheets">Further reading and cheat sheets</h2>
+<ul>
+<li>
+<p>A gallery of various plots with <a href="https://matplotlib.org/stable/plot_types/index.html">example</a> code.</p>
+</li>
+<li>
+<p>matplotlib provides some nice <a href="https://github.com/matplotlib/cheatsheets/blob/master/cheatsheets.pdf">cheat
+  sheets</a>.</p>
+</li>
+<li>
+<p>And there are a number of
+  <a href="https://matplotlib.org/stable/tutorials/index.html">tutorials</a>.</p>
+</li>
+</ul>
+<h2 id="figure-guidelines">Figure guidelines</h2>
+<p>Continue reading with some <a href="../guide/">figure guidelines</a>. </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../guide/" class="btn btn-neutral float-right" title="Plotting guidelines">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../guide/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

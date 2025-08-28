@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>plottools</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/plottools/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#enhanced-matplotlib-functionality">Enhanced matplotlib functionality</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#colors-and-styles">Colors and styles</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#helper-modules">Helper modules</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#importing-plottools-modules">Importing plottools modules</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setting-rcparams">Setting rcParams</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#demos">Demos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#howtos">Howtos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bug-reporting">Bug reporting</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Home</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p><a href="https://github.com/bendalab/plottools/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/pypi/l/plottools.svg" /></a>
+<img alt="downloads" src="https://img.shields.io/pypi/dm/plottools.svg" />
+<a href="https://github.com/bendalab/plottools/graphs/contributors"><img alt="contributors" src="https://img.shields.io/github/contributors/bendalab/plottools" /></a>
+<a href="https://github.com/bendalab/plottools/pulse"><img alt="commits" src="https://img.shields.io/github/commit-activity/m/bendalab/plottools" /></a></p>
+<h1 id="plottools">plottools</h1>
+<p>Simplify production of publication-quality figures based on <a href="https://matplotlib.org/">matplotlib</a>.</p>
+<p><a href="https://matplotlib.org/">matplotlib</a> is a powerful package for plotting in <a href="https://docs.python.org/3/">python</a>. It allows
+detailed control over every possible aspect of a plot. However, a lot
+of the provided functionality is cumbersome to use and impossible to
+remember. For specific use cases, however, a lot of this can be hidden
+in dedicated functions. The <code>plottools</code> package does this for
+scientific publications by adding a number of functions to
+<a href="https://matplotlib.org/stable/api/axes_api.html">matplotlib</a> and <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure">Figure</a> classes.</p>
+<p>The second design goal of the <code>plottools</code> package is separation of
+content and design. We know this from LaTeX documents. A good LaTeX
+document contains only the text and the logical structure. The actual
+layout (fonts, format of the sections, etc.) can then be entirely
+controlled by the header without touching the text. Equivalently,
+<a href="https://docs.python.org/3/">python</a> scripts generating various figures should only provide the
+data and necessary annotation like axes labels. The design should be
+controllable by a single central function or module that is used by
+all the scripts generating the figures. <a href="https://matplotlib.org/">matplotlib</a>'s <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a> are
+a big step in this direction but do not completely reach this
+goal. The <code>plottools</code> package expands on this, by providing additional
+<a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>, and by introducing the concept of <a href="https://bendalab.github.io/plottools/api/styles.html">plot
+styles</a>.</p>
+<h2 id="modules">Modules</h2>
+<p>The following modules are provided by the <code>plottools</code> package.</p>
+<p>See <a href="https://bendalab.github.io/plottools/api">API documentation</a> of the
+modules for more infos.</p>
+<h3 id="enhanced-matplotlib-functionality">Enhanced <a href="https://matplotlib.org/">matplotlib</a> functionality</h3>
+<p>Most modules patch the <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure">matplotlib</a> and <a href="https://matplotlib.org/stable/api/axes_api.html">Axes</a> classes to provide
+new functionality or some specialized interface:</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/align.html"><code>align</code></a>:
+  align axes labels.</li>
+<li><a href="https://bendalab.github.io/plottools/api/arrows.html"><code>arrows</code></a>:
+  arrows.</li>
+<li><a href="https://bendalab.github.io/plottools/api/aspect.html"><code>aspect</code></a>:
+  adapting plots to aspect ratio of axes.</li>
+<li><a href="https://bendalab.github.io/plottools/api/axes.html"><code>axes</code></a>:
+  setting appearance of axes.</li>
+<li><a href="https://bendalab.github.io/plottools/api/circuits.html"><code>circuits</code></a>:
+  electrical circuits.</li>
+<li><a href="https://bendalab.github.io/plottools/api/common.html"><code>common</code></a>:
+  reduce common axis labels.</li>
+<li><a href="https://bendalab.github.io/plottools/api/figure.html"><code>figure</code></a>:
+  size and file names of a <a href="https://matplotlib.org/stable/api/figure_api.html#matplotlib.figure.Figure">figure</a>.</li>
+<li><a href="https://bendalab.github.io/plottools/api/insets.html"><code>insets</code></a>:
+  insets made easy. <a href="docs/insets.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/labels.html"><code>labels</code></a>:
+  annotate axis with label and unit.</li>
+<li><a href="https://bendalab.github.io/plottools/api/legend/html"><code>legend</code></a>:
+  enhance legend text.</li>
+<li><a href="https://bendalab.github.io/plottools/api/neurons.html"><code>neurons</code></a>:
+  draw sketches of neurons.</li>
+<li><a href="https://bendalab.github.io/plottools/api/clear.html"><code>remove</code></a>:
+  remove specific artists from an axes.</li>
+<li><a href="https://bendalab.github.io/plottools/api/scalebars.html"><code>scalebars</code></a>:
+  labeled scale bars. <a href="docs/scalebars.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/significance.html"><code>significance</code></a>:
+  indicating statsitical significance.</li>
+<li><a href="https://bendalab.github.io/plottools/api/spines.html"><code>spines</code></a>:
+  modify the appearance of spines. <a href="docs/spines.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/subplots.html"><code>subplots</code></a>:
+  enhanced subplots with margins. <a href="docs/subplots.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/tag.html"><code>tag</code></a>:
+  tag axes with a label.</li>
+<li><a href="https://bendalab.github.io/plottools/api/text.html"><code>text</code></a>:
+  enhance textual annotations.</li>
+<li><a href="https://bendalab.github.io/plottools/api/ticks.html"><code>ticks</code></a>:
+  setting tick locations and formats. <a href="docs/ticks.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/title/html"><code>title</code></a>:
+  enhance title text.</li>
+</ul>
+<p>The patching is done by each module's <code>install_&lt;module&gt;()</code>
+function. This function is called automatically upon importing the
+module. While some modules simply add a few new member functions
+(e.g. <a href="https://bendalab.github.io/plottools/api/insets.html"><code>insets</code></a>)
+others modify existing functions
+(e.g. <a href="https://bendalab.github.io/plottools/api/figure.html"><code>figure</code></a>).
+An <code>uninstall_&lt;module&gt;()</code> function is provided to undo the patching.</p>
+<p>You usually do not need to care about the install/uninstall
+functions. Simply import the module of interest and you are all set.</p>
+<h3 id="colors-and-styles">Colors and styles</h3>
+<p>These two modules do not patch <a href="https://matplotlib.org/">matplotlib</a>, but provide functions
+aiding the separation of content and design:</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/colors.html"><code>colors</code></a>:
+  color palettes and tools for manipulating colors. <a href="docs/colors.md">More...</a></li>
+<li><a href="https://bendalab.github.io/plottools/api/styles.html"><code>styles</code></a>:
+  plotting styles.</li>
+</ul>
+<h3 id="helper-modules">Helper modules</h3>
+<p>These modules are used internally by other modules of the plottools
+package:</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/latex.html"><code>latex</code></a>:
+  translate LaTeX texts.</li>
+<li><a href="https://bendalab.github.io/plottools/api/rcsetup.html"><code>rcsetup</code></a>:
+  additional validators for <code>matplotlib.rcsetup</code>. </li>
+<li><a href="https://bendalab.github.io/plottools/api/version.html"><code>version</code></a>:
+  version of plottools and other packages.</li>
+</ul>
+<h2 id="importing-plottools-modules">Importing plottools modules</h2>
+<p>Each module can be imported separately. No other functionality of the
+<code>plottools</code> is then installed or executed. The only exception are the
+<a href="https://bendalab.github.io/plottools/api/plottools.html"><code>plottools</code></a>
+and <a href="https://bendalab.github.io/plottools/api/params.html"><code>params</code></a>
+modules that import all the other modules. For example, if you are
+only interested in the functions the
+<a href="https://bendalab.github.io/plottools/api/ticks.html"><code>ticks</code></a> module
+provides, then you can do</p>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.ticks
+# installs set_xticks_delta() (and other functions) on matplotlib Axes class
+
+fig, ax = plt.subplots()
+ax.set_xticks_delta(1.0)
+</code></pre>
+<p>For importing all <code>plottools</code> modules, simply import the module</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/plottools.html"><code>plottools</code></a>:
+  import all plottool modules and install their functions in <a href="https://matplotlib.org/">matplotlib</a>.</li>
+</ul>
+<p>i.e.</p>
+<pre><code class="language-py">import plottools.plottools as pt 
+</code></pre>
+<p>This also imports all the functions of the modules such they can be used
+directly in the <code>pt</code> namespace. For example:</p>
+<pre><code class="language-py">light_blue = pt.lighter(pt.color_palettes['muted']['blue'], 0.4)
+</code></pre>
+<p>A special module is</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/params.html"><code>params</code></a>:
+  functions setting default <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a> settings for all modules.</li>
+</ul>
+<p>which also imports and installs all other modules via the
+<a href="https://bendalab.github.io/plottools/api/plottools.html"><code>plottools</code></a>
+module. This module provides a few functions
+(e.g. <a href="https://bendalab.github.io/plottools/api/params.html#plottools.params.paper_style"><code>paper_style()</code></a>)
+that set some default <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a> and add a number of plotting styles
+to a namespace.</p>
+<p>These functions can be used like this:</p>
+<pre><code class="language-py">from plottools.params import paper_style
+
+class s: pass   # namespace for plotting styles
+paper_style(s)  # install all plottool functions in matplotlib and populate s with plotting styles
+fig, ax = plt.subplots(cmsize=(12, 8))  # new subplots() argument `cmsize`
+ax.plot(x, y, **s.lsB1)                 # plotting style
+ax.set_xticks_delta(0.5)      # new function for setting spacing of tick marks
+fig.savefig()                 # use name of script as name for figure file
+</code></pre>
+<p>Usually you will not import the
+<a href="https://bendalab.github.io/plottools/api/params.html"><code>params</code></a>
+module, but rahter copy one of its functions and adapt them to your
+own needs.</p>
+<h2 id="setting-rcparams">Setting <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a></h2>
+<p>Most modules have a <code>&lt;module&gt;_params()</code> function for setting rc
+parameters to default values. In many cases these functions are just
+an alternative way to set <a href="https://matplotlib.org/">matplotlib</a>'s <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>.  Many <code>plottools</code>
+modules define additional <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>, that also can be set by these
+functions.</p>
+<p>The following modules just provide such a function as an alternative
+interface for setting <a href="https://matplotlib.org/">matplotlib</a>'s <a href="https://matplotlib.org/stable/tutorials/introductory/customizing.html">rcParams</a>:</p>
+<ul>
+<li><a href="https://bendalab.github.io/plottools/api/git.html"><code>grid</code></a>:
+  setting grid appearance.</li>
+</ul>
+<p>Usually, the <code>&lt;module&gt;_params()</code> have many arguments that by default
+are set to <code>None</code>. Only the arguments that you provide and differ from
+<code>None</code> are actually set, the other ones stay untouched. For example:</p>
+<pre><code class="language-py">from plottools.text import text_params
+
+# set the default font size and family:
+text_params(font_size=12.0, font_family='sans-serif')
+# turn on LaTex mode:
+text_params(latex=True)
+</code></pre>
+<p>This is equivalent to</p>
+<pre><code class="language-py">import matplotlib as mpl
+
+mpl.rcParams['font.size'] = 12
+mpl.rcParams['font.family'] = 'sans-serif'
+mpl.rcParams['text.usetex'] = True
+</code></pre>
+<h2 id="demos">Demos</h2>
+<p>For a demonstration of the functionality of all modules run</p>
+<pre><code class="language-py">python demos.py
+</code></pre>
+<p>For demos of the individual modules in <code>plottools/</code>, 
+run, for example,</p>
+<pre><code class="language-py">python -m src.plottools.spines
+</code></pre>
+<h2 id="howtos">Howtos</h2>
+<ul>
+<li>A quick introduction to <a href="https://matplotlib.org/">matplotlib</a>: <a href="docs/starter.md">Getting started with
+  matplotlib</a>.</li>
+<li>A general guidline for preparing figures for your next manuscript or
+  presentation: <a href="docs/guide.md">Figure guidelines</a>.</li>
+<li>From spaghetti code to a structured code generating a figure:
+  <a href="docs/code.md">Coding a figure</a>.</li>
+<li>A suggestion for structuring code that generates plot figures:
+  <a href="docs/structure.md">How to structure your code</a>.</li>
+</ul>
+<h2 id="bug-reporting">Bug reporting</h2>
+<p>The <code>plottools</code> are still in a conceptual phase, interfaces might
+change without notice and tests on various <a href="https://docs.python.org/3/">python</a> and <a href="https://matplotlib.org/">matplotlib</a>
+versions are not done yet. So getting an error is not unlikely.</p>
+<p>Providing a pull request that fixes the error or provides new
+functionality is, of course, most appreciated.</p>
+<p>You can also open an issue, describing the error. Before doing so,
+check whether you get the error when you run the demo of the
+respective module. E.g.</p>
+<pre><code class="language-py">python -m src.plottools.figures
+</code></pre>
+<p>Mention the outcome in the issue.</p>
+<p>In any case, run</p>
+<pre><code class="language-py">python -m src.plottools.version
+</code></pre>
+<p>and paste the output (<a href="https://docs.python.org/3/">python</a>, <a href="https://numpy.org/">numpy</a>, <a href="https://pandas.pydata.org/">pandas</a>, <a href="https://matplotlib.org/">matplotlib</a> and
+<code>plottools</code> versions) into the issue.</p>
+<h2 id="documentation">Documentation</h2>
+<p>The full <a href="https://bendalab.github.io/plottools">documentation</a> is provided on 
+<a href="https://bendalab.github.io/plottools">github.io</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="starter/" class="btn btn-neutral float-right" title="Getting started with matplotlib">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="starter/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-08-28 16:13:07.375877+00:00
+-->

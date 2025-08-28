@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.figure API documentation</title>
+<meta name="description" content="Size and file names of a figure …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.figure</code></h1>
+</header>
+<section id="section-intro">
+<p>Size and file names of a figure.</p>
+<p>Patches matplotlib to provide the following features:</p>
+<h2 id="figure-size-in-centimeters">Figure size in centimeters</h2>
+<p>You can specify the figure size in centimeters:</p>
+<pre><code>fig = plt.figure(cmsize=(20.0, 16.0))         # in cm!
+fig, ax = plt.subplots(cmsize=(16.0, 10.0))   # in cm!
+</code></pre>
+<h2 id="default-file-names-for-figures">Default file names for figures</h2>
+<p>If no file name or only a file extension is specified in <code>fig.savefig()</code>,
+then the file name of the main script is used. So you can call</p>
+<pre><code class="language-py">fig.savefig()
+</code></pre>
+<p>and get a 'figure.pdf' file (if the python script was called 'figure.py').
+If the file name just specifies a path that ends with '/', then the name
+of the main script is appended:</p>
+<pre><code class="language-py">fig.savefig('plots/')
+</code></pre>
+<p>writes the file `plots/figure.pdf'.</p>
+<p>If the file name specified in <code>fig.savefig()</code> starts with a '+',
+then this string without the plus is added to the name of the main script.
+This is usefull for saving several figures for a (LaTeX beamer) talk.
+For example, a python script named 'example.py'</p>
+<pre><code class="language-py">fig1.savefig('+-one')
+fig2.savefig('+-two')
+</code></pre>
+<p>generates the files 'example-one.pdf' and 'example-two.pdf' (or whatever file type
+was specified in <code>rcParams['savefig.format']</code>).</p>
+<p>A '@' character in the file name is replaced by 'A', 'B', 'C', &hellip;
+according to how often <code>fig.savefig()</code> is called from within the same
+figure. If the '@' is the first character of the file name,
+it is added to the name of the main script. So in 'example.py' we can write</p>
+<pre><code class="language-py">fig.savefig('@')
+fig.savefig('@')
+latex_include_figures()
+</code></pre>
+<p>This prints to the console</p>
+<pre><code class="language-txt">\includegraphics&lt;1&gt;{exampleA}
+\includegraphics&lt;2&gt;{exampleB}
+</code></pre>
+<p>and generates the respective files.
+By setting <code>rcParams['savefig.counter']</code> (<code>counter</code> argument in <code><a title="plottools.figure.figure_params" href="#plottools.figure.figure_params">figure_params()</a></code>)
+to 'A', 'a', or '1', '@' in file names is replaced 'A', 'B', 'C', &hellip;,
+'a', 'b', 'c', &hellip; or '1', '2', '3', &hellip;, respectively.</p>
+<h2 id="strip-embedded-fonts-from-pdf-file">Strip embedded fonts from pdf file</h2>
+<p>By setting <code>stripfonts=True</code> in <code>savefig()</code> or via
+<code>rcParams['pdf.stripfonts']</code>, figures saved as pdf files
+are run through <code>ps2pdf</code> in order to remove embedded fonts.
+This significantly reduces the file size of the generated
+figure files, and is in particular useful when using LaTeX mode
+and including the figures in a LaTeX document.</p>
+<h2 id="functions">Functions</h2>
+<ul>
+<li><code><a title="plottools.figure.cm_size" href="#plottools.figure.cm_size">cm_size()</a></code>: convert dimensions from cm to inch.</li>
+<li><code><a title="plottools.figure.latex_include_figures" href="#plottools.figure.latex_include_figures">latex_include_figures()</a></code>: print LaTeX <code>\includegraphics&lt;&gt;{}</code> commands for all saved files.</li>
+</ul>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<ul>
+<li><code><a title="plottools.figure.set_size_cm" href="#plottools.figure.set_size_cm">set_size_cm()</a></code>: set the figure size in centimeters.</li>
+<li><code><a title="plottools.figure.get_savefig_count" href="#plottools.figure.get_savefig_count">get_savefig_count()</a></code>: number of <code>savefig()</code> calls on the figure.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.figure.figure_params" href="#plottools.figure.figure_params">figure_params()</a></code>: set savefig options via matplotlib's rc settings.</li>
+</ul>
+<p><code>mpl.rcParams</code> defined by the figures module:</p>
+<pre><code class="language-py">savefig.counter: 'A'
+pdf.stripfonts: False
+</code></pre>
+<h2 id="installuninstall-figure-functions">Install/uninstall figure functions</h2>
+<p>You usually do not need to call these functions. Upon loading the figure
+module, <code><a title="plottools.figure.install_figure" href="#plottools.figure.install_figure">install_figure()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.figure.install_figure" href="#plottools.figure.install_figure">install_figure()</a></code>: install functions of the figure module in matplotlib.</li>
+<li><code><a title="plottools.figure.uninstall_figure" href="#plottools.figure.uninstall_figure">uninstall_figure()</a></code>: uninstall all code of the figure module from matplotlib.</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.figure.cm_size"><code class="name flex">
+<span>def <span class="ident">cm_size</span></span>(<span>*args)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert dimensions from cm to inch.</p>
+<p>Use this function to set the size of a figure in centimeter:</p>
+<pre><code>fig = plt.figure(figsize=cm_size(16.0, 10.0))
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>args</code></strong> :&ensp;<code>one</code> or <code>many float</code></dt>
+<dd>Size in centimeter.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>inches</code></strong> :&ensp;<code>float</code> or <code>list</code> of <code>floats</code></dt>
+<dd>Input arguments converted to inch.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.figure.set_size_cm"><code class="name flex">
+<span>def <span class="ident">set_size_cm</span></span>(<span>fig, w, h=None, forward=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the figure size in centimeters.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib figure</code></dt>
+<dd>The figure of which to set the size.</dd>
+<dt><strong><code>w</code></strong> :&ensp;<code>float</code> or <code>(float, float)</code></dt>
+<dd>If <code>h</code> is not specified, width and height of the figure in centimeters,
+otherwise the width of the figure.</dd>
+<dt><strong><code>h</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Height of the figure in centimeters.</dd>
+<dt><strong><code>forward</code></strong> :&ensp;<code>bool</code></dt>
+<dd>If <code>True</code>, the canvas size is automatically updated, e.g.,
+you can resize the figure window from the shell.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.figure.get_savefig_count"><code class="name flex">
+<span>def <span class="ident">get_savefig_count</span></span>(<span>fig)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Number of <code>savefig()</code> calls on the figure.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib.figure</code></dt>
+<dd>The figure.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>counter</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of calls to <code>fig.savefig()</code> on this figure.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.figure.latex_include_figures"><code class="name flex">
+<span>def <span class="ident">latex_include_figures</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Print LaTeX <code>\includegraphics&lt;&gt;{}</code> commands for all saved files.</p>
+<p>This can then be copied directly into you LaTeX document to include
+the generated figures.
+For multiple files from the same figure,
+beamer overlay specification are printed as well.</p>
+<h2 id="examples">Examples</h2>
+<p>A python script named 'intro.py'</p>
+<pre><code class="language-py">from plottools.figure import latex_include_figures
+...
+fig1.savefig('@')
+fig1.savefig('@')
+fig2.savefig('data')
+latex_include_figures()
+</code></pre>
+<p>writes to console</p>
+<pre><code class="language-txt">\includegraphics&lt;1&gt;{introA}
+\includegraphics&lt;2&gt;{introB}
+\includegraphics{data}
+</code></pre></div>
+</dd>
+<dt id="plottools.figure.figure_params"><code class="name flex">
+<span>def <span class="ident">figure_params</span></span>(<span>color=None, format=None, counter=None, dpi=None, compression=None, fonttype=None, stripfonts=None, cmsize=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set figure parameter.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color specification</code> or <code>'none'</code></dt>
+<dd>Background color for the whole figure.
+Sets rcParam <code>figure.facecolor</code> and <code>savefig.facecolor</code>.
+For setting the background color of a specific figure, use
+<code>fig.set_facecolor(color)</code>
+or pass it to the <code>plt.figure()</code> or <code>plt.subplots()</code> functions
+via the <code>facecolor</code>keyword argument.</dd>
+<dt><strong><code>format</code></strong> :&ensp;<code>'png', 'ps', 'pdf', 'svg'</code></dt>
+<dd>File format of the saved figure. Sets rcParam <code>savefig.format</code>.</dd>
+<dt><strong><code>counter</code></strong> :&ensp;<code>'A', 'a',</code> or <code>'1'</code></dt>
+<dd>Specifies how a '@' character in the file name passed to <code>fig.savefig()</code>
+is translated into a string. Sets rcParam <code>savefig.counter</code>.</dd>
+<dt><strong><code>dpi</code></strong> :&ensp;<code>int</code></dt>
+<dd>For pixel graphics the number of dots per inch.</dd>
+<dt><strong><code>compression</code></strong> :&ensp;<code>int</code></dt>
+<dd>Compression level of pdf file from 0 to 9.
+Sets rcParam <code>pdf.compression</code>.</dd>
+<dt><strong><code>fonttype</code></strong> :&ensp;<code>3</code> or <code>42</code></dt>
+<dd>Type 3 (Type3) or Type 42 (TrueType) fonts.
+Sets rcParams <code>pdf.fonttype</code> and <code>ps.fonttype</code>.
+Type3 use less disk space but are less well editable,
+Type42 use more disk space but are better editable in vector
+graphics software (says the internet).</dd>
+<dt><strong><code>stripfonts</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>If output file format is pdf, then run ps2pdf on the generated
+pdf file to strip it from embedded fonts. This might then look
+ugly as a standalone figure, but results in nice plots within
+a latex documents at a fraction of the file size.
+Sets
+rcParam <code>pdf.stripfonts</code>.</dd>
+<dt><strong><code>cmsize</code></strong> :&ensp;<code>tuple</code> of <code>floats</code></dt>
+<dd>Default width and height of a figure in centimeters.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.figure.install_figure"><code class="name flex">
+<span>def <span class="ident">install_figure</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the figure module in matplotlib.</p>
+<p>Patches a few matplotlib functions (<code>plt.figure()</code>,
+<code>plt.subplots()</code>, <code>fig.savefig()</code>, <code>plt.savefig()</code>).</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.figure.uninstall_figure" href="#plottools.figure.uninstall_figure">uninstall_figure()</a></code></p></div>
+</dd>
+<dt id="plottools.figure.uninstall_figure"><code class="name flex">
+<span>def <span class="ident">uninstall_figure</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the figure module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.figure.install_figure" href="#plottools.figure.install_figure">install_figure()</a></code></p></div>
+</dd>
+<dt id="plottools.figure.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the figure module.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#figure-size-in-centimeters">Figure size in centimeters</a></li>
+<li><a href="#default-file-names-for-figures">Default file names for figures</a></li>
+<li><a href="#strip-embedded-fonts-from-pdf-file">Strip embedded fonts from pdf file</a></li>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-figure-functions">Install/uninstall figure functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="plottools.figure.cm_size" href="#plottools.figure.cm_size">cm_size</a></code></li>
+<li><code><a title="plottools.figure.set_size_cm" href="#plottools.figure.set_size_cm">set_size_cm</a></code></li>
+<li><code><a title="plottools.figure.get_savefig_count" href="#plottools.figure.get_savefig_count">get_savefig_count</a></code></li>
+<li><code><a title="plottools.figure.latex_include_figures" href="#plottools.figure.latex_include_figures">latex_include_figures</a></code></li>
+<li><code><a title="plottools.figure.figure_params" href="#plottools.figure.figure_params">figure_params</a></code></li>
+<li><code><a title="plottools.figure.install_figure" href="#plottools.figure.install_figure">install_figure</a></code></li>
+<li><code><a title="plottools.figure.uninstall_figure" href="#plottools.figure.uninstall_figure">uninstall_figure</a></code></li>
+<li><code><a title="plottools.figure.demo" href="#plottools.figure.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>

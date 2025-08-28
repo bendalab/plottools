@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/colors/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Colors - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Colors";
+        var mkdocs_page_input_path = "colors.md";
+        var mkdocs_page_url = "/plottools/colors/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Colors</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#color-palettes">Color palettes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#plain-rgb-colors">Plain RGB colors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#muted-colors">Muted colors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vivid-colors">Vivid colors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tableau">Tableau</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#color-palette-by-jorg-henninger">Color palette by J&ouml;rg Henninger</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#color-pallete-of-our-scientific-computing-script">Color pallete of our Scientific Computing script</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#color-palette-of-the-corporate-design-of-the-university-of-tubingen">Color palette of the corporate design of the University of T&uuml;bingen</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#farbkreis-by-johannes-itten-1961">Farbkreis by Johannes Itten, 1961</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#solarized-colors-by-ethan-schoonover-from-latex-xcolor-solarized-package">Solarized colors by Ethan Schoonover (from LaTeX xcolor-solarized package)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#googles-material-color-palette-from-latex-xcolor-material-package">Google's material color palette (from LaTeX xcolor-material package)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#color-manipulation">Color manipulation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#lighter-colors">Lighter colors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#darker-colors">Darker colors</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gradient-between-two-colors">Gradient between two colors</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#latex-colors">LaTeX colors</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#color-maps">Color maps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#display-colors">Display colors</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../subplots/">Subplots</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Colors</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="colors-module">Colors module</h1>
+<p>Make sure you know about</p>
+<ul>
+<li><a href="https://matplotlib.org/3.1.0/tutorials/colors/colormaps.html">matplotlib color maps</a></li>
+<li><a href="https://jiffyclub.github.io/palettable">Palettable</a>: many beautiful color palettes</li>
+</ul>
+<p>Load the color module:</p>
+<pre><code>import plottools.colors as c
+</code></pre>
+<h2 id="color-palettes">Color palettes</h2>
+<p>The color module provides a few color palettes as dictionaries that
+reference colors by standard color names.</p>
+<pre><code>c.color_palettes
+</code></pre>
+<p>is a dictionary referencing all color palettes provided by the module
+by their name.</p>
+<p>For example</p>
+<pre><code>colors = c.color_palettes['muted']
+colors['red']
+</code></pre>
+<p>returns the red color of the <code>colors_muted</code> palette. The returned
+colors are valid matplotlib colors and can be passed on to the <code>color</code>,
+<code>facecolor</code>, <code>edgecolor</code>, etc. arguments of the various matplotlib
+plotting functions.</p>
+<p>The following sections display the colors and their names of all provided palettes.</p>
+<h3 id="plain-rgb-colors">Plain RGB colors</h3>
+<pre><code>c.colors_plain
+</code></pre>
+<p><img alt="plain" src="../figures/colors-plain.png" /></p>
+<p>This palette is provided for completeness. The colors are made up of
+either full or half saturated RGB values, e.g. red is '#ff0000', green
+is '#00ff00', and orange is '#ff8000'.</p>
+<h3 id="muted-colors">Muted colors</h3>
+<pre><code>c.colors_muted
+</code></pre>
+<p><img alt="muted" src="../figures/colors-muted.png" /></p>
+<p>This palette extends the <code>colors_henninger</code> palette.</p>
+<h3 id="vivid-colors">Vivid colors</h3>
+<pre><code>c.colors_vivid
+</code></pre>
+<p><img alt="vivid" src="../figures/colors-vivid.png" /></p>
+<p>Vivid but not plain basic colors for a fresh look.</p>
+<h3 id="tableau">Tableau</h3>
+<pre><code>c.colors_tableau
+</code></pre>
+<p><img alt="tableau" src="../figures/colors-tableau.png" /></p>
+<p>This is matplotlib's tableau palette, the default in newer matplotlib
+versions, also known as <code>tab10</code>.</p>
+<h3 id="color-palette-by-jorg-henninger">Color palette by J&ouml;rg Henninger</h3>
+<pre><code>c.colors_henninger
+</code></pre>
+<p><img alt="henninger" src="../figures/colors-henninger.png" /></p>
+<h3 id="color-pallete-of-our-scientific-computing-script">Color pallete of our Scientific Computing script</h3>
+<pre><code>c.colors_scicomp
+</code></pre>
+<p><img alt="scicomp" src="../figures/colors-scicomp.png" /></p>
+<p>Nice red, orange and yellow, but blue and green need some improvement.</p>
+<h3 id="color-palette-of-the-corporate-design-of-the-university-of-tubingen">Color palette of the corporate design of the University of T&uuml;bingen</h3>
+<pre><code>c.colors_unituebingen
+</code></pre>
+<p><img alt="unituebingen" src="../figures/colors-unituebingen.png" /></p>
+<h3 id="farbkreis-by-johannes-itten-1961">Farbkreis by Johannes Itten, 1961</h3>
+<pre><code>c.colors_itten
+</code></pre>
+<p><img alt="itten" src="../figures/colors-itten.png" /></p>
+<h3 id="solarized-colors-by-ethan-schoonover-from-latex-xcolor-solarized-package">Solarized colors by Ethan Schoonover (from LaTeX xcolor-solarized package)</h3>
+<pre><code>c.colors_solarized
+</code></pre>
+<p><img alt="solarized" src="../figures/colors-solarized.png" /></p>
+<h3 id="googles-material-color-palette-from-latex-xcolor-material-package">Google's material color palette (from LaTeX xcolor-material package)</h3>
+<pre><code>c.colors_material
+</code></pre>
+<p><img alt="material" src="../figures/colors-material.png" /></p>
+<h2 id="color-manipulation">Color manipulation</h2>
+<h3 id="lighter-colors">Lighter colors</h3>
+<p>Make colors lighter.</p>
+<p><img alt="lighter" src="../figures/colors-lighter.png" /></p>
+<p>For 40% lightness of blue do</p>
+<pre><code>colors = c.color_palettes['muted']
+lightblue = c.lighter(colors['blue'], 0.4)
+</code></pre>
+<h3 id="darker-colors">Darker colors</h3>
+<p>Make colors darker.</p>
+<p><img alt="darker" src="../figures/colors-darker.png" /></p>
+<p>For 40% darker blue do</p>
+<pre><code>colors = c.color_palettes['muted']
+darkblue = c.darker(colors['blue'], 0.4)
+</code></pre>
+<h3 id="gradient-between-two-colors">Gradient between two colors</h3>
+<p>Mix two colors.</p>
+<p><img alt="gradient" src="../figures/colors-gradient.png" /></p>
+<p>For 30% transition between blue and orange do</p>
+<pre><code>colors = c.color_palettes['muted']
+colors = c.color_palettes['muted']
+color = c.gradient(colors['blue'], colors['orange'], 0.3)
+</code></pre>
+<h2 id="latex-colors">LaTeX colors</h2>
+<p>If you want to use in your LaTeX document the same colors as in your plots,
+then you can export matplotlib colors using the <code>latex_colors()</code> function.
+Either for single colors:</p>
+<pre><code>colors = c.color_palettes['muted']
+c.latex_colors(colors['red'], 'red')
+</code></pre>
+<p>writes to the console</p>
+<pre><code>\definecolor{red}{rgb}{0.753,0.153,0.090}
+</code></pre>
+<p>or for a whole palette:</p>
+<pre><code>c.latex_colors(c.color_palettes['vivid'])
+</code></pre>
+<p>writes to the console</p>
+<pre><code>\definecolor{red}{rgb}{0.843,0.063,0.000}
+\definecolor{orange}{rgb}{1.000,0.565,0.000}
+\definecolor{yellow}{rgb}{1.000,0.969,0.000}
+...
+</code></pre>
+<p>Then copy the color definitions into you LaTeX preamble. Do not forget to
+load the <code>color</code> or <code>xcolor</code> packages before:</p>
+<pre><code>\usepackage{xcolor}
+</code></pre>
+<p>You then can use the newly defined  colors with the usual commands, like for example:</p>
+<pre><code>\textcolor{red}{Some text in my special red.}
+</code></pre>
+<h2 id="color-maps">Color maps</h2>
+<p>Generate and register a color map from colors like this:</p>
+<pre><code>colors = c.color_palettes['muted']
+cmcolors = [colors['red'],
+            c.lighter(colors['orange'], 0.85),
+            c.lighter(colors['yellow'], 0.2),
+            c.lighter(colors['lightblue'], 0.8),
+            colors['blue']]
+cmvalues = [0.0, 0.25, 0.5, 0.8, 1.0]
+c.colormap('RYB', cmcolors, cmvalues)
+</code></pre>
+<p>This is just a simple wrapper for
+<code>matplotlib.colors.LinearSegmentedColormap</code> and <code>matplotlib.cm import
+register_cmap</code>.</p>
+<p>The new colormap can then be used directly by its name for the <code>cmap</code>
+arguments of <code>imshow()</code>, <code>pcolormesh()</code>, <code>contourf()</code>, etc.:</p>
+<pre><code>ax.imshow(image, cmap='RYB')
+</code></pre>
+<p><img alt="colormap" src="../figures/colors-colormap.png" /></p>
+<p>Retrieve a single color from a color map:</p>
+<pre><code>jet_red = c.cmap_color('jet', 0.0)
+</code></pre>
+<h2 id="display-colors">Display colors</h2>
+<p>For displaying colors and color maps, four functions are provided:</p>
+<ul>
+<li><code>plot_colors()</code>: plot all colors of a palette and optionally some lighter and darker variants.
+  <img alt="plotcolors" src="../figures/colors-plotcolors.png" /></li>
+<li><code>plot_complementary_colors()</code>: plot complementary colors of a palette on top of each other.
+  <img alt="plotcomplementary" src="../figures/colors-plotcomplementary.png" /></li>
+<li><code>plot_color_comparison()</code>: plot matching colors of severals palettes on top of each other.
+  <img alt="plotcomparison" src="../figures/colors-plotcomparison.png" /></li>
+<li><code>plot_colormap()</code>: plot a color map and its luminance.
+  <img alt="plotcolormap" src="../figures/colors-plotcolormap.png" /></li>
+</ul>
+<p>These functions are helpfull when creating new palettes. See their
+documentation for details on how to use them.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../structure/" class="btn btn-neutral float-left" title="How to structure your code"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../figure/" class="btn btn-neutral float-right" title="Figure">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../structure/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../figure/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

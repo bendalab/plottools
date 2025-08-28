@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Benda-Lab" /><link rel="canonical" href="https://bendalab.github.io/plottools/subplots/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Subplots - plottools</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Subplots";
+        var mkdocs_page_input_path = "subplots.md";
+        var mkdocs_page_url = "/plottools/subplots/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> plottools
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../starter/">Getting started with matplotlib</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../guide/">Plotting guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../code/">Coding a figure</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../structure/">How to structure your code</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../colors/">Colors</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../figure/">Figure</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Subplots</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#figure-margins">Figure margins</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-specs">Grid specs</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../spines/">Spines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ticks/">Ticks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../insets/">Insets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scalebars/">Scalebars</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../api/index.html">API reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">plottools</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">User Guide</li>
+      <li class="breadcrumb-item active">Subplots</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="subplots-module">Subplots module</h1>
+<p>Enhanced subplots with margins.</p>
+<p>Importing the subplots module modifies the matplotlib functions
+<code>plt.subplots()</code>, <code>fig.add_gridspec()</code>, <code>gridspec.update()</code>. </p>
+<p><code>import matplotlib.pyplot as plt 
+import plottools.subplots</code></p>
+<p>Then the following features are available:</p>
+<h2 id="figure-margins">Figure margins</h2>
+<p>In matplotlib margins, i.e. the space between the axes and the figure
+edges, are controlled via <code>left</code>, <code>right</code>, <code>top</code>, and <code>bottom</code>
+arguments to the <code>fig.subplots_adjust()</code> and related functions. These
+arguments are given in fractions of the figure size as values ranging
+between 0 and 1. This is often quite cumbersome, because the margins
+get bigger if the figure size is enlarged, although the size of the
+tick and axis labels stay the same.</p>
+<p>The subplots module introduces <code>leftm</code>, <code>rightm</code>, <code>topm</code>, and
+<code>bottomm</code> as additional arguments to the <code>plt.subplots()</code>,
+<code>fig.subplots_adjust()</code>, <code>fig.add_gridspec()</code> and <code>gridspec.update()</code>
+functions. These arguments specify the margins in units of the current
+font size, because the font size is what sets the size of the tick and
+axis labels. And they are measured from the respective figure edge,
+not from the figure's origin. I.e. specifying <code>topm=0</code> is the same as
+<code>top=1</code>, and results in no margin at the top of the upper axes. In
+addition, a resize event handler is installed, that ensures that the
+margins stay the same (when specified by the new arguments) when you
+resize the figure on the screen.</p>
+<p>TODO: image illustrating figure margins.</p>
+<h2 id="grid-specs">Grid specs</h2>
+<p><code>plt.subplots()</code> can be called with <code>width_ratios</code> and <code>height_ratios</code>.</p>
+<p>Further, <code>figure.add_gridspec()</code> is made available for older
+matplotlib versions that do not have this function yet.</p>
+<p>To merge several subplots into a single axes, call <code>fig.merge()</code>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../figure/" class="btn btn-neutral float-left" title="Figure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../spines/" class="btn btn-neutral float-right" title="Spines">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/bendalab/plottools/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../figure/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../spines/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
