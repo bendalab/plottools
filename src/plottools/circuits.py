@@ -271,7 +271,7 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
     w = mpl.rcParams['circuits.scale']
-    h = 0.5*mpl.rcParams['circuits.scale']
+    h = 0.4*mpl.rcParams['circuits.scale']
     x, y = pos
     ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
                            zorder=zorder, edgecolor='none',
@@ -358,7 +358,7 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    w = 0.5*mpl.rcParams['circuits.scale']
+    w = 0.4*mpl.rcParams['circuits.scale']
     h = mpl.rcParams['circuits.scale']
     x, y = pos
     ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
@@ -451,7 +451,7 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
     w = mpl.rcParams['circuits.scale']
-    h = 0.5*mpl.rcParams['circuits.scale']
+    h = 0.4*mpl.rcParams['circuits.scale']
     x, y = pos
     transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
     ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
@@ -551,7 +551,7 @@ def capacitance_h(ax, pos, label='', align='above', lw=None,
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
     w = mpl.rcParams['circuits.scale']
-    h = mpl.rcParams['circuits.scale']*0.8/3
+    h = mpl.rcParams['circuits.scale']*0.2
     x, y = pos
     ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
             zorder=zorder, lw=lw, color=color)
@@ -626,7 +626,7 @@ def capacitance_v(ax, pos, label='', align='right', lw=None,
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
     w = mpl.rcParams['circuits.scale']
-    h = mpl.rcParams['circuits.scale']*0.8/3
+    h = mpl.rcParams['circuits.scale']*0.2
     x, y = pos
     ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
             zorder=zorder, lw=lw, color=color)
@@ -699,8 +699,8 @@ def battery_h(ax, pos, label='', align='above', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    w = mpl.rcParams['circuits.scale']*4/3
-    h = mpl.rcParams['circuits.scale']*0.8/3
+    w = mpl.rcParams['circuits.scale']*1.2
+    h = mpl.rcParams['circuits.scale']*0.2
     x, y = pos
     ax.plot([x - 0.5*h, x - 0.5*h], [y - 0.5*w, y + 0.5*w],
             zorder=zorder, lw=lw, color=color)
@@ -774,8 +774,8 @@ def battery_v(ax, pos, label='', align='right', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    w = mpl.rcParams['circuits.scale']*4/3
-    h = mpl.rcParams['circuits.scale']*0.8/3
+    w = mpl.rcParams['circuits.scale']*1.2
+    h = mpl.rcParams['circuits.scale']*0.2
     x, y = pos
     ax.plot([x - 0.5*w, x + 0.5*w], [y + 0.5*h, y + 0.5*h],
             zorder=zorder, lw=lw, color=color)
@@ -846,8 +846,8 @@ def ground(ax, pos, label='', align='right', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    w = mpl.rcParams['circuits.scale']*0.8
-    h = mpl.rcParams['circuits.scale']*0.17
+    w = mpl.rcParams['circuits.scale']*0.9
+    h = mpl.rcParams['circuits.scale']*0.2
     w *= 0.5
     h *= 0.5
     x, y = pos
@@ -922,8 +922,8 @@ def ground_u(ax, pos, label='', align='right', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    w = mpl.rcParams['circuits.scale']*0.8
-    h = mpl.rcParams['circuits.scale']*0.17
+    w = mpl.rcParams['circuits.scale']*0.9
+    h = mpl.rcParams['circuits.scale']*0.2
     w *= 0.5
     h *= 0.5
     x, y = pos
@@ -1016,19 +1016,19 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    a = mpl.rcParams['circuits.scale']*5/3
-    r = a/2/np.sqrt(3)
+    r = mpl.rcParams['circuits.scale']*0.5
+    a = 2*np.sqrt(3)*r
     x, y = pos
     xy = np.array([[x - r, y - 0.5*a], [x - r, y + 0.5*a], [x + 2*r, y]])
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder, edgecolor='none',
                          facecolor=facecolor, alpha=alpha))
     ax.add_patch(Polygon(xy, closed=True,
-                         zorder=zorder+1, edgecolor=color,
+                         zorder=zorder + 1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x - 0.8*r, y + 0.21*a, '$+$', ha='left', va='center',
+    ax.text(x - 0.8*r, y + 1.05*r, '$+$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x - 0.8*r, y - 0.19*a, '$-$', ha='left', va='center',
+    ax.text(x - 0.8*r, y - 0.95*r, '$-$', ha='left', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
         ha = 'left'
@@ -1047,8 +1047,8 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x+0.1*r, y + yy, label, zorder=zorder+1, **kwargs)
-    return Pos(x - r, y - 0.2*a), Pos(x - r, y + 0.2*a), Pos(x + 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
+        ax.text(x + 0.1*r, y + yy, label, zorder=zorder + 1, **kwargs)
+    return Pos(x - r, y - r), Pos(x - r, y + r), Pos(x + 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
 
 
 def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
@@ -1115,19 +1115,19 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
-    a = mpl.rcParams['circuits.scale']*5/3
-    r = a/2/np.sqrt(3)
+    r = mpl.rcParams['circuits.scale']*0.5
+    a = 2*np.sqrt(3)*r
     x, y = pos
     xy = np.array([[x + r, y - 0.5*a], [x + r, y + 0.5*a], [x - 2*r, y]])
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder, edgecolor='none',
                          facecolor=facecolor, alpha=alpha))
     ax.add_patch(Polygon(xy, closed=True,
-                         zorder=zorder+1, edgecolor=color,
+                         zorder=zorder + 1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x + 0.8*r, y + 0.21*a, '$+$', ha='right', va='center',
+    ax.text(x + 0.8*r, y + 1.05*r, '$+$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x + 0.8*r, y - 0.19*a, '$-$', ha='right', va='center',
+    ax.text(x + 0.8*r, y - 0.95*r, '$-$', ha='right', va='center',
             fontsize='x-small', color=color, zorder=zorder+1)
     if label:
         ha = 'right'
@@ -1146,8 +1146,8 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
-    return Pos(x + r, y - 0.2*a), Pos(x + r, y + 0.2*a), Pos(x - 2*r, y), Pos(x, y-1.2*r), Pos(x, y+1.2*r)
+        ax.text(x, y + yy, label, zorder=zorder + 1, **kwargs)
+    return Pos(x + r, y - r), Pos(x + r, y + r), Pos(x - 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
 
 
 def switch_h(ax, pos, label='', align='above', lw=None, color=None,
@@ -1438,6 +1438,113 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
     return Pos(pos[0], pos[1])
 
 
+def bus(ax, pos, label='', align='left', lw=None, color=None,
+        facecolor=None, alpha=None, zorder=None, **kwargs):
+    """ Draw a bus with label.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the bus.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the tip of bus label.
+    label: string
+        Optional label for the bus.
+    align: 'left', 'right', 'top', 'bottom', 'above', 'below', 'north', 'south', 'west', 'east'
+        Position of the bus relative to the pos.
+    lw: float, int
+        Linewidth for drawing the outline of the bus label.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color: matplotlib color
+        Color for the outline of the bus label.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor: matplotlib color
+        Color for filling the bus label.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the bus.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos: Pos
+        Coordinates of the tip of the bus.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.linewidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if facecolor is None:
+        facecolor = mpl.rcParams['circuits.facecolor']
+    if alpha is None:
+        alpha = mpl.rcParams['circuits.alpha']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    fs = mpl.rcParams['font.size']
+    if 'fs' in kwargs:
+        fs = kwargs['fs']
+    if 'fontsize' in kwargs:
+        fs = kwargs['fontsize']
+    r = mpl.rcParams['circuits.scale']*0.03
+    w = 2
+    fw = np.diff(ax.get_xlim())[0]/ax.get_window_extent().width
+    fh = np.diff(ax.get_ylim())[0]/ax.get_window_extent().height
+    tw = (len(label) + 1)*1*fs*fw
+    th = 2*fs*fh
+    if r < 0.6*th:
+        r = 0.6*th
+    w = r + tw
+    px = pos[0]
+    py = pos[1]
+    rot = 0
+    angle = 0
+    ha = 'left'
+    va = 'center'
+    if align in ['left', 'west']:
+        px -= r + 0.5*fs*fw
+        rot = 'horizontal'
+        angle = 180
+        ha = 'right'
+        va = 'center'
+    elif align in ['right', 'east']:
+        px += r + 0.5*fs*fw
+        rot = 'horizontal'
+        angle = 0
+        ha = 'left'
+        va = 'center'
+    elif align in ['above', 'top', 'north']:
+        py += r + 0.2*fs*fh
+        rot = 'vertical'
+        angle = 90
+        ha = 'center'
+        va = 'bottom'
+    elif align in ['below', 'bottom', 'south']:
+        py -= r + 0.2*fs*fh
+        rot = 'vertical'
+        angle = 270
+        ha = 'center'
+        va = 'top'
+    if label:
+        txt = ax.text(px, py, label, ha=ha, va=va,
+                      rotation=rot, zorder=zorder + 1, **kwargs)
+    transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
+    vertices = [(0, 0), (r, r), (w, r), (w, -r), (r, -r), (0, 0)]
+    p = plt.Polygon(vertices, transform=transform + ax.transData, zorder=zorder,
+                    lw=lw, edgecolor=color, facecolor=facecolor,
+                    alpha=alpha)
+    ax.add_patch(p)
+    return Pos(pos[0], pos[1])
+
+
 def connect(ax, nodes, lw=None, color=None, zorder=None):
     """ Draw horizontal and vertical lines connecting circuit elements.
 
@@ -1627,6 +1734,8 @@ def install_circuits():
         mpl.axes.Axes.node = node
     if not hasattr(mpl.axes.Axes, 'pin'):
         mpl.axes.Axes.pin = pin
+    if not hasattr(mpl.axes.Axes, 'bus'):
+        mpl.axes.Axes.bus = bus
     if not hasattr(mpl.axes.Axes, 'connect'):
         mpl.axes.Axes.connect = connect
     if not hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -1690,6 +1799,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'node')
     if hasattr(mpl.axes.Axes, 'pin'):
         delattr(mpl.axes.Axes, 'pin')
+    if hasattr(mpl.axes.Axes, 'bus'):
+        delattr(mpl.axes.Axes, 'bus')
     if hasattr(mpl.axes.Axes, 'connect'):
         delattr(mpl.axes.Axes, 'connect')
     if hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -1726,7 +1837,7 @@ def demo():
     s1b, s1t = ax.switch_v(op1g.downs(1), r'$S1$', 'left')
     n1n = ax.node(op1n.lefts(2))
     n1p = ax.node(op1p.lefts(2))
-    n1o = ax.node(op1o.rights(1))
+    n1o = ax.bus(op1o.rights(1), 'BUS ', align='right')
     gnd1 = ax.ground(s1b.downs(1), r'$GND_1$')
     ax.connect((op1n, n1n))
     ax.connect((op1p, n1p))
