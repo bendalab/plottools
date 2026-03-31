@@ -952,8 +952,9 @@ def ground_u(ax, pos, label='', align='right', lw=None, color=None,
     return Pos(x, y - h)
 
 
-def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
-            facecolor=None, alpha=None, zorder=None, **kwargs):
+def opamp_l(ax, pos, label='', align='above', invert=False,
+            lw=None, color=None, facecolor=None, alpha=None,
+            zorder=None, **kwargs):
     """ Draw an operational amplifier with inputs on the left.
 
     Parameters
@@ -966,6 +967,8 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
         Optional label for the opamp.
     align: 'above', 'below', 'center'
         Position the label above, below or in the center of the opamp.
+    invert: bool
+        If True invert the inputs, i.e. have the inverting input at the top.
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -1026,11 +1029,18 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder + 1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x - 0.8*r, y + 1.05*r, '$+$', ha='left', va='center',
-            fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x - 0.8*r, y - 0.95*r, '$-$', ha='left', va='center',
-            fontsize='x-small', color=color, zorder=zorder+1)
+    if invert:
+        ax.text(x - 0.8*r, y + 1.05*r, '$-$', ha='left', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+        ax.text(x - 0.8*r, y - 0.95*r, '$+$', ha='left', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+    else:
+        ax.text(x - 0.8*r, y + 1.05*r, '$+$', ha='left', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+        ax.text(x - 0.8*r, y - 0.95*r, '$-$', ha='left', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        xx = 0.1*r
         ha = 'left'
         va = 'center'
         if align == 'above' or align == 'top':
@@ -1040,19 +1050,23 @@ def opamp_l(ax, pos, label='', align='above', lw=None, color=None,
             yy = -1.4*r
             va = 'top'
         elif align == 'center':
+            xx = 0
             yy = 0
+            ha = 'center'
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x + 0.1*r, y + yy, label, zorder=zorder + 1, **kwargs)
-    return Pos(x - r, y - r), Pos(x - r, y + r), Pos(x + 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
+        ax.text(x + xx, y + yy, label, zorder=zorder + 1, **kwargs)
+    inv = -1 if invert else +1
+    return Pos(x - r, y - inv*r), Pos(x - r, y + inv*r), Pos(x + 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
 
 
-def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
-            facecolor=None, alpha=None, zorder=None, **kwargs):
+def opamp_r(ax, pos, label='', align='above', invert=False,
+            lw=None, color=None, facecolor=None, alpha=None,
+            zorder=None, **kwargs):
     """ Draw an operational amplifier with inputs on the right.
 
     Parameters
@@ -1065,6 +1079,8 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
         Optional label for the opamp.
     align: 'above', 'below', 'center'
         Position the label above, below or in the center of the opamp.
+    invert: bool
+        If True invert the inputs, i.e. have the inverting input at the top.
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -1125,11 +1141,18 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
     ax.add_patch(Polygon(xy, closed=True,
                          zorder=zorder + 1, edgecolor=color,
                          facecolor='none', lw=lw))
-    ax.text(x + 0.8*r, y + 1.05*r, '$+$', ha='right', va='center',
-            fontsize='x-small', color=color, zorder=zorder+1)
-    ax.text(x + 0.8*r, y - 0.95*r, '$-$', ha='right', va='center',
-            fontsize='x-small', color=color, zorder=zorder+1)
+    if invert:
+        ax.text(x + 0.8*r, y + 1.05*r, '$-$', ha='right', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+        ax.text(x + 0.8*r, y - 0.95*r, '$+$', ha='right', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+    else:
+        ax.text(x + 0.8*r, y + 1.05*r, '$+$', ha='right', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
+        ax.text(x + 0.8*r, y - 0.95*r, '$-$', ha='right', va='center',
+                fontsize='x-small', color=color, zorder=zorder+1)
     if label:
+        xx = -0.1*r
         ha = 'right'
         va = 'center'
         if align == 'above' or align == 'top':
@@ -1139,15 +1162,18 @@ def opamp_r(ax, pos, label='', align='above', lw=None, color=None,
             yy = -1.4*r
             va = 'top'
         elif align == 'center':
+            xx = 0
             yy = 0
+            ha = 'center'
         else:
             raise ValueError('align must be one of "above", "bottom", or "center"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x, y + yy, label, zorder=zorder + 1, **kwargs)
-    return Pos(x + r, y - r), Pos(x + r, y + r), Pos(x - 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
+        ax.text(x + xx, y + yy, label, zorder=zorder + 1, **kwargs)
+    inv = -1 if invert else +1
+    return Pos(x + r, y - inv*r), Pos(x + r, y + inv*r), Pos(x - 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
 
 
 def switch_h(ax, pos, label='', align='above', lw=None, color=None,
@@ -1321,6 +1347,11 @@ def node(ax, pos, label='', align='northeast', color=None,
     -------
     pos: Pos
         Coordinates of the node.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if color is None:
         color = mpl.rcParams['circuits.color']
@@ -1349,6 +1380,8 @@ def node(ax, pos, label='', align='northeast', color=None,
         elif align == 'below' or align == 'bottom' or 'south' in align:
             yy = -2*r
             va = 'top'
+        else:
+            raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", "east", "northwest", "northeast", "southwest", or "southeast"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
@@ -1394,6 +1427,11 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
     -------
     pos: Pos
         Coordinates of the pin hole.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -1430,6 +1468,8 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
         elif align == 'below' or align == 'bottom' or 'south' in align:
             yy = -2*r
             va = 'top'
+        else:
+            raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", "east", "northwest", "northeast", "southwest", or "southeast"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
@@ -1475,6 +1515,11 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
     -------
     pos: Pos
         Coordinates of the tip of the bus.
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
     """
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
@@ -1533,6 +1578,8 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
         angle = 270
         ha = 'center'
         va = 'top'
+    else:
+        raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", or "east"')
     if label:
         txt = ax.text(px, py, label, ha=ha, va=va,
                       rotation=rot, zorder=zorder + 1, **kwargs)
@@ -1833,7 +1880,8 @@ def demo():
     ax.connect((e2l, r2r, None, r2l, r2l.lefts(0.5), c2l, None,
                 c2r, e2r.rights(0.5), e2r))
     
-    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((5, 3), r'$OP1$')
+    op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((5, 3), r'$OP1$',
+                                               align='center', invert=True)
     s1b, s1t = ax.switch_v(op1g.downs(1), r'$S1$', 'left')
     n1n = ax.node(op1n.lefts(2))
     n1p = ax.node(op1p.lefts(2))
@@ -1844,7 +1892,7 @@ def demo():
     ax.connect((op1o, n1o))
     ax.connect((op1g, s1t, None, s1b, gnd1))
     
-    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((6, -2), r'$OP2$')
+    op2n, op2p, op2o, op2g, op2pw = ax.opamp_r((6, -2), r'$OP2$', 'top')
     s2l, s2r = ax.switch_h(op2o.lefts(1), r'$S2$', 'below')
     n2p = ax.pin(op2p.rights(1), r'$P_1$', 'east')
     n2n = ax.pin(op2n.rights(1), r'$P_2$', 'east')
