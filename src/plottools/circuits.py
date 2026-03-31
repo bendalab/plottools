@@ -1549,14 +1549,11 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
         fs = kwargs['fs']
     if 'fontsize' in kwargs:
         fs = kwargs['fontsize']
-    r = mpl.rcParams['circuits.scale']*0.03
-    w = 2
     fw = np.diff(ax.get_xlim())[0]/ax.get_window_extent().width
     fh = np.diff(ax.get_ylim())[0]/ax.get_window_extent().height
-    tw = (len(label) + 1)*1*fs*fw
+    tw = (len(label) + 0.5)*1*fs*fw
     th = 2*fs*fh
-    if r < 0.6*th:
-        r = 0.6*th
+    r = 0.6*th
     w = r + tw
     px = pos[0]
     py = pos[1]
