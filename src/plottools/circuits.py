@@ -1368,19 +1368,24 @@ def node(ax, pos, label='', align='northeast', color=None,
         yy = 0
         ha = 'center'
         va = 'center'
+        aset = False
         if align == 'right' or 'east' in align:
             xx = 2*r
             ha = 'left'
+            aset = True
         elif align == 'left' or 'west' in align:
             xx = -2*r
             ha = 'right'
+            aset = True
         if align == 'above' or align == 'top' or 'north' in align:
             yy = 2*r
             va = 'bottom'
+            aset = True
         elif align == 'below' or align == 'bottom' or 'south' in align:
             yy = -2*r
             va = 'top'
-        else:
+            aset = True
+        if not aset:
             raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", "east", "northwest", "northeast", "southwest", or "southeast"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
@@ -1456,19 +1461,24 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
         yy = 0
         ha = 'center'
         va = 'center'
+        aset = False
         if align == 'right' or 'east' in align:
             xx = 2*r
             ha = 'left'
+            aset = True
         elif align == 'left' or 'west' in align:
             xx = -2*r
             ha = 'right'
+            aset = True
         if align == 'above' or align == 'top' or 'north' in align:
             yy = 2*r
             va = 'bottom'
+            aset = True
         elif align == 'below' or align == 'bottom' or 'south' in align:
             yy = -2*r
             va = 'top'
-        else:
+            aset = True
+        if not aset:
             raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", "east", "northwest", "northeast", "southwest", or "southeast"')
         if not 'ha' in kwargs and not 'horizontalalignment' in kwargs:
             kwargs['ha'] = ha
