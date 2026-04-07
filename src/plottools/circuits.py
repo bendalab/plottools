@@ -14,6 +14,7 @@ Electrical circuits.
 - `ground_u()`: draw ground upwards.
 - `opamp_l()`: draw an operational amplifier with inputs on the left.
 - `opamp_l()`: draw an operational amplifier with inputs on the right.
+- `chip()`: draw an integrated circuit.
 - `switch_h()`: draw a horizontal switch.
 - `switch_v()`: draw a vertical switch.
 - `node()`: draw a node connecting lines.
@@ -59,7 +60,7 @@ import matplotlib as mpl
 import matplotlib.transforms as mpt
 import matplotlib.rcsetup as mrc
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, Circle, Polygon
+from matplotlib.patches import Rectangle, Circle, Polygon, FancyBboxPatch
 from .rcsetup import _validate_fontdict
 
 
@@ -277,7 +278,7 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
                            zorder=zorder, edgecolor='none',
                            facecolor=facecolor, alpha=alpha))
     ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
-                           zorder=zorder+1, edgecolor=color,
+                           zorder=zorder + 1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
         ha = 'center'
@@ -296,7 +297,7 @@ def resistance_h(ax, pos, label='', align='above', lw=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder + 1, **kwargs)
     return Pos(x - 0.5*w, y), Pos(x + 0.5*w, y)
 
 
@@ -365,7 +366,7 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
                            zorder=zorder, edgecolor='none',
                            facecolor=facecolor, alpha=alpha))
     ax.add_patch(Rectangle((x - 0.5*w, y - 0.5*h), w, h,
-                           zorder=zorder+1, edgecolor=color,
+                           zorder=zorder + 1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
         ha = 'center'
@@ -384,7 +385,7 @@ def resistance_v(ax, pos, label='', align='right', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder + 1, **kwargs)
     return Pos(x, y - 0.5*h), Pos(x, y + 0.5*h)
 
 
@@ -460,7 +461,7 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
                            facecolor=facecolor, alpha=alpha))
     ax.add_patch(Rectangle((-0.5*w, -0.5*h), w, h,
                            transform=transform + ax.transData,
-                           zorder=zorder+1, edgecolor=color,
+                           zorder=zorder + 1, edgecolor=color,
                            facecolor='none', lw=lw))
     if label:
         if angle < 0:
@@ -496,7 +497,7 @@ def resistance(ax, pos, angle=0, label='', align='above', lw=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(pos[0,0], pos[0,1], label, zorder=zorder+1, **kwargs)
+        ax.text(pos[0,0], pos[0,1], label, zorder=zorder + 1, **kwargs)
     nodes = np.array(((-0.5*w, 0), (+0.5*w, 0)))
     nodes = transform.transform(nodes)
     return Pos(*nodes[0,:]),  Pos(*nodes[1,:])
@@ -1031,14 +1032,14 @@ def opamp_l(ax, pos, label='', align='above', invert=False,
                          facecolor='none', lw=lw))
     if invert:
         ax.text(x - 0.8*r, y + 1.05*r, '$-$', ha='left', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
         ax.text(x - 0.8*r, y - 0.95*r, '$+$', ha='left', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
     else:
         ax.text(x - 0.8*r, y + 1.05*r, '$+$', ha='left', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
         ax.text(x - 0.8*r, y - 0.95*r, '$-$', ha='left', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
     if label:
         xx = 0.1*r
         ha = 'left'
@@ -1143,14 +1144,14 @@ def opamp_r(ax, pos, label='', align='above', invert=False,
                          facecolor='none', lw=lw))
     if invert:
         ax.text(x + 0.8*r, y + 1.05*r, '$-$', ha='right', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
         ax.text(x + 0.8*r, y - 0.95*r, '$+$', ha='right', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
     else:
         ax.text(x + 0.8*r, y + 1.05*r, '$+$', ha='right', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
         ax.text(x + 0.8*r, y - 0.95*r, '$-$', ha='right', va='center',
-                fontsize='x-small', color=color, zorder=zorder+1)
+                fontsize='x-small', color=color, zorder=zorder + 1)
     if label:
         xx = -0.1*r
         ha = 'right'
@@ -1174,6 +1175,231 @@ def opamp_r(ax, pos, label='', align='above', invert=False,
         ax.text(x + xx, y + yy, label, zorder=zorder + 1, **kwargs)
     inv = -1 if invert else +1
     return Pos(x + r, y - inv*r), Pos(x + r, y + inv*r), Pos(x - 2*r, y), Pos(x, y - 1.2*r), Pos(x, y + 1.2*r)
+
+
+def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
+         palign="top left", label='', align='above',
+         lw=None, color=None, facecolor=None,
+         alpha=None, zorder=None, **kwargs):
+    """ Draw an integrated circuit.
+
+    Just a rectangular block with pins on the left, right, top, and bottom.
+    The size of the chip is deduced from the pins it needs to accomodate.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the chip.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the chip.
+    pins_left: int or list of str or None
+        If integer, the number of pins on the left side of the chip.
+        If list, then the list elements are the labels for the pins
+        on the left side of the chip. Labels can be empty. If a label
+        is None then this pin will be omitted.
+    pins_right: int or list of str or None
+        If integer, the number of pins on the right side of the chip.
+        If list, then the list elements are the labels for the pins
+        on the right side of the chip. Labels can be empty. If a label
+        is None then this pin will be omitted.
+    pins_top: int or list of str or None
+        If integer, the number of pins on the top side of the chip.
+        If list, then the list elements are the labels for the pins
+        on the top side of the chip. Labels can be empty. If a label
+        is None then this pin will be omitted.
+    pins_bottom: int or list of str or None
+        If integer, the number of pins on the bottom side of the chip.
+        If list, then the list elements are the labels for the pins
+        on the bottom side of the chip. Labels can be empty. If a label
+        is None then this pin will be omitted.
+    palign: string
+        Where to label the strings: "inside" or a combination of
+        "left", "right", "top", "bottom".
+    label: string
+        Optional label for the chip.
+    align: 'left', 'right', 'top', 'bottom', 'above', 'below', 'center'
+        Position the label above, below or in the center of the chip.
+    lw: float, int
+        Linewidth for drawing the outline of the opamp.
+        Defaults to `circuits.linewidth` rcParams settings.
+    color: matplotlib color
+        Color for the outline of the opamp.
+        Defaults to `circuits.color` rcParams settings.
+    facecolor: matplotlib color
+        Color for filling the opamp.
+        Defaults to `circuits.facecolor` rcParams settings.
+    alpha: float
+        Alpha value for the face color.
+        Defaults to `circuits.alpha` rcParams settings.
+    zorder: int
+        zorder for the opamp and the label.
+        Defaults to `circuits.zorder` rcParams settings.
+    kwargs: key-word arguments
+        Passed on to `ax.text()` used to print the label.
+        Defaults to `circuits.font` rcParams settings.
+
+    Returns
+    -------
+    pos_left: list of Pos
+        Coordinates of the left pins (whose label is not None).
+    pos_righ: list of Pos
+        Coordinates of the right pins (whose label is not None).
+    pos_top: list of Pos
+        Coordinates of the top pins (whose label is not None).
+    pos_bottom: list of Pos
+        Coordinates of the bottom pins (whose label is not None).
+
+    Raises
+    ------
+    ValueError:
+        Invalid value for `align`.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.linewidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if facecolor is None:
+        facecolor = mpl.rcParams['circuits.facecolor']
+    if alpha is None:
+        alpha = mpl.rcParams['circuits.alpha']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    for k in mpl.rcParams['circuits.font']:
+        if not k in kwargs:
+            kwargs[k] = mpl.rcParams['circuits.font'][k]
+    r = mpl.rcParams['circuits.scale']*0.5
+    nh = 0
+    if not isinstance(pins_left, (list, tuple, np.ndarray)):
+        pins_left = ['']*pins_left
+    if not isinstance(pins_right, (list, tuple, np.ndarray)):
+        pins_right = ['']*pins_right
+    nh = max(1, len(pins_left), len(pins_right))
+    nw = 0
+    if not isinstance(pins_top, (list, tuple, np.ndarray)):
+        pins_top = [None]*pins_top
+    if not isinstance(pins_bottom, (list, tuple, np.ndarray)):
+        pins_bottom = [None]*pins_bottom
+    nw = max(1, len(pins_top), len(pins_bottom))
+    w = (nw - 1)*r
+    h = (nh - 1)*r
+    x, y = pos
+    pad = 0.3
+    ax.add_patch(FancyBboxPatch((x - 0.5*w, y - 0.5*h), w, h,
+                                boxstyle=f'round,pad={pad}',
+                                zorder=zorder, edgecolor='none',
+                                facecolor=facecolor, alpha=alpha))
+    ax.add_patch(FancyBboxPatch((x - 0.5*w, y - 0.5*h), w, h,
+                                boxstyle=f'round,pad={pad}',
+                                zorder=zorder + 1, edgecolor=color,
+                                facecolor='none', lw=lw))
+    clw = None
+    if clw is None:
+        clw = mpl.rcParams['circuits.connectwidth']
+    ccolor = None
+    if ccolor is None:
+        ccolor = mpl.rcParams['circuits.color']
+    czorder = None
+    if czorder is None:
+        czorder = mpl.rcParams['circuits.zorder'] + 2
+    pos_left = []
+    pos_right = []
+    pos_top = []
+    pos_bottom = []
+    px = x - 0.5*w
+    py = y + 0.5*h
+    for l in pins_left:
+        if l is not None:
+            ax.plot([px - r, px - pad], [py, py], '-',
+                    lw=clw, color=ccolor, zorder=czorder)
+            pos_left.append(Pos(px - r, py))
+            if len(l) > 0:
+                if 'inside' in palign:
+                    ax.text(px, py, l, ha='left', va='center',
+                            zorder=czorder + 1)
+                elif 'top' in palign:
+                    ax.text(px - 1.5*pad, py + 0.1*r, l, ha='right', va='bottom',
+                            zorder=czorder + 1)
+                elif 'bottom' in palign:
+                    ax.text(px - 1.5*pad, py - 0.1*r, l, ha='right', va='top',
+                            zorder=czorder + 1)
+        py -= r
+    px = x + 0.5*w
+    py = y + 0.5*h
+    for l in pins_right:
+        if l is not None:
+            ax.plot([px + pad, px + r], [py, py], '-',
+                    lw=clw, color=ccolor, zorder=czorder)
+            pos_right.append(Pos(px + r, py))
+            if len(l) > 0:
+                if 'inside' in palign:
+                    ax.text(px, py, l, ha='right', va='center',
+                            zorder=czorder + 1)
+                elif 'top' in palign:
+                    ax.text(px + 1.5*pad, py + 0.1*r, l, ha='left', va='bottom',
+                            zorder=czorder + 1)
+                elif 'bottom' in palign:
+                    ax.text(px + 1.5*pad, py - 0.1*r, l, ha='left', va='top',
+                            zorder=czorder + 1)
+        py -= r
+    px = x - 0.5*w
+    py = y + 0.5*h
+    for l in pins_top:
+        if l is not None:
+            ax.plot([px, px], [py + pad, py + r], '-',
+                    lw=clw, color=ccolor, zorder=czorder)
+            pos_top.append(Pos(px, py + r))
+            if len(l) > 0:
+                if 'inside' in palign:
+                    ax.text(px, py, l,
+                            rotation='vertical', ha='center', va='top',
+                            zorder=czorder + 1)
+                elif 'left' in palign:
+                    ax.text(px - 0.1*r, py + 1.5*pad, l,
+                            rotation='vertical', ha='right', va='bottom',
+                            zorder=czorder + 1)
+                elif 'right' in palign:
+                    ax.text(px + 0.1*r, py + 1.5*pad, l,
+                            rotation='vertical', ha='left', va='bottom',
+                            zorder=czorder + 1)
+        px += r
+    px = x - 0.5*w
+    py = y - 0.5*h
+    for l in pins_bottom:
+        if l is not None:
+            ax.plot([px, px], [py - pad, py - r], '-',
+                    lw=clw, color=ccolor, zorder=czorder)
+            pos_bottom.append(Pos(px, py - r))
+            if len(l) > 0:
+                if 'inside' in palign:
+                    ax.text(px, py, l,
+                            rotation='vertical', ha='center', va='bottom',
+                            zorder=czorder + 1)
+                elif 'left' in palign:
+                    ax.text(px - 0.1*r, py - 1.5*pad, l,
+                            rotation='vertical', ha='right', va='top',
+                            zorder=czorder + 1)
+                elif 'right' in palign:
+                    ax.text(px + 0.1*r, py - 1.5*pad, l,
+                            rotation='vertical', ha='left', va='top',
+                            zorder=czorder + 1)
+        px += r
+    if label:
+        ha = 'center'
+        va = 'center'
+        if align in ['top', 'above']:
+            y += 0.5*h + 1.5*pad
+            va = 'bottom'
+        elif align in ['bottom', 'below']:
+            y -= 0.5*h + 1.5*pad
+            va = 'top'
+        elif align == 'left':
+            x -= 0.5*w + 1.5*pad
+            ha = 'right'
+        elif align == 'right':
+            x += 0.5*w + 1.5*pad
+            ha = 'left'
+        ax.text(x, y, label, ha=ha, va=va, zorder=zorder + 2, **kwargs)
+    return pos_left, pos_right, pos_top, pos_bottom
 
 
 def switch_h(ax, pos, label='', align='above', lw=None, color=None,
@@ -1244,7 +1470,7 @@ def switch_h(ax, pos, label='', align='above', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x, y + yy, label, zorder=zorder+1, **kwargs)
+        ax.text(x, y + yy, label, zorder=zorder + 1, **kwargs)
     return Pos(x - 0.3*w, y), Pos(x + 0.3*w, y)
 
 
@@ -1315,7 +1541,7 @@ def switch_v(ax, pos, label='', align='right', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(x + xx, y, label, zorder=zorder+1, **kwargs)
+        ax.text(x + xx, y, label, zorder=zorder + 1, **kwargs)
     return Pos(x, y - 0.3*h), Pos(x, y + 0.3*h)
 
 
@@ -1391,7 +1617,7 @@ def node(ax, pos, label='', align='northeast', color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder + 1, **kwargs)
     return Pos(pos[0], pos[1])
 
 
@@ -1454,7 +1680,7 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
     r = mpl.rcParams['circuits.scale']*0.25/2
     ax.add_patch(Circle(pos, r, zorder=zorder, edgecolor='none',
                         facecolor=facecolor, alpha=alpha))
-    ax.add_patch(Circle(pos, r, zorder=zorder+1, edgecolor=color,
+    ax.add_patch(Circle(pos, r, zorder=zorder + 1, edgecolor=color,
                         facecolor='none', lw=lw))
     if label:
         xx = 0
@@ -1484,7 +1710,7 @@ def pin(ax, pos, label='', align='northeast', lw=None, color=None,
             kwargs['ha'] = ha
         if not 'va' in kwargs and not 'verticalalignment' in kwargs:
             kwargs['va'] = va
-        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder+1, **kwargs)
+        ax.text(pos[0] + xx, pos[1] + yy, label, zorder=zorder + 1, **kwargs)
     return Pos(pos[0], pos[1])
 
 
@@ -1780,6 +2006,8 @@ def install_circuits():
         mpl.axes.Axes.opamp_l = opamp_l
     if not hasattr(mpl.axes.Axes, 'opamp_r'):
         mpl.axes.Axes.opamp_r = opamp_r
+    if not hasattr(mpl.axes.Axes, 'chip'):
+        mpl.axes.Axes.chip = chip
     if not hasattr(mpl.axes.Axes, 'switch_h'):
         mpl.axes.Axes.switch_h = switch_h
     if not hasattr(mpl.axes.Axes, 'switch_v'):
@@ -1845,6 +2073,8 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'opamp_l')
     if hasattr(mpl.axes.Axes, 'opamp_r'):
         delattr(mpl.axes.Axes, 'opamp_r')
+    if hasattr(mpl.axes.Axes, 'chip'):
+        delattr(mpl.axes.Axes, 'chip')
     if hasattr(mpl.axes.Axes, 'switch_h'):
         delattr(mpl.axes.Axes, 'switch_h')
     if hasattr(mpl.axes.Axes, 'switch_v'):
@@ -1909,6 +2139,11 @@ def demo():
     ax.connect((op2p, n2p))
     ax.connect((op2o, s2r, None, s2l, n2o))
     ax.connect((op2g, gnd2))
+
+    pl, pr, pt, pb = ax.chip((10, 0), pins_left=['A', 'B','C', 'D'],
+                             pins_top=3,
+                             palign='inside', label='IC1', align='above')
+    ax.connect((pl[2], n2p))
     
     ax.set_aspect('equal')
     plt.show()
