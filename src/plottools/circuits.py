@@ -35,6 +35,7 @@ Electrical circuits.
 `matplotlib.rcParams` defined by the circuits module:
 ```py
 circuits.scale: 1
+circuits.radius: 0.2
 circuits.connectwidth: 1
 circuits.linewidth: 2
 circuits.color: 'black'
@@ -42,6 +43,7 @@ circuits.facecolor: 'white'
 circuits.alpha: 1
 circuits.zorder: 100
 circuits.font: dict()
+circuits.pinfont: dict(fontsize='small')
 ```
 
 
@@ -1178,9 +1180,9 @@ def opamp_r(ax, pos, label='', align='above', invert=False,
 
 
 def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
-         palign="top left", label='', align='above',
-         lw=None, color=None, facecolor=None,
-         alpha=None, zorder=None, **kwargs):
+         palign="top left", label='', align='above', rotation='horizontal',
+         radius=None, lw=None, color=None, facecolor=None,
+         alpha=None, zorder=None, pinfont=None, **kwargs):
     """ Draw an integrated circuit.
 
     Just a rectangular block with pins on the left, right, top, and bottom.
@@ -1219,6 +1221,12 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
         Optional label for the chip.
     align: 'left', 'right', 'top', 'bottom', 'above', 'below', 'center'
         Position the label above, below or in the center of the chip.
+    rotation: str or float
+        Rotation angle of the label in degrees or 'horizontal' or 'vertical'.
+    radius: float
+        Radius of the rounded corners of the chip as a fraction of
+        `circuits.scale`.
+        Defaults to `circuits.radius` rcParams settings.
     lw: float, int
         Linewidth for drawing the outline of the opamp.
         Defaults to `circuits.linewidth` rcParams settings.
@@ -1234,6 +1242,9 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
     zorder: int
         zorder for the opamp and the label.
         Defaults to `circuits.zorder` rcParams settings.
+    pinfont: dict
+        Dictionary with font settings used for labeling pins.
+        Defaults to `circuits.pinfont` rcParams settings.
     kwargs: key-word arguments
         Passed on to `ax.text()` used to print the label.
         Defaults to `circuits.font` rcParams settings.
@@ -1254,6 +1265,9 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
     ValueError:
         Invalid value for `align`.
     """
+    if radius is None:
+        radius = mpl.rcParams['circuits.radius']
+    pad = mpl.rcParams['circuits.scale']*radius
     if lw is None:
         lw = mpl.rcParams['circuits.linewidth']
     if color is None:
@@ -1264,6 +1278,8 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
         alpha = mpl.rcParams['circuits.alpha']
     if zorder is None:
         zorder = mpl.rcParams['circuits.zorder']
+    if pinfont is None:
+        pinfont = mpl.rcParams['circuits.pinfont']
     for k in mpl.rcParams['circuits.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['circuits.font'][k]
@@ -1282,13 +1298,16 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
     nw = max(1, len(pins_top), len(pins_bottom))
     w = (nw - 1)*r
     h = (nh - 1)*r
+    dw = 0.5*w
+    dh = 0.5*h
+    ddw = dw + 0.1*r
+    ddh = dh + 0.1*r
     x, y = pos
-    pad = 0.3
-    ax.add_patch(FancyBboxPatch((x - 0.5*w, y - 0.5*h), w, h,
+    ax.add_patch(FancyBboxPatch((x - ddw, y - ddh), 2*ddw, 2*ddh,
                                 boxstyle=f'round,pad={pad}',
                                 zorder=zorder, edgecolor='none',
                                 facecolor=facecolor, alpha=alpha))
-    ax.add_patch(FancyBboxPatch((x - 0.5*w, y - 0.5*h), w, h,
+    ax.add_patch(FancyBboxPatch((x - ddw, y - ddh), 2*ddw, 2*ddh,
                                 boxstyle=f'round,pad={pad}',
                                 zorder=zorder + 1, edgecolor=color,
                                 facecolor='none', lw=lw))
@@ -1298,15 +1317,13 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
     ccolor = None
     if ccolor is None:
         ccolor = mpl.rcParams['circuits.color']
-    czorder = None
-    if czorder is None:
-        czorder = mpl.rcParams['circuits.zorder'] + 2
+    czorder = zorder + 2
     pos_left = []
     pos_right = []
     pos_top = []
     pos_bottom = []
-    px = x - 0.5*w
-    py = y + 0.5*h
+    px = x - ddw
+    py = y + dh
     for l in pins_left:
         if l is not None:
             ax.plot([px - r, px - pad], [py, py], '-',
@@ -1315,16 +1332,16 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
             if len(l) > 0:
                 if 'inside' in palign:
                     ax.text(px, py, l, ha='left', va='center',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'top' in palign:
                     ax.text(px - 1.5*pad, py + 0.1*r, l, ha='right', va='bottom',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'bottom' in palign:
                     ax.text(px - 1.5*pad, py - 0.1*r, l, ha='right', va='top',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
         py -= r
-    px = x + 0.5*w
-    py = y + 0.5*h
+    px = x + ddw
+    py = y + dh
     for l in pins_right:
         if l is not None:
             ax.plot([px + pad, px + r], [py, py], '-',
@@ -1333,16 +1350,16 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
             if len(l) > 0:
                 if 'inside' in palign:
                     ax.text(px, py, l, ha='right', va='center',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'top' in palign:
                     ax.text(px + 1.5*pad, py + 0.1*r, l, ha='left', va='bottom',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'bottom' in palign:
                     ax.text(px + 1.5*pad, py - 0.1*r, l, ha='left', va='top',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
         py -= r
-    px = x - 0.5*w
-    py = y + 0.5*h
+    px = x - dw
+    py = y + ddh
     for l in pins_top:
         if l is not None:
             ax.plot([px, px], [py + pad, py + r], '-',
@@ -1352,18 +1369,18 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
                 if 'inside' in palign:
                     ax.text(px, py, l,
                             rotation='vertical', ha='center', va='top',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'left' in palign:
                     ax.text(px - 0.1*r, py + 1.5*pad, l,
                             rotation='vertical', ha='right', va='bottom',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'right' in palign:
                     ax.text(px + 0.1*r, py + 1.5*pad, l,
                             rotation='vertical', ha='left', va='bottom',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
         px += r
-    px = x - 0.5*w
-    py = y - 0.5*h
+    px = x - dw
+    py = y - ddh
     for l in pins_bottom:
         if l is not None:
             ax.plot([px, px], [py - pad, py - r], '-',
@@ -1373,32 +1390,33 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
                 if 'inside' in palign:
                     ax.text(px, py, l,
                             rotation='vertical', ha='center', va='bottom',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'left' in palign:
                     ax.text(px - 0.1*r, py - 1.5*pad, l,
                             rotation='vertical', ha='right', va='top',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
                 elif 'right' in palign:
                     ax.text(px + 0.1*r, py - 1.5*pad, l,
                             rotation='vertical', ha='left', va='top',
-                            zorder=czorder + 1)
+                            zorder=czorder + 1, **pinfont)
         px += r
     if label:
         ha = 'center'
         va = 'center'
         if align in ['top', 'above']:
-            y += 0.5*h + 1.5*pad
+            y += ddh + 1.5*pad
             va = 'bottom'
         elif align in ['bottom', 'below']:
-            y -= 0.5*h + 1.5*pad
+            y -= ddh + 1.5*pad
             va = 'top'
         elif align == 'left':
-            x -= 0.5*w + 1.5*pad
+            x -= ddw + 1.5*pad
             ha = 'right'
         elif align == 'right':
-            x += 0.5*w + 1.5*pad
+            x += ddw + 1.5*pad
             ha = 'left'
-        ax.text(x, y, label, ha=ha, va=va, zorder=zorder + 2, **kwargs)
+        ax.text(x, y, label, ha=ha, va=va, rotation=rotation,
+                zorder=zorder + 2, **kwargs)
     return pos_left, pos_right, pos_top, pos_bottom
 
 
@@ -1921,9 +1939,10 @@ def connect_straight(ax, nodes, lw=None, color=None, zorder=None):
     ax.plot(xs, ys, lw=lw, color=color, zorder=zorder)
 
 
-def circuits_params(scale=None, connectwidth=None, linewidth=None,
+def circuits_params(scale=None, radius=None,
+                    connectwidth=None, linewidth=None,
                     color=None, facecolor=None, alpha=None,
-                    zorder=None, font=None):
+                    zorder=None, font=None, pinfont=None):
     """Set rc settings for circuits.
                   
     Only parameters that are not `None` are updated.
@@ -1933,6 +1952,9 @@ def circuits_params(scale=None, connectwidth=None, linewidth=None,
     scale: float
         Size of circuit elements as the height of a vertical resistance
         in x/y coordinate units.
+    radius: float
+        Radius of rounded corners (e.g. of a chip) as a fraction of
+        `circuits.scale`.
     connectwidth: int, float
         Line width of lines connecting circuit elements.
         Set rcParam `circuits.connectwidth`.
@@ -1955,10 +1977,15 @@ def circuits_params(scale=None, connectwidth=None, linewidth=None,
     font: dict
         Dictionary with font settings used for labeling circuit elements
         (e.g. fontsize, fontfamiliy, fontstyle, fontweight, bbox, ...).
-         Set rcParam `circuits.font`.
+        Set rcParam `circuits.font`.
+    pinfont: dict
+        Dictionary with font settings used for labeling pins, e.g. of a chip.
+        Set rcParam `circuits.pinfont`.
     """
     if scale is not None and 'circuits.scale' in mrc._validators:
         mpl.rcParams['circuits.scale'] = scale
+    if radius is not None and 'circuits.radius' in mrc._validators:
+        mpl.rcParams['circuits.radius'] = radius
     if connectwidth is not None and 'circuits.connectwidth' in mrc._validators:
         mpl.rcParams['circuits.connectwidth'] = connectwidth
     if linewidth is not None and 'circuits.linewidth' in mrc._validators:
@@ -1973,6 +2000,8 @@ def circuits_params(scale=None, connectwidth=None, linewidth=None,
         mpl.rcParams['circuits.zorder'] = zorder
     if font is not None and 'circuits.font' in mrc._validators:
         mpl.rcParams.update({'circuits.font': font})
+    if font is not None and 'circuits.pinfont' in mrc._validators:
+        mpl.rcParams.update({'circuits.pinfont': pinfont})
 
 
 def install_circuits():
@@ -2025,6 +2054,7 @@ def install_circuits():
     # add circuits parameter to rc configuration:
     if 'circuits.scale' not in mpl.rcParams:
         mrc._validators['circuits.scale'] = mrc.validate_float
+        mrc._validators['circuits.radius'] = mrc.validate_float
         mrc._validators['circuits.connectwidth'] = mrc.validate_float
         mrc._validators['circuits.linewidth'] = mrc.validate_float
         mrc._validators['circuits.color'] = mrc.validate_string
@@ -2032,14 +2062,17 @@ def install_circuits():
         mrc._validators['circuits.alpha'] = mrc.validate_float
         mrc._validators['circuits.zorder'] = mrc.validate_float
         mrc._validators['circuits.font'] = _validate_fontdict
+        mrc._validators['circuits.pinfont'] = _validate_fontdict
         mpl.rcParams.update({'circuits.scale': 1,
+                             'circuits.radius': 0.2,
                              'circuits.connectwidth': 1,
                              'circuits.linewidth': 2,
                              'circuits.color': 'black',
                              'circuits.facecolor': 'white',
                              'circuits.alpha': 1,
                              'circuits.zorder': 100,
-                             'circuits.font': dict()})
+                             'circuits.font': dict(),
+                             'circuits.pinfont': dict(fontsize='small')})
 
         
 def uninstall_circuits():
@@ -2090,6 +2123,7 @@ def uninstall_circuits():
     if hasattr(mpl.axes.Axes, 'connect_straight'):
         delattr(mpl.axes.Axes, 'connect_straight')
     mrc._validators.pop('circuits.scale', None)
+    mrc._validators.pop('circuits.radius', None)
     mrc._validators.pop('circuits.connectwidth', None)
     mrc._validators.pop('circuits.linewidth', None)
     mrc._validators.pop('circuits.color', None)
@@ -2097,6 +2131,7 @@ def uninstall_circuits():
     mrc._validators.pop('circuits.alpha', None)
     mrc._validators.pop('circuits.zorder', None)
     mrc._validators.pop('circuits.font', None)
+    mrc._validators.pop('circuits.pinfont', None)
 
 
 install_circuits()
@@ -2141,8 +2176,9 @@ def demo():
     ax.connect((op2g, gnd2))
 
     pl, pr, pt, pb = ax.chip((10, 0), pins_left=['A', 'B','C', 'D'],
-                             pins_top=3,
-                             palign='inside', label='IC1', align='above')
+                             pins_top=3, pins_bottom=[None, '', ''],
+                             palign='inside', label='IC1', align='above',
+                             pinfont=dict(fontsize='x-small'))
     ax.connect((pl[2], n2p))
     
     ax.set_aspect('equal')
