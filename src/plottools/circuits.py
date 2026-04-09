@@ -1045,7 +1045,7 @@ def opamp_l(ax, pos, label='', align='above', invert=False,
     if label:
         xx = 0.1*r
         ha = 'left'
-        va = 'center'
+        va = 'center_baseline'
         if align == 'above' or align == 'top':
             yy = 1.4*r
             va = 'bottom'
@@ -1157,7 +1157,7 @@ def opamp_r(ax, pos, label='', align='above', invert=False,
     if label:
         xx = -0.1*r
         ha = 'right'
-        va = 'center'
+        va = 'center_baseline'
         if align == 'above' or align == 'top':
             yy = 1.4*r
             va = 'bottom'
@@ -1402,21 +1402,34 @@ def chip(ax, pos, pins_left=3, pins_right=3, pins_top=2, pins_bottom=2,
         px += r
     if label:
         ha = 'center'
-        va = 'center'
+        va = 'center_baseline'
+        rot_mode = 'anchor' if rotation != 'horizontal' and rotation != 0 else 'default'
         if align in ['top', 'above']:
             y += ddh + 1.5*pad
-            va = 'bottom'
+            if rot_mode == 'anchor':
+                ha = 'left'
+            else:
+                va = 'bottom'
         elif align in ['bottom', 'below']:
             y -= ddh + 1.5*pad
-            va = 'top'
+            if rot_mode == 'anchor':
+                ha = 'right'
+            else:
+                va = 'top'
         elif align == 'left':
             x -= ddw + 1.5*pad
-            ha = 'right'
+            if rot_mode == 'anchor':
+                va = 'bottom'
+            else:
+                ha = 'right'
         elif align == 'right':
             x += ddw + 1.5*pad
-            ha = 'left'
+            if rot_mode == 'anchor':
+                va = 'top'
+            else:
+                ha = 'left'
         ax.text(x, y, label, ha=ha, va=va, rotation=rotation,
-                zorder=zorder + 2, **kwargs)
+                rotation_mode='anchor', zorder=zorder + 2, **kwargs)
     return pos_left, pos_right, pos_top, pos_bottom
 
 
@@ -1804,35 +1817,31 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
     rot = 0
     angle = 0
     ha = 'left'
-    va = 'center'
+    va = 'center_baseline'
     if align in ['left', 'west']:
         px -= r + 0.5*fs*fw
         rot = 'horizontal'
         angle = 180
         ha = 'right'
-        va = 'center'
     elif align in ['right', 'east']:
         px += r + 0.5*fs*fw
         rot = 'horizontal'
         angle = 0
         ha = 'left'
-        va = 'center'
     elif align in ['above', 'top', 'north']:
         py += r + 0.2*fs*fh
         rot = 'vertical'
         angle = 90
-        ha = 'center'
-        va = 'bottom'
+        ha = 'left'
     elif align in ['below', 'bottom', 'south']:
         py -= r + 0.2*fs*fh
         rot = 'vertical'
         angle = 270
-        ha = 'center'
-        va = 'top'
+        ha = 'right'
     else:
         raise ValueError('align must be one of "left", "right", "above", "below", "top", "bottom", "north", "south", "west", or "east"')
     if label:
-        txt = ax.text(px, py, label, ha=ha, va=va,
+        txt = ax.text(px, py, label, ha=ha, va=va, rotation_mode='anchor',
                       rotation=rot, zorder=zorder + 1, **kwargs)
     transform = mpt.Affine2D().rotate(np.radians(angle)).translate(*pos)
     vertices = [(0, 0), (r, r), (w, r), (w, -r), (r, -r), (0, 0)]
