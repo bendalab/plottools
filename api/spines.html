@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.0">
+<title>plottools.spines API documentation</title>
+<meta name="description" content="Modify the appearance of spines …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>plottools.spines</code></h1>
+</header>
+<section id="section-intro">
+<p>Modify the appearance of spines.</p>
+<h2 id="axes-member-functions">Axes member functions</h2>
+<ul>
+<li><code><a title="plottools.spines.show_spines" href="#plottools.spines.show_spines">show_spines()</a></code>: show and hide spines and corresponding tick marks.</li>
+<li><code><a title="plottools.spines.set_spines_outward" href="#plottools.spines.set_spines_outward">set_spines_outward()</a></code>: set the specified spines outward.</li>
+<li><code><a title="plottools.spines.set_spines_zero" href="#plottools.spines.set_spines_zero">set_spines_zero()</a></code>: set the position of the specified spines
+to the data value of the other axis.</li>
+<li><code><a title="plottools.spines.set_spines_bounds" href="#plottools.spines.set_spines_bounds">set_spines_bounds()</a></code>: set bounds for the specified spines.</li>
+<li><code><a title="plottools.spines.arrow_spines" href="#plottools.spines.arrow_spines">arrow_spines()</a></code>: spines with arrows.</li>
+</ul>
+<h2 id="figure-member-functions">Figure member functions</h2>
+<p>Same functions as the ones for the Axes. Functions are called on all
+figure axes.</p>
+<ul>
+<li><code><a title="plottools.spines.show_spines" href="#plottools.spines.show_spines">show_spines()</a></code>: show and hide spines and corresponding tick marks.</li>
+<li><code><a title="plottools.spines.set_spines_outward" href="#plottools.spines.set_spines_outward">set_spines_outward()</a></code>: set the specified spines outward.</li>
+<li><code><a title="plottools.spines.set_spines_zero" href="#plottools.spines.set_spines_zero">set_spines_zero()</a></code>: set the position of the specified spines to
+the data value of the other axis.</li>
+<li><code><a title="plottools.spines.set_spines_bounds" href="#plottools.spines.set_spines_bounds">set_spines_bounds()</a></code>: set bounds for the specified spines.</li>
+<li><code><a title="plottools.spines.arrow_spines" href="#plottools.spines.arrow_spines">arrow_spines()</a></code>: spines with arrows.</li>
+</ul>
+<h2 id="settings">Settings</h2>
+<ul>
+<li><code><a title="plottools.spines.spines_params" href="#plottools.spines.spines_params">spines_params()</a></code>: set default spine appearance.</li>
+</ul>
+<p><code>matplotlib.rcParams</code> defined by the spines module:</p>
+<pre><code class="language-py">axes.spines.show   : 'lrtb'
+axes.spines.offsets: {'lrtb': 0}
+axes.spines.positions: {'lrtb': None}
+axes.spines.bounds : {'lrtb': 'full'}
+axes.spines.arrows: '',
+axes.spines.arrows.flushx: 0.0
+axes.spines.arrows.flushy: 0.0
+axes.spines.arrows.extendx: 1.0
+axes.spines.arrows.extendy: 1.0
+axes.spines.arrows.height: 10.0
+axes.spines.arrows.ratio: 0.7
+axes.spines.arrows.overhang: 1.0
+axes.spines.twinx: 'r'
+axes.spines.twiny: 't'
+axes.spines.inset.show   : 'lrtb'
+axes.spines.inset.offsets: {'lrtb': 0}
+axes.spines.inset.positions: {'lrtb': None}
+axes.spines.inset.bounds : {'lrtb': 'full'}
+</code></pre>
+<h2 id="installuninstall-spines-functions">Install/uninstall spines functions</h2>
+<p>You usually do not need to call these functions. Upon loading the spines
+module, <code><a title="plottools.spines.install_spines" href="#plottools.spines.install_spines">install_spines()</a></code> is called automatically.</p>
+<ul>
+<li><code><a title="plottools.spines.install_spines" href="#plottools.spines.install_spines">install_spines()</a></code>: install functions of the spines module in matplotlib.</li>
+<li><code><a title="plottools.spines.uninstall_spines" href="#plottools.spines.uninstall_spines">uninstall_spines()</a></code>: uninstall all code of the spines module from matplotlib.</li>
+</ul>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="plottools.spines.show_spines"><code class="name flex">
+<span>def <span class="ident">show_spines</span></span>(<span>ax, spines='lrtb')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Show and hide spines.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib figure, matplotlib axis,</code> or <code>list</code> of <code>matplotlib axes</code></dt>
+<dd>Axis on which spine and ticks visibility is manipulated.
+If figure, then apply manipulations on all axes of the figure.
+If list of axes, apply manipulations on each of the given axes.</dd>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Specify which spines and ticks should be shown.
+All other ones or hidden.
+'l' is the left spine, 'r' the right spine,
+'t' the top one and 'b' the bottom one.
+E.g. 'lb' shows the left and bottom spine, and hides the top
+and and right spines, as well as their tick marks and labels.
+'' shows no spines at all.
+'lrtb' shows all spines and tick marks.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+
+fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+ax0.show_spines('lb')
+ax1.show_spines('bt')
+ax2.show_spines('tr')
+</code></pre>
+<p><img alt="show" src="figures/spines-show.png"></p></div>
+</dd>
+<dt id="plottools.spines.set_spines_outward"><code class="name flex">
+<span>def <span class="ident">set_spines_outward</span></span>(<span>ax, spines, offset=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the specified spines outward.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib figure, matplotlib axis,</code> or <code>list</code> of <code>matplotlib axes</code></dt>
+<dd>Axis on which spines are set outwards.
+If figure, then apply manipulations on all axes of the figure.
+If list of axes, apply manipulations on each of the given axes.</dd>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code> or <code>dictionary </code></dt>
+<dd>
+<ul>
+<li>string: specify to which spines the offset given by
+the <code>offset</code> argument should be applied.
+'l' is the left spine, 'r' the right spine,
+'t' the top one and 'b' the bottom one.
+E.g. 'lb' applies the offset to the left and bottom spine.</li>
+<li>dictionary: apply offsets to several sets of spines individually.
+Dictionary keys are strings specifying the spines as described above.
+The corresponding values specify the offset by which the spines
+are moved outwards.</li>
+</ul>
+</dd>
+<dt><strong><code>offset</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Move the specified spines outward by that many pixels.
+If None. leave the position of the spines untouched.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+
+fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+ax0.set_spines_outward('lb', 0)
+# set left and bottom spine outwards by 10 pixels:
+ax1.set_spines_outward('lb', 10)
+# set left and bottom spine inwards by 10 pixels:
+ax2.set_spines_outward('lb', -10)
+</code></pre>
+<p><img alt="outward" src="figures/spines-outward.png"></p>
+<pre><code class="language-py"># set the left and right spines outwards by 10 pixels and the top and bottom ones by 5:
+ax0.set_spines_outward({'lr': 10, 'bt': 5})
+
+# set the bottom spine of all axis of the figure outward by 5 pixels:
+fig.set_spines_outward('b', 5)
+</code></pre></div>
+</dd>
+<dt id="plottools.spines.set_spines_zero"><code class="name flex">
+<span>def <span class="ident">set_spines_zero</span></span>(<span>ax, spines, pos=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set the position of the specified spines to the data value of the other axis.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib figure, matplotlib axis,</code> or <code>list</code> of <code>matplotlib axes</code></dt>
+<dd>Axis on which the spine position is set.
+If figure, then apply manipulations on all axes of the figure.
+If list of axes, apply manipulations on each of the given axes.</dd>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code> or <code>dictionary </code></dt>
+<dd>
+<ul>
+<li>string: specify which spines should be set.
+'l' is the left spine, 'r' the right spine,
+'t' the top one and 'b' the bottom one.
+E.g. 'lb' applies the position to the left and bottom spine.</li>
+<li>dictionary: apply spine position to several sets of
+spines individually.
+Dictionary keys are strings specifying the spines as described above.
+The corresponding values specify the position of the spines.</li>
+</ul>
+</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Position of the spine in data values of the other axis.
+If None, leave spine position untouched.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py"># set left and right spine to the origin of the data coordinates:
+ax.set_spines_zero('lr')
+
+# set the left spine to the origin of the x-axis, and the bottom spine
+# at -1 on the y-axis:
+ax.set_spines_zero({'l': 0, 'b': -1})
+
+# set the left and the right spine of all axis of the figure to the origin:
+fig.set_spines_zero('lb')
+</code></pre></div>
+</dd>
+<dt id="plottools.spines.set_spines_bounds"><code class="name flex">
+<span>def <span class="ident">set_spines_bounds</span></span>(<span>ax, spines, bounds='full')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set bounds for the specified spines.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib figure, matplotlib axis,</code> or <code>list</code> of <code>matplotlib axes</code></dt>
+<dd>Axis on which spine bounds are set.
+If figure, then apply manipulations on all axes of the figure.
+If list of axes, apply manipulations on each of the given axes.</dd>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code> or <code>dictionary </code></dt>
+<dd>
+<ul>
+<li>string: specify to which spines the bound setttings given by
+the <code>bounds</code> argument should be applied.
+'l' is the left spine, 'r' the right spine,
+'t' the top one and 'b' the bottom one.
+E.g. 'lb' applies the bounds settings to the left and bottom spine.</li>
+<li>dictionary: apply bound settings for several sets of spines.
+Dictionary keys are strings specifying the spines as described above.
+The corresponding values specify the bound settings
+(see <code>bounds</code> below for possible values and their effects).</li>
+</ul>
+</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>'full', 'data', 'ticks'</code> or <code>float</code> or <code>tuple thereof</code></dt>
+<dd>
+<ul>
+<li>'full': draw the spine in its full length (default)</li>
+<li>'data': do not draw the spine beyond the data range,
+uses matplotlib's smart_bounds</li>
+<li>'ticks': draw the spine only within the first and
+last major tick mark.</li>
+<li>tuple: two values of 'full', 'data', 'ticks' or float specifying
+the lower and upper bound separately.</li>
+</ul>
+</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<h2 id="valueerror">Valueerror</h2>
+<p>If an invalid <code>bounds</code> argument was specified.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+import plottools.spines
+
+fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+ax0.set_spines_bounds('lb', 'full')
+ax1.set_spines_bounds('lb', 'data')
+ax2.set_spines_bounds('lb', 'ticks')
+</code></pre>
+<p><img alt="bounds" src="figures/spines-bounds.png"></p></div>
+</dd>
+<dt id="plottools.spines.arrow_spines"><code class="name flex">
+<span>def <span class="ident">arrow_spines</span></span>(<span>ax, spines, flush=None, extend=None, height=None, ratio=None, overhang=None, lw=None, color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Spines with arrows.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>matplotlib figure, matplotlib axis,</code> or <code>list</code> of <code>matplotlib axes</code></dt>
+<dd>Axis on which spine and ticks visibility is manipulated.
+If figure, then apply manipulations on all axes of the figure.
+If list of axes, apply manipulations on each of the given axes.</dd>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Specify which spines should be shown as arrows.
+'l' is the left spine, 'r' the right spine,
+'t' the top one and 'b' the bottom one.</dd>
+<dt><strong><code>flush</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Extend the tail of the arrow. If the other axis is set
+outward, then extend the tail by this factor times the outward
+set distance of the spine of the other axis. That is, if
+<code>flush</code> is set to 1.0, the tail of the arrow just touches the
+other spine.
+If the other axis is set to a specific data coordinate, then
+extend the tail by <code>flush</code> times the height of the arrow.
+If <code>None</code> set to <code>rcParams['axes.spines.arrows.flushx']</code> for
+horizontal spines or <code>rcParams['axes.spines.arrows.flushy']</code>
+for vertical spines.</dd>
+<dt><strong><code>extend</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Extend the length of the spine by this factor times the height
+of the arrow.
+If <code>None</code> set to <code>rcParams['axes.spines.arrows.extendx']</code> for
+horizontal spines or <code>rcParams['axes.spines.arrows.extendy']</code>
+for vertical spines.</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>float</code></dt>
+<dd>Height (length) of the arrow in points.
+If <code>None</code> set to <code>rcParams['axes.spines.arrows.height']</code>.</dd>
+<dt><strong><code>ratio</code></strong> :&ensp;<code>float</code></dt>
+<dd>Width of arrow is <code>height</code> times <code>ratio</code>.
+If <code>None</code> set to <code>rcParams['axes.spines.arrows.ratio']</code>.</dd>
+<dt><strong><code>overhang</code></strong> :&ensp;<code>float</code></dt>
+<dd>Fraction that the arrow is swept back: 0 is triangular arrow,
+1 is pure line arrow, negative values extend the arrow backwards.
+If <code>None</code> set to <code>rcParams['axes.spines.arrows.overhang']</code>.</dd>
+<dt><strong><code>lw</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Line width of spine. If <code>None</code> set to <code>rcParams['axes.linewidth']</code>.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color specificaion</code> or <code>None</code></dt>
+<dd>Color of spine. If <code>None</code> set to <code>rcParams['axes.edgecolor']</code>.</dd>
+</dl>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-py">import matplotlib.pyplot as plt
+from plottools.spines import spines_params
+
+fig, (ax0, ax1, ax2) = plt.subplots(1, 3)
+spines_params(spines='', height=10)
+ax0.arrow_spines('lb')
+ax1.arrow_spines('lb', flush=1.0)
+ax2.arrow_spines('lb', flush=2.0)
+</code></pre>
+<p><img alt="arrow" src="figures/spines-arrow.png"></p></div>
+</dd>
+<dt id="plottools.spines.spines_params"><code class="name flex">
+<span>def <span class="ident">spines_params</span></span>(<span>spines=None, spines_offsets=None, spines_positions=None, spines_bounds=None, arrows=None, flushx=None, extendx=None, flushy=None, extendy=None, height=None, ratio=None, overhang=None, twinx_spines=None, twiny_spines=None, inset_spines=None, inset_spines_offsets=None, inset_spines_positions=None, inset_spines_bounds=None, color=None, linewidth=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set default spine appearance.</p>
+<p>Only parameters that are not <code>None</code> are updated.</p>
+<p>Call this function <em>before</em> you create a matplotlib figure.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Spines to be shown. Sets rcParams <code>axes.spines.show</code>.
+See <code>spines.show_spines()</code> for details.</dd>
+<dt><strong><code>spines_offsets</code></strong> :&ensp;<code>dict</code> or <code>float</code></dt>
+<dd>Offsets for moving spines outward. Sets rcParams <code>axes.spines.offsets</code>.
+See <code>spines.set_spines_outward()</code> for details.</dd>
+<dt><strong><code>spines_positions</code></strong> :&ensp;<code>dict</code> or <code>float</code></dt>
+<dd>Positions for spines in data coordinates.
+Sets rcParams <code>axes.spines.positions</code>.
+See <code>spines.set_spines_zero()</code> for details.</dd>
+<dt><strong><code>spines_bounds</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Bounds for the spines. Sets rcParams <code>axes.spines.bounds</code>.
+See <code>spines.set_spines_bounds()</code> for details.</dd>
+<dt><strong><code>arrows</code></strong> :&ensp;<code>string</code></dt>
+<dd>Spines as arrows. Sets rcParams <code>axes.spines.arrows</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>flushx</code></strong> :&ensp;<code>float</code></dt>
+<dd>Extend tail of arrowed top or bottom spine by this factor times
+offset of other axis
+(if set outwards) or by this factor times the height of the arrow
+(if set to a data coordinate).
+Sets rcParams <code>axes.spines.arrows.flushx</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>extendx</code></strong> :&ensp;<code>float</code></dt>
+<dd>Extend head of arrowed top or bottom spine by this factor times
+height of arrow.
+Sets rcParams <code>axes.spines.arrows.extendx</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>flushy</code></strong> :&ensp;<code>float</code></dt>
+<dd>Extend tail of arrowed left or right spine by this factor times
+offset of other axis
+(if set outwards) or by this factor times the height of the arrow
+(if set to a data coordinate).
+Sets rcParams <code>axes.spines.arrows.flushy</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>extendy</code></strong> :&ensp;<code>float</code></dt>
+<dd>Extend head of arrowed left or right spine by this factor times
+height of arrow.
+Sets rcParams <code>axes.spines.arrows.extendy</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>height</code></strong> :&ensp;<code>float</code></dt>
+<dd>Height of arrow head of arrowed spine in points.
+Sets rcParams <code>axes.spines.arrows.height</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>ratio</code></strong> :&ensp;<code>float</code></dt>
+<dd>Width relative to height of arrow head of arrowed spine in points.
+Sets rcParams <code>axes.spines.arrows.ratio</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>overhang</code></strong> :&ensp;<code>float</code></dt>
+<dd>Fraction that the arrow is swept back: 0 is triangular arrow,
+1 is pure line arrow, negative values extend the arrow backwards.
+Sets rcParams <code>axes.spines.arrows.overhang</code>.
+See <code>spines.arrow_spines()</code> for details.</dd>
+<dt><strong><code>twinx_spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Spines to be shown for <code>twinx()</code> axes.
+Sets rcParams <code>axes.spines.twinx</code>.
+See <code>spines.show_spines()</code> for details.
+Twinned axes get the same default offsets, positions, and bounds
+as the defaults for normal axes.</dd>
+<dt><strong><code>twiny_spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Spines to be shown for <code>twiny()</code> axes.
+Sets rcParams <code>axes.spines.twiny</code>.
+See <code>spines.show_spines()</code> for details.
+Twinned axes get the same default offsets, positions, and bounds
+as the defaults for normal axes.</dd>
+<dt><strong><code>inset_spines</code></strong> :&ensp;<code>string</code></dt>
+<dd>Spines to be shown for an inset.
+Sets rcParams <code>axes.spines.inset.show</code>.
+See <code>spines.show_spines()</code> for details.</dd>
+<dt><strong><code>inset_spines_offsets</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Offsets for moving spines outward for an inset.
+Sets rcParams <code>axes.spines.inset.offsets</code>.
+See <code>spines.set_spines_outward()</code> for details.</dd>
+<dt><strong><code>inset_spines_positions</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Positions of spines in data coordinates for an inset.
+Sets rcParams <code>axes.spines.inset.positions</code>.
+See <code>spines.set_spines_zero()</code> for details.</dd>
+<dt><strong><code>inset_spines_bounds</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Bounds for the spines of an inset.
+Sets rcParams <code>axes.spines.inset.bounds</code>.
+See <code>spines.set_spines_bounds()</code> for details.</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>matplotlib color</code></dt>
+<dd>Color of spines. Sets rcParam <code>axes.edgecolor</code>.</dd>
+<dt><strong><code>linewidth</code></strong> :&ensp;<code>float</code></dt>
+<dd>Width of spines. Sets rcParam <code>axes.linewidth</code>.</dd>
+</dl></div>
+</dd>
+<dt id="plottools.spines.install_spines"><code class="name flex">
+<span>def <span class="ident">install_spines</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Install functions of the spines module in matplotlib.</p>
+<p>Patches the matplotlib functions <code>show()</code> and <code>savefig()</code> for fixing
+spine bounds before finishing the figure.</p>
+<p>Also patches the matplotlib axes constructor, the <code>twinx()</code>, <code>twiny()</code>,
+and the <code><a title="plottools.insets" href="insets.html">plottools.insets</a></code> functions.
+</p>
+<p>Adds <code>matplotlib.rcParams</code>:</p>
+<pre><code>axes.spines.show   : 'lrtb'
+axes.spines.offsets: {'lrtb': 0}
+axes.spines.positions: {'lrtb': None}
+axes.spines.bounds : {'lrtb': 'full'}
+axes.spines.arrows: '',
+axes.spines.arrows.flushx: 0.0
+axes.spines.arrows.flushy: 0.0
+axes.spines.arrows.extendx: 1.0
+axes.spines.arrows.extendy: 1.0
+axes.spines.arrows.height: 10.0
+axes.spines.arrows.ratio: 0.7
+axes.spines.arrows.overhang: 1.0
+axes.spines.twinx: 'r'
+axes.spines.twiny: 't'
+axes.spines.inset.show   : 'lrtb'
+axes.spines.inset.offsets: {'lrtb': 0}
+axes.spines.inset.positions: {'lrtb': None}
+axes.spines.inset.bounds : {'lrtb': 'full'}
+</code></pre>
+<p>This function is called automatically upon importing the module.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.spines.uninstall_spines" href="#plottools.spines.uninstall_spines">uninstall_spines()</a></code></p></div>
+</dd>
+<dt id="plottools.spines.uninstall_spines"><code class="name flex">
+<span>def <span class="ident">uninstall_spines</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uninstall all code of the spines module from matplotlib.</p>
+<h2 id="see-also">See Also</h2>
+<p><code><a title="plottools.spines.install_spines" href="#plottools.spines.install_spines">install_spines()</a></code></p></div>
+</dd>
+<dt id="plottools.spines.demo_basic"><code class="name flex">
+<span>def <span class="ident">demo_basic</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a basic demonstration of the spine module.</p></div>
+</dd>
+<dt id="plottools.spines.demo_arrows"><code class="name flex">
+<span>def <span class="ident">demo_arrows</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the spine module showing arrowed spines.</p></div>
+</dd>
+<dt id="plottools.spines.demo_twin_inset"><code class="name flex">
+<span>def <span class="ident">demo_twin_inset</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run a demonstration of the spine module showing twin behavior.</p></div>
+</dd>
+<dt id="plottools.spines.demo"><code class="name flex">
+<span>def <span class="ident">demo</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul>
+<li><a href="#axes-member-functions">Axes member functions</a></li>
+<li><a href="#figure-member-functions">Figure member functions</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#installuninstall-spines-functions">Install/uninstall spines functions</a></li>
+</ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="plottools" href="index.html">plottools</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="plottools.spines.show_spines" href="#plottools.spines.show_spines">show_spines</a></code></li>
+<li><code><a title="plottools.spines.set_spines_outward" href="#plottools.spines.set_spines_outward">set_spines_outward</a></code></li>
+<li><code><a title="plottools.spines.set_spines_zero" href="#plottools.spines.set_spines_zero">set_spines_zero</a></code></li>
+<li><code><a title="plottools.spines.set_spines_bounds" href="#plottools.spines.set_spines_bounds">set_spines_bounds</a></code></li>
+<li><code><a title="plottools.spines.arrow_spines" href="#plottools.spines.arrow_spines">arrow_spines</a></code></li>
+<li><code><a title="plottools.spines.spines_params" href="#plottools.spines.spines_params">spines_params</a></code></li>
+<li><code><a title="plottools.spines.install_spines" href="#plottools.spines.install_spines">install_spines</a></code></li>
+<li><code><a title="plottools.spines.uninstall_spines" href="#plottools.spines.uninstall_spines">uninstall_spines</a></code></li>
+<li><code><a title="plottools.spines.demo_basic" href="#plottools.spines.demo_basic">demo_basic</a></code></li>
+<li><code><a title="plottools.spines.demo_arrows" href="#plottools.spines.demo_arrows">demo_arrows</a></code></li>
+<li><code><a title="plottools.spines.demo_twin_inset" href="#plottools.spines.demo_twin_inset">demo_twin_inset</a></code></li>
+<li><code><a title="plottools.spines.demo" href="#plottools.spines.demo">demo</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.0</a>.</p>
+</footer>
+</body>
+</html>
