@@ -103,11 +103,19 @@ def tag(fig=None, axes=None, xoffs=None, yoffs=None,
         Overrides settings in `mpl.rcParams['figure.tags.font']`.
     """
     if fig is None:
-        fig = axes[0].get_figure()
+        fig = axes[0].get_figure() if isinstance(axes, (list, tuple, np.ndarray)) else axes.get_figure()
     if axes is None:
         axes = fig.get_axes()
     if not isinstance(axes, (list, tuple, np.ndarray)):
         axes = [axes]
+    for j in range(len(axes)):
+        axs = axes[j]
+        if isinstance(axs, (list, tuple, np.ndarray)):
+            for k in range(len(axs)):
+                if not hasattr(axs[k], 'get_visible'):
+                    axs[k] = fig.get_axes()[axs[k]]
+        elif not hasattr(axes[j], 'get_visible'):
+            axes[j] = fig.get_axes()[axes[j]]
     if labels is None:
         labels = mpl.rcParams['figure.tags.label']
     if minor_label is None:

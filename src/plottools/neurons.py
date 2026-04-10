@@ -152,8 +152,8 @@ def neuron(ax, xy, r, label=None, xytarget=None, synapse='exc',
         else:
             t = mpl.transforms.Affine2D().translate(xy[0], xy[1])
             t += ax.transData
-        ax.add_patch(mpl.patches.Arc((0.0, ar), ar, ar, 0.0, -50.0,
-                                     220.0, transform=t,
+        ax.add_patch(mpl.patches.Arc((0.0, ar), ar, ar, angle=0.0, theta1=-50.0,
+                                     theta2=220.0, transform=t,
                                      clip_on=False, color=ec, lw=lw))
         ax.plot([1.15*r, 1.2*r], [-0.35*r, 0.35*r], color=ec, lw=lw,
                 clip_on=False,

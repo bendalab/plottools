@@ -686,9 +686,9 @@ install_subplots()
 def demo():
     """ Run a demonstration of the subplots module.
     """
-    fig, axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])
+    fig, axs = plt.subplots(3, 3, width_ratios=[1, 1, 0.2, 2], height_ratios=[3, 2, 2])
     fig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)
-    fig.suptitle('axs = plt.subplots(3, 3, width_ratios=[1, 1, 2], height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
+    fig.suptitle('axs = plt.subplots(3, 3, width_ratios=[1, 1, 0.2, 2], height_ratios=[3, 2, 2])\nfig.subplots_adjust(leftm=5, bottomm=2, rightm=2, topm=4)')
     x = np.linspace(0.0, 2.0, 200)
     ax = fig.merge(axs[1:3,0:2])
     ax.plot(x, np.sin(2.0*np.pi*x))
