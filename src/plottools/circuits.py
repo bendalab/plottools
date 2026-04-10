@@ -19,7 +19,10 @@ Electrical circuits.
 - `switch_v()`: draw a vertical switch.
 - `node()`: draw a node connecting lines.
 - `pin()`: draw a pin hole.
-- `connect()`: draw lines directly connecting circuit elements.
+- `bus()`: draw a bus with label.
+- `break_h()`: break a horizontal connection.
+- `break_v()`: break a vertical connection.
+- `connect()`: draw horizontal and vertical lines connecting circuit elements.
 - `connect_straight()`: draw straight lines connecting circuit elements.
 
 
@@ -1852,6 +1855,94 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
     return Pos(pos[0], pos[1])
 
 
+def break_h(ax, pos, lw=None, color=None, zorder=None):
+    """ Break a horizontal connection.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the break.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the break.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.connectwidth` rcParams settings.
+    color: matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+
+    Returns
+    -------
+    posl: Pos
+        Coordinates of the left end of the break.
+    posr: Pos
+        Coordinates of the right end of the break.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.connectwidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    r = mpl.rcParams['circuits.scale']
+    x = pos[0]
+    y = pos[1]
+    ax.plot([x + 0.08*r, x + 0.5*r], [y, y], lw=lw, color=color, zorder=zorder)
+    ax.plot([x - 0.08*r, x - 0.5*r], [y, y], lw=lw, color=color, zorder=zorder)
+    ax.plot([x + 0.03*r, x + 0.13*r], [y - 0.2*r, y + 0.2*r],
+            lw=lw, color=color, zorder=zorder)
+    ax.plot([x - 0.13*r, x - 0.03*r], [y - 0.2*r, y + 0.2*r],
+            lw=lw, color=color, zorder=zorder)
+    return pos.left(0.5), pos.right(0.5)
+
+
+def break_v(ax, pos, lw=None, color=None, zorder=None):
+    """ Break a vertical connection.
+
+    Parameters
+    ----------
+    ax: matplotlib axes
+        Axes where to draw the break.
+    pos: Pos or 2-tuple of floats
+        x and y-coordinate of position of the center of the break.
+    lw: float, int
+        Linewidth for drawing the connection lines.
+        Defaults to `circuits.connectwidth` rcParams settings.
+    color: matplotlib color
+        Color of the connection lines.
+        Defaults to `circuits.color` rcParams settings.
+    zorder: int
+        zorder for the connection lines.
+        Defaults to `circuits.zorder` rcParams settings.
+
+    Returns
+    -------
+    posb: Pos
+        Coordinates of the bottom end of the break.
+    post: Pos
+        Coordinates of the top end of the break.
+    """
+    if lw is None:
+        lw = mpl.rcParams['circuits.connectwidth']
+    if color is None:
+        color = mpl.rcParams['circuits.color']
+    if zorder is None:
+        zorder = mpl.rcParams['circuits.zorder']
+    r = mpl.rcParams['circuits.scale']
+    x = pos[0]
+    y = pos[1]
+    ax.plot([x, x], [y + 0.08*r, y + 0.5*r], lw=lw, color=color, zorder=zorder)
+    ax.plot([x, x], [y - 0.08*r, y - 0.5*r], lw=lw, color=color, zorder=zorder)
+    ax.plot([x - 0.2*r, x + 0.2*r], [y + 0.03*r, y + 0.13*r],
+            lw=lw, color=color, zorder=zorder)
+    ax.plot([x - 0.2*r, x + 0.2*r], [y - 0.13*r, y - 0.03*r],
+            lw=lw, color=color, zorder=zorder)
+    return pos.down(0.5), pos.up(0.5)
+
+
 def connect(ax, nodes, lw=None, color=None, zorder=None):
     """ Draw horizontal and vertical lines connecting circuit elements.
 
@@ -2056,6 +2147,10 @@ def install_circuits():
         mpl.axes.Axes.pin = pin
     if not hasattr(mpl.axes.Axes, 'bus'):
         mpl.axes.Axes.bus = bus
+    if not hasattr(mpl.axes.Axes, 'break_h'):
+        mpl.axes.Axes.break_h = break_h
+    if not hasattr(mpl.axes.Axes, 'break_v'):
+        mpl.axes.Axes.break_v = break_v
     if not hasattr(mpl.axes.Axes, 'connect'):
         mpl.axes.Axes.connect = connect
     if not hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -2127,6 +2222,10 @@ def uninstall_circuits():
         delattr(mpl.axes.Axes, 'pin')
     if hasattr(mpl.axes.Axes, 'bus'):
         delattr(mpl.axes.Axes, 'bus')
+    if hasattr(mpl.axes.Axes, 'break_h'):
+        delattr(mpl.axes.Axes, 'break_h')
+    if hasattr(mpl.axes.Axes, 'break_v'):
+        delattr(mpl.axes.Axes, 'break_v')
     if hasattr(mpl.axes.Axes, 'connect'):
         delattr(mpl.axes.Axes, 'connect')
     if hasattr(mpl.axes.Axes, 'connect_straight'):
@@ -2164,11 +2263,12 @@ def demo():
     op1n, op1p, op1o, op1g, op1pw = ax.opamp_l((5, 3), r'$OP1$',
                                                align='center', invert=True)
     s1b, s1t = ax.switch_v(op1g.downs(1), r'$S1$', 'left')
-    n1n = ax.node(op1n.lefts(2))
+    b1l, b1r = ax.break_h(op1n.lefts(1))
+    n1n = ax.node(b1l.lefts(0.5))
     n1p = ax.node(op1p.lefts(2))
     n1o = ax.bus(op1o.rights(1), 'BUS ', align='right')
     gnd1 = ax.ground(s1b.downs(1), r'$GND_1$')
-    ax.connect((op1n, n1n))
+    ax.connect((op1n, b1r, None, b1l, n1n))
     ax.connect((op1p, n1p))
     ax.connect((op1o, n1o))
     ax.connect((op1g, s1t, None, s1b, gnd1))
