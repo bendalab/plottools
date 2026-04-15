@@ -1822,12 +1822,12 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
     ha = 'left'
     va = 'center_baseline'
     if align in ['left', 'west']:
-        px -= r + 0.5*fs*fw
+        px -= r + 0.2*fs*fw
         rot = 'horizontal'
         angle = 180
         ha = 'right'
     elif align in ['right', 'east']:
-        px += r + 0.5*fs*fw
+        px += r + 0.2*fs*fw
         rot = 'horizontal'
         angle = 0
         ha = 'left'
