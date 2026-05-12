@@ -79,7 +79,7 @@ def align_xlabels(fig, axs=None, dist=None):
         If provided, overwrites rc parameter `axes.labelpad`.
     """
     if dist is None:
-        dist = mpl.rcParams.get('axes.labelpad', 3)
+        dist = mpl.rcParams.get('axes.labelpad', 4)
     xtick_size = mpl.rcParams['xtick.major.size']
     if mpl.rcParams['xtick.direction'] == 'inout':
         xtick_size *= 0.5
@@ -90,6 +90,7 @@ def align_xlabels(fig, axs=None, dist=None):
         dist += mpl.rcParams['xtick.major.pad']
     if axs is None:
         axs = fig.get_axes()
+    dpi = fig.get_dpi()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     yap = np.zeros((len(axs), 3))
@@ -104,11 +105,9 @@ def align_xlabels(fig, axs=None, dist=None):
             pos = xax.get_label_position() == 'top'
             #tlh = np.abs(np.diff(xax.get_ticklabel_extents(renderer)[pos].get_points()[:,1]))[0]
             tlh = get_ticklabel_extend(xax, pos, 1, renderer)
-            tlh += dist
-            if pos:
-                tlh += 0.5*xax.get_label().get_fontsize()
-            else:
-                tlh += 0.5*xax.get_label().get_fontsize()
+            tlh_dist = dist
+            #tlh_dist += 0.3*xax.get_label().get_fontsize()
+            tlh += tlh_dist/72*dpi
             ylh[k] = tlh
             yph[k] = pixely
             ylx[k] = xax.get_label().get_position()[0]
@@ -147,7 +146,7 @@ def align_ylabels(fig, axs=None, dist=None):
         If provided, overwrites rc parameter `axes.labelpad`.
     """
     if dist is None:
-        dist = mpl.rcParams.get('axes.labelpad', 3)
+        dist = mpl.rcParams.get('axes.labelpad', 4)
     ytick_size = mpl.rcParams['ytick.major.size']
     if mpl.rcParams['ytick.direction'] == 'inout':
         ytick_size *= 0.5
@@ -158,6 +157,7 @@ def align_ylabels(fig, axs=None, dist=None):
         dist += mpl.rcParams['ytick.major.pad']
     if axs is None:
         axs = fig.get_axes()
+    dpi = fig.get_dpi()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     xap = np.zeros((len(axs), 3))
@@ -172,11 +172,9 @@ def align_ylabels(fig, axs=None, dist=None):
             pos = yax.get_label_position() == 'right'
             #tlw = np.abs(np.diff(yax.get_ticklabel_extents(renderer)[pos].get_points()[:,0]))[0]
             tlw = get_ticklabel_extend(yax, pos, 0, renderer)
-            tlw += dist
-            if pos:
-                tlw += 0.7*yax.get_label().get_fontsize()
-            else:
-                tlw += 0.5*yax.get_label().get_fontsize()
+            tlw_dist = dist
+            tlw_dist += 0.2*yax.get_label().get_fontsize()
+            tlw += tlw_dist/72*dpi
             xlw[k] = tlw
             xpw[k] = pixelx
             xly[k] = yax.get_label().get_position()[1]
