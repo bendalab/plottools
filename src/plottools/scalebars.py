@@ -173,13 +173,13 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     # bar:
     if ha == 'left':
         x0 = x
-        x1 = x+width
+        x1 = x + width
     elif ha == 'right':
-        x0 = x-width
+        x0 = x - width
         x1 = x
     else:
-        x0 = x-0.5*width
-        x1 = x+0.5*width
+        x0 = x - 0.5*width
+        x1 = x + 0.5*width
     # line width:
     if lw is None:
         lw = mpl.rcParams['scalebar.linewidth']
@@ -192,7 +192,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     if not return_coords:
         artists.extend(lh)
     # get y position of line in figure pixel coordinates:
-    ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
+    ly = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0, 1]
     # caps:
     if capsize is None:
         capsize = mpl.rcParams['scalebar.capsize']
@@ -200,11 +200,11 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dy = capsize*dyu
-        cl = ax.plot([x0, x0], [y-dy, y+dy], '-', color=color, lw=clw,
-                     solid_capstyle='butt', clip_on=False)
+        cl = ax.plot([x0, x0], [y - dy, y + dy], '-', color=color,
+                     lw=clw, solid_capstyle='butt', clip_on=False)
         artists.extend(cl)
-        cl = ax.plot([x1, x1], [y-dy, y+dy], '-', color=color, lw=clw,
-                     solid_capstyle='butt', clip_on=False)
+        cl = ax.plot([x1, x1], [y - dy, y + dy], '-', color=color,
+                     lw=clw, solid_capstyle='butt', clip_on=False)
         artists.extend(cl)
     # label:
     if wunit:
@@ -215,7 +215,7 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
     for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['scalebar.font'][k]
-    xt = 0.5*(x0+x1)
+    xt = 0.5*(x0 + x1)
     if hat == 'left':
         xt = x0
     elif hat == 'right':
@@ -224,15 +224,15 @@ def xscalebar(ax, x, y, width, wunit=None, wformat=None,
         th = ax.text(xt, y, ls, clip_on=False,
                      ha=hat, va='bottom', **kwargs)
         # get y coordinate of text bottom in figure pixel coordinates:
-        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,1]
-        dty = ly+0.5*lw + 2.0 - ty
+        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0, 1]
+        dty = ly + 0.5*lw + 2.0 - ty
     else:
         th = ax.text(xt, y, ls, clip_on=False,
                      ha=hat, va='top', **kwargs)
         # get y coordinate of text bottom in figure pixel coordinates:
-        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,1]
-        dty = ly-0.5*lw - 2.0 - ty
-    th.set_position((xt, y+dyu*dty))
+        ty = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1, 1]
+        dty = ly - 0.5*lw - 2.0 - ty
+    th.set_position((xt, y + dyu*dty))
     artists.append(th)
     if return_coords:
         return artists, x0, x1, y
@@ -366,13 +366,13 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     # bar:
     if va == 'bottom':
         y0 = y
-        y1 = y+height
+        y1 = y + height
     elif va == 'top':
-        y0 = y-height
+        y0 = y - height
         y1 = y
     else:
-        y0 = y-0.5*height
-        y1 = y+0.5*height
+        y0 = y - 0.5*height
+        y1 = y + 0.5*height
     # line width:
     if lw is None:
         lw = mpl.rcParams['scalebar.linewidth']
@@ -385,7 +385,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     if not return_coords:
         artists.extend(lh)
     # get x position of line in figure pixel coordinates:
-    lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
+    lx = np.array(lh[0].get_window_extent(ax.get_figure().canvas.get_renderer()))[0, 0]
     # caps:
     if capsize is None:
         capsize = mpl.rcParams['scalebar.capsize']
@@ -393,11 +393,11 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         clw = mpl.rcParams['scalebar.caplinewidth']
     if capsize > 0.0:
         dx = capsize*dxu
-        cl = ax.plot([x-dx, x+dx], [y0, y0], '-', color=color, lw=clw,
-                     solid_capstyle='butt', clip_on=False)
+        cl = ax.plot([x - dx, x + dx], [y0, y0], '-', color=color,
+                     lw=clw, solid_capstyle='butt', clip_on=False)
         artists.extend(cl)
-        cl = ax.plot([x-dx, x+dx], [y1, y1], '-', color=color, lw=clw,
-                     solid_capstyle='butt', clip_on=False)
+        cl = ax.plot([x - dx, x + dx], [y1, y1], '-', color=color,
+                     lw=clw, solid_capstyle='butt', clip_on=False)
         artists.extend(cl)
     # label:
     if hunit:
@@ -408,7 +408,7 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
     for k in mpl.rcParams['scalebar.font']:
         if not k in kwargs:
             kwargs[k] = mpl.rcParams['scalebar.font'][k]
-    yt = 0.5*(y0+y1)
+    yt = 0.5*(y0 + y1)
     if vat == 'top':
         yt = y1
     elif vat == 'bottom':
@@ -417,15 +417,15 @@ def yscalebar(ax, x, y, height, hunit=None, hformat=None,
         th = ax.text(x, yt, ls, clip_on=False, rotation=90.0,
                      ha='left', va=vat, **kwargs)
         # get x coordinate of text bottom in figure pixel coordinates:
-        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0,0]
-        dtx = lx+0.5*lw + 2.0 - tx
+        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[0, 0]
+        dtx = lx + 0.5*lw + 2.0 - tx
     else:
         th = ax.text(x, yt, ls, clip_on=False, rotation=90.0,
                      ha='right', va=vat, **kwargs)
         # get x coordinate of text bottom in figure pixel coordinates:
-        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1,0]
-        dtx = lx-0.5*lw - 1.0 - tx
-    th.set_position((x+dxu*dtx, yt))
+        tx = np.array(th.get_window_extent(ax.get_figure().canvas.get_renderer()))[1, 0]
+        dtx = lx - 0.5*lw - 1.0 - tx
+    th.set_position((x + dxu*dtx, yt))
     artists.append(th)
     if return_coords:
         return artists, x, y0, y1
@@ -538,15 +538,17 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
     # color:
     if color is None:
         color = mpl.rcParams['scalebar.color']
-    a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va, hat,
-                              lw, color, 0.0, 1, return_coords=True, **kwargs)
+    a, x0, x1, yy = xscalebar(ax, x, y, width, wunit, wformat, ha, va,
+                              hat, lw, color, 0.0, 1,
+                              return_coords=True, **kwargs)
     artists.extend(a)
     try:
         ax.lines.pop()
     except AttributeError:
         ax.lines[-1].remove()
-    a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha, va, vat,
-                              lw, color, 0.0, 1, return_coords=True, **kwargs)
+    a, xx, y0, y1 = yscalebar(ax, x, y, height, hunit, hformat, ha,
+                              va, vat, lw, color, 0.0, 1,
+                              return_coords=True, **kwargs)
     artists.extend(a)
     try:
         ax.lines.pop()
@@ -554,18 +556,22 @@ def scalebars(ax, x, y, width, height, wunit=None, hunit=None,
         ax.lines[-1].remove()
     if x0 == xx:
         if y0 == yy:
-            la = ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color, lw=lw,
-                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x0, x1], [y1, y0, y0], '-', color=color,
+                         lw=lw, solid_capstyle='butt',
+                         solid_joinstyle='miter', clip_on=False)
         else:
-            la = ax.plot([x0, x0, x1], [y0, y1, y1], '-', color=color, lw=lw,
-                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x0, x1], [y0, y1, y1], '-', color=color,
+                         lw=lw, solid_capstyle='butt',
+                         solid_joinstyle='miter', clip_on=False)
     else:
         if y0 == yy:
-            la = ax.plot([x0, x1, x1], [y0, y0, y1], '-', color=color, lw=lw,
-                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x1, x1], [y0, y0, y1], '-', color=color,
+                         lw=lw, solid_capstyle='butt',
+                         solid_joinstyle='miter', clip_on=False)
         else:
-            la = ax.plot([x0, x1, x1], [y1, y1, y0], '-', color=color, lw=lw,
-                         solid_capstyle='butt', solid_joinstyle='miter', clip_on=False)
+            la = ax.plot([x0, x1, x1], [y1, y1, y0], '-', color=color,
+                         lw=lw, solid_capstyle='butt',
+                         solid_joinstyle='miter', clip_on=False)
     artists.extend(la)
     return artists
 

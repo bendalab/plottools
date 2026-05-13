@@ -219,11 +219,11 @@ def __savefig_filename(fig, fname):
         if mpl.rcParams['savefig.counter'] == 'a':
             cs = chr(ord('a')+fig.__saved_files_counter-1)
         elif mpl.rcParams['savefig.counter'] == '1':
-            cs = '%d' % fig.__saved_files_counter
+            cs = f'{fig.__saved_files_counter}'
         fname = fname.replace('@', cs)
     if len(os.path.splitext(fname)[1]) <= 1:
         fname = os.path.splitext(fname)[0] + '.' + mpl.rcParams['savefig.format']
-    # store file name and fiure counter:
+    # store file name and figure counter:
     global plot_saved_files
     plot_saved_files.append([fname, fig.__saved_files_counter])
     return fname
@@ -234,8 +234,9 @@ def __savefig_stripfonts(fname, stripfonts):
     if stripfonts is None:
         stripfonts = mpl.rcParams['pdf.stripfonts']
     if os.path.splitext(fname)[1] == '.pdf' and stripfonts:
-        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None', fname, 'tmp-'+fname])
-        os.rename('tmp-'+fname, fname)
+        subprocess.call(['ps2pdf', '-dAutoRotatePages=/None',
+                         fname, 'tmp-' + fname])
+        os.rename('tmp-' + fname, fname)
 
             
 def __fig_savefig(fig, fname='', *args, stripfonts=None, **kwargs):
@@ -297,9 +298,9 @@ def latex_include_figures():
     for fname, counter in plot_saved_files:
         fname = os.path.splitext(fname)[0]
         if counter is not None:
-            print(r'\includegraphics<%d>{%s}' % (counter, fname))
+            print(f'\\includegraphics<{counter}>{{{fname}}}')
         else:
-            print(r'\includegraphics{%s}' % fname)
+            print(f'\\includegraphics{{{fname}}}')
     plot_saved_files = []
     
 

@@ -90,7 +90,6 @@ def align_xlabels(fig, axs=None, dist=None):
         dist += mpl.rcParams['xtick.major.pad']
     if axs is None:
         axs = fig.get_axes()
-    dpi = fig.get_dpi()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     yap = np.zeros((len(axs), 3))
@@ -107,7 +106,8 @@ def align_xlabels(fig, axs=None, dist=None):
             tlh = get_ticklabel_extend(xax, pos, 1, renderer)
             tlh_dist = dist
             #tlh_dist += 0.3*xax.get_label().get_fontsize()
-            tlh += tlh_dist/72*dpi
+            ppi = 72.0 # points per inch
+            tlh += tlh_dist*fig.dpi/ppi
             ylh[k] = tlh
             yph[k] = pixely
             ylx[k] = xax.get_label().get_position()[0]
@@ -157,7 +157,6 @@ def align_ylabels(fig, axs=None, dist=None):
         dist += mpl.rcParams['ytick.major.pad']
     if axs is None:
         axs = fig.get_axes()
-    dpi = fig.get_dpi()
     # get axes positions and ticklabel widths:
     renderer = fig.canvas.get_renderer()
     xap = np.zeros((len(axs), 3))
@@ -174,7 +173,8 @@ def align_ylabels(fig, axs=None, dist=None):
             tlw = get_ticklabel_extend(yax, pos, 0, renderer)
             tlw_dist = dist
             tlw_dist += 0.2*yax.get_label().get_fontsize()
-            tlw += tlw_dist/72*dpi
+            ppi = 72.0 # points per inch
+            tlw += tlw_dist*fig.dpi/ppi
             xlw[k] = tlw
             xpw[k] = pixelx
             xly[k] = yax.get_label().get_position()[1]

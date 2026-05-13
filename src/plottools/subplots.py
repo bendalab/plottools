@@ -146,7 +146,7 @@ def __adjust_fs(fig=None, left=None, bottom=None, right=None, top=None,
     if fig is None:
         fig = plt.gcf()
     w, h = fig.get_window_extent().bounds[2:]
-    ppi = 72.0 # points per inch:
+    ppi = 72.0 # points per inch
     fs = plt.rcParams['font.size']*fig.dpi/ppi
     if nomargins:
         left = 0.0

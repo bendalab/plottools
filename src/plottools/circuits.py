@@ -1809,6 +1809,8 @@ def bus(ax, pos, label='', align='left', lw=None, color=None,
         fs = kwargs['fs']
     if 'fontsize' in kwargs:
         fs = kwargs['fontsize']
+    ppi = 72.0 # points per inch
+    fs *= ax.get_figure().dpi/ppi
     fw = np.diff(ax.get_xlim())[0]/ax.get_window_extent().width
     fh = np.diff(ax.get_ylim())[0]/ax.get_window_extent().height
     tw = (len(label) + 0.5)*1*fs*fw
